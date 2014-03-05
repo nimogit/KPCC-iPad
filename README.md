@@ -1,7 +1,76 @@
-KPCCiOSApp
+KPCC-iPad
 ==========
 
-The next-gen KPCC iOS App for iPhone and iPad
+The next-gen KPCC iOS App for iPad
+
+
+Config
+==========
+  In order for this app to hook up to the variety of third-party services we use, you're going to have to setup a file 'KPCC/Config.plist'.
+
+  Here's the current state of ours while withholding sensitive data:
+  ```
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+      <key>LinkedIn</key>
+      <dict>
+        <key>AppKey</key>
+        <string>*****</string>
+        <key>ClientSecret</key>
+        <string>*****</string>
+      </dict>
+      <key>Twitter</key>
+      <dict>
+        <key>ConsumerKey</key>
+        <string>*****</string>
+        <key>ConsumerSecret</key>
+        <string>*****</string>
+      </dict>
+      <key>Readability</key>
+      <dict>
+        <key>ApiKey</key>
+        <string>*****</string>
+      </dict>
+      <key>Desk</key>
+      <dict>
+        <key>AuthPassword</key>
+        <string>*****</string>
+        <key>AuthUser</key>
+        <string>*****</string>
+      </dict>
+      <key>AdSettings</key>
+      <dict>
+        <key>AdGtpId</key>
+        <string>*****</string>
+        <key>VendorId</key>
+        <string>*****</string>
+      </dict>
+      <key>Flurry</key>
+      <dict/>
+      <key>DebugKey</key>
+      <string>*****</string>
+      <key>ProductionKey</key>
+      <string>*****</string>
+      <key>TestFlight</key>
+      <dict>
+        <key>iPadKey</key>
+        <string>*****</string>
+        <key>iPhoneKey</key>
+        <string>*****</string>
+      </dict>
+      <key>Parse</key>
+      <dict>
+        <key>ClientKey</key>
+        <string>*****</string>
+        <key>ApplicationId</key>
+        <string>*****</string>
+      </dict>
+    </dict>
+    </plist>
+  ```
+
 
 
 Introduction
