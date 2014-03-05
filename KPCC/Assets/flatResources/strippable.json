@@ -1,0 +1,1 @@
+[ "<script.*?>.*?</script>", "<style.*?>.*?<\\/style>", "<meta\\w?.*?>", "<link\\w?.*?>", "<nav.*?>.*?</nav>", "<header.*?>.*?</header>","<footer.*?>.*?</footer>","<aside.*?>.*?</aside>","<div class=\"story-related\">.*" , "<noscript.*?>.*?</noscript>", "<div id=\"jp-post-flair\".*", "<div class=\"sharebar\".*?>.*?</html>" ]

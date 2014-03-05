@@ -1,0 +1,1 @@
+[ "<span class=\"credit\">(.*?)</span>","<span class=\"byline\">(.*?)</span>","<aside class=\"byline\">(.*?)</aside>","<div class=\"byline\">(.*?)</div>","<span class=\"author.*?>(.*?)</span>" ]

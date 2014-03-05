@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ArticleStub" representedClassName="ArticleStub" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created_at" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="links" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Collection" representedClassName="Collection" syncable="YES">
+        <attribute name="collectionType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="keywords" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Keyword" inverseName="collections" inverseEntity="Keyword" syncable="YES"/>
+        <relationship name="segments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Segment" inverseName="collections" inverseEntity="Segment" syncable="YES"/>
+    </entity>
+    <entity name="Keyword" representedClassName="Keyword" syncable="YES">
+        <attribute name="keywordType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="collections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Collection" inverseName="keywords" inverseEntity="Collection" syncable="YES"/>
+        <relationship name="segments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Segment" inverseName="keywords" inverseEntity="Segment" syncable="YES"/>
+    </entity>
+    <entity name="Segment" representedClassName="Segment" syncable="YES">
+        <attribute name="addedToQueueDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="airdate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="completed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="originalArticle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="program" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="queuePosition" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="seekposition" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="collections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Collection" inverseName="segments" inverseEntity="Collection" syncable="YES"/>
+        <relationship name="keywords" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Keyword" inverseName="segments" inverseEntity="Keyword" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ArticleStub" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Collection" positionX="-405" positionY="354" width="128" height="133"/>
+        <element name="Keyword" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="Segment" positionX="160" positionY="192" width="128" height="255"/>
+    </elements>
+</model>

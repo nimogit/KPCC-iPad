@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="498" id="cx0-34-ekl" customClass="SCPRDeluxeNewsCell">
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="505"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cx0-34-ekl" id="soR-3O-HyK">
+                <rect key="frame" x="0.0" y="0.0" width="1024" height="504"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" id="1">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="3">
+                                <rect key="frame" x="60" y="30" width="437" height="475"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" id="4">
+                                        <rect key="frame" x="6" y="6" width="424" height="280"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" image="videoPlayButton.png" id="24">
+                                        <rect key="frame" x="6" y="6" width="424" height="280"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" id="5">
+                                        <rect key="frame" x="6" y="286" width="424" height="4"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.2521720033" green="0.72082301459999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="6">
+                                        <rect key="frame" x="6" y="286" width="190" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SLIDESHOW:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9">
+                                                <rect key="frame" x="8" y="4" width="83" height="19"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="137 PHOTOS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="10">
+                                                <rect key="frame" x="99" y="4" width="85" height="19"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.2521720033" green="0.72082301459999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We want this to go the full length and test to two lines" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7">
+                                        <rect key="frame" x="10" y="320" width="411" height="74"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="24"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="YESTERDAY" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8">
+                                        <rect key="frame" x="286" y="290" width="144" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="0.55978260869999996" green="0.55978260869999996" blue="0.55978260869999996" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="11">
+                                        <rect key="frame" x="10" y="402" width="411" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <string key="text">Neutra messenger bag delectus fingerstache farm-to-table Marfa tofu Wes Anderson ex magna fashion axe hoodie. Pickled small batch Portland umami. Kale chips ex food truck vegan, DIY High Life locavore shabby chic blue bottle odio YOLO put a bird on it nisi chillwave cred.</string>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                        <color key="textColor" red="0.62659222150000005" green="0.62659222150000005" blue="0.62659222150000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" id="P07-mG-T22">
+                                        <rect key="frame" x="195" y="291" width="91" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-social-facebook.png" id="siG-n3-i01">
+                                                <rect key="frame" x="5" y="4" width="6" height="12"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="64" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TSs-Zz-svd">
+                                                <rect key="frame" x="17" y="-1" width="27" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                <color key="textColor" red="0.2784313725" green="0.43529411759999997" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" id="qSJ-mS-bWc">
+                                                <rect key="frame" x="41" y="3" width="1" height="14"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            </view>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BDK-w6-WYd">
+                                                <rect key="frame" x="64" y="-1" width="29" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                <color key="textColor" red="0.070588235289999995" green="0.6705882353" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-social-twitter.png" id="aHL-ji-pPH">
+                                                <rect key="frame" x="48" y="4" width="15" height="12"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="KSA-Ng-UtJ">
+                                <rect key="frame" x="527" y="30" width="437" height="475"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" id="OHc-zf-lXv">
+                                        <rect key="frame" x="6" y="6" width="424" height="280"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" image="videoPlayButton.png" id="7pl-Rb-7M3">
+                                        <rect key="frame" x="6" y="6" width="424" height="280"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" id="gVf-lr-3fq">
+                                        <rect key="frame" x="6" y="286" width="424" height="4"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.2521720033" green="0.72082301459999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="jqH-3A-Uj2">
+                                        <rect key="frame" x="6" y="286" width="190" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SLIDESHOW:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A41-5L-DNs">
+                                                <rect key="frame" x="8" y="4" width="83" height="19"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="137 PHOTOS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pB6-Ha-bkg">
+                                                <rect key="frame" x="99" y="4" width="85" height="19"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.2521720033" green="0.72082301459999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We want this to go the full length and test to two lines" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QXT-nD-7kj">
+                                        <rect key="frame" x="10" y="320" width="411" height="74"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="24"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="YESTERDAY" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ubx-sZ-C4H">
+                                        <rect key="frame" x="286" y="290" width="144" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="0.55978260869999996" green="0.55978260869999996" blue="0.55978260869999996" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="TopLeft" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ani-H5-2zj">
+                                        <rect key="frame" x="10" y="402" width="411" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <string key="text">Neutra messenger bag delectus fingerstache farm-to-table Marfa tofu Wes Anderson ex magna fashion axe hoodie. Pickled small batch Portland umami. Kale chips ex food truck vegan, DIY High Life locavore shabby chic blue bottle odio YOLO put a bird on it nisi chillwave cred.</string>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                        <color key="textColor" red="0.62659222150000005" green="0.62659222150000005" blue="0.62659222150000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" id="uJd-eB-Uw5">
+                                        <rect key="frame" x="198" y="291" width="91" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-social-facebook.png" id="6nk-Oi-Xig">
+                                                <rect key="frame" x="5" y="4" width="6" height="12"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="64" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fUG-ge-jbj">
+                                                <rect key="frame" x="17" y="-1" width="27" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                <color key="textColor" red="0.2784313725" green="0.43529411759999997" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" id="mlf-Px-sBQ">
+                                                <rect key="frame" x="41" y="3" width="1" height="14"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            </view>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="N4u-3g-XHB">
+                                                <rect key="frame" x="64" y="-1" width="29" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                <color key="textColor" red="0.070588235289999995" green="0.6705882353" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-social-twitter.png" id="Uph-nS-Za1">
+                                                <rect key="frame" x="48" y="4" width="15" height="12"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.81375254760000004" green="0.81375254760000004" blue="0.81375254760000004" alpha="0.0" colorSpace="calibratedRGB"/>
+                        <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    </view>
+                </subviews>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="facade0" destination="12" id="PoD-2G-foO"/>
+                <outlet property="facade1" destination="36" id="PBv-et-gQf"/>
+            </connections>
+        </tableViewCell>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="12" customClass="SCPRDeluxeNewsFacadeViewController">
+            <extendedEdge key="edgesForExtendedLayout"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+            <nil key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bluePaddingView" destination="5" id="15"/>
+                <outlet property="blurbLabel" destination="11" id="14"/>
+                <outlet property="cardView" destination="3" id="61"/>
+                <outlet property="categoryLabel" destination="10" id="16"/>
+                <outlet property="categorySeatView" destination="6" id="17"/>
+                <outlet property="facebookCountLabel" destination="TSs-Zz-svd" id="0dA-FT-Jaf"/>
+                <outlet property="facebookLogoImage" destination="siG-n3-i01" id="3yq-cS-cCv"/>
+                <outlet property="headlineLabel" destination="7" id="18"/>
+                <outlet property="playOverlayImage" destination="24" id="25"/>
+                <outlet property="slideshowLabel" destination="9" id="19"/>
+                <outlet property="socialCountView" destination="P07-mG-T22" id="mmm-0M-SOW"/>
+                <outlet property="socialLineDivider" destination="qSJ-mS-bWc" id="dHJ-on-Gb8"/>
+                <outlet property="splashImage" destination="4" id="20"/>
+                <outlet property="timestampLabel" destination="8" id="23"/>
+                <outlet property="twitterCountLabel" destination="BDK-w6-WYd" id="0xn-3B-7yF"/>
+                <outlet property="twitterLogoImage" destination="aHL-ji-pPH" id="mqA-lK-22S"/>
+                <outlet property="view" destination="3" id="49"/>
+            </connections>
+        </viewController>
+        <viewController id="36" customClass="SCPRDeluxeNewsFacadeViewController">
+            <extendedEdge key="edgesForExtendedLayout"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+            <nil key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bluePaddingView" destination="gVf-lr-3fq" id="GNx-s4-UmG"/>
+                <outlet property="blurbLabel" destination="Ani-H5-2zj" id="43F-Hs-yIW"/>
+                <outlet property="cardView" destination="KSA-Ng-UtJ" id="ARS-Wk-51d"/>
+                <outlet property="categoryLabel" destination="pB6-Ha-bkg" id="4va-4P-NRI"/>
+                <outlet property="categorySeatView" destination="jqH-3A-Uj2" id="YEt-Zq-siU"/>
+                <outlet property="facebookCountLabel" destination="fUG-ge-jbj" id="bov-rv-uPg"/>
+                <outlet property="facebookLogoImage" destination="6nk-Oi-Xig" id="PIo-xm-2Ub"/>
+                <outlet property="headlineLabel" destination="QXT-nD-7kj" id="WiV-6e-eaA"/>
+                <outlet property="playOverlayImage" destination="7pl-Rb-7M3" id="6td-i2-YVd"/>
+                <outlet property="slideshowLabel" destination="A41-5L-DNs" id="Idz-BK-jUy"/>
+                <outlet property="socialCountView" destination="uJd-eB-Uw5" id="SM4-fy-0ue"/>
+                <outlet property="socialLineDivider" destination="mlf-Px-sBQ" id="l0A-2A-pQA"/>
+                <outlet property="splashImage" destination="OHc-zf-lXv" id="wAW-7Z-FVd"/>
+                <outlet property="timestampLabel" destination="ubx-sZ-C4H" id="n4h-52-feY"/>
+                <outlet property="twitterCountLabel" destination="N4u-3g-XHB" id="e8n-hL-ums"/>
+                <outlet property="twitterLogoImage" destination="Uph-nS-Za1" id="zjc-uB-GLr"/>
+                <outlet property="view" destination="KSA-Ng-UtJ" id="I2p-7w-ltZ"/>
+            </connections>
+        </viewController>
+    </objects>
+    <resources>
+        <image name="icon-social-facebook.png" width="6" height="12"/>
+        <image name="icon-social-twitter.png" width="15" height="12"/>
+        <image name="videoPlayButton.png" width="76" height="76"/>
+    </resources>
+</document>

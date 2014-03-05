@@ -1,0 +1,1 @@
+{ "bad-assets" : [{ "crux" : "src=\"http://www.nbc.com/assets/video","token" : "<iframe "},{ "crux" : "src=\"http://media.nbclosangeles.com/assets","token": "<embed "},{ "crux" : "data=\"http://www.abc15.com/video_player", "token" : "<object " }] }

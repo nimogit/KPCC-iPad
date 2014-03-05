@@ -1,0 +1,132 @@
+<style TYPE="text/css">
+     
+      body{
+        font-family: "PTSerif-Regular";
+        font-size: 14px;
+        line-height: 18px;
+        font-style: normal;
+        font-weight: 400;
+        background-color: rgba(255,255,255,1);
+      }
+      
+      iframe {
+        width: 100%;
+      }
+      
+      body a {
+        color:rgba(51,106,166,1);
+        text-decoration: none;
+      }
+      blockquote {
+        border-left:7px solid rgba(222,228,229,1);
+        font-family: PTSerif-Italic;
+        font-size: 13px;
+        color: rgba(108,117,121,1);
+        line-height: 18px;
+        padding-left: 13px;
+        margin-left: -1px;
+      }
+      #floating_asset {
+        max-width: 188px;
+        padding: 20px 20px 20px 20px;
+        float: right;
+        font-family: Lato-Light;
+        font-size: 14px;
+        color: rgba(34,38,40,1);
+        line-height: 18px;
+        line-spacing:2px;
+      }
+      
+      #framecontainer {
+        width: 100%;
+      }
+      
+    #freezeframe {
+      z-index: 2;
+      position: relative;
+    }
+    #playoverlay {
+
+    position: absolute;
+      z-index: 5;
+    }
+    #twitter_bird {
+      float: left;
+      padding-right: 2px;
+      margin-left: -2px;
+      margin-top: 4px;
+    }
+    #fa_credit {
+      font-family: Lato-Light;
+      font-size: 10px;
+      color: rgba(108,117,121,1);
+      line-height: 10px;
+      margin-top: 10px;
+    }
+
+      h1 {
+        font-size: 20px;
+        line-height: 43px;
+        margin-bottom: 25px;
+        font-family: "PT Sans Narrow";
+        font-style: regular;
+        font-weight: 700;
+        color: rgba(68,68,68,1);
+      }
+      h2 {
+        margin-top: 18px;
+        margin-bottom: 13px;
+        font-size: 19px;
+        line-height: 25px;
+        letter-spacing: 1px;
+        font-family: "PTSerif-Regular";
+        text-transform: uppercase;
+        font-style: regular;
+        font-weight: 700;
+      }
+      
+    p {
+      letter-spacing: 0px;
+      margin-bottom: 0px;
+      color: rgba(38,38,38,1);
+    }
+      
+    .oembed {
+        background-color:rgba(238,250,255,1);
+        color:rgba(15,167,234,1);
+        font-weight:bold;
+        padding:9px;
+    }
+  .oembed-image {
+      float: left;
+      padding-right: 10px;
+      padding-top: 2px;
+   }
+   .oembed a {
+    color:rgba(15,167,234,1);
+   }
+      #container {
+        padding-left: ||_LEFTPADDING_||;
+        padding-right: ||_RIGHTPADDING_||;
+        margin-top: ||_TOPMARGIN_||;
+        padding-bottom: 60px;
+      }
+      #special_iframe {
+       margin-left: -30px;
+      }
+      p a:link {
+        color:rgba(51,106,166,1);
+        text-decoration: none;
+      }
+      .twitter-tweet {
+        border-left: 7px solid rgba(159,217,239,1);
+        font-family: "PTSerif-Italic";
+        font-size: 12px;
+        color: rgba(108,117,121,1);
+        line-height: 16px;
+
+      }
+  #twitter-text {
+    margin-left: 20px;
+    }
+    </style>

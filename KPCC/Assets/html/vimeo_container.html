@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script type="text/javascript">
+        
+        </script>
+      <script src="http://a.vimeocdn.com/js/froogaloop2.min.js" type="text/javascript"></script>
+
+      <script type="text/javascript" language="javascript">
+        
+        var player, iframe;
+        
+        window.onload = function() {
+          iframe = document.getElementById("vim-player");
+          player = $f(iframe);
+        
+          player.addEvent('ready', function() {
+                        alert("Ready");
+                        player.addEvent('pause', onPause);
+                        player.addEvent('play', onPlay );
+                        player.addEvent('playProgress', onPlayProgress);
+                        });
+          
+          if ( player != null ) {
+            
+          }
+        }
+        
+        
+        function onPlay(id) {
+           alert("PLAYING VIMEO MESSAGE FINALLY!");
+        }
+        
+        function onPlayProgress(data, id) {
+          alert("Progress..");
+        }
+                               
+        function seek() {
+              alert('Seeking');
+        }
+                               
+        function onPause(id) {
+          alert("Pausing fucker");
+        }
+        
+        
+        
+        
+        </script>
+      
+    </head>
+    
+  
+  
+  <body>
+    <div>
+      <iframe id="vim-player" src="http://player.vimeo.com/video/||_EMBED_||?api=1&player_id=vim-player" width="||_WIDTH_||" height="||_HEIGHT_||" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen  webkit-playsinline></iframe>
+
+    </div>
+  </body>
+</html>
