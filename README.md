@@ -1,7 +1,7 @@
 KPCC-iPad
 ==========
 
-The next-gen KPCC iOS App for iPad
+The next-gen KPCC iOS App for iPad. We open-sourced it on March 5th, 2014 at version 1.0.2.
 
 
 Config
