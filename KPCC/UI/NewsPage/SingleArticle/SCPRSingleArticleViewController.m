@@ -752,10 +752,13 @@
     
     [self.playThisAudioLabel titleizeText:self.playThisAudioLabel.text bold:NO];
     NSDictionary *piece = [audio objectAtIndex:0];
-    [self.audioDurationLabel italicizeText:[Utilities formalStringFromSeconds:[[piece objectForKey:@"duration"] intValue]]
-                                               bold:YES
-                                      respectHeight:YES];
-  
+    if ([piece objectForKey:@"duration"] != [NSNull null]) {
+      [self.audioDurationLabel italicizeText:[Utilities formalStringFromSeconds:[[piece objectForKey:@"duration"] intValue]]
+                                        bold:YES
+                               respectHeight:YES];
+    } else {
+      [self.audioDurationLabel setHidden:YES];
+    }
   }
   
   if ( ![Utilities isLandscape] || ( pushAssetIntoBody && [Utilities isLandscape] )) {
