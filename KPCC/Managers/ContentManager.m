@@ -2281,7 +2281,7 @@ static ContentManager *singleton = nil;
   [NSURLCache setSharedURLCache:sharedCache];
   
   NSError *error = nil;
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
   NSString *imageCachePath = [NSString stringWithFormat:@"%@/%@", [paths objectAtIndex:0], @"images"];
   BOOL dir;
   
@@ -2424,7 +2424,7 @@ static ContentManager *singleton = nil;
   [[ContentManager shared] setSkipParse:YES];
   [[ContentManager shared] writeSettings];
   
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
   NSString *imageCachePath = [NSString stringWithFormat:@"%@/%@", [paths objectAtIndex:0], @"images"];
   NSError *error = nil;
   NSMutableArray *images = [NSMutableArray arrayWithArray:[[NSFileManager defaultManager] contentsOfDirectoryAtPath:imageCachePath
@@ -2537,7 +2537,7 @@ static ContentManager *singleton = nil;
 - (void)destroyDiskAndMemoryCache {
   NSLog(@"Destorying disk and memory cache.. bye bye");
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *imageCachePath = [NSString stringWithFormat:@"%@/%@", [paths objectAtIndex:0], @"images"];
     NSError *error = nil;
     NSMutableArray *images = [NSMutableArray arrayWithArray:[[NSFileManager defaultManager] contentsOfDirectoryAtPath:imageCachePath
@@ -2610,7 +2610,7 @@ static ContentManager *singleton = nil;
     [self writeSettings];
     
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *dir = [NSString stringWithFormat:@"%@/html",[paths objectAtIndex:0]];
     
     error = nil;
@@ -2643,7 +2643,7 @@ static ContentManager *singleton = nil;
     }
   }
   
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
   NSString *imageCachePath = [NSString stringWithFormat:@"%@/%@", [paths objectAtIndex:0], @"images"];
   
   UIImage *img = nil;
@@ -2671,7 +2671,7 @@ static ContentManager *singleton = nil;
     return memoryImage;
   }
   
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
   NSString *imageCachePath = [NSString stringWithFormat:@"%@/%@/%@", [paths objectAtIndex:0], @"images", @"sandbox"];
   
   UIImage *img = nil;
@@ -2699,7 +2699,7 @@ static ContentManager *singleton = nil;
 
 - (NSString*)writeImageToDisk:(NSData *)img forHash:(NSString *)hash sandbox:(BOOL)sandbox atomically:(BOOL)atomically {
 
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
   NSString *imageCachePath = [NSString stringWithFormat:@"%@/%@", [paths objectAtIndex:0], @"images"];
   if ( sandbox ) {
     BOOL directory;
