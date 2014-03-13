@@ -48,11 +48,12 @@ Config
       <string>*****</string>
     </dict>
     <key>Flurry</key>
+    <dict>
+      <key>DebugKey</key>
+      <string>*****</string>
+      <key>ProductionKey</key>
+      <string>*****</string>
     <dict/>
-    <key>DebugKey</key>
-    <string>*****</string>
-    <key>ProductionKey</key>
-    <string>*****</string>
     <key>TestFlight</key>
     <dict>
       <key>iPadKey</key>
