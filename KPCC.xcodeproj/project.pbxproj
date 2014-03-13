@@ -6900,8 +6900,8 @@
 			buildSettings = {
 				BUNDLE_ID = org.scpr.mobile.ipad;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6938,10 +6938,10 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "0386E561-0CBE-494C-9DE4-4F4E4F60BE85";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = 1.0.2;
-				VERSION = 1.0.2;
+				UNIQUE_BUNDLE_VERSION = 1.0.3;
+				VERSION = 1.0.3;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Production;
@@ -7027,8 +7027,8 @@
 			buildSettings = {
 				BUNDLE_ID = org.scpr.ipad.kpcc;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FACEBOOK_IDENTIFIER = 580965191936158;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7062,10 +7062,10 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "B48AE4C7-1553-453A-A444-F9416CA562EC";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = "NFR build 2";
-				VERSION = 1.0.2;
+				VERSION = 1.0.3;
 				WRAPPER_EXTENSION = app;
 			};
 			name = NFR;
@@ -7074,8 +7074,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_ID = org.scpr.mobile.ipad;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Meeker (R8B7L4868Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Meeker (R8B7L4868Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7112,10 +7112,10 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "B48AE4C7-1553-453A-A444-F9416CA562EC";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = SANDBOX;
-				VERSION = 1.0.2;
+				VERSION = 1.0.3;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -7125,8 +7125,8 @@
 			buildSettings = {
 				BUNDLE_ID = org.scpr.mobile.ipad;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7160,10 +7160,10 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "C3535C4B-4E4E-453A-A8E9-271BB543A3C1";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = 1.0.2;
-				VERSION = 1.0.2;
+				UNIQUE_BUNDLE_VERSION = 1.0.3;
+				VERSION = 1.0.3;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

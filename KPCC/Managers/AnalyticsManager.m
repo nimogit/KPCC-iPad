@@ -345,12 +345,13 @@ static AnalyticsManager *singleton = nil;
   [Flurry setCrashReportingEnabled:YES];
 #ifdef PRODUCTION
   [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"ProductionKey"] ];
+#elif RELEASE
+  [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"ProductionKey"] ];
 #else
+  [Flurry setDebugLogEnabled:YES];
   [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"DebugKey"] ];
 #endif
   [Flurry setBackgroundSessionEnabled:NO];
-  
-
 }
 
 - (NSDictionary*)mergeParametersWithUserInfo:(NSDictionary *)extraParams callingFunction:(NSString *)callingFunction {
