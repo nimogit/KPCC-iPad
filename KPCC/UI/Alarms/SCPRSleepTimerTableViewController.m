@@ -102,6 +102,12 @@
       SCPRQueueViewController *qvc = (SCPRQueueViewController*) self.queueViewControllerDelegate;
       [qvc updateSleepTimeLeft];
       [qvc closeSleepTimerModal];
+      
+      // Unpause or start livestream if it isn't currently playing.
+      if (![[AudioManager shared] isPlayingAnyAudio]) {
+        [qvc playOrPauseTapped:nil];
+      }
+
       [UIView animateWithDuration:0.22 animations:^{
         qvc.sleepTimerActiveView.alpha = 1.0;
         qvc.sleepTimerInactiveView.alpha = 0.0;
