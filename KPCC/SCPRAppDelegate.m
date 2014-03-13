@@ -734,12 +734,6 @@
   }
   [[ContentManager shared] resetAdTracking];
   
-  if ( [[self masterRootController] queueUp] ) {
-    [[self masterRootController] dismissViewControllerAnimated:YES completion:^{
-      
-    }];
-  }
-  
   if ( [[AudioManager shared] isPlayingAnyAudio] ) {
     [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:[[ContentManager shared] audioMetaData]];
   }

@@ -636,10 +636,6 @@
 
 - (void)bringUpQueue {
   
-  if ( [self queueUp] ) {
-    return;
-  }
-  
   if ( [Utilities isIOS7] ) {
     [self setNeedsStatusBarAppearanceUpdate];
   }
@@ -653,12 +649,7 @@
   
   [self presentViewController:self.queueViewController
                      animated:YES
-                   completion:^{
-                     
-                     [self setQueueUp:YES];
-                     
-                     
-                   }];
+                   completion:nil];
 }
 
 - (void)invalidateStatusBar {

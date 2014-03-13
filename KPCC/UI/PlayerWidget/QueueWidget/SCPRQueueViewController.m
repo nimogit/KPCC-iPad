@@ -631,7 +631,6 @@
     
     SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
     [root invalidateStatusBar];
-    root.queueUp = NO;
     root.frozenOrientation = 0;
     
   }];
