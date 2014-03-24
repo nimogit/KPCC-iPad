@@ -3951,9 +3951,9 @@
 				255945A917820C0F0014B0B5 /* pauseButton.png */,
 				255945AA17820C0F0014B0B5 /* pauseButton@2x.png */,
 				2559459D1781FD4A0014B0B5 /* ff_btn.png */,
-				2559459E1781FD4A0014B0B5 /* ff_btn@2x.png */,
 				255945971781FAB40014B0B5 /* playButton.png */,
 				255945981781FAB40014B0B5 /* playButton@2x.png */,
+				2559459E1781FD4A0014B0B5 /* ff_btn@2x.png */,
 			);
 			name = Player;
 			sourceTree = "<group>";
@@ -7146,6 +7146,8 @@
 					SUPPORT_LANDSCAPE,
 					AGGRESSIVE_DEALLOCATION,
 					ENABLE_ADS,
+					TURN_OFF_UNTESTED_FEATURES,
+					TURN_OFF_LOGGING,
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
 				HEADER_SEARCH_PATHS = "";
