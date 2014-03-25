@@ -786,10 +786,6 @@
 		25A70B9417DE41CA0024E654 /* SCPRBreakingNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A70B9117DE41CA0024E654 /* SCPRBreakingNewsViewController.m */; };
 		25A70B9517DE41CA0024E654 /* SCPRBreakingNewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25A70B9217DE41CA0024E654 /* SCPRBreakingNewsViewController.xib */; };
 		25A70B9617DE41CA0024E654 /* SCPRBreakingNewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25A70B9217DE41CA0024E654 /* SCPRBreakingNewsViewController.xib */; };
-		25A70BA517E124250024E654 /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = 25A70BA217E124250024E654 /* fishhook.c */; };
-		25A70BA617E124250024E654 /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = 25A70BA217E124250024E654 /* fishhook.c */; };
-		25A70BA717E124250024E654 /* QuietAssertMacros.c in Sources */ = {isa = PBXBuildFile; fileRef = 25A70BA417E124250024E654 /* QuietAssertMacros.c */; };
-		25A70BA817E124250024E654 /* QuietAssertMacros.c in Sources */ = {isa = PBXBuildFile; fileRef = 25A70BA417E124250024E654 /* QuietAssertMacros.c */; };
 		25A70BAF17E135800024E654 /* SCPROnboardingFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A70BAD17E135800024E654 /* SCPROnboardingFlowViewController.m */; };
 		25A70BB017E135800024E654 /* SCPROnboardingFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A70BAD17E135800024E654 /* SCPROnboardingFlowViewController.m */; };
 		25A70BB117E135800024E654 /* SCPROnboardingFlowViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25A70BAE17E135800024E654 /* SCPROnboardingFlowViewController_iPad.xib */; };
@@ -1671,8 +1667,6 @@
 		28036AAE1718A344007DBDE2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28683CBE170B9BBD00346B6E /* CoreGraphics.framework */; };
 		28036AB11718A344007DBDE2 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2832FEFE1714CC7D009FF2F0 /* NewRelicAgent.framework */; };
 		28036AB31718A344007DBDE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28683CC3170B9BBD00346B6E /* InfoPlist.strings */; };
-		28036AB71718A344007DBDE2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E796170D065800ED18FB /* README.md */; };
-		28036AB81718A344007DBDE2 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E797170D065800ED18FB /* release_notes.md */; };
 		28036AB91718A344007DBDE2 /* SCPRPlayerWidgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E7C9170E2BE300ED18FB /* SCPRPlayerWidgetViewController.xib */; };
 		28036ABA1718A344007DBDE2 /* SCPRPlayerWidgetViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E7CC170E2C1500ED18FB /* SCPRPlayerWidgetViewController_iPad.xib */; };
 		28036ABB1718A344007DBDE2 /* SCPRViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AFBE9A170F416C00125DB8 /* SCPRViewController_iPad.xib */; };
@@ -1769,9 +1763,6 @@
 		28C9E7A3170D065800ED18FB /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E78F170D065700ED18FB /* SBJsonTokeniser.m */; };
 		28C9E7A4170D065800ED18FB /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E791170D065700ED18FB /* SBJsonUTF8Stream.m */; };
 		28C9E7A5170D065800ED18FB /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E793170D065700ED18FB /* SBJsonWriter.m */; };
-		28C9E7A6170D065800ED18FB /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C9E795170D065700ED18FB /* libTestFlight.a */; };
-		28C9E7A7170D065800ED18FB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E796170D065800ED18FB /* README.md */; };
-		28C9E7A8170D065800ED18FB /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E797170D065800ED18FB /* release_notes.md */; };
 		28C9E7B1170DFB0300ED18FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C9E7B0170DFB0300ED18FB /* AudioToolbox.framework */; };
 		28C9E7B5170DFB0B00ED18FB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C9E7B4170DFB0A00ED18FB /* CoreData.framework */; };
 		28C9E7B7170DFB2500ED18FB /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C9E7B6170DFB2500ED18FB /* libxml2.dylib */; };
@@ -1798,10 +1789,15 @@
 		28DF6D3A171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DF6D39171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib */; };
 		76658B5718E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5418E1F43800026176 /* libFlurry_4.3.2.a */; };
 		76658B5818E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5418E1F43800026176 /* libFlurry_4.3.2.a */; };
+		76658B6018E2141C00026176 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5A18E2141C00026176 /* libTestFlight.a */; };
+		76658B6118E2141C00026176 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5A18E2141C00026176 /* libTestFlight.a */; };
+		76658B6218E2141C00026176 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5B18E2141C00026176 /* README.md */; };
+		76658B6318E2141C00026176 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5B18E2141C00026176 /* README.md */; };
+		76658B6418E2141C00026176 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5C18E2141C00026176 /* release_notes.md */; };
+		76658B6518E2141C00026176 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5C18E2141C00026176 /* release_notes.md */; };
 		76A3087318B696630065D4B1 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 76A3087018B696630065D4B1 /* iRate.bundle */; };
 		76A3087418B696630065D4B1 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3087218B696630065D4B1 /* iRate.m */; };
 		76A3088018BBDFD00065D4B1 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FA086D1821D758008BADF2 /* libGoogleAdMobAds.a */; };
-		76A3088118BBE0090065D4B1 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C9E795170D065700ED18FB /* libTestFlight.a */; };
 		76A3089018BD5ABA0065D4B1 /* AlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3088F18BD5ABA0065D4B1 /* AlarmManager.m */; };
 		76A3089118BD5ABA0065D4B1 /* AlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3088F18BD5ABA0065D4B1 /* AlarmManager.m */; };
 		76A3089618BFECE70065D4B1 /* icon-timer-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A3089218BFECE70065D4B1 /* icon-timer-blue.png */; };
@@ -1971,8 +1967,6 @@
 		254CABA11739699F0005341D /* SCPRSimpleNewsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRSimpleNewsViewController.xib; path = UI/NewsPage/Simple/SCPRSimpleNewsViewController.xib; sourceTree = "<group>"; };
 		254CABA21739699F0005341D /* SCPRTileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRTileViewController.xib; path = UI/NewsPage/Simple/SCPRTileViewController.xib; sourceTree = "<group>"; };
 		254CABA617396D700005341D /* SCPRSpecialTitlebarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRSpecialTitlebarViewController.xib; path = UI/Titlebar/SCPRSpecialTitlebarViewController.xib; sourceTree = "<group>"; };
-		254FB69617CBD022008F81FD /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		254FB69717CBD022008F81FD /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		255571731738AFFA00354D30 /* SCPRSpecialTitlebarViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRSpecialTitlebarViewController_iPad.xib; path = UI/Titlebar/SCPRSpecialTitlebarViewController_iPad.xib; sourceTree = "<group>"; };
 		2559456A1781EA1C0014B0B5 /* spinner.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = spinner.html; path = Assets/html/spinner.html; sourceTree = "<group>"; };
 		2559456D1781EABC0014B0B5 /* spinning-donut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spinning-donut.png"; sourceTree = "<group>"; };
@@ -2321,9 +2315,6 @@
 		25A70B9017DE41C90024E654 /* SCPRBreakingNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRBreakingNewsViewController.h; path = UI/UtilityViews/SCPRBreakingNewsViewController.h; sourceTree = "<group>"; };
 		25A70B9117DE41CA0024E654 /* SCPRBreakingNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRBreakingNewsViewController.m; path = UI/UtilityViews/SCPRBreakingNewsViewController.m; sourceTree = "<group>"; };
 		25A70B9217DE41CA0024E654 /* SCPRBreakingNewsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRBreakingNewsViewController.xib; path = UI/UtilityViews/SCPRBreakingNewsViewController.xib; sourceTree = "<group>"; };
-		25A70BA217E124250024E654 /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
-		25A70BA317E124250024E654 /* fishhook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
-		25A70BA417E124250024E654 /* QuietAssertMacros.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = QuietAssertMacros.c; sourceTree = "<group>"; };
 		25A70BAC17E135800024E654 /* SCPROnboardingFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPROnboardingFlowViewController.h; path = UI/Onboarding/SCPROnboardingFlowViewController.h; sourceTree = "<group>"; };
 		25A70BAD17E135800024E654 /* SCPROnboardingFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPROnboardingFlowViewController.m; path = UI/Onboarding/SCPROnboardingFlowViewController.m; sourceTree = "<group>"; };
 		25A70BAE17E135800024E654 /* SCPROnboardingFlowViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPROnboardingFlowViewController_iPad.xib; path = UI/Onboarding/SCPROnboardingFlowViewController_iPad.xib; sourceTree = "<group>"; };
@@ -2910,10 +2901,6 @@
 		28C9E791170D065700ED18FB /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
 		28C9E792170D065700ED18FB /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		28C9E793170D065700ED18FB /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		28C9E795170D065700ED18FB /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		28C9E796170D065800ED18FB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		28C9E797170D065800ED18FB /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		28C9E798170D065800ED18FB /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		28C9E7B0170DFB0300ED18FB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		28C9E7B2170DFB0700ED18FB /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		28C9E7B4170DFB0A00ED18FB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -2939,6 +2926,12 @@
 		28DF6D39171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRNewsPageContainerController_iPad.xib; path = UI/NewsPage/SCPRNewsPageContainerController_iPad.xib; sourceTree = "<group>"; };
 		76658B5318E1F43800026176 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		76658B5418E1F43800026176 /* libFlurry_4.3.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.2.a; sourceTree = "<group>"; };
+		76658B5A18E2141C00026176 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		76658B5B18E2141C00026176 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		76658B5C18E2141C00026176 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		76658B5D18E2141C00026176 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		76658B5E18E2141C00026176 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		76658B5F18E2141C00026176 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		76A3087018B696630065D4B1 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		76A3087118B696630065D4B1 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		76A3087218B696630065D4B1 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -2971,9 +2964,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76A3088118BBE0090065D4B1 /* libTestFlight.a in Frameworks */,
-				76A3088018BBDFD00065D4B1 /* libGoogleAdMobAds.a in Frameworks */,
+				28036AA81718A344007DBDE2 /* libz.dylib in Frameworks */,
 				2594146317E7DD52006DC6A6 /* StoreKit.framework in Frameworks */,
+				76658B6118E2141C00026176 /* libTestFlight.a in Frameworks */,
 				25332B901760FF8400ADAB3B /* CoreLocation.framework in Frameworks */,
 				25A824A41757CFEB0061C889 /* Social.framework in Frameworks */,
 				25AEFA7A17558636003CD916 /* MessageUI.framework in Frameworks */,
@@ -2986,13 +2979,13 @@
 				25C8F20E1732FCD500229891 /* CoreMedia.framework in Frameworks */,
 				2571C06A172993B500B43422 /* CoreText.framework in Frameworks */,
 				76658B5818E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */,
+				76A3088018BBDFD00065D4B1 /* libGoogleAdMobAds.a in Frameworks */,
 				28036AA21718A344007DBDE2 /* CoreTelephony.framework in Frameworks */,
 				28036AA31718A344007DBDE2 /* AVFoundation.framework in Frameworks */,
 				28036AA41718A344007DBDE2 /* CFNetwork.framework in Frameworks */,
 				28036AA51718A344007DBDE2 /* MobileCoreServices.framework in Frameworks */,
 				28036AA61718A344007DBDE2 /* QuartzCore.framework in Frameworks */,
 				28036AA71718A344007DBDE2 /* SystemConfiguration.framework in Frameworks */,
-				28036AA81718A344007DBDE2 /* libz.dylib in Frameworks */,
 				28036AA91718A344007DBDE2 /* libxml2.dylib in Frameworks */,
 				28036AAA1718A344007DBDE2 /* CoreData.framework in Frameworks */,
 				28036AAB1718A344007DBDE2 /* AudioToolbox.framework in Frameworks */,
@@ -3027,11 +3020,11 @@
 				28C9E7B9170DFB2F00ED18FB /* libz.dylib in Frameworks */,
 				28C9E7B7170DFB2500ED18FB /* libxml2.dylib in Frameworks */,
 				28C9E7B5170DFB0B00ED18FB /* CoreData.framework in Frameworks */,
+				76658B6018E2141C00026176 /* libTestFlight.a in Frameworks */,
 				28C9E7B1170DFB0300ED18FB /* AudioToolbox.framework in Frameworks */,
 				28683CBB170B9BBD00346B6E /* UIKit.framework in Frameworks */,
 				28683CBD170B9BBD00346B6E /* Foundation.framework in Frameworks */,
 				28683CBF170B9BBD00346B6E /* CoreGraphics.framework in Frameworks */,
-				28C9E7A6170D065800ED18FB /* libTestFlight.a in Frameworks */,
 				76658B5718E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */,
 				2832FEFF1714CC7D009FF2F0 /* NewRelicAgent.framework in Frameworks */,
 				25A8249C1757C9310061C889 /* FacebookSDK.framework in Frameworks */,
@@ -3644,17 +3637,6 @@
 				25A6778A1828785600565925 /* onboarding-magnifier-step4@2x.png */,
 			);
 			name = Intro;
-			sourceTree = "<group>";
-		};
-		25A70BA117E124250024E654 /* Fishook */ = {
-			isa = PBXGroup;
-			children = (
-				25A70BA217E124250024E654 /* fishhook.c */,
-				25A70BA317E124250024E654 /* fishhook.h */,
-				25A70BA417E124250024E654 /* QuietAssertMacros.c */,
-			);
-			name = Fishook;
-			path = ThirdParty/Fishook;
 			sourceTree = "<group>";
 		};
 		25A70BA917E134F90024E654 /* Menu Stuff */ = {
@@ -4807,15 +4789,14 @@
 		28C9E776170D064200ED18FB /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				76658B5918E2141C00026176 /* TestFlight */,
 				76658AC618E1F43700026176 /* Flurry */,
 				76A3086F18B696630065D4B1 /* iRate */,
 				25FA08631821D758008BADF2 /* DFP */,
 				2567340D17EA177600B80921 /* AudioStreamer */,
-				25A70BA117E124250024E654 /* Fishook */,
 				25AC7D2917BB00B8008B1599 /* XMLD */,
 				259C4A061721ED2700FC3CEC /* UIDeviceAdditions */,
 				28C9E77A170D065700ED18FB /* SBJson */,
-				28C9E794170D065700ED18FB /* TestFlight */,
 			);
 			name = ThirdParty;
 			sourceTree = "<group>";
@@ -4851,20 +4832,6 @@
 			);
 			name = SBJson;
 			path = ThirdParty/SBJson;
-			sourceTree = "<group>";
-		};
-		28C9E794170D065700ED18FB /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				254FB69617CBD022008F81FD /* TestFlight+AsyncLogging.h */,
-				254FB69717CBD022008F81FD /* TestFlight+ManualSessions.h */,
-				28C9E795170D065700ED18FB /* libTestFlight.a */,
-				28C9E796170D065800ED18FB /* README.md */,
-				28C9E797170D065800ED18FB /* release_notes.md */,
-				28C9E798170D065800ED18FB /* TestFlight.h */,
-			);
-			name = TestFlight;
-			path = ThirdParty/TestFlight;
 			sourceTree = "<group>";
 		};
 		28C9E7C5170E2B9900ED18FB /* Main UI */ = {
@@ -4904,6 +4871,20 @@
 			);
 			name = Flurry;
 			path = ThirdParty/Flurry;
+			sourceTree = "<group>";
+		};
+		76658B5918E2141C00026176 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				76658B5A18E2141C00026176 /* libTestFlight.a */,
+				76658B5B18E2141C00026176 /* README.md */,
+				76658B5C18E2141C00026176 /* release_notes.md */,
+				76658B5D18E2141C00026176 /* TestFlight+AsyncLogging.h */,
+				76658B5E18E2141C00026176 /* TestFlight+ManualSessions.h */,
+				76658B5F18E2141C00026176 /* TestFlight.h */,
+			);
+			name = TestFlight;
+			path = ThirdParty/TestFlight;
 			sourceTree = "<group>";
 		};
 		76A3086F18B696630065D4B1 /* iRate */ = {
@@ -5035,8 +5016,6 @@
 				28A0CF1A171E05D900776579 /* person@2x.png in Resources */,
 				28A0CF1B171E05D900776579 /* stripes@2x.png in Resources */,
 				28036AB31718A344007DBDE2 /* InfoPlist.strings in Resources */,
-				28036AB71718A344007DBDE2 /* README.md in Resources */,
-				28036AB81718A344007DBDE2 /* release_notes.md in Resources */,
 				28036AB91718A344007DBDE2 /* SCPRPlayerWidgetViewController.xib in Resources */,
 				28036ABA1718A344007DBDE2 /* SCPRPlayerWidgetViewController_iPad.xib in Resources */,
 				28036ABB1718A344007DBDE2 /* SCPRViewController_iPad.xib in Resources */,
@@ -5336,6 +5315,7 @@
 				255EE4A917970395004D1D5E /* add_to_favorites_plus.png in Resources */,
 				25C9A4B017F4CBF400B6BBB6 /* icon-share-facebook.png in Resources */,
 				25D1C61F18088225001FD92C /* icon-save-queue@2x.png in Resources */,
+				76658B6518E2141C00026176 /* release_notes.md in Resources */,
 				255EE4AB17970395004D1D5E /* add_to_favorites_plus@2x.png in Resources */,
 				255EE4AD17970395004D1D5E /* section_0_header_icon.png in Resources */,
 				255EE4AF17970395004D1D5E /* section_0_header_icon@2x.png in Resources */,
@@ -5390,6 +5370,7 @@
 				2577165317A19FE6003BDC2F /* byline_containers.json in Resources */,
 				2577165617A1B4FC003BDC2F /* top_gradient@2x.png in Resources */,
 				25A70C4817E378F90024E654 /* SCPROnboardingStep5ViewController_iPad.xib in Resources */,
+				76658B6318E2141C00026176 /* README.md in Resources */,
 				25C9A44A17F3831200B6BBB6 /* SCPRDeluxeNewsViewController_iPadLandscape.xib in Resources */,
 				2577165917A1B533003BDC2F /* top_gradient.png in Resources */,
 				25C9A44217F358F100B6BBB6 /* top_gradient_7.png in Resources */,
@@ -5728,8 +5709,6 @@
 			files = (
 				28683CC5170B9BBD00346B6E /* InfoPlist.strings in Resources */,
 				254A863517E8FD3400C0227D /* circleMask.png in Resources */,
-				28C9E7A7170D065800ED18FB /* README.md in Resources */,
-				28C9E7A8170D065800ED18FB /* release_notes.md in Resources */,
 				259AF5E8183419F6008AFB2A /* SCPRProgramAZViewController.xib in Resources */,
 				25A70BF417E13C220024E654 /* button-signin-twitter.png in Resources */,
 				258BB7EE182C2F4800F19A63 /* small_taketwoevenings_splash@2x.jpg in Resources */,
@@ -6072,6 +6051,7 @@
 				256245E4178F7B6400328CEE /* queueItemPlay.png in Resources */,
 				25A677991828785600565925 /* onboarding-card-step4@2x.jpg in Resources */,
 				256421D618107391002F1C6A /* SCPRDeluxeNewsCellSingle32_iPadLandscape.xib in Resources */,
+				76658B6418E2141C00026176 /* release_notes.md in Resources */,
 				256245E5178F7B6400328CEE /* queueItemPlay@2x.png in Resources */,
 				2578081E1790D346003D4BB3 /* spinning-donut@2x.png in Resources */,
 				255FD5E117D0043600F03A0B /* SCPRDeluxeNewsCellSingle23_iPad.xib in Resources */,
@@ -6265,6 +6245,7 @@
 				25C9A49D17F4CBF400B6BBB6 /* icon-embed@2x.png in Resources */,
 				25E0B20017C2F0C7009C3C72 /* freshair_splash@2x.jpg in Resources */,
 				25E0B20217C2F0C7009C3C72 /* generic_splash.jpg in Resources */,
+				76658B6218E2141C00026176 /* README.md in Resources */,
 				259AF5AD183409B4008AFB2A /* SCPREditionShortListViewController.xib in Resources */,
 				25E0B20417C2F0C7009C3C72 /* generic_splash@2x.jpg in Resources */,
 				259AF5EF1834342A008AFB2A /* SCPRQueueCellViewController.xib in Resources */,
@@ -6500,7 +6481,6 @@
 				255D2D771725DDDB00ED1136 /* NSString+MD5Addition.m in Sources */,
 				255D2D781725DDDB00ED1136 /* UIDevice+IdentifierAddition.m in Sources */,
 				28A0CF19171E055600776579 /* SCPRTitlebarViewController.m in Sources */,
-				25A70BA617E124250024E654 /* fishhook.c in Sources */,
 				28DF6D2F171DBE49002F0F99 /* UIImageView+ImageProcessor.m in Sources */,
 				2832AD48171CD105003E9204 /* SCPRSettings.m in Sources */,
 				282E6A4B171C884500B04519 /* SCPRShadowingView.m in Sources */,
@@ -6619,7 +6599,6 @@
 				257AB7D7177B6C3100D2F4EA /* SCPRProgramNavigatorViewController.m in Sources */,
 				25D7A8D3177CC3EA008D9F37 /* SCPRSegmentCell.m in Sources */,
 				25D7A8DE177D0445008D9F37 /* SCPRFloatingOptionViewController.m in Sources */,
-				25A70BA817E124250024E654 /* QuietAssertMacros.c in Sources */,
 				256A0AD91784CFDC00508999 /* SCPRProfileReminderCell.m in Sources */,
 				25A70C0017E13DC40024E654 /* SCPROnboardingCardViewController.m in Sources */,
 				255EE49D1796FE24004D1D5E /* SCPRDrawerSectionHeaderView.m in Sources */,
@@ -6699,7 +6678,6 @@
 				2832AD37171C969C003E9204 /* SCPRSettings.m in Sources */,
 				2832AD40171CC130003E9204 /* UIImageView+ImageProcessor.m in Sources */,
 				76A3089018BD5ABA0065D4B1 /* AlarmManager.m in Sources */,
-				25A70BA717E124250024E654 /* QuietAssertMacros.c in Sources */,
 				28DF6D35171DCAF7002F0F99 /* SCPRNewsPageContainerController.m in Sources */,
 				28A0CF0F171E007300776579 /* SCPRTitlebarViewController.m in Sources */,
 				28A0CF20171E080800776579 /* SCPRDrawerViewController.m in Sources */,
@@ -6792,7 +6770,6 @@
 				254435D2179F0B1000394EDF /* SCPREditionMoleculeViewController.m in Sources */,
 				251D4CA817A7320400D4CAA3 /* SCPRUnderConstructionViewController.m in Sources */,
 				280A3BE917A896260077763C /* FeedbackManager.m in Sources */,
-				25A70BA517E124250024E654 /* fishhook.c in Sources */,
 				280A3BF017A89A1D0077763C /* SCPRFeedbackViewController.m in Sources */,
 				259EB08617B0208C0009EE4C /* UIImage+StackBlur.m in Sources */,
 				255B583517B1A2F9004E9712 /* SCPRCompositeNewsViewController.m in Sources */,
@@ -6830,7 +6807,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -6854,6 +6831,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSION = "";
 			};
 			name = Production;
@@ -6881,10 +6859,6 @@
 					"\"$(SRCROOT)/../Libraries/BCiOSSDK-543/Libraries\"",
 					"\"$(SRCROOT)/../Libraries/GoogleAdMobAdsSdkiOS-6.4.2/Add-ons/GoogleAnalyticsiOS_2.0beta4/Library\"",
 					"\"$(SRCROOT)/../Libraries/GoogleAdMobAdsSdkiOS-6.4.2\"",
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/DFP,
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/BrightCove/Library,
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/Flurry,
-					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				PLATFORM_STRING = iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6898,10 +6872,11 @@
 		259210EF18315B0A001EDFB2 /* Production */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6931,18 +6906,18 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/DFP,
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/TestFlight,
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/Flurry,
-					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
+					"$(SRCROOT)/KPCC/ThirdParty/TestFlight",
+					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
+					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C3535C4B-4E4E-453A-A8E9-271BB543A3C1";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = 1.0.3;
-				VERSION = 1.0.3;
+				UNIQUE_BUNDLE_VERSION = 1.0.4;
+				VALID_ARCHS = "armv7 armv7s arm64";
+				VERSION = 1.0.4;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Production;
@@ -6951,7 +6926,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -6975,6 +6950,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSION = "";
 			};
 			name = NFR;
@@ -7011,10 +6987,6 @@
 					"\"$(SRCROOT)/../Libraries/BCiOSSDK-543/Libraries\"",
 					"\"$(SRCROOT)/../Libraries/GoogleAdMobAdsSdkiOS-6.4.2/Add-ons/GoogleAnalyticsiOS_2.0beta4/Library\"",
 					"\"$(SRCROOT)/../Libraries/GoogleAdMobAdsSdkiOS-6.4.2\"",
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/DFP,
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/BrightCove/Library,
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/Flurry,
-					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				PLATFORM_STRING = iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7028,6 +7000,7 @@
 		25E21ACF183ADA660057E91D /* NFR */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.ipad.kpcc;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -7058,10 +7031,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/DFP,
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/TestFlight,
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/Flurry,
-					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
+					"$(SRCROOT)/KPCC/ThirdParty/TestFlight",
+					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
+					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
@@ -7069,7 +7041,8 @@
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = "NFR build 2";
-				VERSION = 1.0.3;
+				VALID_ARCHS = "armv7 armv7s arm64";
+				VERSION = 1.0.4;
 				WRAPPER_EXTENSION = app;
 			};
 			name = NFR;
@@ -7077,6 +7050,7 @@
 		28036AC71718A344007DBDE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -7109,18 +7083,18 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/DFP,
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/TestFlight,
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/Flurry,
-					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
+					"$(SRCROOT)/KPCC/ThirdParty/TestFlight",
+					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
+					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "A6E6D268-DE80-40BB-9C74-C2771FB93D90";
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = SANDBOX;
-				VERSION = 1.0.3;
+				VALID_ARCHS = "armv7 armv7s arm64";
+				VERSION = 1.0.4;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -7128,10 +7102,11 @@
 		28036AC81718A344007DBDE2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7160,18 +7135,18 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/DFP,
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/TestFlight,
-					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/Flurry,
-					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
+					"$(SRCROOT)/KPCC/ThirdParty/TestFlight",
+					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
+					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C3535C4B-4E4E-453A-A8E9-271BB543A3C1";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = 1.0.3;
-				VERSION = 1.0.3;
+				UNIQUE_BUNDLE_VERSION = 1.0.4;
+				VALID_ARCHS = "armv7 armv7s arm64";
+				VERSION = 1.0.4;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -7180,7 +7155,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7207,6 +7182,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSION = "";
 			};
 			name = Debug;
@@ -7215,7 +7191,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7239,6 +7215,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSION = "";
 			};
 			name = Release;
@@ -7275,10 +7252,6 @@
 					"\"$(SRCROOT)/../Libraries/BCiOSSDK-543/Libraries\"",
 					"\"$(SRCROOT)/../Libraries/GoogleAdMobAdsSdkiOS-6.4.2/Add-ons/GoogleAnalyticsiOS_2.0beta4/Library\"",
 					"\"$(SRCROOT)/../Libraries/GoogleAdMobAdsSdkiOS-6.4.2\"",
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/DFP,
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/BrightCove/Library,
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/Flurry,
-					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				PLATFORM_STRING = iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7321,10 +7294,6 @@
 					"\"$(SRCROOT)/../Libraries/BCiOSSDK-543/Libraries\"",
 					"\"$(SRCROOT)/../Libraries/GoogleAdMobAdsSdkiOS-6.4.2/Add-ons/GoogleAnalyticsiOS_2.0beta4/Library\"",
 					"\"$(SRCROOT)/../Libraries/GoogleAdMobAdsSdkiOS-6.4.2\"",
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/DFP,
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/BrightCove/Library,
-					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/Flurry,
-					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				PLATFORM_STRING = iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
