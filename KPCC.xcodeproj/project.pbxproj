@@ -637,7 +637,6 @@
 		259028DB1829B52800334DB3 /* icon-embed-video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 259028CB1829B52800334DB3 /* icon-embed-video@2x.png */; };
 		2590D132174308E40047F4C1 /* SCPRNewsPageSplit340_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2590D131174308E30047F4C1 /* SCPRNewsPageSplit340_iPad.xib */; };
 		2590D133174308E40047F4C1 /* SCPRNewsPageSplit340_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2590D131174308E30047F4C1 /* SCPRNewsPageSplit340_iPad.xib */; };
-		2592110C18317371001EDFB2 /* libFlurry_4.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2592110B18317371001EDFB2 /* libFlurry_4.3.0.a */; };
 		2594146317E7DD52006DC6A6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2594146217E7DD52006DC6A6 /* StoreKit.framework */; };
 		25988C4E17FB647500819CFA /* embedsupport.json in Resources */ = {isa = PBXBuildFile; fileRef = 25988C4D17FB647500819CFA /* embedsupport.json */; };
 		25988C4F17FB647500819CFA /* embedsupport.json in Resources */ = {isa = PBXBuildFile; fileRef = 25988C4D17FB647500819CFA /* embedsupport.json */; };
@@ -1797,11 +1796,12 @@
 		28DF6D37171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DF6D34171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib */; };
 		28DF6D38171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DF6D34171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib */; };
 		28DF6D3A171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DF6D39171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib */; };
+		76658B5718E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5418E1F43800026176 /* libFlurry_4.3.2.a */; };
+		76658B5818E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5418E1F43800026176 /* libFlurry_4.3.2.a */; };
 		76A3087318B696630065D4B1 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 76A3087018B696630065D4B1 /* iRate.bundle */; };
 		76A3087418B696630065D4B1 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3087218B696630065D4B1 /* iRate.m */; };
 		76A3088018BBDFD00065D4B1 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FA086D1821D758008BADF2 /* libGoogleAdMobAds.a */; };
 		76A3088118BBE0090065D4B1 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C9E795170D065700ED18FB /* libTestFlight.a */; };
-		76A3088218BBE03D0065D4B1 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A3087E18BBDE400065D4B1 /* libFlurry_4.3.2.a */; };
 		76A3089018BD5ABA0065D4B1 /* AlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3088F18BD5ABA0065D4B1 /* AlarmManager.m */; };
 		76A3089118BD5ABA0065D4B1 /* AlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3088F18BD5ABA0065D4B1 /* AlarmManager.m */; };
 		76A3089618BFECE70065D4B1 /* icon-timer-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A3089218BFECE70065D4B1 /* icon-timer-blue.png */; };
@@ -2217,7 +2217,6 @@
 		259028CA1829B52800334DB3 /* icon-embed-video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-embed-video.png"; sourceTree = "<group>"; };
 		259028CB1829B52800334DB3 /* icon-embed-video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-embed-video@2x.png"; sourceTree = "<group>"; };
 		2590D131174308E30047F4C1 /* SCPRNewsPageSplit340_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRNewsPageSplit340_iPad.xib; sourceTree = "<group>"; };
-		2592110B18317371001EDFB2 /* libFlurry_4.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.0.a; sourceTree = "<group>"; };
 		2594146217E7DD52006DC6A6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		25988C4D17FB647500819CFA /* embedsupport.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = embedsupport.json; path = Assets/flatResources/embedsupport.json; sourceTree = "<group>"; };
 		25995079176F9B8700C12183 /* SCPRLogoGeneratorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRLogoGeneratorViewController.h; path = UI/NewsPage/Snapshot/SCPRLogoGeneratorViewController.h; sourceTree = "<group>"; };
@@ -2886,7 +2885,6 @@
 		28C9E770170D062300ED18FB /* NSURLRequest+IgnoreSSL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURLRequest+IgnoreSSL.m"; path = "Helpers/NSURLRequest+IgnoreSSL.m"; sourceTree = "<group>"; };
 		28C9E771170D062300ED18FB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Helpers/Reachability.h; sourceTree = "<group>"; };
 		28C9E772170D062300ED18FB /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Helpers/Reachability.m; sourceTree = "<group>"; };
-		28C9E778170D065700ED18FB /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		28C9E77B170D065700ED18FB /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		28C9E77C170D065700ED18FB /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		28C9E77D170D065700ED18FB /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
@@ -2939,10 +2937,11 @@
 		28DF6D33171DCAF7002F0F99 /* SCPRNewsPageContainerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRNewsPageContainerController.m; path = UI/NewsPage/SCPRNewsPageContainerController.m; sourceTree = "<group>"; };
 		28DF6D34171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRNewsPageContainerController.xib; path = UI/NewsPage/SCPRNewsPageContainerController.xib; sourceTree = "<group>"; };
 		28DF6D39171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRNewsPageContainerController_iPad.xib; path = UI/NewsPage/SCPRNewsPageContainerController_iPad.xib; sourceTree = "<group>"; };
+		76658B5318E1F43800026176 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		76658B5418E1F43800026176 /* libFlurry_4.3.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.2.a; sourceTree = "<group>"; };
 		76A3087018B696630065D4B1 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		76A3087118B696630065D4B1 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		76A3087218B696630065D4B1 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
-		76A3087D18BBDE200065D4B1 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		76A3087E18BBDE400065D4B1 /* libFlurry_4.3.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.3.2.a; path = KPCC/ThirdParty/Flurry/libFlurry_4.3.2.a; sourceTree = "<group>"; };
 		76A3088E18BD5ABA0065D4B1 /* AlarmManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlarmManager.h; path = Managers/AlarmManager.h; sourceTree = "<group>"; };
 		76A3088F18BD5ABA0065D4B1 /* AlarmManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlarmManager.m; path = Managers/AlarmManager.m; sourceTree = "<group>"; };
@@ -2972,7 +2971,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76A3088218BBE03D0065D4B1 /* libFlurry_4.3.2.a in Frameworks */,
 				76A3088118BBE0090065D4B1 /* libTestFlight.a in Frameworks */,
 				76A3088018BBDFD00065D4B1 /* libGoogleAdMobAds.a in Frameworks */,
 				2594146317E7DD52006DC6A6 /* StoreKit.framework in Frameworks */,
@@ -2987,6 +2985,7 @@
 				2506A0DC17398BE700E38246 /* MediaPlayer.framework in Frameworks */,
 				25C8F20E1732FCD500229891 /* CoreMedia.framework in Frameworks */,
 				2571C06A172993B500B43422 /* CoreText.framework in Frameworks */,
+				76658B5818E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */,
 				28036AA21718A344007DBDE2 /* CoreTelephony.framework in Frameworks */,
 				28036AA31718A344007DBDE2 /* AVFoundation.framework in Frameworks */,
 				28036AA41718A344007DBDE2 /* CFNetwork.framework in Frameworks */,
@@ -3033,10 +3032,10 @@
 				28683CBD170B9BBD00346B6E /* Foundation.framework in Frameworks */,
 				28683CBF170B9BBD00346B6E /* CoreGraphics.framework in Frameworks */,
 				28C9E7A6170D065800ED18FB /* libTestFlight.a in Frameworks */,
+				76658B5718E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */,
 				2832FEFF1714CC7D009FF2F0 /* NewRelicAgent.framework in Frameworks */,
 				25A8249C1757C9310061C889 /* FacebookSDK.framework in Frameworks */,
 				25332B8D1760FD3F00ADAB3B /* Parse.framework in Frameworks */,
-				2592110C18317371001EDFB2 /* libFlurry_4.3.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4808,28 +4807,17 @@
 		28C9E776170D064200ED18FB /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				76658AC618E1F43700026176 /* Flurry */,
 				76A3086F18B696630065D4B1 /* iRate */,
 				25FA08631821D758008BADF2 /* DFP */,
 				2567340D17EA177600B80921 /* AudioStreamer */,
 				25A70BA117E124250024E654 /* Fishook */,
 				25AC7D2917BB00B8008B1599 /* XMLD */,
 				259C4A061721ED2700FC3CEC /* UIDeviceAdditions */,
-				28C9E777170D065700ED18FB /* Flurry */,
 				28C9E77A170D065700ED18FB /* SBJson */,
 				28C9E794170D065700ED18FB /* TestFlight */,
 			);
 			name = ThirdParty;
-			sourceTree = "<group>";
-		};
-		28C9E777170D065700ED18FB /* Flurry */ = {
-			isa = PBXGroup;
-			children = (
-				76A3087D18BBDE200065D4B1 /* Flurry.h */,
-				2592110B18317371001EDFB2 /* libFlurry_4.3.0.a */,
-				28C9E778170D065700ED18FB /* Flurry.h */,
-			);
-			name = Flurry;
-			path = ThirdParty/Flurry;
 			sourceTree = "<group>";
 		};
 		28C9E77A170D065700ED18FB /* SBJson */ = {
@@ -4906,6 +4894,16 @@
 				28C9E7CC170E2C1500ED18FB /* SCPRPlayerWidgetViewController_iPad.xib */,
 			);
 			name = PlayerWidget;
+			sourceTree = "<group>";
+		};
+		76658AC618E1F43700026176 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				76658B5318E1F43800026176 /* Flurry.h */,
+				76658B5418E1F43800026176 /* libFlurry_4.3.2.a */,
+			);
+			name = Flurry;
+			path = ThirdParty/Flurry;
 			sourceTree = "<group>";
 		};
 		76A3086F18B696630065D4B1 /* iRate */ = {
@@ -6832,6 +6830,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -6885,6 +6884,7 @@
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/DFP,
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/BrightCove/Library,
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/Flurry,
+					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				PLATFORM_STRING = iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6934,6 +6934,7 @@
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/DFP,
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/TestFlight,
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/Flurry,
+					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
@@ -6950,6 +6951,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7012,6 +7014,7 @@
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/DFP,
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/BrightCove/Library,
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/Flurry,
+					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				PLATFORM_STRING = iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7058,6 +7061,7 @@
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/DFP,
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/TestFlight,
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/Flurry,
+					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
@@ -7108,6 +7112,7 @@
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/DFP,
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/TestFlight,
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/Flurry,
+					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
@@ -7158,6 +7163,7 @@
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/DFP,
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/TestFlight,
 					/Users/jmeeker/Sites/KPCCiOSApp/KPCC/ThirdParty/Flurry,
+					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PLATFORM_STRING = ipad;
@@ -7174,6 +7180,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7208,6 +7215,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7270,6 +7278,7 @@
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/DFP,
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/BrightCove/Library,
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/Flurry,
+					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				PLATFORM_STRING = iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7315,6 +7324,7 @@
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/DFP,
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/BrightCove/Library,
 					/Users/bhochberg/Documents/SCPR/KPCCiOSApp/KPCC/ThirdParty/Flurry,
+					"$(PROJECT_DIR)/KPCC/ThirdParty/Flurry",
 				);
 				PLATFORM_STRING = iphone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
