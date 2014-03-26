@@ -488,7 +488,7 @@ enum {
 }
 
 - (UIDeviceCapabilities) platformCapabilities {
-    return [UIDevice platformCapabilities: [self platformType]];
+    return [UIDevice platformCapabilities: (int)[self platformType]];
 }
 
 // Courtesy of Danny Sung <dannys@mail.com>
