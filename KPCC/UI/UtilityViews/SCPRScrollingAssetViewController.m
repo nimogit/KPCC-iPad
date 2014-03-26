@@ -199,7 +199,7 @@ static CGFloat expanseLimit = 100.0;
 
 - (void)applyMeta:(NSDictionary *)meta withOffset:(NSInteger)offset {
   
-  NSString *key = [NSString stringWithFormat:@"%d",offset];
+  NSString *key = [NSString stringWithFormat:@"%ld",(long)offset];
   BOOL fadein = NO;
   if ( ![self.actualSizeLookupHash objectForKey:key] ) {
 
@@ -226,7 +226,7 @@ static CGFloat expanseLimit = 100.0;
     //self.mainCaptionLabel.backgroundColor = [UIColor greenColor];
 #endif
   
-    NSString *progress = [NSString stringWithFormat:@"%d of %d",offset+1,[self.imageVector count]];
+    NSString *progress = [NSString stringWithFormat:@"%d of %d",(int)offset+1,(int)[self.imageVector count]];
     
 
     self.progressLabel.text = progress;

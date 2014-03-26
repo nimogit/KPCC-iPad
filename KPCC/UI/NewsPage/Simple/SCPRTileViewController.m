@@ -376,7 +376,7 @@
 
 - (void)tileFaded {
   [[NSNotificationCenter defaultCenter] postNotificationName:@"tile_disappearing"
-                                                      object:[NSNumber numberWithInt:self.index]];
+                                                      object:[NSNumber numberWithInt:(int)self.index]];
 }
 
 #ifdef LOG_DEALLOCATIONS

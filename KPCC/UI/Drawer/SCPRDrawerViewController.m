@@ -51,7 +51,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  NSString *key = [NSString stringWithFormat:@"section%d",section];
+  NSString *key = [NSString stringWithFormat:@"section%ld",(long)section];
   NSDictionary *sectionBlock = [self.schema objectForKey:key];
   NSArray *content = [sectionBlock objectForKey:@"content"];
   
@@ -61,7 +61,7 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  NSString *key = [NSString stringWithFormat:@"section%d",indexPath.section];
+  NSString *key = [NSString stringWithFormat:@"section%ld",(long)indexPath.section];
   SCPRDrawerCell *cell = nil;
   NSArray *objs = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared] xibForPlatformWithName:@"SCPRDrawerCell"]
                                                   owner:nil
@@ -123,7 +123,7 @@
   
 
   // Atomic top-level page
-  [[[Utilities del] viewController] handleDrawerCommand:[NSString stringWithFormat:@"%d|%d",indexPath.section,indexPath.row]];
+  [[[Utilities del] viewController] handleDrawerCommand:[NSString stringWithFormat:@"%ld|%ld",(long)indexPath.section,(long)indexPath.row]];
   
   /*[self.expandedCells removeAllObjects];
     
@@ -189,13 +189,13 @@
   
   SCPRDrawerSectionHeaderView *sHead = (SCPRDrawerSectionHeaderView*)[objects objectAtIndex:0];
   
-  NSString *key = [NSString stringWithFormat:@"section%d",section];
+  NSString *key = [NSString stringWithFormat:@"section%ld",(long)section];
 
   NSDictionary *sectionBlock = [self.schema objectForKey:key];
   [sHead.sectionCaptionLabel titleizeText:[sectionBlock objectForKey:@"title"]
                                      bold:YES];
   
-  NSString *imageKey = [NSString stringWithFormat:@"section_%d_header_icon.png",section];
+  NSString *imageKey = [NSString stringWithFormat:@"section_%ld_header_icon.png",(long)section];
   UIImage *icon = [UIImage imageNamed:imageKey];
   UIImageView *iconImage = [[UIImageView alloc] initWithImage:icon];
   iconImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -337,7 +337,7 @@
       NSInteger count = [newSchema count];
       count--;
       
-      NSString *token = [NSString stringWithFormat:@"section%d",count];
+      NSString *token = [NSString stringWithFormat:@"section%ld",(long)count];
       NSMutableDictionary *lastSection = [[newSchema objectForKey:token] mutableCopy];
       NSMutableArray *titles = [[lastSection objectForKey:@"content"] mutableCopy];
       [titles addObject:[pDict objectForKey:@"contentTitle"]];

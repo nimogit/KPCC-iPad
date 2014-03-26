@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
   
       //_CFEnableZombies();
-  srandom(time(NULL));
+  srandom((unsigned int)time(NULL));
   return UIApplicationMain(argc, argv, nil, NSStringFromClass([SCPRAppDelegate class]));
   
 }

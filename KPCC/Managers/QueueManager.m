@@ -206,7 +206,7 @@ static QueueManager *singleton = nil;
   if ( playImmediately ) {
     s.queuePosition = 0;
   } else {
-    s.queuePosition = [NSNumber numberWithInt:[[[self queue] segments] count]];
+    s.queuePosition = [NSNumber numberWithInt:(int)[[[self queue] segments] count]];
   }
   s.addedToQueueDate = [NSDate date];
   

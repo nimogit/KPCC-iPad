@@ -682,7 +682,7 @@
 //
 //
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  NSLog(@"Going to rotate %d in rotation queue",[[ContentManager shared].resizeVector count]);
+  NSLog(@"Going to rotate %lu in rotation queue",(unsigned long)[[ContentManager shared].resizeVector count]);
   NSMutableArray *vector = [[ContentManager shared] resizeVector];
   
   if ( [[[Utilities del] viewController] shareDrawerOpen] ) {

@@ -95,7 +95,7 @@
   [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
   
   NSNumber *sleepTimerDurationMinutes = [self.sleepTimerData objectAtIndex:indexPath.row];
-  [[AlarmManager shared] startTimer:sleepTimerDurationMinutes.integerValue * 60];
+  [[AlarmManager shared] startTimer:(int)sleepTimerDurationMinutes.integerValue * 60];
   
   if (self.queueViewControllerDelegate) {
     if ([self.queueViewControllerDelegate isKindOfClass:[SCPRQueueViewController class]]) {

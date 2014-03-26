@@ -165,13 +165,13 @@
   if ( [self.snapshotContent count] > 4 ) {
     NSInteger diff = [self.snapshotContent count] - 4;
     NSString *noun = diff == 1 ? @"STORY" : @"STORIES";
-    NSString *moreStories = [NSString stringWithFormat:@"+ %d MORE %@",diff,noun];
+    NSString *moreStories = [NSString stringWithFormat:@"+ %ld MORE %@",(long)diff,noun];
     self.moreStoriesLabel.textColor = [[DesignManager shared] number2pencilColor];
     self.summaryTableView.tableFooterView = self.moreStoriesFooter;
     [self.moreStoriesLabel titleizeText:moreStories bold:NO];
   }
   
-  [self.storyMetricsLabel titleizeText:[NSString stringWithFormat:@"%d STORIES",[self.snapshotContent count]]
+  [self.storyMetricsLabel titleizeText:[NSString stringWithFormat:@"%lu STORIES",(unsigned long)[self.snapshotContent count]]
                                   bold:NO
                          respectHeight:YES];
   self.storyMetricsLabel.textColor = [[DesignManager shared] burnedCharcoalColor];
@@ -273,7 +273,7 @@
   for ( unsigned i = 0; i < [self.snapshotContent count]; i++ ) {
   
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-    NSString *key = [NSString stringWithFormat:@"%d%d",0,indexPath.row];
+    NSString *key = [NSString stringWithFormat:@"%d%ld",0,(long)indexPath.row];
     SCPRSnapshotCell *ssc = [self.cellHash objectForKey:key];
     if ( !ssc ) {
     
@@ -360,7 +360,7 @@
   
   SCPRSnapshotCell *ssc = nil;
   
-  NSString *key = [NSString stringWithFormat:@"%d%d",indexPath.section,indexPath.row];
+  NSString *key = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row];
   ssc = [self.cellHash objectForKey:key];
   
   
@@ -396,7 +396,7 @@
   
   SCPRSnapshotCell *ssc = nil;
   
-  __block NSString *key = [NSString stringWithFormat:@"%d%d",indexPath.section,indexPath.row];
+  __block NSString *key = [NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row];
   ssc = [self.cellHash objectForKey:key];
   ssc.articleImage.contentMode = UIViewContentModeScaleAspectFill;
   
@@ -414,7 +414,7 @@
     NSString *headline = [thing objectForKey:@"headline"];
     
 
-    SCPRSnapshotCell *cell = [self.cellHash objectForKey:[NSString stringWithFormat:@"%d%d",indexPath.section,indexPath.row]];
+    SCPRSnapshotCell *cell = [self.cellHash objectForKey:[NSString stringWithFormat:@"%ld%ld",(long)indexPath.section,(long)indexPath.row]];
     [cell.headlineLabel titleizeText:headline bold:NO respectHeight:YES];
     
     CGSize s = cell.headlineLabel.frame.size;

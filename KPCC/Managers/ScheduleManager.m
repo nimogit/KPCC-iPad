@@ -137,7 +137,7 @@ static ScheduleManager *singleton = nil;
     BOOL am = NO;
     NSRange timeRange = [rest rangeOfString:time];
     timeRange.location += timeRange.length;
-    for ( unsigned j = timeRange.location; j < [rest length]; j++ ) {
+    for ( unsigned j = (int)timeRange.location; j < [rest length]; j++ ) {
       unichar e = [rest characterAtIndex:j];
       if ( e == 'a' || e == 'A' ) {
         am = YES;
@@ -234,7 +234,7 @@ static ScheduleManager *singleton = nil;
     BOOL am = NO;
     NSRange timeRange = [rest rangeOfString:time];
     timeRange.location += timeRange.length;
-    for ( unsigned j = timeRange.location; j < [rest length]; j++ ) {
+    for ( unsigned j = (int)timeRange.location; j < [rest length]; j++ ) {
       unichar e = [rest characterAtIndex:j];
       if ( e == 'a' || e == 'A' ) {
         am = YES;

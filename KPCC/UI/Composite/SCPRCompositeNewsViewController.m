@@ -161,8 +161,8 @@
   NSArray *trends = [self.compositeNews objectForKey:@"trending"];
   NSArray *general = [self.compositeNews objectForKey:@"general"];
   
-  NSLog(@"Trends : %d",[trends count]);
-  NSLog(@"General : %d",[general count]);
+  NSLog(@"Trends : %d",(int)[trends count]);
+  NSLog(@"General : %d",(int)[general count]);
   
   return (([trends count]-1)*3);
 }

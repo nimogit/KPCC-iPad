@@ -349,10 +349,10 @@
   [state setObject:[NSNumber numberWithInt:self.barType]
             forKey:@"type"];
   
-  [state setObject:[NSNumber numberWithInt:self.pager.numberOfPages]
+  [state setObject:[NSNumber numberWithInt:(int)self.pager.numberOfPages]
             forKey:@"pageCount"];
   
-  [state setObject:[NSNumber numberWithInt:self.pager.currentPage]
+  [state setObject:[NSNumber numberWithInt:(int)self.pager.currentPage]
             forKey:@"currentPage"];
   
   for ( id v in [self.view subviews] ) {
@@ -467,7 +467,7 @@
   }
   
   if ( [backButtonText length] < [@"PHOTO & VIDEO" length] ) {
-    NSInteger diff = abs([backButtonText length]-[@"PHOTO & VIDEO" length]);
+    NSInteger diff = abs((int)([backButtonText length]-[@"PHOTO & VIDEO" length]));
     for ( unsigned i = 0; i < diff-1; i++ ) {
       backButtonText = [backButtonText stringByAppendingString:@"   "];
     }

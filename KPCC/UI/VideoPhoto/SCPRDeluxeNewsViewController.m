@@ -125,7 +125,7 @@
   NSInteger slLimit = 1;
 
   
-  NSString *urlString = [NSString stringWithFormat:@"%@/editions?limit=%d",kServerBase,slLimit];
+  NSString *urlString = [NSString stringWithFormat:@"%@/editions?limit=%d",kServerBase,(int)slLimit];
   NSURL *url = [NSURL URLWithString:urlString];
   __block NSURLRequest *req = [NSURLRequest requestWithURL:url];
 
@@ -164,7 +164,7 @@
                              [self.loadingMoreNewsSpinner startAnimating];
 
                              
-                             NSString *allstr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d",kServerBase,[[ContentManager shared] currentNewsPage]];
+                             NSString *allstr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d",kServerBase,(int)[[ContentManager shared] currentNewsPage]];
                              NSURL *allUrl = [NSURL URLWithString:allstr];
                              NSURLRequest *allReq = [NSURLRequest requestWithURL:allUrl];
                              [NSURLConnection sendAsynchronousRequest:allReq
@@ -907,7 +907,7 @@
 - (void)sanitizeBigPosts {
   
   NSMutableDictionary *fresh = [[NSMutableDictionary alloc] init];
-  NSLog(@"Number of big Video/Photo stories before filter : %d",[self.bigHash count]);
+  NSLog(@"Number of big Video/Photo stories before filter : %d",(int)[self.bigHash count]);
   for ( NSString *key in [self.bigHash allKeys] ) {
     BOOL present = NO;
     for ( NSDictionary *vpData in self.posts ) {
@@ -922,7 +922,7 @@
     }
   }
   self.bigHash = fresh;
-   NSLog(@"Number of big Video/Photo stories after filter : %d",[self.bigHash count]);
+   NSLog(@"Number of big Video/Photo stories after filter : %d",(int)[self.bigHash count]);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1561,7 +1561,7 @@
     
   }
   
-  NSString *cellKey = [NSString stringWithFormat:@"%d%d",indexPath.section,indexPath.row];
+  NSString *cellKey = [NSString stringWithFormat:@"%d%d",(int)indexPath.section,(int)indexPath.row];
   UITableViewCell *c = [self.masterCellHash objectForKey:cellKey];
   if ( c ) {
     return c;
@@ -1587,7 +1587,7 @@
       aspect = @"";
     }
     
-    NSString *reuse = [NSString stringWithFormat:@"vpc%d%@",[posts count],orientation];
+    NSString *reuse = [NSString stringWithFormat:@"vpc%d%@",(int)[posts count],orientation];
 
     SCPRDeluxeNewsCell *cell = nil;
     if ( !self.reorienting ) {
@@ -1666,7 +1666,7 @@
     
     NSString *reuse = [NSString stringWithFormat:@"vpcbig%@1%@",aspect,orientation];
     SCPRDeluxeNewsCell *cell = [self.photoVideoTable dequeueReusableCellWithIdentifier:reuse];
-    NSString *lookup = [NSString stringWithFormat:@"%d%d",cell.currentIndexPath.section,cell.currentIndexPath.row];
+    NSString *lookup = [NSString stringWithFormat:@"%d%d",(int)cell.currentIndexPath.section,(int)cell.currentIndexPath.row];
     if ( !cell || [self.masterCellHash objectForKey:lookup] ) {
       
 

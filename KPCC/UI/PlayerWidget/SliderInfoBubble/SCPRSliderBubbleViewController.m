@@ -79,7 +79,7 @@
   UISlider *s = (UISlider*)object;
   if ( self.sliderType == SliderTypeVolume ) {
     NSInteger percentage = round(((double)s.value / (double)1.0)*100);
-    self.valueLabel.text = [NSString stringWithFormat:@"%d%%",percentage];
+    self.valueLabel.text = [NSString stringWithFormat:@"%ld%%",(long)percentage];
   }
   
 }
@@ -94,7 +94,7 @@
   
   if ( self.sliderType == SliderTypeVolume ) {
     NSInteger percentage = round(((double)value / (double)1.0)*100);
-    self.valueLabel.text = [NSString stringWithFormat:@"%d%%",percentage];
+    self.valueLabel.text = [NSString stringWithFormat:@"%ld%%",(long)percentage];
   }
 }
 

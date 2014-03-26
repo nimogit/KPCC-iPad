@@ -127,7 +127,7 @@ static FeedbackManager *singleton = nil;
   [request setHTTPBody:requestData];
   [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
   [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-  [request setValue:[NSString stringWithFormat:@"%d", [requestData length]] forHTTPHeaderField:@"Content-Length"];
+  [request setValue:[NSString stringWithFormat:@"%d", (int)[requestData length]] forHTTPHeaderField:@"Content-Length"];
   
   NSString *authStr = [NSString stringWithFormat:@"%@:%@",
                        [[[[FileManager shared] globalConfig] objectForKey:@"Desk"] objectForKey:@"AuthUser"],
@@ -255,7 +255,7 @@ static FeedbackManager *singleton = nil;
   [request setHTTPBody:requestData];
   [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
   [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-  [request setValue:[NSString stringWithFormat:@"%d", [requestData length]] forHTTPHeaderField:@"Content-Length"];
+  [request setValue:[NSString stringWithFormat:@"%d", (int)[requestData length]] forHTTPHeaderField:@"Content-Length"];
   
   NSString *authStr = [NSString stringWithFormat:@"%@:%@",
                        [[[[FileManager shared] globalConfig] objectForKey:@"Desk"] objectForKey:@"AuthUser"],

@@ -82,7 +82,7 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
   
   uint8_t digest[CC_SHA1_DIGEST_LENGTH];
   
-  CC_SHA1(data.bytes, data.length, digest);
+  CC_SHA1(data.bytes, (int)data.length, digest);
   
   NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
   
@@ -93,16 +93,16 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 }
 
 +(NSString *)base64:(NSData *)input {
-  int encodedLength = (((([input length] % 3) + [input length]) / 3) * 4) + 1;
+  int encodedLength = (int)(((([input length] % 3) + [input length]) / 3) * 4) + 1;
   unsigned char *outputBuffer = malloc(encodedLength);
   unsigned char *inputBuffer = (unsigned char *)[input bytes];
   
-  NSInteger i;
+  //NSInteger i;
   NSInteger j = 0;
   int remain;
   
-  for(i = 0; i < [input length]; i += 3) {
-    remain = [input length] - i;
+  for(int i = 0; i < [input length]; i += 3) {
+    remain = (int)([input length] - i);
     
     outputBuffer[j++] = alphabet[(inputBuffer[i] & 0xFC) >> 2];
     outputBuffer[j++] = alphabet[((inputBuffer[i] & 0x03) << 4) |
@@ -344,7 +344,7 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 + (NSString*)formalStringFromSeconds:(NSInteger)seconds {
   int s = seconds % 60;
   int minutes = (seconds / 60) % 60;
-  int hours = seconds / 3600;
+  int hours = (int) seconds / 3600;
   
   return [NSString stringWithFormat:@"%02d:%02d:%02d",hours,minutes,s];
 }
@@ -403,7 +403,7 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
     [formatter setGroupingSeparator:@""];
     return [NSString stringWithFormat:@"%@K",[formatter stringFromNumber:[NSNumber numberWithFloat:thousands]]];
   } else {
-    return [NSString stringWithFormat:@"%d", count];
+    return [NSString stringWithFormat:@"%ld", (long)count];
   }
 }
 
@@ -415,7 +415,7 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
   
   int s = seconds % 60;
   int minutes = (seconds / 60) % 60;
-  int hours = seconds / 3600;
+  int hours = (int)seconds / 3600;
   int days = floor(hours/24);
   
   if ( s >= 30 ) {
@@ -445,7 +445,7 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
   }
   
   if ( [Utilities pureNil:prepend] && [Utilities pureNil:append] ) {
-    return [NSString stringWithFormat:@"About %d seconds",seconds];
+    return [NSString stringWithFormat:@"About %ld seconds",(long)seconds];
   }
   
   return [NSString stringWithFormat:@"About%@%@%@",prepend,hoursInclude,append];
@@ -502,8 +502,8 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
   NSInteger month = [c month];
   NSInteger day = [c day];
   
-  NSString *ms = [Utilities stripLeadingZero:[NSString stringWithFormat:@"%d",month]];
-  NSString *ds = [Utilities stripLeadingZero:[NSString stringWithFormat:@"%d",day]];
+  NSString *ms = [Utilities stripLeadingZero:[NSString stringWithFormat:@"%ld",(long)month]];
+  NSString *ds = [Utilities stripLeadingZero:[NSString stringWithFormat:@"%ld",(long)day]];
   NSString *dow = [NSDate stringFromDate:date
                               withFormat:@"EEEE"];
   

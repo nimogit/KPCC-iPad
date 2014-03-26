@@ -453,7 +453,7 @@ static NetworkManager *singleton = nil;
 }
 
 - (void)fetchProgramInformationFor:(NSDate *)thisTime display:(id<ContentProcessor>)display {
-  NSString *urlString = [NSString stringWithFormat:@"%@/schedule/at?time=%d",kServerBase,(NSInteger)[thisTime timeIntervalSince1970]];
+  NSString *urlString = [NSString stringWithFormat:@"%@/schedule/at?time=%ld",kServerBase,(long)[thisTime timeIntervalSince1970]];
   [self requestFromKPCCWithEndpoint:urlString
                          andDisplay:display];
 }
@@ -518,7 +518,7 @@ static NetworkManager *singleton = nil;
 - (void)fetchEditionsInBackground {
   
   NSInteger count = 12;
-  NSString *urlString = [NSString stringWithFormat:@"%@/editions?limit=%d",kServerBase,count];
+  NSString *urlString = [NSString stringWithFormat:@"%@/editions?limit=%d",kServerBase,(int)count];
   NSURL *url = [NSURL URLWithString:urlString];
   NSURLRequest *req = [NSURLRequest requestWithURL:url];
   [NSURLConnection sendAsynchronousRequest:req
@@ -596,7 +596,7 @@ static NetworkManager *singleton = nil;
 - (void)fetchContentForScheduleThisWeek:(id<ContentProcessor>)display {
 #ifndef FAKE_LOCAL_NOTIFICATION
   NSDate *last = [[ContentManager shared].settings lastReminderSync];
-  if ( abs([last daysAgoAgainstMidnight]) >= 1 ) {
+  if ( abs((int)[last daysAgoAgainstMidnight]) >= 1 ) {
 #endif
     [[ScheduleManager shared] setCachedSchedule:nil];
 #ifndef FAKE_LOCAL_NOTIFICATION
@@ -663,7 +663,7 @@ static NetworkManager *singleton = nil;
   NSInteger threshold = [[flags objectForKey:@"quantity"] intValue];
 
   
-  NSString *urlString = [NSString stringWithFormat:@"%@/articles?categories=%@&limit=%d",kServerBase,topic,threshold];
+  NSString *urlString = [NSString stringWithFormat:@"%@/articles?categories=%@&limit=%d",kServerBase,topic,(int)threshold];
   NSURL *url = [NSURL URLWithString:urlString];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
   [NSURLConnection sendAsynchronousRequest:request
@@ -1092,11 +1092,11 @@ static NetworkManager *singleton = nil;
     return;
   }
   
-  NSLog(@" *** Going to embiggen %d stories",[hash count]);
+  NSLog(@" *** Going to embiggen %d stories",(int)[hash count]);
   NSDictionary *final = @{ @"trending" : trending,
                            @"general" : general,
                            @"lookup" : hash,
-                           @"totalCount" : [NSNumber numberWithInt:[general count]] };
+                           @"totalCount" : [NSNumber numberWithInt:(int)[general count]] };
   
   id<ContentProcessor> processor = [compositeContent objectForKey:@"processor"];
   
@@ -1109,7 +1109,7 @@ static NetworkManager *singleton = nil;
   [[ContentManager shared] setGlobalCompositeNews:[slimHash mutableCopy]];
   
   NSInteger currentNewsPage = [[ContentManager shared] currentNewsPage];
-  NSLog(@"CURRENT NEWS PAGE : %d",currentNewsPage);
+  NSLog(@"CURRENT NEWS PAGE : %d",(int)currentNewsPage);
   
   [[ContentManager shared] setCurrentNewsPage:[[ContentManager shared] currentNewsPage]+1];
   
@@ -1215,7 +1215,7 @@ static NetworkManager *singleton = nil;
     
     NSInteger adjustedThat = [thatArray count]-x;
     NSInteger adjustedThis = [thisArray count]+x;
-    NSInteger diff = abs((int)floorf(adjustedThis/6.0) - adjustedThat);
+    NSInteger diff = abs((int)floorf(adjustedThis/6.0) - (int)adjustedThat);
     if ( diff <= 3 ) {
       return x;
     }

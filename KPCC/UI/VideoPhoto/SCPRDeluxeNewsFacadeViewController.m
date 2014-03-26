@@ -568,7 +568,7 @@
     NSArray *assets = [self.pvArticle objectForKey:@"assets"];
     
     NSString *noun = [assets count] == 1 ? @"PHOTO" : @"PHOTOS";
-    NSString *slideshow = [NSString stringWithFormat:@"%d %@",[assets count],noun];
+    NSString *slideshow = [NSString stringWithFormat:@"%d %@",(int)[assets count],noun];
     [self.categoryLabel titleizeText:slideshow
                                 bold:NO];
     
