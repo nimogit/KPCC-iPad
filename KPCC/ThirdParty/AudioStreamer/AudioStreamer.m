@@ -1381,7 +1381,7 @@ cleanup:
 
 		if (discontinuous)
 		{
-			err = AudioFileStreamParseBytes(audioFileStream, length, bytes, kAudioFileStreamParseFlag_Discontinuity);
+			err = AudioFileStreamParseBytes(audioFileStream, (unsigned int)length, bytes, kAudioFileStreamParseFlag_Discontinuity);
 			if (err)
 			{
 				[self failWithErrorCode:AS_FILE_STREAM_PARSE_BYTES_FAILED];
@@ -1390,7 +1390,7 @@ cleanup:
 		}
 		else
 		{
-			err = AudioFileStreamParseBytes(audioFileStream, length, bytes, 0);
+			err = AudioFileStreamParseBytes(audioFileStream, (unsigned int)length, bytes, 0);
 			if (err)
 			{
 				[self failWithErrorCode:AS_FILE_STREAM_PARSE_BYTES_FAILED];
@@ -1425,11 +1425,11 @@ cleanup:
 
 		// enqueue buffer
 		AudioQueueBufferRef fillBuf = audioQueueBuffer[fillBufferIndex];
-		fillBuf->mAudioDataByteSize = bytesFilled;
+		fillBuf->mAudioDataByteSize = (unsigned int)bytesFilled;
 		
 		if (packetsFilled)
 		{
-			err = AudioQueueEnqueueBuffer(audioQueue, fillBuf, packetsFilled, packetDescs);
+			err = AudioQueueEnqueueBuffer(audioQueue, fillBuf, (unsigned int)packetsFilled, packetDescs);
 		}
 		else
 		{
