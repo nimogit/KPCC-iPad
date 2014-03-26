@@ -1387,7 +1387,6 @@
 		25E34F7E17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E34F7D17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib */; };
 		25E34F7F17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E34F7D17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib */; };
 		25E9354B1843D3E5004ED1DA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E935491843D3E5004ED1DA /* README.md */; };
-		25E9354C1843D3E5004ED1DA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E935491843D3E5004ED1DA /* README.md */; };
 		25E9354D1843D3E5004ED1DA /* RefactoringProposals.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E9354A1843D3E5004ED1DA /* RefactoringProposals.md */; };
 		25E9354E1843D3E5004ED1DA /* RefactoringProposals.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E9354A1843D3E5004ED1DA /* RefactoringProposals.md */; };
 		25E93550184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E9354F184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib */; };
@@ -5226,7 +5225,6 @@
 				257AB804177BA3F200D2F4EA /* waitwaitdonttellme_episodes.json in Resources */,
 				76A3089B18BFECE70065D4B1 /* icon-timer-white.png in Resources */,
 				25D7A87D177CB08B008D9F37 /* airtime_icon@2x.png in Resources */,
-				25E9354C1843D3E5004ED1DA /* README.md in Resources */,
 				25D7A87F177CB08B008D9F37 /* twitter_icon@2x.png in Resources */,
 				25D7A881177CB08B008D9F37 /* website_icon@2x.png in Resources */,
 				25D7A897177CB5C0008D9F37 /* airtime_icon.png in Resources */,

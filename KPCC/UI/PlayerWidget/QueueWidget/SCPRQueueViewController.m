@@ -15,7 +15,7 @@
 
 #define kDeleteButtonOffset 500000
 
-@interface SCPRQueueViewController ()
+@interface SCPRQueueViewController() <UIPopoverControllerDelegate>
 
 @end
 

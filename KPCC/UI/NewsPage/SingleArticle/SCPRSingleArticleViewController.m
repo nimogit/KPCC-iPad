@@ -15,7 +15,7 @@
 #import "SCPRSingleArticleCollectionViewController.h"
 #import "SCPRExternalWebContentViewController.h"
 
-@interface SCPRSingleArticleViewController ()
+@interface SCPRSingleArticleViewController() <UIPopoverControllerDelegate>
 
 @end
 

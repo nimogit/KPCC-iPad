@@ -338,8 +338,6 @@
       penultimate = index == 0;
     }
     
-    UIView *playerBar = [[[Utilities del] globalPlayer] view];
-    
     [[ContentManager shared] tickSwipe:dir
                                 inView:scrollView
                                 penultimate:penultimate
