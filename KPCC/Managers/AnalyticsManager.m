@@ -9,7 +9,6 @@
 #import "AnalyticsManager.h"
 #import "TestFlight.h"
 #import "Flurry.h"
-#import <NewRelicAgent/NewRelicAgent.h>
 #import "global.h"
 #import "SBJson.h"
 #import <Parse/Parse.h>
