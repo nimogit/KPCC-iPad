@@ -129,7 +129,7 @@ static AnalyticsManager *singleton = nil;
   NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
   NSInteger length = (NSInteger) now - self.sessionBegan;
   
-  NSString *lengthStr = [NSString stringWithFormat:@"%d",length];
+  NSString *lengthStr = [NSString stringWithFormat:@"%d",(int)length];
   NSString *name = [[ContentManager shared] nameForScreenContentType:self.screenContent];
   if ( contentType == ScreenContentTypeSnapshotPage ) {
     NSDictionary *focusedEditionObject = [[ContentManager shared] focusedEditionObject];
@@ -298,7 +298,7 @@ static AnalyticsManager *singleton = nil;
                                                             withFormat:@"YYYY-MM-dd hh:mm:ss"],
                               @"timeRestored" : [NSDate stringFromDate:self.streamRestored
                                                              withFormat:@"YYYY-MM-dd hh:mm:ss"],
-                              @"droppedPackets" : [NSString stringWithFormat:@"%d",self.droppedPackets]
+                              @"droppedPackets" : [NSString stringWithFormat:@"%d",(int)self.droppedPackets]
                               
                             };
     

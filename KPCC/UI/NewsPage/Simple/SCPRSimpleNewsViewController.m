@@ -300,12 +300,12 @@
 #pragma mark - ScrollView
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   
-  NSString *offsetKey = [NSString stringWithFormat:@"anchoredOffset%d",scrollView.tag];
+  NSString *offsetKey = [NSString stringWithFormat:@"anchoredOffset%ld",(long)scrollView.tag];
   [self.scrollLocks removeObjectForKey:offsetKey];
   
   CGPoint origin = [[self valueForKey:offsetKey] CGPointValue];
   ScrollDirection direction = ScrollDirectionUnknown;
-  NSString *directionKey = [NSString stringWithFormat:@"direction%d",scrollView.tag];
+  NSString *directionKey = [NSString stringWithFormat:@"direction%ld",(long)scrollView.tag];
   if ( origin.x > scrollView.contentOffset.x ) {
     direction = ScrollDirectionRight;
   } else {
@@ -338,7 +338,7 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
   
-  NSString *offsetKey = [NSString stringWithFormat:@"anchoredOffset%d",scrollView.tag];
+  NSString *offsetKey = [NSString stringWithFormat:@"anchoredOffset%ld",(long)scrollView.tag];
   
   if ( [self.scrollLocks objectForKey:offsetKey] ) {
     return;
@@ -354,7 +354,7 @@
   UIScrollView *scroller = (UIScrollView*)[timer userInfo];
   CGSize pageSize = scroller.frame.size;
   
-  NSString *directionKey = [NSString stringWithFormat:@"direction%d",scroller.tag];
+  NSString *directionKey = [NSString stringWithFormat:@"direction%ld",(long)scroller.tag];
   ScrollDirection direction = (ScrollDirection)[[self valueForKey:directionKey] intValue];
   
   if ( direction == ScrollDirectionUnknown ) {
@@ -416,7 +416,7 @@
 - (void)autoFlip:(UIScrollView*)scroller newFrame:(NSValue *)frame direction:(NSInteger)directior {
   //for ( unsigned i = 0; i < [self.schema count]; i++ ) {
     
-    NSDictionary *values = @{ @"scroller" : scroller, @"frame" : frame, @"direction" : [NSNumber numberWithInt:directior] };
+    NSDictionary *values = @{ @"scroller" : scroller, @"frame" : frame, @"direction" : [NSNumber numberWithInt:(int)directior] };
     [self.bounceQueue addObject:values];
     
     [UIView animateWithDuration:1.1 animations:^{

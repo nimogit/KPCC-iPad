@@ -85,7 +85,7 @@
   [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
   [[NSUserDefaults standardUserDefaults] synchronize];
   
-  NSLog(@"ViewControllers : %d",self.designatedNav.viewControllers.count);
+  NSLog(@"ViewControllers : %lu",(unsigned long)self.designatedNav.viewControllers.count);
   
   id toplevel = [self.designatedNav topViewController];
   NSLog(@"Top level is kind of : %@",[toplevel class]);

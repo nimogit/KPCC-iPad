@@ -872,7 +872,7 @@ static ContentManager *singleton = nil;
   self.masterProgramList = [[NSMutableDictionary alloc] init];
   
   NSMutableArray *filtered = [[NSMutableArray alloc] init];
-  NSLog(@"Program count before filter : %d",[programs count]);
+  NSLog(@"Program count before filter : %lu",(unsigned long)[programs count]);
   for ( NSDictionary *program in programs) {
     
     if ( [Utilities pureNil:[program objectForKey:@"air_status"]] || ![[program objectForKey:@"air_status"] isEqualToString:@"onair"] ) {
@@ -901,7 +901,7 @@ static ContentManager *singleton = nil;
                                toFilename:@"mpl.json"];
   
   [[AnalyticsManager shared] tF:@"Program sorting : new"];
-  NSLog(@"Program count after filter : %d",[filtered count]);
+  NSLog(@"Program count after filter : %lu",(unsigned long)[filtered count]);
   
   self.sortedProgramsCache = filtered;
   return filtered;
@@ -1407,7 +1407,7 @@ static ContentManager *singleton = nil;
       NSLog(@"**** PUSHING %@ TO RESIZE VECTOR",[[rotatable class] description]);
   [self.resizeVector addObject:rotatable];
   
-  NSLog(@"Number of items in resize vector : %d",[self.resizeVector count]);
+  NSLog(@"Number of items in resize vector : %lu",(unsigned long)[self.resizeVector count]);
 
 }
 
@@ -1418,7 +1418,7 @@ static ContentManager *singleton = nil;
     [self.resizeVector removeLastObject];
   }
   
-  NSLog(@"Number of items in resize vector : %d",[self.resizeVector count]);
+  NSLog(@"Number of items in resize vector : %lu",(unsigned long)[self.resizeVector count]);
   
 }
 
@@ -1529,7 +1529,7 @@ static ContentManager *singleton = nil;
                    @"http://media.scpr.org/audio/upload/2013/05/07/Greuel.mp3",
                    @"http://media.scpr.org/audio/upload/2013/05/07/burial.mp3" ];
   
-  int randy = random() % [fake count];
+  int randy = random() % (int)[fake count];
   
   return [fake objectAtIndex:randy];
 }
@@ -2303,7 +2303,7 @@ static ContentManager *singleton = nil;
   NSMutableArray *images = [NSMutableArray arrayWithArray:[[NSFileManager defaultManager] contentsOfDirectoryAtPath:imageCachePath
                                                                                                               error:&error]];
   
-  NSLog(@"Number of images : %d",[images count]);
+  NSLog(@"Number of images : %lu",(unsigned long)[images count]);
   
   if ( error ) {
     NSLog(@"ENUMERATING IMAGE DIRECTORY - %@",[error localizedDescription]);

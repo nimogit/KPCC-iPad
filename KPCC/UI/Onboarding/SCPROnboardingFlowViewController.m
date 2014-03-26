@@ -102,7 +102,7 @@
   } else {
     card.backButton.alpha = 0.0;
   }
-  [card setupWithStep:step andMaster:self];
+  [card setupWithStep:(int)step andMaster:self];
   
   
   self.cardScroller.contentSize = CGSizeMake(self.cardScroller.frame.size.width*[self.contentStack count],

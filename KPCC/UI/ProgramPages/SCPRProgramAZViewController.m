@@ -151,7 +151,7 @@
     
       if ( [mutableValues count] > 12 ) {
         [[AnalyticsManager shared] logEvent:@"user_has_large_number_of_favorites"
-                             withParameters:@{ @"count" : [NSString stringWithFormat:@"%d",[mutableValues count]] }];
+                             withParameters:@{ @"count" : [NSString stringWithFormat:@"%d",(int)[mutableValues count]] }];
       }
       
       NSString *asJson = [mutableValues JSONRepresentation];

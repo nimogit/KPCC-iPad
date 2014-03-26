@@ -110,7 +110,7 @@
   }
   
   NSString *orientation = self.landscape ? @"LND" : @"PT";
-  NSString *rui = [NSString stringWithFormat:@"vpc%@%d%@",aspect,[self.posts count],orientation];
+  NSString *rui = [NSString stringWithFormat:@"vpc%@%d%@",aspect,(int)[self.posts count],orientation];
   
   return rui;
 }

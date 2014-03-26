@@ -313,10 +313,10 @@
     
   }
   
-  NSString *baseHeadline = [NSString stringWithFormat:@"headline%d",index+1];
-  NSString *baseBlurb = [NSString stringWithFormat:@"blurb%d",index+1];
-  NSString *baseImage = [NSString stringWithFormat:@"image%d",index+1];
-  NSString *baseByline = [NSString stringWithFormat:@"byline%d",index+1];
+  NSString *baseHeadline = [NSString stringWithFormat:@"headline%ld",index+1];
+  NSString *baseBlurb = [NSString stringWithFormat:@"blurb%ld",index+1];
+  NSString *baseImage = [NSString stringWithFormat:@"image%ld",index+1];
+  NSString *baseByline = [NSString stringWithFormat:@"byline%ld",index+1];
   
   // Remove gray line for now
   self.grayLine.alpha = 0.0;

@@ -97,7 +97,7 @@
                                                quality:AssetQualityFull
                                           forceQuality:YES];
   [self.leadAssetImage loadImage:asset];
-  [self.numberOfStoriesLabel titleizeText:[NSString stringWithFormat:@"%d STORIES",[abstracts count]]
+  [self.numberOfStoriesLabel titleizeText:[NSString stringWithFormat:@"%d STORIES",(int)[abstracts count]]
                                      bold:YES];
   [self.leadStoryHeadlineLabel sansifyTitleText:[lead objectForKey:@"headline"]
                                            bold:YES
@@ -393,7 +393,7 @@
       NSInteger diff = [abstracts count] - max;
       
       NSString *suffix = diff == 1 ? @"y" : @"ies";
-      NSString *append = [NSString stringWithFormat:@"\n\n• %d more stor%@...",diff,suffix];
+      NSString *append = [NSString stringWithFormat:@"\n\n• %d more stor%@...",(int)diff,suffix];
       finished = [finished stringByAppendingString:append];
       return finished;
     }

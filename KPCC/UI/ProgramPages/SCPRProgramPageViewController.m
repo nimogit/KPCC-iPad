@@ -516,7 +516,7 @@
        lighten:(indexPath.section != 0)];
       
     } else {
-      [cell.numberOfSegmentsLabel titleizeText:[NSString stringWithFormat:@"%d segments",[segments count]]
+      [cell.numberOfSegmentsLabel titleizeText:[NSString stringWithFormat:@"%d segments",(int)[segments count]]
                                         bold:YES
                                respectHeight:YES];
     
@@ -527,9 +527,9 @@
       cell.showSegmentsButton.tag = [self calculateTagForIndexPath:indexPath];
       
       [self.segmentTableHash setObject:cell.segmentsTable
-                                forKey:[NSString stringWithFormat:@"%d",cell.showSegmentsButton.tag]];
+                                forKey:[NSString stringWithFormat:@"%d",(int)cell.showSegmentsButton.tag]];
       [self.cellWithSegmentsHash setObject:cell
-                                    forKey:[NSString stringWithFormat:@"%d",cell.showSegmentsButton.tag]];
+                                    forKey:[NSString stringWithFormat:@"%d",(int)cell.showSegmentsButton.tag]];
       
       [cell.showSegmentsButton addTarget:self
                                 action:@selector(toggleSegments:)
@@ -629,7 +629,7 @@
   if ( [self.expandedCellTag intValue] == sb.tag ) {
     self.expandedCellTag = nil;
   } else {
-    self.expandedCellTag = [NSNumber numberWithInt:sb.tag];
+    self.expandedCellTag = [NSNumber numberWithInt:(int)sb.tag];
   }
   
   if ( self.expandedCellTag ) {

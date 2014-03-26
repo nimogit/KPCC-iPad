@@ -241,7 +241,7 @@
   NSString *title = [self.relatedArticle objectForKey:@"short_title"] ? [self.relatedArticle objectForKey:@"short_title"] : [self.relatedArticle objectForKey:@"title"];
   //NSLog(@" **** KILLING CONTENT FOR :%@ **** ",title);
   NSString *code = [NSString stringWithFormat:@"%@%d",[Utilities sha1:title],
-                    (NSInteger)[[NSDate date] timeIntervalSince1970]];
+                    (int)[[NSDate date] timeIntervalSince1970]];
   self.deactivationToken = code;
   [[ContentManager shared] queueDeactivation:self];
   
@@ -1087,7 +1087,7 @@
       self.playOverlayButton.alpha = 1.0;
       self.extraAssetsImage.image = [UIImage imageNamed:@"slideshow-icon.png"];
       
-      [self.extraAssetsLabel titleizeText:[NSString stringWithFormat:@"SLIDESHOW : %d PHOTOS",[assets count]]
+      [self.extraAssetsLabel titleizeText:[NSString stringWithFormat:@"SLIDESHOW : %d PHOTOS",(int)[assets count]]
                                      bold:NO];
       
       self.extraAssetsSeat.alpha = 1.0;

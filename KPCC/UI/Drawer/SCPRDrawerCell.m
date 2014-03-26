@@ -98,8 +98,8 @@
   //NSString *submenu = [[self acquireContentsFromSchema] objectAtIndex:indexPath.row];
   NSString *title = self.menuTitle;
 
-  return [NSString stringWithFormat:@"%@-%d",title,
-          indexPath.row];
+  return [NSString stringWithFormat:@"%@-%ld",title,
+          (long)indexPath.row];
 }
 
 #pragma mark - UITableView sh*t
@@ -141,7 +141,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   SCPRViewController *vc = [[Utilities del] viewController];
-  [vc handleDrawerCommand:[NSString stringWithFormat:@"%d|%d",self.indexHint,indexPath.row]];
+  [vc handleDrawerCommand:[NSString stringWithFormat:@"%ld|%ld",(long)self.indexHint,(long)indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -737,7 +737,7 @@
 - (void)setAddedItemsCount:(NSUInteger)addedItemsCount {
   _addedItemsCount = addedItemsCount;
   
-  [self.addedItemsBadgeLabel titleizeText:[NSString stringWithFormat:@"%d",addedItemsCount]
+  [self.addedItemsBadgeLabel titleizeText:[NSString stringWithFormat:@"%lu",(unsigned long)addedItemsCount]
                                    bold:YES];
   
   if ( [Utilities isIpad] ) {

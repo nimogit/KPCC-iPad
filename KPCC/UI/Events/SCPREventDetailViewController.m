@@ -308,7 +308,7 @@
     count = count - [self.tweetContentTextView.text length];
   }
   
-  self.remainingCharactersLabel.text = [NSString stringWithFormat:@"%d characters remaining",count];
+  self.remainingCharactersLabel.text = [NSString stringWithFormat:@"%d characters remaining",(int)count];
   return count;
 }
 

@@ -234,7 +234,7 @@
     totalQueueSeconds += [s.duration intValue];
   }
 
-  NSString *countStr = [NSString stringWithFormat:@"%d",[self.queueContent count]];
+  NSString *countStr = [NSString stringWithFormat:@"%d",(int)([self.queueContent count])];
   if ( [self.queueContent count] == 0 ) {
     countStr = @"No";
   }
@@ -460,7 +460,7 @@
 - (IBAction)deleteCommitted:(id)sender {
   UIButton *delete = (UIButton*)sender;
   NSInteger trueIndex = delete.tag-kDeleteButtonOffset;
-  [self.confirmedDeletions removeObjectForKey:[NSString stringWithFormat:@"%d",trueIndex]];
+  [self.confirmedDeletions removeObjectForKey:[NSString stringWithFormat:@"%d",(int)trueIndex]];
   
   SCPRQueueCellViewController *cell = [self.queueVisualContent objectAtIndex:trueIndex];
   if ( [[QueueManager shared] articleIsPlayingNow:cell.relatedArticle] ) {
@@ -479,7 +479,7 @@
 
 - (IBAction)deleteConfirmed:(id)sender {
   UIButton *b = (UIButton*)sender;
-  NSString *key = [NSString stringWithFormat:@"%d",b.tag];
+  NSString *key = [NSString stringWithFormat:@"%d",(int)b.tag];
   if ( [self.confirmedDeletions objectForKey:key] ) {
     [self.confirmedDeletions removeObjectForKey:key];
     [UIView animateWithDuration:0.33 animations:^{
@@ -793,7 +793,7 @@
   cell.view.frame = cell.view.frame;
   
   Segment *s = [self.queueContent objectAtIndex:index];
-  s.queuePosition = [NSNumber numberWithInt:index];
+  s.queuePosition = [NSNumber numberWithInt:(int)index];
   if ( !s ) {
     NSLog(@"Segment was nil here");
   }

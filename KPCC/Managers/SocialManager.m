@@ -604,7 +604,7 @@ static SocialManager *singleton = nil;
   NSData *data = [complete dataUsingEncoding:NSUTF8StringEncoding];
   [request setHTTPBody:data];
   [request setValue:@"application/xml" forHTTPHeaderField:@"Content-Type"];
-  [request setValue:[NSString stringWithFormat:@"%d",[data length]]
+  [request setValue:[NSString stringWithFormat:@"%d",(int)[data length]]
  forHTTPHeaderField:@"Content-Length"];
   [request setValue:@"application/xml" forHTTPHeaderField:@"Accept"];
   
@@ -1406,9 +1406,9 @@ static SocialManager *singleton = nil;
                                              
                                              NSDictionary *meta = @{};
                                              if ( error ) {
-                                               meta = @{ @"session" : session, @"status" : [NSNumber numberWithInt:(NSInteger)status], @"error" : error };
+                                               meta = @{ @"session" : session, @"status" : [NSNumber numberWithInt:(int)status], @"error" : error };
                                              } else {
-                                               meta = @{ @"session" : session, @"status" : [NSNumber numberWithInt:(NSInteger)status] };
+                                               meta = @{ @"session" : session, @"status" : [NSNumber numberWithInt:(int)status] };
                                              }
                                              
                                              [self performSelectorOnMainThread:@selector(threadStatus:)
@@ -1435,9 +1435,9 @@ static SocialManager *singleton = nil;
                                      
                                      NSDictionary *meta = @{};
                                      if ( error ) {
-                                       meta = @{ @"session" : session, @"status" : [NSNumber numberWithInt:(NSInteger)status], @"error" : error };
+                                       meta = @{ @"session" : session, @"status" : [NSNumber numberWithInt:(int)status], @"error" : error };
                                      } else {
-                                       meta = @{ @"session" : session, @"status" : [NSNumber numberWithInt:(NSInteger)status] };
+                                       meta = @{ @"session" : session, @"status" : [NSNumber numberWithInt:(int)status] };
                                      }
                                      
                                      [self performSelectorOnMainThread:@selector(threadStatus:)

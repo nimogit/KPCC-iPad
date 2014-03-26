@@ -69,7 +69,7 @@
   
   self.deactivating = YES;
   NSString *code = [NSString stringWithFormat:@"%@%d",[Utilities sha1:self.dataService],
-                    (NSInteger)[[NSDate date] timeIntervalSince1970]];
+                    (int)[[NSDate date] timeIntervalSince1970]];
   self.deactivationToken = code;
   [[ContentManager shared] queueDeactivation:self];
   

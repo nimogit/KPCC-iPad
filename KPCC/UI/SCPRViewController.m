@@ -560,7 +560,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       }
       NSInteger needed = kMinimumArticleQuantity - [contentByTopic count];
       //NSLog(@"Need %d for %@",needed,key);
-      NSDictionary *params = @{ @"quantity" : [NSNumber numberWithInt:needed] };
+      NSDictionary *params = @{ @"quantity" : [NSNumber numberWithInt:(int)needed] };
       
       [self.backgroundFetchQueue addObject:@{ @"query" : query, @"flags" : params }];
 
@@ -1027,7 +1027,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       break;
     case ScreenContentTypeSnapshotPage:
       [self displaySnapshot:self.mediaContent
-                    edition:[Utilities snapshotEditionForTimeOfDay]];
+                    edition:(int)[Utilities snapshotEditionForTimeOfDay]];
       break;
     case ScreenContentTypeEventsPage:
       [self displayUnderConstructionPage:@""];
@@ -1370,7 +1370,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   self.stationMapLabel.text = segmentString;
   
   NSSet *localShows = [[ContentManager shared] findSegmentsWithKeyword:@"local"];
-  NSLog(@"Local Show count : %d",[localShows count]);
+  NSLog(@"Local Show count : %lu",(unsigned long)[localShows count]);
   
 
 }

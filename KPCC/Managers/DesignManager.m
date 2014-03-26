@@ -669,10 +669,10 @@ static DesignManager *singleton = nil;
   }
   
   if ( [Utilities isIpad] ) {
-    return [NSString stringWithFormat:@"%@%@_iPad",root,[NSNumber numberWithInt:style]];
+    return [NSString stringWithFormat:@"%@%@_iPad",root,[NSNumber numberWithInt:(int)style]];
   }
 
-  return [NSString stringWithFormat:@"%@%@",root,[NSNumber numberWithInt:style]];
+  return [NSString stringWithFormat:@"%@%@",root,[NSNumber numberWithInt:(int)style]];
 }
 
 - (void)treatButton:(UIButton *)button withStyle:(ButtonStyle)style {
