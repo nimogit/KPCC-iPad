@@ -46,12 +46,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 {
   [super viewDidLoad];
   
-#ifdef DEBUG
-#if TARGET_IPHONE_SIMULATOR
-  //[self processProgramImagesInBackground];
-#endif
-#endif
-  
   self.playerWidget = [[SCPRPlayerWidgetViewController alloc]
                        initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRPlayerWidgetViewController"]
                        bundle:nil];
@@ -63,16 +57,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   if ( [Utilities isIOS7] ) {
     self.mainPageScroller.center = CGPointMake(self.mainPageScroller.center.x,
                                                self.mainPageScroller.center.y+20.0);
-    
-    
   } else {
     self.mainPageScroller.frame = CGRectMake(self.mainPageScroller.frame.origin.x,
                                              self.mainPageScroller.frame.origin.y,
                                              self.mainPageScroller.frame.size.width,
                                              self.mainPageScroller.frame.size.height+20.0);
   }
-  
-  NSLog(@"Main paging area : %1.1f",self.mainPageScroller.frame.size.height);
   
   self.mainPageScroller.scrollEnabled = NO;
   self.globalShareDrawer = [[SCPRShareDrawerViewController alloc]
@@ -1085,7 +1075,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)finishTransition {
-  [[Utilities del] closeDrawer];
   [[Utilities del] setLaunchFinished:YES];
   
   [UIView animateWithDuration:0.25 animations:^{
@@ -1271,7 +1260,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     }
     [cookedHash setObject:aggregateForCategory
                    forKey:key];
-    //NSLog(@"%d article(s) for %@",aggregateForCategory.count,key);
   }
   
   [cookedHash setObject:@[ @"us-world", @"health-ed", @"local", @"arts-culture" ]
@@ -1290,17 +1278,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     return;
   }
   
-  // The white cloak
-  
-
-  
-  
-  NSString *titleBarXIB = @"SCPRTitlebarViewController";
-#ifdef TESTING_SPECIAL_UI
-  titleBarXIB = @"SCPRSpecialTitlebarViewController";
-#endif
-  
-  self.titleBarController = [[SCPRTitlebarViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:titleBarXIB]
+  self.titleBarController = [[SCPRTitlebarViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRTitlebarViewController"]
                                                                          bundle:nil];
   if ( [Utilities isIOS7] ) {
     self.titleBarController.view.frame = CGRectMake(self.titleBarController.view.frame.origin.x,
@@ -1331,24 +1309,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   self.globalGradient.alpha = 0.0;
   
   [self.view addSubview:self.titleBarController.view];
-  
-#ifdef TESTING_SPECIAL_UI
-  self.titleBarController.specialView.backgroundColor = [[DesignManager shared] slateColor:1.0];
-  self.titleBarController.view.backgroundColor = [UIColor clearColor];
-#endif
-  
-
-
-  
   [self.view bringSubviewToFront:self.titleBarController.view];
-  
-  
-
-  
 }
-
-
-
 
 #ifdef DEBUG
 - (void)loadListOfSegmentsFromQueue {
@@ -1508,20 +1470,11 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     v.layer.zPosition = k;
     k--;
   }
-  
 
-  
   if ( [Utilities isIOS7] ) {
     [self.globalShareDrawer setAutomaticallyAdjustsScrollViewInsets:NO];
   }
-  
-  
-
 }
-
-
-
-
 
 - (void)openShareDrawer:(id)targetContent {
   
@@ -1552,8 +1505,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
            permittedArrowDirections:UIPopoverArrowDirectionUp
                            animated:YES];
 #else
-  
-  
+
   CGRect raw = [[[Utilities del] globalTitleBar] personalInfoButton].frame;
   CGRect cooked = [self.view convertRect:raw fromView:[[Utilities del] globalTitleBar].view];
   self.globalShareDrawer.view.frame = CGRectMake(self.view.frame.size.width-self.globalShareDrawer.view.frame.size.width,
@@ -1562,17 +1514,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                                  self.globalShareDrawer.view.frame.size.height);
   [self.view addSubview:self.globalShareDrawer.view];
   
-  /*self.shareDrawerTapDismiss = [[UITapGestureRecognizer alloc]
-                                initWithTarget:self
-                                action:@selector(closeShareDrawer)];
-  
-  [self.view addGestureRecognizer:self.shareDrawerTapDismiss];*/
-  
 #endif
-
-  
-  
-  
 }
 
 - (void)shareDrawerFinishedOpening {
@@ -1669,18 +1611,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                                                       andType:ModelTypeSegment]
                          fromCollection:[[ContentManager shared] findModelByName:@"Queue"
                                                                       andType:ModelTypeCollection]];
-#ifdef DEBUG
-    //[self loadListOfSegmentsFromQueue];
-#endif
   }
   if ( sender == self.removeOfframpButton ) {
     [[ContentManager shared] removeSegment:[[ContentManager shared] findModelByName:@"Off Ramp"
                                                                       andType:ModelTypeSegment]
                          fromCollection:[[ContentManager shared] findModelByName:@"Queue"
                                                                       andType:ModelTypeCollection]];
-#ifdef DEBUG
-    //[self loadListOfSegmentsFromQueue];
-#endif
   }
   if ( self.returnToLiveButton == sender ) {
     [self.playerWidget overrideStream:nil];
@@ -1738,21 +1674,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   [self checkAutomation];
   
 }
-
-/*
-- (BOOL)shouldAutorotate {
-#ifdef SUPPORT_LANDSCAPE
-  return YES;
-#else
-  return NO;
-#endif
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-  return UIInterfaceOrientationMaskAll;
-}
-*/
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 
