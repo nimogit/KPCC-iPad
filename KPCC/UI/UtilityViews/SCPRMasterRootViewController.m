@@ -172,10 +172,6 @@
 
 #pragma mark - GLobal display
 - (void)showIntro {
-
-  if ( [Utilities isIpad] ) {
-    return;
-  }
   
   [[Utilities del] setAppIsShowingTour:YES];
   
