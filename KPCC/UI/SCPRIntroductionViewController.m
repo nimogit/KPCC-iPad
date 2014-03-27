@@ -43,15 +43,10 @@
   
   NSArray *introCards = [Utilities loadJson:@"intro_cards"];
 
-#ifdef FAKE_TOUR
-  //self.cardScroller.backgroundColor = [UIColor greenColor];
-#endif
-  
-  CGRect r = CGRectMake(0.0,
+  self.cardScroller.frame = CGRectMake(0.0,
                                        0.0,
                                        root.view.bounds.size.width,
                                        root.view.bounds.size.height);
-  self.cardScroller.frame = r;
   CGFloat width = self.cardScroller.bounds.size.width;
   
   for ( SCPRIntroCardViewController *card in self.cardVector ) {

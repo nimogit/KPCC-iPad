@@ -49,10 +49,6 @@
                                                              ofType:@"jpg"]];
   
   [self placeOrnamentInCorner:position];
- 
-#ifdef FAKE_TOUR
-  //self.nextButton.backgroundColor = [UIColor redColor];
-#endif
   
   if ( [Utilities isLandscape] ) {
     self.splashImage.center = CGPointMake(self.splashImage.center.x,
@@ -62,14 +58,10 @@
                                   self.pager.frame.size.width,
                                   self.pager.frame.size.height);
     
-
-    
-    
     self.nextButton.frame = CGRectMake(self.splashImage.frame.origin.x+self.splashImage.frame.size.width-self.nextButton.frame.size.width-20.0,
                                   self.splashImage.frame.origin.y+self.splashImage.frame.size.height-60.0,
                                   self.nextButton.frame.size.width,
                                   self.nextButton.frame.size.height);
-    
   }
   
   self.pager.currentPage = type;
