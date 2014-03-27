@@ -601,7 +601,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   CGFloat offset = [Utilities isIOS7] ? 0.0 : -20.0;
 
   CGRect r = CGRectMake(0.0, offset, mineral.view.bounds.size.width,
-                              mineral.view.bounds.size.height)/*[[DesignManager shared] orientedZeroFrameFor:mineral]*/;
+                              mineral.view.bounds.size.height);
   nav.view.frame = r;
   
   [self.contentVector addObject:mineral];
@@ -686,9 +686,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     return;
   }
   
-  //if ( !self.programPages ) {
-    [self buildProgramPages:YES];
-  //}
+  [self buildProgramPages:YES];
   
   NSArray *programs = [[ContentManager shared] favoritedProgramsList];
   NSInteger index = 0;
@@ -1666,13 +1664,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   [[DesignManager shared] globalSetTitleTo:@"Show Player"
                                  forButton:self.showOrHidePlayerButton];
   
-  //[self.playerWidget.view removeFromSuperview];
   [self.playerWidget hideVolumeSlider];
-  
-  
-  
   [self checkAutomation];
-  
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
