@@ -63,7 +63,6 @@ typedef enum {
 - (void)armGlobalDismiss:(id)sender;
 - (void)disarmGlobalDismiss;
 - (void)openDrawer;
-- (void)closeDrawer;
 - (void)toggleDrawer;
 - (void)rotateDrawerForInterfaceOrientation:(UIInterfaceOrientation)orientation;
 - (void)cloakUIWithMessage:(NSString*)message;
@@ -78,7 +77,6 @@ typedef enum {
 - (void)presentFloatingOptionsMenuFromPoint:(CGPoint)point sourceView:(UIView*)sourceView delegate:(id<OptionsDelegate>)delegate withObject:(id)sourceable;
 - (void)dismissFloatingOptionsMenu;
 - (void)dropOnWindow:(UIView*)view fromView:(UIView*)originalView animateToFrame:(CGRect)animateToFrame completion:(VoidBlock)completion;
-- (void)globalSpinWithDismissMessage:(NSString*)message;
 - (void)incrementNewItemCount;
 
 - (SCPRPlayerWidgetViewController*)globalPlayer;
@@ -109,7 +107,6 @@ typedef enum {
 @property (nonatomic, strong) id<Cloakable> customCloak;
 @property (nonatomic, strong) SCPRFloatingOptionViewController *floatingOptionsMenu;
 @property (nonatomic, strong) UIImageView *bigShadow;
-@property (nonatomic, strong) UIImageView *splash;
 @property (nonatomic, strong) SCPRSpinnerViewController *globalSpinner;
 
 @end
