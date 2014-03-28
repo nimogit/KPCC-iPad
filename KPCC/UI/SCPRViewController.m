@@ -715,11 +715,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   
   [[QueueManager shared] setStories:contentObjects];
   if ( self.silentlyFetchingNews ) {
-    
-    [[ContentManager shared] processStories];
     return;
   }
-
   
   SCPRDeluxeNewsViewController *vpvc = [[SCPRDeluxeNewsViewController alloc]
                                         initWithNibName:[[DesignManager shared]

@@ -120,10 +120,6 @@ typedef enum {
 
 - (void)displayPushMessageWithPayload:(NSDictionary*)userInfo;
 
-#ifdef DEBUG
-- (void)createFakeSegments;
-#endif
-
 @property (atomic) BOOL threadLock;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -157,9 +153,6 @@ typedef enum {
 @property (nonatomic,strong) NSMutableDictionary *compositeNewsLookupHash;
 @property (nonatomic,strong) NSMutableDictionary *deactivationQueue;
 @property (nonatomic,strong) NSMutableDictionary *pendingNotification;
-
-
-
 
 @property NSInteger swipeCount;
 @property NSInteger adCount;
@@ -196,7 +189,6 @@ typedef enum {
 - (void)saveContextOnMainThread;
 - (void)saveContextInBackground;
 - (void)queueDeactivation:(id<Deactivatable>)articleKey;
-- (void)processDeactivationQueue;
 - (void)popDeactivation:(NSString*)token;
 
 - (NSString*)modelBase;
@@ -218,7 +210,6 @@ typedef enum {
 - (NSArray*)favoritedProgramsList;
 - (NSMutableArray*)filterPrograms:(NSArray*)programs;
 - (NSMutableArray*)sortedProgramList;
-- (void)findProgramForSegment:(Segment*)segment;
 - (NSDictionary*)bakeInIDForArticle:(NSDictionary*)article;
 - (NSDictionary*)bakeInShortTitleForArticle:(NSDictionary*)article;
 - (NSDictionary*)bakeInBylineForArticle:(NSDictionary*)article;
@@ -237,7 +228,6 @@ typedef enum {
 - (NSString*)nameForModelType:(ModelType)type;
 - (NSString*)nameForScreenContentType:(NSInteger)contentType;
 - (NSString*)prettyNameForScreenContentType:(NSInteger)contentType;
-- (NSString*)fakeURL;
 
 // Settings
 - (void)loadSettings;
@@ -262,10 +252,8 @@ typedef enum {
 - (void)sweepDiskAndMemory;
 - (void)destroyDiskAndMemoryCache;
 - (void)sweepMemory;
-- (void)smartMemorySweep;
 - (CGFloat)imageCacheSizeInMB;
 - (void)printCacheUsage;
-- (void)processStories;
 
 // Push
 - (void)editPushForBreakingNews:(BOOL)on;

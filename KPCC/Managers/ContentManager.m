@@ -70,17 +70,16 @@ static ContentManager *singleton = nil;
   
   self.compositeNewsLookupHash = [@{} mutableCopy];
   [self.settings setEditionsJson:@""];
-  
+
   [[ContentManager shared] setGlobalCompositeNews:marshalledNews];
   [[QueueManager shared] setStories:@{}];
-  
+
   [[ContentManager shared].settings setLastEditionsSync:nil];
   [[ContentManager shared].settings setLastCompositeNewsSync:nil];
   [[NetworkManager shared] setCompositeEditionsFetchFinished:NO];
   [[NetworkManager shared] setCompositeMainNewsFetchFinished:NO];
+
   [[ContentManager shared] setSkipParse:YES];
-
-
   [[ContentManager shared] writeSettings];
 }
 
@@ -123,8 +122,7 @@ static ContentManager *singleton = nil;
                             waitUntilDone:NO];
         return;
       }
-      
-      
+
       if ( object ) {
         [self performSelectorOnMainThread:@selector(readParse:)
                                withObject:@{ @"user" : object }
@@ -136,7 +134,6 @@ static ContentManager *singleton = nil;
                             waitUntilDone:NO];
         return;
       }
-      
       
       [self performSelectorOnMainThread:@selector(leaveSettingsAlone)
                              withObject:nil
@@ -155,11 +152,8 @@ static ContentManager *singleton = nil;
 }
 
 - (void)readParse:(NSDictionary*)meta {
-#ifndef IGNORE_PARSE_INFO
-  //PFObject *user = [meta objectForKey:@"user"];
-  
+
   __block NSString *before = [self.settings favoriteProgramsAsJson];
- 
 
   PFUser *user = [meta objectForKey:@"user"];
   [user fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
@@ -211,14 +205,8 @@ static ContentManager *singleton = nil;
  
         }
       }
-      
     });
-    
-    
-    
   }];
-  
-#endif
 }
 
 - (void)sanitizeSettings {
@@ -274,9 +262,7 @@ static ContentManager *singleton = nil;
     NSUUID *uid = [[UIDevice currentDevice] identifierForVendor];
     
     self.settings.deviceID = [uid UUIDString];
-#if TARGET_IPHONE_SIMULATOR
-    //self.settings.deviceID = @"IPHONE_SIMULATOR";
-#endif
+
     self.settings.lastCacheCleanDate = [NSDate date];
     [self sanitizeSettings];
     [self syncSettingsWithParse];
@@ -354,7 +340,6 @@ static ContentManager *singleton = nil;
 
 - (void)writeToParse {
 #ifdef USE_PARSE
-#ifndef IGNORE_PARSE_INFO
   __block PFObject *parseBlock = nil;
   PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
   
@@ -371,8 +356,6 @@ static ContentManager *singleton = nil;
       parseBlock = [PFObject objectWithClassName:@"UserInfo"];
       NSDictionary *devices = @{ [self.settings deviceID] : [self buildDeviceObject] };
       [parseBlock setObject:devices forKey:@"devices"];
-      
-      
     } else {
       NSDictionary *devices = [parseBlock objectForKey:@"devices"];
       if ( ![devices objectForKey:[self.settings deviceID]] ) {
@@ -382,24 +365,15 @@ static ContentManager *singleton = nil;
         [parseBlock setObject:[NSDictionary dictionaryWithDictionary:mutable]
                        forKey:@"devices"];
       }
-      
     }
-    
-    
+
     // Push all listened segments up to Parse
-    NSMutableDictionary *uniqueHash = [[NSMutableDictionary alloc] init];
-    // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
     NSArray *segments = [[ContentManager shared] findAllSegments];
     for ( Segment *s in segments ) {
       
-      
       NSDictionary *article = (NSDictionary*)[s.originalArticle JSONValue];
       article = [self bakeInIDForArticle:article];
-      if ( [uniqueHash objectForKey:[article objectForKey:@"id"]] ) {
-        continue;
-      } else {
-        //[uniqueHash setObject:@1 forKey:[article objectForKey:@"id"]];
-      }
+
       if ( [s.completed boolValue] ) {
         PFQuery *segmentQuery = [PFQuery queryWithClassName:@"ListenedSegments"];
         [segmentQuery whereKey:@"device_id" equalTo:[self.settings deviceID]];
@@ -434,7 +408,6 @@ static ContentManager *singleton = nil;
             
             NSLog(@"Successfully wrote completed segment to Parse : %@",[NSDate stringFromDate:[NSDate date]
                                                                                     withFormat:@"YYYY-MM-dd hh:mm:ss"]);
-            
     
             [[NSNotificationCenter defaultCenter] postNotificationName:@"segment_tracked"
                                                                 object:nil];
@@ -442,9 +415,7 @@ static ContentManager *singleton = nil;
           }
         }];
       }
-      
     }
-    
     
     if ( ![Utilities pureNil:[[SocialManager shared] userName]] ) {
       [parseBlock setObject:[[SocialManager shared] userName]
@@ -559,12 +530,10 @@ static ContentManager *singleton = nil;
         
         NSLog(@"Successfully saved to Parse : %@",[NSDate stringFromDate:[NSDate date]
                                                               withFormat:@"YYYY-MM-dd hh:mm:ss"]);
-        
       }
       
       PFInstallation *currentInstallation = [PFInstallation currentInstallation];
       [currentInstallation saveEventually];
-      
     }];
     
     if ( ![self.settings parseInitiated] ) {
@@ -578,51 +547,13 @@ static ContentManager *singleton = nil;
                              withObject:nil
                           waitUntilDone:NO];
     }
-
-    
   }];
-  
-  
-  #endif
 #endif
 }
 
-
-
 - (void)checkCurrentVersion:(id)delegate {
-#ifdef IPHONE_VERSION
-  return;
-#endif
-#ifdef USE_PARSE
-#ifdef PARSE_ADMIN_OPERATION
-  
-  /**************************************************************************/
-  // -- Developer Note --
-  // Use this block of code to create new tables and params in Parse. I've found it easier to simply create tables programmatically using a debug
-  // session in the app rather than with the web interface. Use with caution of course, as soon as your new table is created to your satisfaction
-  // then remove this macro from the target settings.
-  //
-  // Usage: Change the "AdSettings" class name to the name of the new table you want to create. Then [cv setObject:<obj> forKey:<nameOfTableColumn>]
-  // for each new column associated with the table, populated with some dummy values that represent the data type you want your column to be. Add the
-  // PARSE_ADMIN_OPERATION macro to your target settings and then run the app in the simulator. Parse will create the new table. Review it at
-  // parse.com and if you're happy with it, remove the macro and you'll be on your way. If you don't like it, drop the class with the Parse data browser
-  // web interface and then try again.
-  //
 
-  PFObject *cv = [PFObject objectWithClassName:@"AdSettings"];
-  [cv setObject:@5 forKey:@"numberOfSwipesPerAd"];
-  [cv setObject:@5 forKey:@"numberOfAdsPerSession"];
-  
-  
-  [cv setObject:@"127204706" forKey:@"adVendorID"];
-  [cv setObject:@"TEST_iPad_UnitV1" forKey:@"adUnitID"];
-  [cv setObject:@"g.doubleclick.net/aclk" forKey:@"urlHint"];
-  
-  [cv saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    NSLog(@"Wrote version object to parse");
-  }];
-#endif
-  
+#ifdef USE_PARSE
   PFQuery *q = [PFQuery queryWithClassName:@"CurrentVersion"];
   [q getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -687,7 +618,6 @@ static ContentManager *singleton = nil;
   }];
 }
 
-
 - (NSArray*)drawerSchema {
   NSError *fileError = nil;
   NSString *json = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"faketopicschema"
@@ -720,10 +650,8 @@ static ContentManager *singleton = nil;
     }
     json = [json stringByReplacingOccurrencesOfString:kFavoritesMacro
                                            withString:base];
-    
   }
-  
-  //NSLog(@"Drawer Schema : %@",json);
+
   return (NSArray*)[json JSONValue];
 }
 
@@ -742,89 +670,6 @@ static ContentManager *singleton = nil;
   return (NSArray*)[[self.settings favoriteProgramsAsJson] JSONValue];
 }
 
-#ifdef DEBUG
-- (void)createFakeSegments {
-  
-  Keyword *topic1 = (Keyword*)[self findModelByName:@"science"
-                                            andType:ModelTypeKeyword];
-  if ( !topic1 ) {
-    topic1 = (Keyword*)[NSEntityDescription insertNewObjectForEntityForName:@"Keyword"
-                                                     inManagedObjectContext:self.managedObjectContext];
-    topic1.name = @"science";
-    topic1.slug = [Utilities generateSlug:topic1.name];
-  }
-  
-  Keyword *topic2 = (Keyword*)[self findModelByName:@"local"
-                                            andType:ModelTypeKeyword];
-  if ( !topic2 ) {
-    topic2 = (Keyword*)[NSEntityDescription insertNewObjectForEntityForName:@"Keyword"
-                                                     inManagedObjectContext:self.managedObjectContext];
-    topic2.name = @"local";
-    topic2.slug = [Utilities generateSlug:topic1.name];
-  }
-  
-  Keyword *topic3 = (Keyword*)[self findModelByName:@"politics"
-                                            andType:ModelTypeKeyword];
-  if ( !topic3 ) {
-    topic3 = (Keyword*)[NSEntityDescription insertNewObjectForEntityForName:@"Keyword"
-                                                     inManagedObjectContext:self.managedObjectContext];
-    topic3.name = @"politics";
-    topic3.slug = [Utilities generateSlug:topic1.name];
-  }
-  
-  Segment *taketwo = (Segment*)[self findModelByName:@"Take Two"
-                                             andType:ModelTypeSegment];
-  if ( !taketwo ) {
-    taketwo = (Segment*)[NSEntityDescription insertNewObjectForEntityForName:@"Segment"
-                                                      inManagedObjectContext:self.managedObjectContext];
-    taketwo.name = @"Take Two";
-    taketwo.slug = [Utilities generateSlug:taketwo.name];
-    [taketwo addKeywords:[NSSet setWithObjects:topic2, nil]];
-  }
-  
-  Segment *offramp = (Segment*)[self findModelByName:@"Off Ramp"
-                                                       andType:ModelTypeSegment];
-  if ( !offramp ) {
-    offramp = (Segment*)[NSEntityDescription insertNewObjectForEntityForName:@"Segment"
-                                                      inManagedObjectContext:self.managedObjectContext];
-    offramp.name = @"Off Ramp";
-    offramp.slug = [Utilities generateSlug:offramp.name];
-    
-  }
-  
-  Collection *queue = (Collection*)[self findModelByName:@"Queue"
-                                                      andType:ModelTypeCollection];
-  if ( !queue ) {
-    queue = (Collection*)[NSEntityDescription insertNewObjectForEntityForName:@"Collection"
-                                                       inManagedObjectContext:self.managedObjectContext];
-    queue.name = @"Queue";
-    queue.slug = [Utilities generateSlug:queue.name];
-    queue.collectionType = [NSNumber numberWithInt:CollectionTypeUserPlaylist];
-    [queue addSegments:[NSSet setWithObjects:taketwo,offramp,nil]];
-  }
-  
-  Collection *station = (Collection*)[self findModelByName:@"Science Station"
-                                                   andType:ModelTypeCollection];
-  if ( !station ) {
-    station = (Collection*)[NSEntityDescription insertNewObjectForEntityForName:@"Collection"
-                                                         inManagedObjectContext:self.managedObjectContext];
-    station.name = @"Science Station";
-    station.slug = [Utilities generateSlug:station.name];
-    station.collectionType = [NSNumber numberWithInt:CollectionTypeStation];
-    [station addKeywordsObject:topic1];
-    
-  }
-  
-  NSError *error = nil;
-  if ( ![self.managedObjectContext save:&error] ) {
-    NSLog(@"Couldn't save segments! : %@",[error localizedDescription]);
-    abort();
-  }
-  
-}
-
-#endif
-
 #pragma mark - Program cache
 - (NSMutableArray*)filterPrograms:(NSArray*)programs {
   [[AnalyticsManager shared] tS];
@@ -838,7 +683,6 @@ static ContentManager *singleton = nil;
     } else {
       json = (NSArray*)jc;
     }
-    
 
     self.masterProgramList = [[NSMutableDictionary alloc] init];
     
@@ -895,14 +739,13 @@ static ContentManager *singleton = nil;
   }];
   
   self.sortedProgramsCache = sorted;
-  
-  
+
   [[FileManager shared] writeFileFromData:[[self.masterProgramList allValues] JSONRepresentation]
                                toFilename:@"mpl.json"];
   
   [[AnalyticsManager shared] tF:@"Program sorting : new"];
   NSLog(@"Program count after filter : %d",[filtered count]);
-  
+
   self.sortedProgramsCache = filtered;
   return filtered;
 }
@@ -938,7 +781,6 @@ static ContentManager *singleton = nil;
     
     return [data objectForKey:@"meta"];
   }
-  
   return nil;
 }
 
@@ -959,9 +801,7 @@ static ContentManager *singleton = nil;
     [minimizedProgram setObject:[program objectForKey:@"title"] forKey:@"title"];
     [minimizedProgram setObject:[program objectForKey:@"slug"] forKey:@"slug"];
     [stripped addObject:minimizedProgram];
-    
   }
-  
   return stripped;
 }
 
@@ -974,16 +814,12 @@ static ContentManager *singleton = nil;
   NSString *imageStr = [NSString stringWithFormat:@"%@_splash.jpg",titleized];
   
   @try {
-    
     NSString *path = [[NSBundle mainBundle] pathForResource:imageStr ofType:@""];
     if ( !path ) {
       imageStr = @"generic_splash.jpg";
     }
-    
   } @catch ( NSException *e ) {
-    
     imageStr = @"generic_splash.jpg";
-    
   }
   
   return imageStr;
@@ -1042,7 +878,6 @@ static ContentManager *singleton = nil;
     
     return stub;
   }
-  
   return nil;
 }
 
@@ -1085,7 +920,6 @@ static ContentManager *singleton = nil;
     stub.body = body;
     stub.links = [links JSONRepresentation];
     stub.identifier = dent;
-    
   }
   
   NSError *error = nil;
@@ -1104,8 +938,6 @@ static ContentManager *singleton = nil;
       abort();
     }
   }
-
-
 }
 
 #pragma mark - Push
@@ -1124,7 +956,6 @@ static ContentManager *singleton = nil;
 }
 
 - (void)editPushForBreakingNews:(BOOL)on {
-#if !TARGET_IPHONE_SIMULATOR
 #ifdef USE_PARSE
   
   NSString *pushKey = kPushKeyBreakingNews;
@@ -1132,7 +963,6 @@ static ContentManager *singleton = nil;
   pushKey = kPushKeySandbox;
 #endif
   if ( on ) {
-    //if ( [Utilities pureNil:[self.settings pushToken]] ) {
       NSLog(@"Registering for push on %@",pushKey);
       
       [[Utilities del] setOperatingWithPushType:PushTypeBreakingNews];
@@ -1144,11 +974,9 @@ static ContentManager *singleton = nil;
     [self unregisterPushNotifications];
   }
 #endif
-#endif
 }
 
 - (void)unregisterPushNotifications {
-#if !TARGET_IPHONE_SIMULATOR
   [[UIApplication sharedApplication] unregisterForRemoteNotifications];
   PFInstallation *currentInstallation = [PFInstallation currentInstallation];
   
@@ -1160,14 +988,11 @@ static ContentManager *singleton = nil;
   [currentInstallation removeObject:pushKey
                              forKey:@"channels"];
   
-  
   [self.settings setPushToken:@""];
   [self writeSettings];
-#endif
 }
 
 - (void)editPushForEvents:(BOOL)on {
-#if !TARGET_IPHONE_SIMULATOR
 #ifdef USE_PARSE
   if ( on ) {
     if ( [Utilities pureNil:[self.settings pushToken]] ) {
@@ -1190,10 +1015,7 @@ static ContentManager *singleton = nil;
     [currentInstallation saveInBackground];
   }
 #endif
-#endif
 }
-
-
 
 #pragma mark - Helpers
 - (void)displayPushMessageWithPayload:(NSDictionary *)userInfo {
@@ -1287,8 +1109,6 @@ static ContentManager *singleton = nil;
                          }];
 }
 
-
-
 - (BOOL)isKPCCArticle:(NSDictionary*)sourceArticle {
   
   NSString *url = [sourceArticle objectForKey:@"url"];
@@ -1327,7 +1147,6 @@ static ContentManager *singleton = nil;
     return YES;
   }
   
-  
   return NO;
 }
 
@@ -1341,28 +1160,6 @@ static ContentManager *singleton = nil;
                              forKey:[articleKey deactivationToken]];
 }
 
-- (void)processDeactivationQueue {
-  /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    
-    for ( id<Deactivatable> dead in [self.deactivationQueue allValues] ) {
-      [dead deactivationMethod];
-    }
-    
-    NSMutableDictionary *newQueue = [[NSMutableDictionary alloc] init];
-    for ( id<Deactivatable> dead in [self.deactivationQueue allValues] ) {
-      if ( [dead okayToRemove] ) {
-        continue;
-      }
-      [newQueue setObject:dead
-                   forKey:[dead deactivationToken]];
-    }
-    
-    self.deactivationQueue = newQueue;
-      
-  //});*/
-  
-}
-
 - (void)popDeactivation:(NSString *)token {
   //NSLog(@"%@ is OK for deletion",token);
   [self.deactivationQueue removeObjectForKey:token];
@@ -1372,12 +1169,9 @@ static ContentManager *singleton = nil;
 - (void)patch:(NSString*)version {
 
   if ( [self userIsMissingPatch:@"1.0.1"] ) {
-    
     [self writePatch:@"1.0.1"];
     [[ScheduleManager shared] createProgramMap];
-    
   }
-
 }
 
 - (void)writePatch:(NSString *)patch {
@@ -1417,12 +1211,8 @@ static ContentManager *singleton = nil;
     NSLog(@"**** POPPING %@ FROM RESIZE VECTOR",[[obj class] description]);
     [self.resizeVector removeLastObject];
   }
-  
   NSLog(@"Number of items in resize vector : %d",[self.resizeVector count]);
-  
 }
-
-
 
 - (NSString*)nameForModelType:(ModelType)type {
   NSString *typeString = nil;
@@ -1520,18 +1310,6 @@ static ContentManager *singleton = nil;
   }
   
   return properName;
-}
-
-- (NSString*)fakeURL {
-  
-  NSArray *fake = @[ @"http://media.scpr.org/audio/upload/2013/05/07/WhaleFrenzy.mp3",
-                   @"http://media.scpr.org/audio/upload/2013/05/07/platescans.mp3",
-                   @"http://media.scpr.org/audio/upload/2013/05/07/Greuel.mp3",
-                   @"http://media.scpr.org/audio/upload/2013/05/07/burial.mp3" ];
-  
-  int randy = random() % [fake count];
-  
-  return [fake objectAtIndex:randy];
 }
 
 - (NSDictionary*)bakeInIDForArticle:(NSDictionary *)article {
@@ -1763,7 +1541,6 @@ static ContentManager *singleton = nil;
       }
     }
   }
-  
 }
 
 - (void)killAdOnscreen:(NSTimer*)timer {
@@ -1987,67 +1764,15 @@ static ContentManager *singleton = nil;
     }
   }
   
-  BOOL synthesizeProgramLater = NO;
   NSDictionary *program = [article objectForKey:@"program"];
   if ( program ) {
     candidate.program = [program objectForKey:@"title"];
-  } else {
-    synthesizeProgramLater = YES;
   }
   
   candidate.originalArticle = [article JSONRepresentation];
   [self saveContext];
   
-  if ( synthesizeProgramLater ) {
-    [self findProgramForSegment:candidate];
-  }
-  
   return candidate;
-}
-
-- (void)findProgramForSegment:(Segment *)segment {
-  /*NSString *oA = segment.originalArticle;
-  NSDictionary *asDict = (NSDictionary*)[oA JSONValue];
-  NSString *udid = [asDict objectForKey:@"id"];
-  if ( !udid ) {
-    return;
-  }
-  
-  
-  NSString *urlString = [NSString stringWithFormat:@"%@/episodes?id=%@",kServerBase,udid];
-  NSURL *url = [NSURL URLWithString:urlString];
-  NSURLRequest *request = [NSURLRequest requestWithURL:url];
-  [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init]
-                         completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
-                           
-                           if ( e ) {
-                             NSLog(@"Error fetching episode from id %@ : %@",udid,[e localizedDescription]);
-                             return;
-                           }
-                           
-                           NSString *s = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
-                           if ( [Utilities pureNil:s] ) {
-                             return;
-                           }
-                           
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                             
-                             NSArray *episodes = (NSArray*)[s JSONValue];
-                             NSDictionary *episode = [episodes objectAtIndex:0];
-                             NSDictionary *program = [episode objectForKey:@"program"];
-                             if ( program ) {
-                               segment.program = [program objectForKey:@"title"];
-                               [self saveContext];
-                               
-                               [[NSNotificationCenter defaultCenter]
-                                postNotificationName:@"synthesized_program_for_segment"
-                                object:segment];
-                             }
-                             
-                             
-                           });
-                           
-                         }];*/
 }
 
 - (NSSet*)findSegmentsWithKeyword:(id)keyword {
@@ -2071,12 +1796,8 @@ static ContentManager *singleton = nil;
     if ( chuck ) {
       return chuck.segments;
     }
-
-    
   }
-  
   return [[NSSet alloc] init];
-  
 }
 
 - (void)removeSegment:(id)segment fromCollection:(id)collection {
@@ -2085,7 +1806,6 @@ static ContentManager *singleton = nil;
 
 - (void)removeSegment:(id)segment fromCollection:(id)collection suspendCommit:(BOOL)suspendCommit {
 
-    
   NSManagedObjectContext *cxToUse = [NSThread isMainThread] ? self.managedObjectContext : self.backgroundThreadObjectContext;
     NSString *thread = [NSThread isMainThread] ? @"main_thread" : @"bg_thread";
     NSLog(@"Using %@ for removal...",thread);
@@ -2136,7 +1856,6 @@ static ContentManager *singleton = nil;
 - (void)pushSegment:(id)segment toCollection:(id)collection {
   Collection *asCollection = (Collection*)collection;
   Segment *asSegment = (Segment*)segment;
-  //asSegment.addedToQueueDate = [NSDate date];
   
   if ( [self articleExists:asSegment inCollection:asCollection] ) {
     return;
@@ -2190,11 +1909,9 @@ static ContentManager *singleton = nil;
         if ( [[(NSDictionary*)segment objectForKey:@"id"] isEqualToString:[oa objectForKey:@"id"]] ) {
           return YES;
         }
-        
       }
     }
   }
-
   return NO;
 }
 
@@ -2214,9 +1931,7 @@ static ContentManager *singleton = nil;
                             MPMediaItemPropertyArtwork : artwork };
                             
   } else {
-    
     // Story
-
     NSDictionary *article = (NSDictionary*)audio;
     NSString *titleKey = [article objectForKey:@"title"] ? @"title" : @"short_title";
     
@@ -2259,10 +1974,7 @@ static ContentManager *singleton = nil;
       [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:self.audioMetaData];
       
     });
-
-    
   }
-  
 }
 
 #pragma mark - Image caching
@@ -2296,9 +2008,7 @@ static ContentManager *singleton = nil;
       NSLog(@"CREATING IMAGE DIRECTORY - %@",[error localizedDescription]);
       return;
     }
-    
   }
-  
   
   NSMutableArray *images = [NSMutableArray arrayWithArray:[[NSFileManager defaultManager] contentsOfDirectoryAtPath:imageCachePath
                                                                                                               error:&error]];
@@ -2311,61 +2021,10 @@ static ContentManager *singleton = nil;
   }
   
   self.imageCache = [[NSMutableDictionary alloc] init];
-  
-  /*for ( unsigned i = 0; i < [images count]; i++ ) {
-
-    NSString *file = [images objectAtIndex:i];
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@",imageCachePath,file];
-    if ( ![[NSFileManager defaultManager] fileExistsAtPath:filePath] ) {
-      continue;
-    }
-    if ( ![[NSFileManager defaultManager] isReadableFileAtPath:filePath] ) {
-      [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-      if ( error ) {
-        continue;
-      }
-      continue;
-    }
-    
-    NSFileHandle *fh = [NSFileHandle fileHandleForReadingAtPath:filePath];
-    [fh closeFile];
-    
-    if ( [self imageCacheSizeInMB] > kImageCacheMBLimit ) {
-      continue;
-    }
-    
-    //@synchronized(self) {
-      NSData *image = [NSData dataWithContentsOfFile:filePath];
-      UIImage *photo = [UIImage imageWithData:image];
-      if ( photo ) {
-        [self.imageCache setObject:photo forKey:file];
-      }
-    //}
-    
-  
-    
-  }*/
-  
   [self printCacheUsage];
 
   self.programCache = [[NSMutableDictionary alloc] init];
-  
   [self systemClean];
-}
-
-- (void)processStories {
-
-  /*NSDictionary *stories = [[QueueManager shared] stories];
-  self.mutableGeneralStories = [NSMutableArray arrayWithArray:[stories objectForKey:@"general"]];
-  self.mutableTrendingStories = [NSMutableArray arrayWithArray:[stories objectForKey:@"trending"]];
-  
-  self.operatingOnStories = [self.mutableTrendingStories count] > [self.mutableGeneralStories count] ? self.mutableTrendingStories : self.mutableGeneralStories;
-  self.synthesisTimer = [NSTimer scheduledTimerWithTimeInterval:0.13
-                                                         target:self
-                                                       selector:@selector(synthesizeStory)
-                                                       userInfo:nil
-                                                        repeats:YES];*/
-
 }
 
 - (void)synthesizeStory {
@@ -2418,8 +2077,6 @@ static ContentManager *singleton = nil;
 }
 
 - (void)sweepDiskAndMemory {
-  
-  
   [[ContentManager shared].settings setLastCacheCleanDate:[NSDate date]];
   [[ContentManager shared] setSkipParse:YES];
   [[ContentManager shared] writeSettings];
@@ -2486,7 +2143,6 @@ static ContentManager *singleton = nil;
   for ( NSString *key in badKeys ) {
     [self.imageCache removeObjectForKey:key];
   }
-  
   return size / (1024.0*1024.0);
 }
 
@@ -2497,20 +2153,8 @@ static ContentManager *singleton = nil;
   NSInteger disk = [[NSURLCache sharedURLCache] currentDiskUsage];
   CGFloat memInMB = (CGFloat)memoryUsage/(1024.0*1024.0);
   CGFloat diskInMB = (CGFloat)disk/(1024.0*1024.0);
-  
   NSLog(@"CACHE : %1.2f MB (Memory), %1.2f MB (Disk)",memInMB,diskInMB);
 #endif
-  
-  /*NSError *error = nil;
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-  NSString *imageCachePath = [NSString stringWithFormat:@"%@/%@", [paths objectAtIndex:0], @"images"];
-  
-  
-  NSMutableArray *images = [NSMutableArray arrayWithArray:[[NSFileManager defaultManager] contentsOfDirectoryAtPath:imageCachePath
-                                                                                                              error:&error]];
-  
-  NSLog(@"NUMBER OF DISK IMAGES : %d objects",[images count]);
-  NSLog(@"IMAGE CACHE : %d objects, %1.1f MB",[self.imageCache count],[self imageCacheSizeInMB]);*/
 }
 
 - (void)smartMemorySweep {
@@ -2526,12 +2170,8 @@ static ContentManager *singleton = nil;
 
 - (void)sweepMemory {
   NSLog(@"Sweeping memory");
-
   [self printCacheUsage];
-  
   [self.imageCache removeAllObjects];
-  //self.imageCache = [[NSMutableDictionary alloc] init];
-  
 }
 
 - (void)destroyDiskAndMemoryCache {
@@ -2560,7 +2200,6 @@ static ContentManager *singleton = nil;
   
   [self.imageCache removeAllObjects];
   self.imageCache = [[NSMutableDictionary alloc] init];
-  
 }
 
 - (void)systemClean {
@@ -2587,8 +2226,7 @@ static ContentManager *singleton = nil;
         }
       }
     }
-    
-    
+
     // Find outdated and non-queued segments and clean them out too
     request = [[NSFetchRequest alloc] init];
     entity = [NSEntityDescription entityForName:@"Segment"
@@ -2609,7 +2247,6 @@ static ContentManager *singleton = nil;
     [self setSkipParse:YES];
     [self writeSettings];
     
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *dir = [NSString stringWithFormat:@"%@/html",[paths objectAtIndex:0]];
     
@@ -2628,10 +2265,8 @@ static ContentManager *singleton = nil;
         NSLog(@"Couldn't remove file : %@",file);
       }
     }
-    
     NSLog(@"Finished cleaning system...");
   }
-
 }
 
 - (UIImage*)retrieveImageFromCache:(NSString*)link {
@@ -2649,18 +2284,9 @@ static ContentManager *singleton = nil;
   UIImage *img = nil;
   NSString *filePath = [imageCachePath stringByAppendingPathComponent:hash];
   if ( [[NSFileManager defaultManager] fileExistsAtPath:filePath] ) {
-    //@synchronized(self) {
       img = [UIImage imageWithContentsOfFile:filePath];
-    if ( img ) {
-#ifdef DETAILED_LOGGING
-      NSLog(@"Found image %@ in cache",link);
-#endif
-    }
-    //}
   }
-  
   return img;
-    
 }
 
 
@@ -2681,11 +2307,6 @@ static ContentManager *singleton = nil;
       img = [UIImage imageWithContentsOfFile:filePath];
     }
   }
-  
-  if ( img ) {
-    //[self.imageCache setObject:img forKey:hash];
-  }
-  
   return img;
 }
 
@@ -2719,15 +2340,7 @@ static ContentManager *singleton = nil;
   if ( ![[NSFileManager defaultManager] fileExistsAtPath:filePath] ) {
     [img writeToFile:filePath atomically:YES];
   }
-  
-  /*if ( img) {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-      [self.imageCache setObject:[UIImage imageWithData:img]
-                        forKey:hash];
-      [self smartMemorySweep];
-    });
-  }*/
-  
+
   return filePath;
 }
 
