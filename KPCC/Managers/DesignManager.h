@@ -66,9 +66,6 @@ typedef enum {
 - (void)applyLeftShadowTo:(UIView*)view;
 - (void)applyLeftOrangeShadowTo:(UIView*)view;
 
-// HTML Styling
-- (NSString*)compositeBodyTreatment:(NSString*)rawBody;
-
 // Button styling
 - (void)globalSetTitleTo:(NSString*)title forButton:(UIButton*)button;
 - (void)globalSetImageTo:(NSString*)image forButton:(UIButton*)button;
@@ -78,7 +75,6 @@ typedef enum {
 - (NSString*)xibForPlatformWithName:(NSString*)root;
 - (NSString*)xibit:(NSString*)root style:(NSInteger)style;
 - (void)treatButton:(UIButton*)button withStyle:(ButtonStyle)style;
-- (CGFloat)calculateHeightAdjustmentForArticle:(NSDictionary*)article;
 - (UIImage*)imageForProgram:(NSDictionary*)program;
 
 // Fonts
@@ -164,8 +160,6 @@ typedef enum {
 - (UIColor*)rainbowForIndex:(NSInteger)index;
 - (void)applyHeadlineStyling:(UILabel*)label;
 
-
-
 // View factory
 - (UIView*)orangeTextHeaderWithText:(NSString*)text;
 - (UIView*)deluxeHeaderWithText:(NSString*)text;
@@ -182,12 +176,8 @@ typedef enum {
 - (void)avoidNeighborFrame:(CGRect)frame withView:(UIView*)floatingView direction:(NeighborDirection)direction padding:(CGFloat)padding;
 - (void)alignHorizontalCenterOf:(UIView*)floatingView withView:(UIView*)anchoredView;
 - (void)alignVerticalCenterOf:(UIView*)floatingView withView:(UIView*)anchoredView;
-- (void)centerRelativeToBaseOfView:(UIView*)floatingView withView:(UIView*)anchoredView constrainedToBaseOf:(UIView*)boundingView;
 - (void)turn:(id<Turnable>)turnable withValues:(NSDictionary*)changes;
 - (void)nudge:(UIView*)view direction:(NeighborDirection)direction amount:(CGFloat)amount;
-
-- (CGRect)orientedZeroFrameFor:(UIViewController*)vc;
-- (CGRect)orientedFrameFor:(UIViewController*)vc yDelta:(CGFloat)yDelta;
 
 @property BOOL inSingleArticle;
 @property BOOL hasBeenInFullscreen;

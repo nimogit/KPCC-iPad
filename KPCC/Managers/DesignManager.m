@@ -21,70 +21,16 @@ static DesignManager *singleton = nil;
 + (DesignManager*)shared {
   if ( !singleton ) {
     @synchronized(self) {
-      
       singleton = [[DesignManager alloc] init];
-      
     }
   }
-  
   return singleton;
 }
 
-#pragma mark - HTML styling
-- (NSString*)compositeBodyTreatment:(NSString *)rawBody {
-  /*<style TYPE="text/css">
-   
-   body{
-   font-family: "PT Serif";
-   font-size: 19px;
-   line-height: 25px;
-   font-style: normal;
-   font-weight: 400;
-   background-color: rgba(255,255,255,1);
-   }*/
-  NSString *css = @"<style TYPE=\"text/css\">body{font-family: \"Lato\";font-size:13px;color:rgba(91,91,91,1);}</style>";
-  NSString *sum = [NSString stringWithFormat:@"<!DOCTYPE html><html><head>%@</head><body><div id=\"container\">%@</div></body></html>",css,rawBody];
-  return sum;
-}
-
-#pragma mark - Layout functions
-- (CGRect)orientedZeroFrameFor:(UIViewController *)vc {
-  
-  CGFloat yDelta = [Utilities isIOS7] ? 20.0 : -20.0;
-  return [self orientedFrameFor:vc yDelta:yDelta];
-}
-
-- (CGRect)orientedFrameFor:(UIViewController *)vc yDelta:(CGFloat)yDelta {
-  CGFloat widthToUse = vc.view.bounds.size.width;
-  CGFloat heightToUse = vc.view.bounds.size.height;
-  
-  if ( UIInterfaceOrientationIsLandscape([[[Utilities del] masterRootController] interfaceOrientation]) ) {
-    if ( widthToUse < heightToUse ) {
-      CGFloat s = widthToUse;
-      widthToUse = heightToUse;
-      heightToUse = s;
-    }
-  }
-  
-  return CGRectMake(0.0,yDelta,widthToUse,heightToUse);
-}
-
-
 - (UIImage*)imageForProgram:(NSDictionary *)program {
-  
   NSString *programName = [program objectForKey:@"title"];
   programName = [Utilities titleize:programName];
-  
-  UIImage *image = [[[ContentManager shared] imageCache] objectForKey:programName];
-  if ( image ) {
-    return image;
-  }
-  
-  if ( !image ) {
-    return nil;
-  }
-  
-  return image;
+  return [[[ContentManager shared] imageCache] objectForKey:programName];
 }
 
 /*************************************************************************/
@@ -189,20 +135,9 @@ static DesignManager *singleton = nil;
     [turnable leftFlap].view.layer.transform = CATransform3DMakeRotation([Utilities degreesToRadians:-90.0],
                                                                  0.0, 1.0, 0.0);
   }
-  
   [turnable shadowView].alpha = sinf(percent*1.0);
 }
 
-- (CGFloat)calculateHeightAdjustmentForArticle:(NSDictionary *)article {
-  NSString *body = [article objectForKey:@"body"];
-  
-  CGFloat adjustment = 0.0;
-  if ( [body rangeOfString:@"polldaddy"].location != NSNotFound ) {
-    adjustment += 140.0;
-  }
-  
-  return adjustment;
-}
 
 - (NSString*)aspectCodeForContentItem:(NSDictionary *)item quality:(AssetQuality)quality {
   NSDictionary *image = [Utilities imageObjectFromBlob:item
@@ -217,9 +152,7 @@ static DesignManager *singleton = nil;
     height = [[image objectForKey:@"height"] floatValue];
   }
   if ( height == 0.0 || width == 0.0 ) {
-    
     return @"Sq";
-    
   }
   
   CGFloat margin = 0.1f;
@@ -243,9 +176,7 @@ static DesignManager *singleton = nil;
     CGFloat keyAsFloat = [key floatValue];
     
     if ( ratio <= keyAsFloat+margin && ratio >= keyAsFloat-margin ) {
-      //NSLog(@"Image ratio is %1.4f",ratio);
       NSString *code = [matrix objectForKey:key];
-      //NSLog(@"Returning %@",code);
       return code;
     } else {
       CGFloat diffCandidate = fabsf(keyAsFloat-ratio);
@@ -255,10 +186,9 @@ static DesignManager *singleton = nil;
       }
     }
   }
-  
+
   //NSLog(@"Couldn't make sense of ratio %1.4f, Guessing %@",ratio,closestGuess);
   return closestGuess;
-
 }
 
 - (void)alignTopOf:(UIView *)thisView withView:(UIView *)thatView {
@@ -299,26 +229,6 @@ static DesignManager *singleton = nil;
                                     floatingView.center.y);
 }
 
-- (void)centerRelativeToBaseOfView:(UIView *)floatingView withView:(UIView *)anchoredView constrainedToBaseOf:(UIView *)boundingView {
-  
-  CGFloat floatingBase = floatingView.frame.origin.y+floatingView.frame.size.height;
-  CGFloat anchoredBase = anchoredView.frame.origin.y+anchoredView.frame.size.height;
-  
-  if ( floatingBase >= anchoredBase )
-    return;
-  
-  
-  CGRect oldFrame = floatingView.frame;
-  
-  floatingView.center = CGPointMake(floatingView.center.x,
-                                    anchoredView.center.y);
-  
-  CGFloat baseOfBoundingView = boundingView.frame.origin.y+boundingView.frame.size.height;
-  if ( floatingView.frame.origin.y <= baseOfBoundingView+4.0) {
-    floatingView.frame = oldFrame;
-  }
-}
-
 - (void)avoidNeighborFrame:(CGRect)frame withView:(UIView *)floatingView direction:(NeighborDirection)direction padding:(CGFloat)padding  {
   switch (direction) {
     case NeighborDirectionAbove:
@@ -348,10 +258,6 @@ static DesignManager *singleton = nil;
     default:
       break;
   }
-  
-  /*NSLog(@"CGRect for Floating : OriginX: %1.1f, OriginY: %1.1f, Width: %1.1f, Height, %1.1f",floatingView.frame.origin.x,
-        floatingView.frame.origin.y,floatingView.frame.size.width,floatingView.frame.size.height);*/
-  
 }
 
 - (void)avoidNeighbor:(UIView *)neighbor
@@ -386,8 +292,6 @@ static DesignManager *singleton = nil;
       break;
   }
 }
-
-
 
 #pragma mark - Fonts
 - (UIFont*)bodyFontBold:(CGFloat)size {
@@ -493,36 +397,28 @@ static DesignManager *singleton = nil;
   dv.backgroundColor = [self silverCurtainsColor];
   dv.textLabel.backgroundColor = [self silverCurtainsColor];
   dv.textLabel.textColor = [self charcoalColor];
-  //dv.backgroundColor = [UIColor purpleColor];
   
   NSString *cookedString = [text uppercaseString];
   
   if ( [text rangeOfString:@":"].location != NSNotFound ) {
-  
     NSMutableAttributedString *mAttr = [[NSMutableAttributedString alloc] initWithString:[text uppercaseString]];
-  
-    UIFont *boldFont = [UIFont fontWithName:@"Lato-Bold"
-                                     size:dv.textLabel.font.pointSize];
-    UIFont *regularFont = [UIFont fontWithName:@"Lato-Regular"
-                                        size:dv.textLabel.font.pointSize];
-  
+    UIFont *boldFont = [UIFont fontWithName:@"Lato-Bold" size:dv.textLabel.font.pointSize];
+    UIFont *regularFont = [UIFont fontWithName:@"Lato-Regular" size:dv.textLabel.font.pointSize];
   
     NSRange colonRange = [text rangeOfString:@":"];
     NSRange cooked = NSMakeRange(0, colonRange.location);
     NSRange secondPartCooked = NSMakeRange(colonRange.location, text.length-colonRange.location);
-  
+
     [mAttr addAttribute:NSFontAttributeName value:boldFont range:cooked];
     [mAttr addAttribute:NSFontAttributeName value:regularFont range:secondPartCooked];
     dv.textLabel.attributedText = mAttr;
   } else {
-    
+
     BOOL bold = NO;
     if ( [text rangeOfString:@"LATEST EDITION"].location != NSNotFound ) {
       bold = YES;
     }
-    
-    [dv.textLabel titleizeText:cookedString
-                      bold:bold];
+    [dv.textLabel titleizeText:cookedString bold:bold];
   }
 
   CGSize s = [dv.textLabel.text sizeOfStringWithFont:dv.textLabel.font
@@ -538,7 +434,6 @@ static DesignManager *singleton = nil;
 }
 
 #pragma mark - Shadowing
-
 - (void)applyBaseShadowTo:(UIView *)view {
   view.layer.shadowColor = [UIColor blackColor].CGColor;
   view.layer.shadowOpacity = 0.5;
@@ -583,8 +478,6 @@ static DesignManager *singleton = nil;
   view.layer.shadowColor = [self kpccDarkOrangeColor].CGColor;
   view.layer.shadowOpacity = 0.5;
   view.layer.shadowOffset = CGSizeMake(-1.0,0.0);
-  //UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:view.bounds];
-  //view.layer.shadowPath = shadowPath.CGPath;
 }
 
 #pragma mark - Label styling
@@ -598,25 +491,16 @@ static DesignManager *singleton = nil;
 - (void)globalSetTitleTo:(NSString *)title forButton:(UIButton *)button {
   [button setTitle:title forState:UIControlStateNormal];
   [button setTitle:title forState:UIControlStateHighlighted];
-  
-  [button.titleLabel titleizeText:button.titleLabel.text
-                             bold:NO];
-  
+  [button.titleLabel titleizeText:button.titleLabel.text bold:NO];
 }
 
 - (void)globalSetImageTo:(NSString *)image forButton:(UIButton *)button {
-  
-  if ( [Utilities pureNil:image] ) {
+  if ([Utilities pureNil:image]) {
     [button setImage:nil forState:UIControlStateNormal];
     [button setImage:nil forState:UIControlStateHighlighted];
     return;
   }
-  
-  NSString *imgPath = [[NSBundle mainBundle] pathForResource:image
-                                                      ofType:@""];
-  
-
-  
+  NSString *imgPath = [[NSBundle mainBundle] pathForResource:image ofType:@""];
   UIImage *img = [UIImage imageWithContentsOfFile:imgPath];
   [button setImage:img forState:UIControlStateHighlighted];
   [button setImage:img forState:UIControlStateNormal];
@@ -632,16 +516,13 @@ static DesignManager *singleton = nil;
 }
 
 #pragma mark - XIBs
-
 /*************************************************************************************************************
  -- Developer Note --
  xibForPlatformWithName is a core piece of runtime functionality that is used throughout the app. It will decicde which resource to use
  based on the current idiom (iPad or iPhone) and the current orientation. Note a lack of the _iPad suffix on the resource name will imply
  "iPhone" as there is no concept of *_iPhone.xib. Lack of "Landscape" will imply portrait as there is no concept of *Portrait.xib
- 
 */
 - (NSString*)xibForPlatformWithName:(NSString *)root {
-  
   NSString *orientation = @"";
   if ( [Utilities isLandscape] ) {
     orientation = @"Landscape";
@@ -656,22 +537,19 @@ static DesignManager *singleton = nil;
       return s;
     }
   }
-  
   return [NSString stringWithFormat:@"%@%@",root,orientation];
 }
 
 - (NSString*)xibit:(NSString *)root style:(NSInteger)style {
-  
   // TODO: This is a hacky thing. If it's shared then figure out a good way to share between
   // templates
   if ( [root rangeOfString:@"Split"].location != NSNotFound ) {
     style = 0;
   }
-  
+
   if ( [Utilities isIpad] ) {
     return [NSString stringWithFormat:@"%@%@_iPad",root,[NSNumber numberWithInt:style]];
   }
-
   return [NSString stringWithFormat:@"%@%@",root,[NSNumber numberWithInt:style]];
 }
 
@@ -706,10 +584,6 @@ static DesignManager *singleton = nil;
     }
   }
 }
-
-
-
-
 
 #pragma mark - Colors
 - (UIColor*)puttingGreenColor:(CGFloat)alpha {
@@ -1159,7 +1033,6 @@ static DesignManager *singleton = nil;
       break;
       
   }
-  
   return color;
 }
 
