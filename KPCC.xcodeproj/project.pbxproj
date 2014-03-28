@@ -1660,7 +1660,6 @@
 		28036AAC1718A344007DBDE2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28683CBA170B9BBD00346B6E /* UIKit.framework */; };
 		28036AAD1718A344007DBDE2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28683CBC170B9BBD00346B6E /* Foundation.framework */; };
 		28036AAE1718A344007DBDE2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28683CBE170B9BBD00346B6E /* CoreGraphics.framework */; };
-		28036AB11718A344007DBDE2 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2832FEFE1714CC7D009FF2F0 /* NewRelicAgent.framework */; };
 		28036AB31718A344007DBDE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28683CC3170B9BBD00346B6E /* InfoPlist.strings */; };
 		28036AB91718A344007DBDE2 /* SCPRPlayerWidgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E7C9170E2BE300ED18FB /* SCPRPlayerWidgetViewController.xib */; };
 		28036ABA1718A344007DBDE2 /* SCPRPlayerWidgetViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E7CC170E2C1500ED18FB /* SCPRPlayerWidgetViewController_iPad.xib */; };
@@ -1698,7 +1697,6 @@
 		2832FEF71714C9FD009FF2F0 /* Collection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2832FEF61714C9FD009FF2F0 /* Collection.m */; };
 		2832FEFA1714C9FE009FF2F0 /* Keyword.m in Sources */ = {isa = PBXBuildFile; fileRef = 2832FEF91714C9FE009FF2F0 /* Keyword.m */; };
 		2832FEFD1714CA00009FF2F0 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2832FEFC1714C9FF009FF2F0 /* Segment.m */; };
-		2832FEFF1714CC7D009FF2F0 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2832FEFE1714CC7D009FF2F0 /* NewRelicAgent.framework */; };
 		2832FF041715F114009FF2F0 /* SCPRVolumeWidgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2832FF021715F114009FF2F0 /* SCPRVolumeWidgetViewController.m */; };
 		2832FF051715F114009FF2F0 /* SCPRVolumeWidgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2832FF031715F114009FF2F0 /* SCPRVolumeWidgetViewController.xib */; };
 		2832FF071715F161009FF2F0 /* SCPRVolumeWidgetViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2832FF061715F161009FF2F0 /* SCPRVolumeWidgetViewController_iPad.xib */; };
@@ -2983,7 +2981,6 @@
 				28036AAC1718A344007DBDE2 /* UIKit.framework in Frameworks */,
 				28036AAD1718A344007DBDE2 /* Foundation.framework in Frameworks */,
 				28036AAE1718A344007DBDE2 /* CoreGraphics.framework in Frameworks */,
-				28036AB11718A344007DBDE2 /* NewRelicAgent.framework in Frameworks */,
 				25A8249D1757C9310061C889 /* FacebookSDK.framework in Frameworks */,
 				25332B8E1760FD3F00ADAB3B /* Parse.framework in Frameworks */,
 			);
@@ -3017,7 +3014,6 @@
 				28683CBD170B9BBD00346B6E /* Foundation.framework in Frameworks */,
 				28683CBF170B9BBD00346B6E /* CoreGraphics.framework in Frameworks */,
 				76658B5718E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */,
-				2832FEFF1714CC7D009FF2F0 /* NewRelicAgent.framework in Frameworks */,
 				25A8249C1757C9310061C889 /* FacebookSDK.framework in Frameworks */,
 				25332B8D1760FD3F00ADAB3B /* Parse.framework in Frameworks */,
 			);
@@ -6816,7 +6812,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/KPCC/ThirdParty/NewRelic\"",
 					"\"$(SRCROOT)/../Libraries/FacebookSDK\"",
 					"\"$(SRCROOT)/../Libraries\"",
 				);
@@ -6853,7 +6848,6 @@
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/KPCC/ThirdParty/NewRelic\"",
 					"\"$(SRCROOT)/../Libraries/FacebookSDK\"",
 					"\"$(SRCROOT)/../Libraries\"",
 				);
@@ -6933,7 +6927,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ben Hochberg (UG5AKGT4FN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/KPCC/ThirdParty/NewRelic\"",
 					"\"$(SRCROOT)/../Libraries/FacebookSDK\"",
 					"\"$(SRCROOT)/../Libraries\"",
 				);
@@ -6979,7 +6972,6 @@
 				FACEBOOK_IDENTIFIER = 580965191936158;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/KPCC/ThirdParty/NewRelic\"",
 					"\"$(SRCROOT)/../Libraries/FacebookSDK\"",
 					"\"$(SRCROOT)/../Libraries\"",
 				);
@@ -7027,7 +7019,6 @@
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/KPCC/ThirdParty/NewRelic\"",
 					"\"$(SRCROOT)/../Libraries/FacebookSDK\"",
 					"\"$(SRCROOT)/../Libraries\"",
 				);
@@ -7079,7 +7070,6 @@
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/KPCC/ThirdParty/NewRelic\"",
 					"\"$(SRCROOT)/../Libraries/FacebookSDK\"",
 					"\"$(SRCROOT)/../Libraries\"",
 				);
@@ -7193,7 +7183,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/KPCC/ThirdParty/NewRelic\"",
 					"\"$(SRCROOT)/../Libraries/FacebookSDK\"",
 					"\"$(SRCROOT)/../Libraries\"",
 				);
@@ -7235,7 +7224,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ben Hochberg (UG5AKGT4FN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/KPCC/ThirdParty/NewRelic\"",
 					"\"$(SRCROOT)/../Libraries/FacebookSDK\"",
 					"\"$(SRCROOT)/../Libraries\"",
 				);
