@@ -48,12 +48,10 @@
   [[AnalyticsManager shared] setSavedScreenContent:ScreenContentTypeUnknown];
   [[ContentManager shared] initDataStores];
   
-#ifdef STOCK_PLAYER
   [[AVAudioSession sharedInstance] setDelegate: self];
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
   UInt32 doChangeDefaultRoute = 1;
   AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryDefaultToSpeaker, sizeof(doChangeDefaultRoute), &doChangeDefaultRoute);
-#endif
 
   if ( [Utilities isIOS7] ) {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

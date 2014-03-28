@@ -983,15 +983,6 @@
 }
 
 - (void)bootUpQueue:(id)cell {
-  
-#ifndef STOCK_PLAYER
-  [[NSNotificationCenter defaultCenter]
-   addObserver:self
-   selector:@selector(audioPlaybackStateCallback:)
-   name:ASStatusChangedNotification
-   object:nil];
-#endif
-  
   if ( !cell ) {
     cell = [self.queueContent objectAtIndex:0];
   }
@@ -1013,59 +1004,6 @@
   }
   
   [[QueueManager shared] start:cell];
-  
-}
-
-- (void)audioPlaybackStateCallback:(NSNotification*)note {
-  
-#ifndef STOCK_PLAYER
-  if ( [AudioManager shared].audioStreamer.state == AS_STOPPING &&
-      [AudioManager shared].audioStreamer.stopReason == AS_STOPPING_TEMPORARILY ) {
-      self.openTrapForResume = YES;
-      return;
-  }
-  
-  
-  if ( self.openTrapForStop ) {
-    
-    if ( [[AudioManager shared] isPlayingAnyAudio] ) {
-      
-      [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:ASStatusChangedNotification
-     object:nil];
-    
-      self.openTrapForResume = NO;
-      self.openTrapForStop = NO;
-    
-      [[AudioManager shared] popSilence];
-      [self.queueTable reloadData];
-    }
-    
-    return;
-    
-  }
-  
-  if ( [[AudioManager shared] isPlayingAnyAudio] ) {
-    
-    if ( self.seeking ) {
-      if ( !self.openTrapForStop ) {
-        self.openTrapForStop = YES;
-        
-        SCPRQueueCellViewController *qvc = (SCPRQueueCellViewController*)[[QueueManager shared] currentlyPlayingSegment];
-        [[AudioManager shared] seekStream:[qvc.relatedSegment.seekposition doubleValue]];
-      }
-    } else {
-      
-      [[NSNotificationCenter defaultCenter]
-       removeObserver:self
-       name:ASStatusChangedNotification
-       object:nil];
-      
-      [[AudioManager shared] popSilence];
-    }
-  }
-#endif
   
 }
 

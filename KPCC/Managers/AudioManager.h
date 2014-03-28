@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AudioStreamer.h"
 #import <AVFoundation/AVFoundation.h>
 
 typedef void (^AudioFadedCallback)(void);
@@ -43,7 +42,6 @@ typedef enum {
 
 @interface AudioManager : NSObject<AVAudioPlayerDelegate> {
   
-  AudioStreamer *_audioStreamer;
   NSMutableArray *_apiStreamerPool;
   NSMutableDictionary *_apiStreamerLocks;
   
@@ -65,10 +63,8 @@ typedef enum {
   StreamingContentType _streamingContentType;
   
   AudioFadedCallback fadeCallback;
-  
 }
 
-@property (nonatomic,strong) AudioStreamer *audioStreamer;
 @property (nonatomic,strong) AVPlayer *audioPlayer;
 @property (nonatomic,strong) NSTimer *audioParsingTimer;
 @property (nonatomic,strong) NSString *lastPlayedStreamURLString;
@@ -111,9 +107,8 @@ typedef enum {
 - (AVAudioPlayer*)requestAudioPlayer:(NSString*)urlString;
 - (void)unlockAudioPlayer:(AVAudioPlayer*)avp;
 
-// AudioStreamer
+// AudioPlayer
 - (void)buildStreamer:(NSString*)urlForStream;
-- (void)buildApiStreamer:(NSString*)urlForStream;
 - (void)takedownStreamer;
 - (void)armAudioParsingTimer;
 - (void)disarmAudioParsingTimer;

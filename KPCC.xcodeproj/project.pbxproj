@@ -375,10 +375,6 @@
 		256421DD1810750E002F1C6A /* SCPRDeluxeNewsCellSingle23_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256421DA1810750E002F1C6A /* SCPRDeluxeNewsCellSingle23_iPadLandscape.xib */; };
 		256421DE1810750E002F1C6A /* SCPRDeluxeNewsCellSingleSq_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256421DB1810750E002F1C6A /* SCPRDeluxeNewsCellSingleSq_iPadLandscape.xib */; };
 		256421DF1810750E002F1C6A /* SCPRDeluxeNewsCellSingleSq_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256421DB1810750E002F1C6A /* SCPRDeluxeNewsCellSingleSq_iPadLandscape.xib */; };
-		2567341C17EA179E00B80921 /* UIDevice+Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 2567341B17EA179E00B80921 /* UIDevice+Hardware.m */; };
-		2567341D17EA179E00B80921 /* UIDevice+Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 2567341B17EA179E00B80921 /* UIDevice+Hardware.m */; };
-		2567342417EA203500B80921 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2567342317EA203500B80921 /* AudioStreamer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		2567342517EA203500B80921 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2567342317EA203500B80921 /* AudioStreamer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2567342817EA364400B80921 /* radio_tower_live.png in Resources */ = {isa = PBXBuildFile; fileRef = 2567342617EA364400B80921 /* radio_tower_live.png */; };
 		2567342917EA364400B80921 /* radio_tower_live.png in Resources */ = {isa = PBXBuildFile; fileRef = 2567342617EA364400B80921 /* radio_tower_live.png */; };
 		2567342A17EA364400B80921 /* radio_tower_live@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2567342717EA364400B80921 /* radio_tower_live@2x.png */; };
@@ -2056,10 +2052,6 @@
 		256421D518107391002F1C6A /* SCPRDeluxeNewsCellSingle34_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsCellSingle34_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeNewsCellSingle34_iPadLandscape.xib; sourceTree = "<group>"; };
 		256421DA1810750E002F1C6A /* SCPRDeluxeNewsCellSingle23_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsCellSingle23_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeNewsCellSingle23_iPadLandscape.xib; sourceTree = "<group>"; };
 		256421DB1810750E002F1C6A /* SCPRDeluxeNewsCellSingleSq_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsCellSingleSq_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeNewsCellSingleSq_iPadLandscape.xib; sourceTree = "<group>"; };
-		2567341A17EA179E00B80921 /* UIDevice+Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+Hardware.h"; path = "ThirdParty/AudioStreamer/UIDevice+Hardware.h"; sourceTree = "<group>"; };
-		2567341B17EA179E00B80921 /* UIDevice+Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+Hardware.m"; path = "ThirdParty/AudioStreamer/UIDevice+Hardware.m"; sourceTree = "<group>"; };
-		2567342217EA203500B80921 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioStreamer.h; path = ThirdParty/AudioStreamer/AudioStreamer.h; sourceTree = "<group>"; };
-		2567342317EA203500B80921 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioStreamer.m; path = ThirdParty/AudioStreamer/AudioStreamer.m; sourceTree = "<group>"; };
 		2567342617EA364400B80921 /* radio_tower_live.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = radio_tower_live.png; sourceTree = "<group>"; };
 		2567342717EA364400B80921 /* radio_tower_live@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "radio_tower_live@2x.png"; sourceTree = "<group>"; };
 		2567DE6518203B76008EA2FA /* icon-abstract-view-externalarticle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-abstract-view-externalarticle.png"; sourceTree = "<group>"; };
@@ -3367,17 +3359,6 @@
 				255FD5DF17D0043600F03A0B /* SCPRDeluxeNewsCellSingle32_iPad.xib */,
 			);
 			name = "3:2";
-			sourceTree = "<group>";
-		};
-		2567340D17EA177600B80921 /* AudioStreamer */ = {
-			isa = PBXGroup;
-			children = (
-				2567342217EA203500B80921 /* AudioStreamer.h */,
-				2567342317EA203500B80921 /* AudioStreamer.m */,
-				2567341A17EA179E00B80921 /* UIDevice+Hardware.h */,
-				2567341B17EA179E00B80921 /* UIDevice+Hardware.m */,
-			);
-			name = AudioStreamer;
 			sourceTree = "<group>";
 		};
 		256C51A81728581C00D4054C /* curated */ = {
@@ -4792,7 +4773,6 @@
 				76658AC618E1F43700026176 /* Flurry */,
 				76A3086F18B696630065D4B1 /* iRate */,
 				25FA08631821D758008BADF2 /* DFP */,
-				2567340D17EA177600B80921 /* AudioStreamer */,
 				25AC7D2917BB00B8008B1599 /* XMLD */,
 				259C4A061721ED2700FC3CEC /* UIDeviceAdditions */,
 				28C9E77A170D065700ED18FB /* SBJson */,
@@ -6610,12 +6590,10 @@
 				280A3BEA17A896260077763C /* FeedbackManager.m in Sources */,
 				280A3BF117A89A1D0077763C /* SCPRFeedbackViewController.m in Sources */,
 				259EB08717B0208C0009EE4C /* UIImage+StackBlur.m in Sources */,
-				2567341D17EA179E00B80921 /* UIDevice+Hardware.m in Sources */,
 				255B583617B1A2F9004E9712 /* SCPRCompositeNewsViewController.m in Sources */,
 				255B583C17B1A400004E9712 /* SCPRCompSingleCell.m in Sources */,
 				255B584017B1A419004E9712 /* SCPRCompDoubleCell.m in Sources */,
 				25A70BB017E135800024E654 /* SCPROnboardingFlowViewController.m in Sources */,
-				2567342517EA203500B80921 /* AudioStreamer.m in Sources */,
 				257001D3182196B1008B43F6 /* SCPREditionShortListViewController.m in Sources */,
 				255B584417B1A687004E9712 /* SCPRCompositeCellViewController.m in Sources */,
 				2547FC4A17B5930D009F35E6 /* SCPREditionMineralViewController.m in Sources */,
@@ -6662,7 +6640,6 @@
 				2832FEE917135027009FF2F0 /* SCPRManagedObject.m in Sources */,
 				2832FEF217149C72009FF2F0 /* AnalyticsManager.m in Sources */,
 				2832FEF71714C9FD009FF2F0 /* Collection.m in Sources */,
-				2567342417EA203500B80921 /* AudioStreamer.m in Sources */,
 				2832FEFA1714C9FE009FF2F0 /* Keyword.m in Sources */,
 				257001EC1821CEBF008B43F6 /* SCPRDFPViewController.m in Sources */,
 				2832FEFD1714CA00009FF2F0 /* Segment.m in Sources */,
@@ -6728,7 +6705,6 @@
 				2527F87517594D5B00A85319 /* SCPRShareCellViewController.m in Sources */,
 				2527F87C17594D8B00A85319 /* SCPRShareDrawerViewController.m in Sources */,
 				2527F88217594DB600A85319 /* SCPRShareDrawerCell.m in Sources */,
-				2567341C17EA179E00B80921 /* UIDevice+Hardware.m in Sources */,
 				25A70BFF17E13DC40024E654 /* SCPROnboardingCardViewController.m in Sources */,
 				25CBBE94175E5ED40093CE5F /* SCPRModalListPickerViewController.m in Sources */,
 				25CBBE9A175E6A680093CE5F /* SCPRListableObject.m in Sources */,
@@ -6888,7 +6864,6 @@
 					"${inherited}",
 					USE_PARSE,
 					USE_BACKGROUND_PERSISTENCE,
-					STOCK_PLAYER,
 					MOST_VIEWED_STYLE_FETCHING,
 					SUPPORT_LANDSCAPE,
 					"PRODUCTION=1",
@@ -7015,7 +6990,6 @@
 					"${inherited}",
 					USE_PARSE,
 					USE_BACKGROUND_PERSISTENCE,
-					STOCK_PLAYER,
 					MOST_VIEWED_STYLE_FETCHING,
 					SUPPORT_LANDSCAPE,
 					AGGRESSIVE_DEALLOCATION,
@@ -7064,7 +7038,6 @@
 					"${inherited}",
 					USE_BACKGROUND_PERSISTENCE,
 					SANDBOX_PUSHES,
-					STOCK_PLAYER,
 					SUPPORT_LANDSCAPE,
 					USE_PARSE,
 					MOST_VIEWED_STYLE_FETCHING,
@@ -7117,7 +7090,6 @@
 					"${inherited}",
 					USE_PARSE,
 					USE_BACKGROUND_PERSISTENCE,
-					STOCK_PLAYER,
 					MOST_VIEWED_STYLE_FETCHING,
 					SUPPORT_LANDSCAPE,
 					AGGRESSIVE_DEALLOCATION,

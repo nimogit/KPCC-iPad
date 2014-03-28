@@ -455,49 +455,7 @@
 }
 
 - (void)updateUIforAudioState {
-#ifdef DEBUG
-#ifdef STOCK_PLAYER
-  switch ( [[[AudioManager shared] audioPlayer] status] ) {
-      
-  }
-#else
-  switch ([[[AudioManager shared] audioStreamer] state] ) {
-    case AS_INITIALIZED:
-      NSLog(@"AS : Initialized");
-      break;
-    case AS_PLAYING:
-      NSLog(@"AS : Playing");
-      break;
-    case AS_PAUSED:
-      NSLog(@"AS : Paused");
-      break;
-    case AS_BUFFERING:
-      NSLog(@"AS : Buffering");
-      break;
-    case AS_WAITING_FOR_DATA:
-      NSLog(@"AS : Waitin for data");
-      break;
-    case AS_STOPPING:
-      NSLog(@"AS : Stopping");
-      break;
-    case AS_FLUSHING_EOF:
-      NSLog(@"AS : Flushing EOF");
-      break;
-    case AS_STARTING_FILE_THREAD:
-      NSLog(@"AS : Starting file thread...");
-      break;
-    case AS_STOPPED:
-      NSLog(@"AS : Stopped");
-      break;
-    case AS_WAITING_FOR_QUEUE_TO_START:
-      NSLog(@"AS : Waiting for Queue to start");
-      break;
-      default:
-      NSLog(@"AS : Unknown State");
-      break;
-  }
-#endif
-#endif
+
   if ( [[AudioManager shared] isPlayingAnyAudio] ) {
     [[DesignManager shared] globalSetImageTo:@"pauseButton.png"
                                    forButton:self.actionButton];
@@ -509,17 +467,12 @@
 
 - (void)handleLiveStream:(BOOL)live {
   if ( live ) {
-  
-    
     [[NetworkManager shared] fetchProgramInformationFor:[NSDate date]
                                                 display:self];
-    
-    
+
     [[ScheduleManager shared] armScheduleUpdater];
-    
-#ifdef STOCK_PLAYER
+
     [self disableScrubber];
-#endif
     
   } else {
 
@@ -533,15 +486,10 @@
     [[ScheduleManager shared] disarmScheduleUpdater];
     
     [self.listenLiveLabel setTextColor:[[DesignManager shared] darkoalColor]];
-    
-#ifdef STOCK_PLAYER
-    [self enableScrubber];
-#endif
-    
-  }
-  
-  
 
+    [self enableScrubber];
+
+  }
 }
 
 - (void)updateTimeText:(double)progress ofDuration:(double)duration {
@@ -693,13 +641,7 @@
     
     
     if ( [[AudioManager shared] paused] ) {
-      
-#ifdef STOCK_PLAYER
       [[AudioManager shared] unpauseStream];
-#else
-      [[AudioManager shared] startStream:nil];
-#endif
-
     } else {
       if ( [[QueueManager shared] currentlyPlayingSegment] ) {
         if ( ![[QueueManager shared] queueIsEmpty] ) {
@@ -710,21 +652,13 @@
           }
         }
       } else {
-        
-        /*[[DesignManager shared] globalSetImageTo:@"pauseButton.png"
-                                       forButton:self.actionButton];*/
-        
         // Go to Live Stream
         [[AudioManager shared] startStream:url];
         [[ContentManager shared] setSkipParse:YES];
         [[ContentManager shared] saveContextOnMainThread];
-        
       }
-    
-
     }
   }
-  
 }
 
 - (void)overrideStream:(NSString *)url {

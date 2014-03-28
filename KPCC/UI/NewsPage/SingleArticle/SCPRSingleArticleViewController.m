@@ -1297,12 +1297,7 @@
 }
 
 - (void)adjustUIForQueue:(NSNotification*)note {
-  
-  NSString *playerState = @"PLAYING NOW";
-  if ( [[AudioManager shared].audioStreamer isPaused] ) {
-    playerState = @"PAUSED";
-  }
-  
+
   if ( [[QueueManager shared] articleIsInQueue:self.relatedArticle] ) {
     if ( [[QueueManager shared] articleIsPlayingNow:self.relatedArticle] ) {
       

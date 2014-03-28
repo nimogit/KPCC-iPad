@@ -14,9 +14,6 @@
 #define kSavePointThreshold 120 // 12 seconds
 
 static AudioManager *singleton = nil;
-//static NSString *kLiveStreamURL = @"http://live.scpr.org/kpcclive?ua=SCPRWEB";
-//static NSString *kLiveStreamURL = @"http://nerdoutproductions.com/products/downloadmp3/unrock";
-//static NSString *kLiveStreamURL = @"http://media.scpr.org/audio/upload/2013/04/04/Smuggling.mp3";
 
 @implementation AudioManager
 
@@ -35,14 +32,7 @@ static AudioManager *singleton = nil;
 - (void)prime {
   self.savedVolume = -1.0;
   self.currentPlayerVolume = 0.5;
-  
-#ifndef STOCK_PLAYER
-  [self.audioStreamer addObserver:self
-                       forKeyPath:@"state"
-                          options:NSKeyValueObservingOptionNew
-                          context:nil];
-#endif
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(segmentCompleted)
                                                name:AVPlayerItemDidPlayToEndTimeNotification
@@ -144,7 +134,7 @@ static AudioManager *singleton = nil;
   [self unlockAudioPlayer:player];
 }
 
-#pragma mark - AudioStreamer
+#pragma mark - AudioPlayer
 - (void)buildStreamer:(NSString*)urlForStream {
   
   if ( !urlForStream ) {
@@ -156,7 +146,6 @@ static AudioManager *singleton = nil;
   NSString *sanitized = [Utilities urlize:urlForStream];
   NSURL *url = [NSURL URLWithString:sanitized];
   
-#ifdef STOCK_PLAYER
   @try {
     [self.audioPlayer removeObserver:self
                           forKeyPath:@"rate"];
@@ -166,68 +155,19 @@ static AudioManager *singleton = nil;
   
   self.audioPlayer = [[AVPlayer alloc] initWithURL:url];
   
-
-  
   [self.audioPlayer addObserver:self
                        forKeyPath:@"rate"
                           options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
                           context:NULL];
-#else
-  self.audioStreamer = [[AudioStreamer alloc] initWithURL:url];
-  
-  [self.audioStreamer addObserver:self
-                       forKeyPath:@"state"
-                          options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
-                          context:NULL];
-  
-  [[NSNotificationCenter defaultCenter]
-   addObserver:self
-   selector:@selector(audioPlaybackStateCallback:)
-   name:ASStatusChangedNotification
-   object:self.audioStreamer];
-#endif
-  
+
   [self armAudioParsingTimer];
 }
 
-- (void)buildApiStreamer:(NSString *)urlForStream {
- /* NSURL *url = [NSURL fileURLWithPath:urlForStream];
-  NSError *error = nil;
-  self.apiStreamer = [[AVAudioPlayer alloc] initWithContentsOfURL:url
-                                                            error:&error];
-
-  
-  [self armAudioParsingTimer];*/
-}
-
 - (void)takedownStreamer {
-#ifdef STOCK_PLAYER
   [self disarmAudioParsingTimer];
   [self.audioPlayer removeTimeObserver:self.timeObserver];
   [self.audioPlayer pause];
   self.audioPlayer = nil;
-#else
-  if ( self.audioStreamer ) {
-    
-    [self.audioStreamer removeObserver:self
-                             forKeyPath:@"state"];
-    
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:ASStatusChangedNotification
-     object:self.audioStreamer];
-  
-    [self disarmAudioParsingTimer];
-  
-    [self.audioStreamer stop];
-    self.audioStreamer = nil;
-  }
-#endif
-  
-#ifndef STOCK_PLAYER
-  [self.delegate disableScrubber];
-#endif
-  
 }
 
 - (BOOL)isPlayingOnDemand {
@@ -235,24 +175,16 @@ static AudioManager *singleton = nil;
 }
 
 - (void)armAudioParsingTimer {
-  
-#ifdef STOCK_PLAYER
+
   if ( self.disarmAfterResume ) {
     self.disarmAfterResume = NO;
     
     @try {
-      
       [self.audioPlayer removeObserver:self forKeyPath:@"status"];
-      
     } @catch (NSException *e) {
       // Not armed
     }
-    
   }
-  
-
-  
-
   
   if ( self.timeObserver )
     return;
@@ -266,38 +198,17 @@ static AudioManager *singleton = nil;
                                               [weakself updateAudioFrame:nil];
                                               
                                             }];
-  
-  
-#else
-  self.audioParsingTimer = [NSTimer
-                                   scheduledTimerWithTimeInterval:0.1
-                                   target:self
-                                   selector:@selector(updateAudioFrame:)
-                                   userInfo:nil
-                                   repeats:YES];
-#endif
 }
 
 - (void)disarmAudioParsingTimer {
   
-#ifdef STOCK_PLAYER
   if ( self.timeObserver ) {
     [self.audioPlayer removeTimeObserver:self.timeObserver];
     self.timeObserver = nil;
   }
-#else
-  if ( self.audioParsingTimer ) {
-    if ( [self.audioParsingTimer isValid] ) {
-      [self.audioParsingTimer invalidate];
-    }
-    self.audioParsingTimer = nil;
-  }
-#endif
-  
 }
 
 - (void)audioPlaybackStateCallback:(NSNotification*)notification {
-#ifdef STOCK_PLAYER
   if ( self.bootingLiveStream ) {
     self.bootingLiveStream = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -306,58 +217,10 @@ static AudioManager *singleton = nil;
        object:nil];
     });
   }
-#else
-  if ( [self.audioStreamer isPlaying] ) {
-    
-    if ( self.bootingLiveStream ) {
-      self.bootingLiveStream = NO;
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"live_stream_started"
-         object:nil];
-      });
-    }
-    
-    if ( !self.audioParsingTimer || ![self.audioParsingTimer isValid] ) {
-      
-      self.seeking = NO;
-      
-
-      
-      [self performSelectorOnMainThread:@selector(armAudioParsingTimer)
-                             withObject:nil
-                          waitUntilDone:YES];
-      
-    }
-  }
-  if ( [self.audioStreamer isFinishing] ) {
-    if ( self.streamingContentType == StreamingContentTypeOnDemand ) {
-      self.trapOpen = YES;
-      return;
-    }
-  }
-  if ( self.trapOpen ) {
-    if ( [self.audioStreamer isIdle] ) {
-      self.trapOpen = NO;
-      NSLog(@"Trap was open.. popping queue");
-      
-      [self disarmAudioParsingTimer];
-      [self performSelectorOnMainThread:@selector(popQueue)
-                             withObject:nil
-                          waitUntilDone:NO];
-    }
-  }
-#endif
 }
 
 - (BOOL)isPlayingAnyAudio {
-#ifdef STOCK_PLAYER
   return [self.audioPlayer rate] > 0.0;
-#else
-  return self.audioStreamer.state != AS_STOPPED &&
-  self.audioStreamer.state != AS_PAUSED &&
-  self.audioStreamer.state != AS_INITIALIZED;
-#endif
 }
 
 - (void)popQueue {
@@ -379,7 +242,6 @@ static AudioManager *singleton = nil;
       
     }
     
-#ifdef STOCK_PLAYER
     AVPlayerItem *ci = self.audioPlayer.currentItem;
     
     if ( !ci || ci.duration.timescale == 0 ) {
@@ -401,71 +263,38 @@ static AudioManager *singleton = nil;
     if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
       normalizedTime = (double) self.audioPlayer.currentTime.value / (double) endTime.value;
     }
-    
-#else
-    if ( self.audioStreamer.bitRate != 0.0 ) {
 
-      double progress = self.audioStreamer.progress;
-      double duration = self.audioStreamer.duration;
-#endif
-      if ( duration > 0.0 ) {
-       
-        if ( [[QueueManager shared] currentlyPlayingSegment] ) {
-          BOOL commit = self.ticksSinceSave > kSavePointThreshold;
-          if ( commit ) {
-            self.ticksSinceSave = 0;
-          } else {
-            self.ticksSinceSave++;
-          }
-          
-          [self.delegate updateTimeText:progress ofDuration:duration];
-          
-          if ( progress / duration >= 0.5 ) {
-            [[QueueManager shared] segmentListenedTo];
-          }
-          
-#ifdef STOCK_PLAYER
-          [[QueueManager shared] writeSegmentProgress:normalizedTime commit:commit];
-#else
-          [[QueueManager shared] writeSegmentProgress:progress/duration commit:commit];
-#endif
+    if ( duration > 0.0 ) {
+      if ( [[QueueManager shared] currentlyPlayingSegment] ) {
+        BOOL commit = self.ticksSinceSave > kSavePointThreshold;
+        if ( commit ) {
+          self.ticksSinceSave = 0;
+        } else {
+          self.ticksSinceSave++;
         }
         
+        [self.delegate updateTimeText:progress ofDuration:duration];
         
-#ifdef STOCK_PLAYER
-        
-        
+        if ( progress / duration >= 0.5 ) {
+          [[QueueManager shared] segmentListenedTo];
+        }
 
-        [self.delegate updateScrubber:normalizedTime];
-        self.currentStreamSeekTime = normalizedTime;
-#else
-        [self.delegate updateScrubber:progress / duration];
-        self.currentStreamSeekTime = progress / duration;
-#endif
-        
-#ifndef STOCK_PLAYER
-        [self.delegate enableScrubber];
-#endif
-        
-      } else {
-        [self.delegate updateScrubber:1.0];
-        
-#ifndef STOCK_PLAYER
-        [self.delegate disableScrubber];
-#endif
+        [[QueueManager shared] writeSegmentProgress:normalizedTime commit:commit];
       }
+      
+      [self.delegate updateScrubber:normalizedTime];
+      self.currentStreamSeekTime = normalizedTime;
+
+    } else {
+      [self.delegate updateScrubber:1.0];
     }
-    
-#ifndef STOCK_PLAYER
+
   }
-#endif
-  
 }
 
 
 - (void)startStream:(NSString*)streamURL {
 
-  
   if ( self.savedVolume >= 0.0 ) {
     [self adjustVolume:self.savedVolume];
     self.savedVolume = -1.0;
@@ -494,30 +323,20 @@ static AudioManager *singleton = nil;
   
   if ( self.paused ) {
     if ( !self.rebootStream ) {
-#ifndef STOCK_PLAYER
-      [self.audioStreamer pause];
-#else
       [self.audioPlayer pause];
-#endif
     } else {
       [self buildStreamer:finalStream];
       self.streamPlaying = YES;
-#ifdef STOCK_PLAYER
+
       self.audioPlayer.allowsExternalPlayback = YES;
       [self.audioPlayer play];
-      
       [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-      
-#else
-      [self.audioStreamer start];
-#endif
     }
   } else {
     
     [self buildStreamer:finalStream];
     self.streamPlaying = YES;
     
-#ifdef STOCK_PLAYER
     [self.audioPlayer play];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
@@ -539,9 +358,6 @@ static AudioManager *singleton = nil;
       }
       
     }
-#else
-    [self.audioStreamer start];
-#endif
   }
   
   @synchronized(self) {
@@ -550,30 +366,17 @@ static AudioManager *singleton = nil;
     self.rebootStream = NO;
   }
   
-  
   self.lastPlayedStreamURLString = finalStream;
   [self.delegate updateUIforAudioState];
   
 }
 
-
-
-
 - (void)stopStream {
-#ifdef STOCK_PLAYER
   [self takedownStreamer];
   self.streamingContentType = StreamingContentTypeLive;
   [self.delegate handleLiveStream:YES];
   [self.delegate updateUIforAudioState];
-  
-#else
 
-  
-  if ( self.audioStreamer ) {
-    [self.audioStreamer stop];
-    [self takedownStreamer];
-  }
-#endif
   @synchronized(self) {
     self.currentStreamSeekTime = 0.0;
     self.streamPlaying = NO;
@@ -582,7 +385,6 @@ static AudioManager *singleton = nil;
 }
 
 - (void)unpauseStream {
-#ifdef STOCK_PLAYER
   if ( [self paused] ) {
     
     if ( self.savedVolume >= 0.0 ) {
@@ -598,56 +400,35 @@ static AudioManager *singleton = nil;
     
     [self.delegate updateUIforAudioState];
   }
-#endif
 }
 
 - (void)pauseStream {
-#ifdef STOCK_PLAYER
+
   if ( self.streamPlaying ) {
     [self.audioPlayer pause];
     [[QueueManager shared] writeSegmentProgress:[self.delegate currentScrubberValue]
                                          commit:YES];
-    
+
     @synchronized(self) {
       self.streamPlaying = NO;
       self.paused = YES;
     }
   }
-  
+
   if ( [[QueueManager shared] currentlyPlayingSegment] ) {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"notify_listeners_of_queue_change"
                                                         object:nil];
   }
-  
-  [self.delegate updateUIforAudioState];
-  
-#else
-  if ( self.streamPlaying ) {
-    if ( self.audioStreamer ) {
-      [self.audioStreamer pause];
-      
-      [[QueueManager shared] writeSegmentProgress:[self.delegate currentScrubberValue]
-                                           commit:YES];
 
-      @synchronized(self) {
-        self.streamPlaying = NO;
-        self.paused = YES;
-      }
-    }
-  }
-#endif
+  [self.delegate updateUIforAudioState];
 }
 
 - (void)seekStream:(double)seekValue {
-#ifdef STOCK_PLAYER
   if ( seekValue >= 1.0 ) {
     [[QueueManager shared] pop];
     return;
   }
-  
-  //self.disarmAfterResume = YES;
-  //[self.audioPlayer addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
-  
+
   double cooked = seekValue * self.audioPlayer.currentItem.duration.value;
   
   [[QueueManager shared] writeSegmentProgress:seekValue
@@ -658,27 +439,6 @@ static AudioManager *singleton = nil;
   } @catch (NSException *e) {
     NSLog(@"Seeking had issues...");
   }
-  
-  
-#else
-  if ( self.audioStreamer.duration ) {
-    if ( seekValue >= 1.0 ) {
-      [[QueueManager shared] pop];
-      return;
-    }
-    
-    double cooked = seekValue * self.audioStreamer.duration;
-    @synchronized(self) {
-      self.seeking = YES;
-    }
-    
-    [[QueueManager shared] writeSegmentProgress:seekValue
-                                         commit:YES];
-    
-    [self.audioStreamer seekToTime:cooked];
-  }
-#endif
-  
 }
 
 - (void)adjustVolume:(CGFloat)volumeLevel {
@@ -690,7 +450,6 @@ static AudioManager *singleton = nil;
     self.currentPlayerVolume = volumeLevel;
   }
   
-#ifdef STOCK_PLAYER
   if ( [Utilities isIOS7] ) {
     [self.audioPlayer setVolume:volumeLevel];
   } else {
@@ -708,9 +467,6 @@ static AudioManager *singleton = nil;
     [audioVolMix setInputParameters:allAudioParams];
     [[self.audioPlayer currentItem] setAudioMix:audioVolMix];
   }
-#else
-  [self.audioStreamer adjustVolume];
-#endif
 }
 
 - (void)pushSilence {
@@ -728,13 +484,6 @@ static AudioManager *singleton = nil;
     [self adjustVolume:self.savedVolume];
     self.savedVolume = -1.0;
   }
-  
-  /*
-  [NSTimer scheduledTimerWithTimeInterval:0.1
-                                   target:self
-                                 selector:@selector(threadedUnfadeAudio:)
-                                 userInfo:nil
-                                  repeats:YES];*/
 }
 
 - (void)handleInterruptSegmentAudio:(NSDictionary *)audioMeta {
@@ -779,15 +528,7 @@ static AudioManager *singleton = nil;
   [self adjustVolume:0.0];
   
   dispatch_async(dispatch_get_main_queue(), fadeCallback);
-  /*
-  [NSTimer scheduledTimerWithTimeInterval:0.1
-                                   target:self
-                                 selector:@selector(threadedFadeAudio:)
-                                 userInfo:[NSNumber numberWithBool:hard]
-                                  repeats:YES];*/
 }
-
-
 
 - (void)threadedFadeAudio:(NSTimer*)timer {
   self.currentPlayerVolume = self.currentPlayerVolume - kVolumeTick;
