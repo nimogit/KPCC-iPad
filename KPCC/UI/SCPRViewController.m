@@ -63,58 +63,42 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                              self.mainPageScroller.frame.size.width,
                                              self.mainPageScroller.frame.size.height+20.0);
   }
-  
+
   self.mainPageScroller.scrollEnabled = NO;
   self.globalShareDrawer = [[SCPRShareDrawerViewController alloc]
                             initWithNibName:[[DesignManager shared]
                                              xibForPlatformWithName:@"SCPRShareDrawerViewController"]
                             bundle:nil];
   [self.globalShareDrawer buildCells];
-  
-  
+
   [self.view addSubview:self.playerWidget.view];
   [self.playerWidget prime];
-  
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(drawerOpened)
                                                name:@"drawer_opened"
                                              object:nil];
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(drawerClosed)
                                                name:@"drawer_closed"
                                              object:nil];
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(respin)
                                                name:@"favorites_modified"
                                              object:nil];
-  
+
   self.decorativeStripe.backgroundColor = [[DesignManager shared] kpccOrangeColor];
-  
+
   [self globalInit];
   [self placeShareDrawer];
   [self.playerWidget quietMinimize];
-  
   [[ContentManager shared] filterPrograms:nil];
-  
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-
-  
-  
 }
 
 - (void)respin {
-  
   [self buildProgramPages:YES];
-  
 }
 
 /*****************************************************************************
@@ -130,28 +114,26 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
  monolithic handleProcessedContent: methods implemented in this class.  -- BH
  */
 - (void)primeUI:(ScreenContentType)contentType newsPath:(NSString *)newsPath {
-  
+
   self.currentNewsType = contentType;
 
   [[[Utilities del] globalTitleBar] morph:BarTypeDrawer container:nil];
   [[ContentManager shared] setFlipBackToPageOne:YES];
   SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
-  
-   if ( newsPath ) {
-     self.newsPath = newsPath;
-   } else {
-     self.newsPath = @"all_content";
-   }
-  
-  
+
+  if ( newsPath ) {
+    self.newsPath = newsPath;
+  } else {
+    self.newsPath = @"all_content";
+  }
+
   [[AnalyticsManager shared] setScreenContent:contentType];
-  
   [root.view bringSubviewToFront:root.cloakView];
   
-   [UIView animateWithDuration:0.3 animations:^{
-     
-     [[[Utilities del] masterRootController] fullCloak];
-     
+  [UIView animateWithDuration:0.3 animations:^{
+
+    [[[Utilities del] masterRootController] fullCloak];
+
    } completion:^(BOOL finished) {
      
      // We're timing how long a user is spending in each session. To do so, open a times session with
@@ -163,9 +145,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
      // Program page (ScreenContentTypeProgramPage). In that scenario, newsPath will represent the title of the program
      // the user is attempting to load. Supporting a method parameter for this one use isn't ideal.
      switch (contentType) {
-       
-         
-       
+
        case ScreenContentTypeProgramPage:
          if ( [self.newsPath isEqualToString:@""] ) {
            [[NetworkManager shared] fetchContentForMasterProgramsList:self];
@@ -236,8 +216,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
  the drawerCode independent of hard values.
  */
 - (void)handleDrawerCommand:(NSString *)drawerCode {
-  
-  
+
   NSArray *tokens = [drawerCode componentsSeparatedByString:@"|"];
   if ( [tokens count] < 2 ) {
     return;
@@ -292,7 +271,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     NSString *url = [pDict objectForKey:@"contentUrl"];
     [[[Utilities del] masterRootController] puntToSafariWithURL:url];
   }
-
 }
 
 #pragma mark - Helpers
@@ -301,28 +279,21 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                                 initWithNibName:[[DesignManager shared]
                                                                  xibForPlatformWithName:@"SCPRNewsPageContainerController"]
                                                 bundle:nil];
-  // Couple these.
-  //page.parentContainer = container;
+  
   container.child = page;
-  
   UIViewController *uvc = (UIViewController*)page;
-  
   [container loadView];
-  
+
   CGFloat adjust = hideStrip ? 0.0 : container.grayStrip.frame.size.height;
   uvc.view.frame = CGRectMake(uvc.view.frame.origin.x,
                               uvc.view.frame.origin.y+adjust,
                               uvc.view.frame.size.width,
                               uvc.view.frame.size.height);
-  
+
   container.contentScroller.contentSize = CGSizeMake(page.view.frame.size.width,
                                                      page.view.frame.size.height+60.0);
   [container.contentScroller addSubview:page.view];
   return container;
-}
-
-- (void)viewWillLayoutSubviews {
-
 }
 
 - (BOOL)shouldAutomaticallyForwardAppearanceMethods {
@@ -350,8 +321,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                          xibForPlatformWithName:@"SCPRSmallCutViewController"]
                         bundle:nil];
     [[NetworkManager shared] fetchContentForProgramAZPage:self.smallCutter];
-    
-    
   });
 }
 
@@ -362,20 +331,19 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 //
 - (void)buildProgramPages:(BOOL)favoritesOnly {
 
-  
   if ( favoritesOnly ) {
     if ( [Utilities pureNil:[[ContentManager shared].settings favoriteProgramsAsJson]] ) {
       return;
     }
   }
-  
+
   if ( self.programPages ) {
     for ( SCPRProgramPageViewController *p in self.programPages.programVector ) {
       [p.view removeFromSuperview];
     }
     [self.programPages.programVector removeAllObjects];
   }
-  
+
   self.programPages = [[SCPRProgramNavigatorViewController alloc]
                        initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRProgramNavigatorViewController"]
                        bundle:nil];
@@ -396,16 +364,11 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     ppvc.view.frame = CGRectMake(i*ppvc.view.frame.size.width,0.0,
                                  ppvc.view.frame.size.width,
                                  ppvc.view.frame.size.height);
-    
-    
-    
+
     [self.programPages.programScroller addSubview:ppvc.view];
     ppvc.programObject = [[ContentManager shared] maximizedProgramForMinimized:program];
-    
-    
     [self.programPages.programVector addObject:ppvc];
   }
-  
 }
 
 - (void)buildCompleteProgramList {
@@ -428,17 +391,15 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     ppvc.view.frame = CGRectMake(i*ppvc.view.frame.size.width,0.0,
                                  ppvc.view.frame.size.width,
                                  ppvc.view.frame.size.height);
-    
+
     [self.completeProgramPages.programScroller addSubview:ppvc.view];
     ppvc.programObject = [[ContentManager shared] maximizedProgramForMinimized:program];
-
-    
     [self.completeProgramPages.programVector addObject:ppvc];
   }
 }
 
 - (void)buildNewsPages:(NSMutableArray *)contentObjects {
-  
+
   self.numberOfStoriesPerPage = [Utilities isIpad] ? 3 : 2;
   if ( self.padThinContent ) {
     self.articlesInCategories = [self categoryHashForArticleSet:self.mediaContent];
@@ -482,6 +443,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                                                                                   xibit:@"SCPRNewsPageViewController"
                                                                                                   style:(j % 2)]
                                                                                           bundle:nil];
+
       newsPage.view.frame = CGRectMake(0.0,0.0,
                                        newsPage.view.frame.size.width,
                                        newsPage.view.frame.size.height);
@@ -492,22 +454,17 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       newsPage.view.alpha = 0.0;
       newsPage.topicSlug = topic;
       newsPage.parentContainer = container;
-      
+
       CGRect containerFrame = CGRectMake(0.0,j*newsPage.view.frame.size.height,
                                          container.view.frame.size.width,
                                          self.mainPageScroller.frame.size.height);
-      
-      
+
       newsPage.view.frame = containerFrame;
-      
       [container.contentScroller addSubview:newsPage.view];
-      
-   
       [newsPage activatePage];
-      
       [container.newsPages addObject:newsPage];
     }
-    
+
     UINavigationController *unc = [[UINavigationController alloc] initWithRootViewController:container];
     unc.navigationBar.hidden = YES;
     unc.view.frame = CGRectMake(container.view.frame.size.width*i,
@@ -521,17 +478,14 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     [self.pagesHashedByTopic setObject:container
                                 forKey:topic];
   }
-  
+
   if ( self.padThinContent ) {
-    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-      [self padContentGaps];
-   // });
+    [self padContentGaps];
   }
-  
 }
 
 - (void)padContentGaps {
-  
+
   self.backgroundFetchQueue = [[NSMutableArray alloc] init];
   NSDictionary *groupHash = [self categoryMap];
   for ( NSString *key in [groupHash allKeys] ) {
@@ -549,145 +503,99 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
         query = [query stringByAppendingString:atom];
       }
       NSInteger needed = kMinimumArticleQuantity - [contentByTopic count];
-      //NSLog(@"Need %d for %@",needed,key);
       NSDictionary *params = @{ @"quantity" : [NSNumber numberWithInt:needed] };
-      
       [self.backgroundFetchQueue addObject:@{ @"query" : query, @"flags" : params }];
-
-  
     }
   }
-  
   [self workOnBackgroundFetch];
-  
 }
 
 - (void)workOnBackgroundFetch {
-  
+
   if ( [self.backgroundFetchQueue count] == 0 ) {
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"content_load_finished"
                                                         object:nil];
     return;
   }
-    
-  
+
   NSDictionary *first = [self.backgroundFetchQueue objectAtIndex:0];
   [self.backgroundFetchQueue removeObjectAtIndex:0];
-  
+
   [[NetworkManager shared] fetchContentForTopic:[first objectForKey:@"query"]
                                         display:self
                                           flags:[first objectForKey:@"flags"]];
 }
 
 - (NSDictionary*)categoryMap {
-
   NSDictionary *groupHash = (NSDictionary*)[Utilities loadJson:@"category_groups"];
   return groupHash;
 }
 
 - (void)displaySnapshot:(NSMutableArray *)contentObjects edition:(SnapshotEdition)edition {
-  
-
-  
   SCPREditionMineralViewController *mineral = [[SCPREditionMineralViewController alloc]
                                                initWithNibName:[[DesignManager shared]
                                                                 xibForPlatformWithName:@"SCPREditionMineralViewController"]
                                                bundle:nil];
   
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mineral];
-  
-  
   CGFloat offset = [Utilities isIOS7] ? 0.0 : -20.0;
-
-  CGRect r = CGRectMake(0.0, offset, mineral.view.bounds.size.width,
+  nav.view.frame = CGRectMake(0.0,
+                              offset,
+                              mineral.view.bounds.size.width,
                               mineral.view.bounds.size.height);
-  nav.view.frame = r;
-  
+
   [self.contentVector addObject:mineral];
   [self.mainPageScroller addSubview:nav.view];
   nav.navigationBarHidden = YES;
   
   self.pushedContent = nav;
-  
   [[ContentManager shared] pushToResizeVector:mineral];
   [mineral setupWithEditions:[NSArray arrayWithArray:contentObjects]];
-  
-  
 }
-
-- (void)displayWebContent:(NSMutableArray *)contentObjects {
-
-}
-
 
 - (void)displayProgramAZPage:(NSMutableArray *)contentObjects {
-  
 
-  
-  
   [[[Utilities del] globalTitleBar] morph:BarTypeProgramAtoZ container:nil];
-  
+
   SCPRProgramAZViewController *ppvc = [[SCPRProgramAZViewController alloc]
                                          initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRProgramAZViewController"]
                                          bundle:nil];
-  
   ppvc.programsMasterList = contentObjects;
-  
 
-  
-  CGRect r = CGRectMake(0.0,0.0,
-                                   ppvc.view.frame.size.width,
-                                   ppvc.view.frame.size.height);
-  ppvc.view.frame = r;
-  
-  CGRect sf = ppvc.programPickerView.frame;
-  
+  ppvc.view.frame = CGRectMake(0.0,
+                               0.0,
+                               ppvc.view.frame.size.width,
+                               ppvc.view.frame.size.height);
+
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:ppvc];
-
   ppvc.navigationController.navigationBarHidden = YES;
-  
-  CGRect containerFrame = CGRectMake(0.0,-20.0,
-                                     ppvc.view.frame.size.width,
-                                     self.mainPageScroller.frame.size.height);
-  nav.view.frame = containerFrame;
-  
+  nav.view.frame = CGRectMake(0.0,
+                              -20.0,
+                              ppvc.view.frame.size.width,
+                              self.mainPageScroller.frame.size.height);
+
   [[ContentManager shared] pushToResizeVector:ppvc];
-  
   [self.mainPageScroller addSubview:nav.view];
   [self.contentVector addObject:ppvc];
-
-  sf = ppvc.programPickerView.frame;
-  
   self.pushedContent = nav;
-
-  
-  
-  
 }
 
 - (void)displayProgramPage:(NSMutableArray *)contentObjects target:(NSString *)show {
-  
-  
-  
+
   if ( [show isEqualToString:@""] ) {
     [self buildCompleteProgramList];
-    
-    self.completeProgramPages.view.frame = CGRectMake(0.0,0.0,self.completeProgramPages.view.frame.size.width,
-                                              self.completeProgramPages.view.frame.size.height);
-    
-    
+
+    self.completeProgramPages.view.frame = CGRectMake(0.0,
+                                                      0.0,
+                                                      self.completeProgramPages.view.frame.size.width,
+                                                      self.completeProgramPages.view.frame.size.height);
     [self.mainPageScroller addSubview:self.completeProgramPages.view];
-    
-    
     [self.completeProgramPages focusShowWithIndex:0];
     [self finishTransition];
-    
     return;
   }
   
   [self buildProgramPages:YES];
-  
   NSArray *programs = [[ContentManager shared] favoritedProgramsList];
   NSInteger index = 0;
   for ( unsigned i = 0; i < [programs count]; i++ ) {
@@ -697,27 +605,24 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       break;
     }
   }
-  
-  [[ContentManager shared] pushToResizeVector:self.programPages];
-  
-  self.programPages.view.frame = CGRectMake(0.0,0.0,self.programPages.view.frame.size.width,
-                                            self.programPages.view.frame.size.height);
-  
-  
-  [self.mainPageScroller addSubview:self.programPages.view];
-  
 
+  [[ContentManager shared] pushToResizeVector:self.programPages];
+
+  self.programPages.view.frame = CGRectMake(0.0,
+                                            0.0,
+                                            self.programPages.view.frame.size.width,
+                                            self.programPages.view.frame.size.height);
+  [self.mainPageScroller addSubview:self.programPages.view];
   [self.programPages focusShowWithIndex:index];
   [self finishTransition];
 }
 
 - (void)displaySimpleContent:(NSDictionary *)contentObjects {
-  
   [[QueueManager shared] setStories:contentObjects];
   if ( self.silentlyFetchingNews ) {
     return;
   }
-  
+
   SCPRDeluxeNewsViewController *vpvc = [[SCPRDeluxeNewsViewController alloc]
                                         initWithNibName:[[DesignManager shared]
                                                          xibForPlatformWithName:@"SCPRDeluxeNewsViewController"]
@@ -732,8 +637,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   
   CGFloat widthToUse = vpvc.view.bounds.size.width;
   CGFloat heightToUse = vpvc.view.bounds.size.height;
-  
-
   CGFloat adjust = 0.0;
   CGFloat yAdjust = 0.0;
   if ( [Utilities isIOS7] ) {
@@ -743,26 +646,21 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     adjust = -20.0;
     yAdjust = -20.0;
   }
-    
-  nav.view.frame = CGRectMake(0.0,yAdjust,
+  nav.view.frame = CGRectMake(0.0,
+                              yAdjust,
                               widthToUse,
                               heightToUse-adjust);
-  
+
   vpvc.navigationController.navigationBarHidden = YES;
-  
   self.mainPageScroller.contentSize = CGSizeMake(vpvc.view.frame.size.width,
                                                  vpvc.view.frame.size.height);
   
   [self.contentVector addObject:vpvc];
-  
   [[ContentManager shared] setCurrentNewsPage:1];
   [vpvc fetchContent:nil];
-  
-  
 }
 
 - (void)displayEventsPage:(NSMutableDictionary *)contentObjects {
-  
   NSArray *allPosts = [contentObjects objectForKey:@"all_posts"];
   SCPRDeluxeNewsViewController *vpvc = [[SCPRDeluxeNewsViewController alloc]
                                         initWithNibName:[[DesignManager shared]
@@ -777,8 +675,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   
   CGFloat widthToUse = vpvc.view.bounds.size.width;
   CGFloat heightToUse = vpvc.view.bounds.size.height;
-  
-  
   CGFloat adjust = 0.0;
   CGFloat yAdjust = 0.0;
   if ( [Utilities isIOS7] ) {
@@ -788,30 +684,22 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     adjust = -20.0;
     yAdjust = -20.0;
   }
-  
-  nav.view.frame = CGRectMake(0.0,yAdjust,
+  nav.view.frame = CGRectMake(0.0,
+                              yAdjust,
                               widthToUse,
                               heightToUse-adjust);
-  
   vpvc.navigationController.navigationBarHidden = YES;
-  
   self.mainPageScroller.contentSize = CGSizeMake(vpvc.view.frame.size.width,
                                                  vpvc.view.frame.size.height);
   
   self.pushedContent = nav;
   [self.mainPageScroller addSubview:nav.view];
-  
-  
   vpvc.navigationController.navigationBarHidden = YES;
-  
   [[ContentManager shared] pushToResizeVector:vpvc];
   [self.contentVector addObject:vpvc];
-  
-  
 }
 
 - (void)displayUserProfilePage:(NSMutableArray *)contentObjects {
-  
   SCPRProfileViewController *profile = [[SCPRProfileViewController alloc]
                                         initWithNibName:[[DesignManager shared]
                                                          xibForPlatformWithName:@"SCPRProfileViewController"]
@@ -819,22 +707,18 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:profile];
   self.pushedContent = nav;
   [self.mainPageScroller addSubview:nav.view];
-  nav.view.frame = CGRectMake(0.0,0.0,
+  nav.view.frame = CGRectMake(0.0,
+                              0.0,
                               profile.view.frame.size.width,
                               profile.view.frame.size.height);
-  
   profile.navigationController.navigationBarHidden = YES;
-  
   [[ContentManager shared] pushToResizeVector:profile];
-  
   [self.contentVector addObject:profile];
-  
   self.mediaContent = contentObjects;
   [profile sourceWithListenedSegments:contentObjects];
 }
 
 - (void)displayVideoPhotoPage:(NSDictionary *)contentObjects {
-  
   NSArray *allPosts = [contentObjects objectForKey:@"all_posts"];
   SCPRDeluxeNewsViewController *vpvc = [[SCPRDeluxeNewsViewController alloc]
                                         initWithNibName:[[DesignManager shared]
@@ -843,14 +727,11 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   vpvc.contentType = ScreenContentTypeVideoPhotoPage;
   vpvc.posts = allPosts;
   vpvc.bigHash = [contentObjects objectForKey:@"big_posts"];
-  
   vpvc.view.frame = vpvc.view.frame;
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vpvc];
-  
+
   CGFloat widthToUse = vpvc.view.bounds.size.width;
   CGFloat heightToUse = vpvc.view.bounds.size.height;
-  
-  
   CGFloat adjust = 0.0;
   CGFloat yAdjust = 0.0;
   if ( [Utilities isIOS7] ) {
@@ -860,26 +741,18 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     adjust = -20.0;
     yAdjust = -20.0;
   }
-  
-  nav.view.frame = CGRectMake(0.0,yAdjust,
+  nav.view.frame = CGRectMake(0.0,
+                              yAdjust,
                               widthToUse,
                               heightToUse-adjust);
-  
   vpvc.navigationController.navigationBarHidden = YES;
-  
   self.mainPageScroller.contentSize = CGSizeMake(vpvc.view.frame.size.width,
                                                  vpvc.view.frame.size.height);
-  
   self.pushedContent = nav;
   [self.mainPageScroller addSubview:nav.view];
-
-  
   vpvc.navigationController.navigationBarHidden = YES;
-  
   [[ContentManager shared] pushToResizeVector:vpvc];
   [self.contentVector addObject:vpvc];
-  
-
 }
 
 - (void)displayUnderConstructionPage:(NSString *)pageTitle {
@@ -890,15 +763,13 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vpvc];
   self.pushedContent = nav;
   [self.mainPageScroller addSubview:nav.view];
-  nav.view.frame = CGRectMake(0.0,0.0,
+  nav.view.frame = CGRectMake(0.0,
+                              0.0,
                               vpvc.view.frame.size.width,
                               vpvc.view.frame.size.height);
-  
-  vpvc.navigationController.navigationBarHidden = YES;
-  
-  [self.contentVector addObject:vpvc];
-  
 
+  vpvc.navigationController.navigationBarHidden = YES;
+  [self.contentVector addObject:vpvc];
 }
 
 - (void)displayFeedbackPage {
@@ -909,12 +780,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:fbvc];
   self.pushedContent = nav;
   [self.mainPageScroller addSubview:nav.view];
-  nav.view.frame = CGRectMake(0.0,0.0,
+  nav.view.frame = CGRectMake(0.0,
+                              0.0,
                               fbvc.view.frame.size.width,
                               fbvc.view.frame.size.height);
-  
+
   fbvc.navigationController.navigationBarHidden = YES;
-  
   [self.contentVector addObject:fbvc];
 }
 
@@ -927,12 +798,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:flow];
   self.pushedContent = nav;
   [self.mainPageScroller addSubview:nav.view];
-  nav.view.frame = CGRectMake(0.0,0.0,
+  nav.view.frame = CGRectMake(0.0,
+                              0.0,
                               self.mainPageScroller.frame.size.width,
                               self.mainPageScroller.frame.size.height);
-  
+
   flow.navigationController.navigationBarHidden = YES;
-  
   [[ContentManager shared] pushToResizeVector:flow];
   [self.contentVector addObject:flow];
 }
@@ -944,7 +815,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   NSString *thisVersion = [Utilities prettyShortVersion];
   NSString *greater = [Utilities higherVersionBetween:thisVersion thatVersion:appVersion];
   if ( ![greater isEqualToString:thisVersion] ) {
-    
     NSString *message = @"There is a new version of the KPCC iPad app available. Tap here to proceed to the download area.";
     BOOL reinstall = [[cvDetails objectForKey:@"reinstallRequired"] boolValue];
     if ( reinstall ) {
@@ -960,7 +830,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
     [root hideBreakingNews];
   }
-  
 }
 
 #pragma mark - ContentProcessor
@@ -968,7 +837,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   if ( [self.articlesInCategories objectForKey:topic] ) {
     return [self.articlesInCategories objectForKey:topic];
   }
-  
   NSString *masterKey = [self masterKeyForTopic:topic];
   return [self.articlesInCategories objectForKey:masterKey];
 }
@@ -980,28 +848,23 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     NSArray *tokens = [topic componentsSeparatedByString:@","];
     topic = [tokens objectAtIndex:0];
   }
-  
   NSString *masterKey = [reverseHash objectForKey:topic];
   return masterKey;
 }
 
 - (void)handleProcessedContent:(NSArray *)content flags:(NSDictionary *)flags {
-  
   self.mediaContent = [NSMutableArray arrayWithArray:content];
   if ( self.silentlyFetchingNews ) {
     self.silentlyFetchingNews = NO;
     return;
   }
-  
+
   [self wipePreviousContent];
-  
+
   switch (self.currentNewsType) {
     case ScreenContentTypeNewsPage:
       self.mediaContent = [self stripBadContent:self.mediaContent];
       [self buildNewsPages:self.mediaContent];
-      break;
-    case ScreenContentTypeDynamicPage:
-      [self displayWebContent:self.mediaContent];
       break;
     case ScreenContentTypeProgramPage:
       if ( [flags objectForKey:@"master"] ) {
@@ -1027,19 +890,18 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       }
       break;
     case ScreenContentTypeVideoPhotoPage:
-
       break;
     case ScreenContentTypeUnderConstruction:
       [self displayUnderConstructionPage:@""];
       break;
     case ScreenContentTypeCompositePage:
       break;
+    case ScreenContentTypeDynamicPage:
+      break;
     default:
-      
       break;
   }
-  
-  
+
   [self finishTransition];
 }
 
@@ -1066,7 +928,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   } else {
     self.silentlyFetchingNews = NO;
   }
-  
 }
 
 - (void)finishTransition {
@@ -1132,25 +993,16 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       //[[NetworkManager shared] fetchEditionsInBackground];
       
       if ( [[Utilities del] drawerIsDirty] ) {
-        //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-          
           [[[Utilities del] globalDrawer] respin];
-          
-        //});
       }
     }
-    
   }];
-  
-
 }
 
 - (void)handleAdditionalContent:(NSArray *)content forTopic:(NSString *)topic {
 
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-  
     NSMutableArray *media = [self mediaContentForTopic:topic];
-    
     NSMutableArray *sum = [[NSMutableArray alloc] initWithArray:media];
     for ( NSDictionary *article in content ) {
       NSString *candidateHash = [Utilities sha1:[article objectForKey:@"permalink"]];
@@ -1164,11 +1016,10 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
           break;
         }
       }
-      
+
       if ( unique ) {
         [sum addObject:article];
       }
-      
     }
     
     sum = [self stripBadContent:sum];
@@ -1186,18 +1037,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       return (NSComparisonResult)[date2 compare:date1];
       
     }] mutableCopy];
-    
+
     [self.articlesInCategories setObject:sum forKey:[self masterKeyForTopic:topic]];
-
-    
-
     dispatch_async(dispatch_get_main_queue(), ^{
       [self.currentContainer appendContentForTopic:[self masterKeyForTopic:topic]];
     });
-    
-    
   });
-  
 }
 
 - (NSMutableArray*)stripBadContent:(NSMutableArray*)dirtyContent {
@@ -1217,10 +1062,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       NSLog(@"Stripping content %@",[asDictionary objectForKey:@"permalink"]);
       continue;
     }
-    
     [stripped addObject:d];
   }
-
   return stripped;
 }
 
@@ -1228,7 +1071,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   
   NSMutableDictionary *hash = [[NSMutableDictionary alloc] init];
   for ( NSDictionary *article in articles ) {
-    
+
     NSDictionary *category = [article objectForKey:@"category"];
     if ( category ) {
       NSMutableArray *catVector = [hash objectForKey:[category objectForKey:@"slug"]];
@@ -1238,11 +1081,9 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       }
       [catVector addObject:article];
     }
-    
   }
   
   NSDictionary *groupHash = [self categoryMap];
-  
   NSMutableDictionary *cookedHash = [[NSMutableDictionary alloc] init];
   for ( NSString *key in [groupHash allKeys] ) {
     NSArray *groupings = [groupHash objectForKey:key];
@@ -1272,7 +1113,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   if ( [[Utilities del] appCloaked] ) {
     return;
   }
-  
+
   self.titleBarController = [[SCPRTitlebarViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRTitlebarViewController"]
                                                                          bundle:nil];
   if ( [Utilities isIOS7] ) {
@@ -1281,9 +1122,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                                     self.titleBarController.view.frame.size.width,
                                                     self.titleBarController.view.frame.size.height);
   }
-  
   self.view.backgroundColor = [UIColor blackColor];
-  
   [[[Utilities del] globalTitleBar] morph:BarTypeDrawer container:nil];
   
   [[DesignManager shared] treatButton:self.playLocalButton
@@ -1300,43 +1139,16 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     self.globalGradient.frame = CGRectMake(0.0,0.0,self.globalGradient.frame.size.width,
                                          iv.frame.size.height);
   }
-  
+
   self.globalGradient.alpha = 0.0;
-  
   [self.view addSubview:self.titleBarController.view];
   [self.view bringSubviewToFront:self.titleBarController.view];
 }
 
-#ifdef DEBUG
-- (void)loadListOfSegmentsFromQueue {
-  Collection *queue = (Collection*)[[ContentManager shared] findModelByName:@"Science Station"
-                                                                 andType:ModelTypeCollection];
-  NSString *segmentString = @"";
-  int counter = 0;
-  if ( queue ) {
-    NSSet *items = queue.segments;
-    for ( Segment *segment in items ) {
-      if ( counter > 0 ) {
-        segmentString = [segmentString stringByAppendingString:@"\n"];
-      }
-      segmentString = [segmentString stringByAppendingString:segment.name];
-      counter++;
-    }
-    
-  }
-  self.stationMapLabel.text = segmentString;
-  
-  NSSet *localShows = [[ContentManager shared] findSegmentsWithKeyword:@"local"];
-  NSLog(@"Local Show count : %d",[localShows count]);
-  
-
-}
-#endif
-
 #pragma mark - UI / Controls
 - (IBAction)switchToggled:(id)sender {
   NSInteger index = self.topicSelector.selectedSegmentIndex;
-  
+
   [UIView beginAnimations:nil context:NULL];
   [UIView setAnimationDuration:0.5];
   [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
@@ -1348,8 +1160,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 - (void)wipePreviousContent {
   [self.topicSelector removeFromSuperview];
   [[ContentManager shared] popFromResizeVector];
-  
-  
+
   [self.mainPageScroller setContentOffset:CGPointMake(0.0, 0.0)];
   
   @synchronized(self) {
@@ -1359,10 +1170,9 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
         [v removeFromSuperview];
       }
     }
-  
+
     self.mainPageScroller.contentSize = CGSizeMake(self.mainPageScroller.frame.size.width,
                                                  self.mainPageScroller.frame.size.height);
-  
   
     for ( id prev in self.contentVector ) {
       [[NSNotificationCenter defaultCenter] removeObserver:prev];
@@ -1374,32 +1184,18 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       }
       
     }
-    
     [self.contentVector removeAllObjects];
     self.currentContainer = nil;
     self.pushedContent = nil;
-    
     [[ContentManager shared] sweepMemory];
-    
   }
-  
-}
-
-- (void)revive {
-  
-}
-
-- (void)toggleReturnToLive:(BOOL)animated {
-
 }
 
 - (void)forceHideOfReturnToLive {
-  
   [UIView beginAnimations:nil context:NULL];
   [UIView setAnimationDuration:0.25];
   self.returnToLiveSeat.center = CGPointMake(self.view.center.x,0.0-self.returnToLiveSeat.frame.size.height/2.0-1.0);
   [UIView commitAnimations];
-  
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -1411,8 +1207,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   self.playerWidget.view.userInteractionEnabled = NO;
   self.drawerSwiper = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(closeDrawerBySwipe)];
   self.drawerSwiper.direction = UISwipeGestureRecognizerDirectionLeft;
-  
-  
   [self.view addGestureRecognizer:self.drawerSwiper];
 }
 
@@ -1436,12 +1230,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)placeShareDrawer {
-  
+
   UIViewController *titleBar = (UIViewController*)[[Utilities del] globalTitleBar];
   UIViewController *player = (UIViewController*)self.playerWidget;
 
   NSInteger k = -300;
-  
+
   for ( UIView *v in [self.view subviews] ) {
     if ( v == self.globalShareDrawer.view ) {
       continue;
@@ -1472,11 +1266,10 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)openShareDrawer:(id)targetContent {
-  
+
   if ( self.shareDrawerOpen ) {
     return;
   }
-  
 
   self.shareDrawerOpen = YES;
 
@@ -1484,14 +1277,11 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   self.sharePopover = [[UIPopoverController alloc]
                                     initWithContentViewController:self.globalShareDrawer];
 
-  
   CGRect raw = [[[Utilities del] globalTitleBar] personalInfoButton].frame;
   CGRect cooked = [self.view convertRect:raw fromView:[[Utilities del] globalTitleBar].view];
   self.sharePopover.delegate = self;
-  
-
   [self.globalShareDrawer.shareMethodTable reloadData];
-  
+
   CGFloat s = [self.globalShareDrawer.shareCells count]*52.0+4.0;
   self.sharePopover.popoverContentSize = CGSizeMake(self.globalShareDrawer.shareMethodTable.frame.size.width,s);
   NSLog(@"Popover content size : %1.1f, %1.1f",self.sharePopover.popoverContentSize.width,self.sharePopover.popoverContentSize.height);
@@ -1500,7 +1290,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
            permittedArrowDirections:UIPopoverArrowDirectionUp
                            animated:YES];
 #else
-
   CGRect raw = [[[Utilities del] globalTitleBar] personalInfoButton].frame;
   CGRect cooked = [self.view convertRect:raw fromView:[[Utilities del] globalTitleBar].view];
   self.globalShareDrawer.view.frame = CGRectMake(self.view.frame.size.width-self.globalShareDrawer.view.frame.size.width,
@@ -1508,7 +1297,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                                  self.globalShareDrawer.view.frame.size.width,
                                                  self.globalShareDrawer.view.frame.size.height);
   [self.view addSubview:self.globalShareDrawer.view];
-  
 #endif
 }
 
@@ -1528,7 +1316,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   [self.globalShareDrawer.view removeFromSuperview];
   [self.view removeGestureRecognizer:self.shareDrawerTapDismiss];
 #endif
-  
 }
 
 - (void)shareDrawerFinishedClosing {
@@ -1538,8 +1325,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   }
 }
 
-
-
 #pragma mark - UIPopoverController
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
   self.shareDrawerOpen = NO;
@@ -1547,13 +1332,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 
 #pragma mark - UIScrollView Delegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-  
+
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   CGFloat offset = scrollView.contentOffset.x/scrollView.frame.size.width;
   self.topicSelector.selectedSegmentIndex = (NSInteger)offset;
-  
   [[NSNotificationCenter defaultCenter] postNotificationName:@"main_scroller_scrolled"
                                                       object:[NSNumber numberWithFloat:offset]];
 }
@@ -1576,8 +1360,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   self.mainPageScroller.frame = r;
   self.mainPageScroller.contentSize = CGSizeMake(r.size.width*self.contentVector.count,self.mainPageScroller.frame.size.height);
   [UIView commitAnimations];
-  
-
 }
 
 #pragma mark - Player event handling
@@ -1585,7 +1367,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   CGFloat randy = (CGFloat) (random() % 100)/100;
   [[AudioManager shared] adjustVolume:randy];
 }
-
 
 - (IBAction)buttonTapped:(id)sender {
   if ( sender == self.showOrHidePlayerButton ) {
@@ -1619,11 +1400,9 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)displayPlayer {
-
   [UIView animateWithDuration:0.25 animations:^{
     self.playerWidget.view.alpha = 1.0;
   }];
-  
 }
 
 - (void)hidePlayer {
@@ -1653,14 +1432,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
       self.playLocalButton.userInteractionEnabled = YES;
     }
   }
-
 }
 
 - (void)killPlayer {
-  
   [[DesignManager shared] globalSetTitleTo:@"Show Player"
                                  forButton:self.showOrHidePlayerButton];
-  
+
   [self.playerWidget hideVolumeSlider];
   [self checkAutomation];
 }
@@ -1669,16 +1446,13 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 
 }
 
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-  
+  // Dispose of any resources that can be recreated.
+
   NSLog(@"Cleaning up due to memory warning...");
   self.programPages = nil;
   [[ContentManager shared] destroyDiskAndMemoryCache];
-  
-    // Dispose of any resources that can be recreated.
 }
 
 @end

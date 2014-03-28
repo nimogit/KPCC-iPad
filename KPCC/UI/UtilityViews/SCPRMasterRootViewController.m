@@ -89,7 +89,7 @@
                                                                                                      xibForPlatformWithName:@"SCPRSingleArticleViewController"]
                                                                                              bundle:nil];
     sac.fromSnapshot = YES;
-    sac.relatedArticle = [content objectAtIndex:0];;
+    sac.relatedArticle = [content objectAtIndex:0];
     sac.wantsFullScreenLayout = YES;
     
     

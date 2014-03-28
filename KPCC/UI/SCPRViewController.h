@@ -164,9 +164,7 @@ typedef enum {
 @property (atomic) NSInteger backgroundProcessesToPend;
 
 #ifdef DEBUG
-- (void)loadListOfSegmentsFromQueue;
 - (void)functionThatDoesntExist;
-
 #endif
 
 @property (nonatomic,strong) IBOutlet UIButton *testVolumeButton;
@@ -183,12 +181,8 @@ typedef enum {
 - (void)cloakUI;
 - (void)handleDrawerCommand:(NSString*)drawerCode;
 
-
-
-
 // Content layouts
 - (void)buildNewsPages:(NSMutableArray*)contentObjects;
-- (void)displayWebContent:(NSMutableArray*)contentObjects;
 - (void)displayProgramPage:(NSMutableArray*)contentObjects target:(NSString*)show;
 - (void)displayProgramAZPage:(NSMutableArray*)contentObjects;
 - (void)displaySnapshot:(NSMutableArray*)contentObjects edition:(SnapshotEdition)edition;
@@ -206,7 +200,6 @@ typedef enum {
 - (IBAction)buttonTapped:(id)sender;
 - (void)displayPlayer;
 - (void)hidePlayer;
-- (void)toggleReturnToLive:(BOOL)animated;
 - (void)forceHideOfReturnToLive;
 - (void)buildProgramPages:(BOOL)favoritesOnly;
 - (void)processProgramImagesInBackground;
