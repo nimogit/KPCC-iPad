@@ -1836,61 +1836,6 @@
 }
 
 
-/*- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-
-  if ( self.contentType == ScreenContentTypeCompositePage ) {
-    if ( self.articleMapPerDate ) {
-      if ( section == [[self.articleMapPerDate allValues] count] ) {
-        return self.spinnerFooter;
-      }
-    }
-  }
-  if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
-    return self.emptyFooter;
-  }
-  
-  return [[UIView alloc] init];
-
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-  //if ( [Utilities isIOS7] ) {
-  if ( self.contentType == ScreenContentTypeCompositePage ) {
-    if ( self.articleMapPerDate ) {
-      if ( section == [[self.articleMapPerDate allValues] count] ) {
-        return self.spinnerFooter.frame.size.height;
-      }
-    }
-  }
-  
-  if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
-    return self.emptyFooter.frame.size.height;
-  }
-  
-  return 0.0;
-
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-  
-  if ( self.contentType == ScreenContentTypeNewsPage ) {
-    if ( section == [[self.articleMapPerDate allValues] count] ) {
-      
-      [UIView animateWithDuration:0.22 animations:^{
-        self.loadingMoreNewsSpinner.alpha = 1.0;
-        self.photoVideoTable.scrollEnabled = NO;
-      } completion:^(BOOL finished) {
-        [self.loadingMoreNewsSpinner startAnimating];
-        [[NetworkManager shared] fetchContentForCompositePage:self
-                                                  firstLaunch:NO];
-      }];
-
-    }
-  }
-  
-}*/
-
-
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   
   // Configure the cell...
@@ -1910,9 +1855,7 @@
       SCPRDeluxeNewsCell *vpc = (SCPRDeluxeNewsCell*)cell;
       if ( self.contentType == ScreenContentTypeEventsPage || self.contentType == ScreenContentTypeCompositePage ) {
         if ( indexPath.row == 0 ) {
-          //if ( !vpc.facade0.embiggened ) {
-            [vpc squish];
-          //}
+          [vpc squish];
         }
       }
       if ( !vpc.primed ) {
@@ -1920,27 +1863,6 @@
       }
     }
   }
-  
-  
-}
-
-
-
-
-
-
-
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-
-}
-
-
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
 }
 
 #pragma mark - ScrollView
@@ -1955,7 +1877,6 @@
   }
   
   CGRect frm = self.spinnerFooter.frame;
-  //NSLog(@"Footer frame : %1.1fx %1.1fy",frm.origin.x,frm.origin.y);
   if ( !scrollView.scrollEnabled ) {
     return;
   }

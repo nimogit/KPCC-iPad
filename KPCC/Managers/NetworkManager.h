@@ -33,11 +33,7 @@
 - (void)handleEvents:(NSDictionary*)content;
 - (void)contentFinishedDisplaying;
 - (void)handleProcessedContent:(NSArray*)content flags:(NSDictionary*)flags;
-
 @required
-
-
-
 @end
 
 typedef enum {
@@ -48,8 +44,6 @@ typedef enum {
   NetworkHealthNetworkDown = 4,
   NetworkHealthAllOK = 5
 } NetworkHealth;
-
-
 
 @interface NetworkManager : NSObject {
   Reachability *_networkHealthReachability;
@@ -68,7 +62,6 @@ typedef enum {
 
 @property (nonatomic,strong) NSOperationQueue *programsFetchQueue;
 
-
 @property NSInteger failoverCount;
 
 - (BOOL)isReadyForRefresh;
@@ -79,7 +72,6 @@ typedef enum {
 - (BOOL)isWifi;
 
 // Content Fetching
-- (void)fetchMostViewed;
 - (void)fetchAllContent:(id<ContentProcessor>)display;
 - (void)fetchContentWithPath:(NSString*)newsPath display:(id<ContentProcessor>)display;
 - (void)fetchContentForProgramPage:(NSString*)newsPath display:(id<ContentProcessor>)display;
@@ -97,8 +89,6 @@ typedef enum {
 - (void)fetchContentForMasterProgramsList:(id<ContentProcessor>)display;
 - (void)fetchContentForScheduleThisWeek:(id<ContentProcessor>)display;
 - (void)fetchProgramInformationFor:(NSDate*)thisTime display:(id<ContentProcessor>)display;
-- (void)fetchContentForCompositePage:(id<ContentProcessor>)display;
-- (void)fetchContentForCompositePage:(id<ContentProcessor>)display firstLaunch:(BOOL)firstLaunch;
 - (void)processContentData:(NSDictionary*)content;
 - (void)processCompositeData:(NSDictionary*)compositeContent;
 - (void)processVideoPhotoData:(NSDictionary*)videoPhotoContent;
@@ -113,7 +103,5 @@ typedef enum {
 - (void)remoteReductionForArticle:(NSString*)url processor:(id<ContentProcessor>)processor;
 - (NSString*)localReduction:(NSString*)fullContent processor:(id<ContentProcessor>)processor;
 - (NSString*)stringForSchemaComponent:(NSString*)code;
-
-//- (void)checkInternetHealth;
 
 @end

@@ -43,7 +43,6 @@ static NetworkManager *singleton = nil;
   if ( lastRefresh ) {
     return [lastRefresh isOlderThanInSeconds:180];
   }
-  
   return YES;
 }
 
@@ -153,11 +152,6 @@ static NetworkManager *singleton = nil;
 #endif
 }
 
-#pragma mark - Content fetching
-- (void)fetchMostViewed {
-  
-}
-
 - (void)requestFromKPCCWithEndpoint:(NSString *)endpoint andDisplay:(id<ContentProcessor>)display {
   [self requestFromKPCCWithEndpoint:endpoint andDisplay:display flags:nil];
 }
@@ -230,14 +224,6 @@ static NetworkManager *singleton = nil;
                          }];
 }
 
-- (void)fetchContentForCompositePage:(id<ContentProcessor>)display {
-  [self fetchContentForCompositePage:display firstLaunch:NO];
-}
-
-- (void)fetchContentForCompositePage:(id<ContentProcessor>)display firstLaunch:(BOOL)firstLaunch {
-  ///// THIS METHOD HAS BEEN DEPRECATED /////
-}
-
 - (void)fetchTrendingArticles:(id<ContentProcessor>)display {
   
   __block NSMutableDictionary *compositeNews = [[ContentManager shared] globalCompositeNews];
@@ -276,27 +262,13 @@ static NetworkManager *singleton = nil;
                                });
                              }
                            }
-                           
                          }];
-  
 }
 
 - (void)fetchAllContent:(id<ContentProcessor>)display {
-#ifdef CACHE_NETWORK
-  NSArray *cached = [[[ContentManager shared] settings] cachedFetch];
-  if ( cached ) {
-
-    [self processContentData:@{ @"chunk" : cached, @"port" : display }];
-    return;
-
-  }
-#endif
-  
   self.lastContentRefresh = [NSDate date];
-  
   NSString *urlString = [NSString stringWithFormat:@"%@/content?limit=39",kServerBase];
   [self requestFromKPCCWithEndpoint:urlString andDisplay:display];
-
 }
 
 - (void)fetchContentWithPath:(NSString *)newsPath display:(id<ContentProcessor>)display {
@@ -375,10 +347,7 @@ static NetworkManager *singleton = nil;
                                                               
                                                             }
                                                           }
-
-                                 
                                                         }];
-                                 
                                });
                                
                              } else {
@@ -387,9 +356,7 @@ static NetworkManager *singleton = nil;
                            } else {
                              [[AnalyticsManager shared] failureFetchingContent:urlString];
                            }
-                           
                          }];
-
 }
 
 - (void)fetchContentForProgramAZPage:(id<ContentProcessor>)display {
@@ -425,7 +392,6 @@ static NetworkManager *singleton = nil;
                                [[ContentManager shared] filterPrograms:chunk];
                              }
                            }
-                           
                          }];
 }
 
@@ -438,8 +404,6 @@ static NetworkManager *singleton = nil;
     [self requestFromKPCCWithEndpoint:urlString andDisplay:display flags:@{ @"master" : @1}];
   }
 }
-
-
 
 - (void)fetchContentForEventsPage:(NSString *)newsPath display:(id<ContentProcessor>)display {
   NSDate *date = [NSDate date];
@@ -467,7 +431,6 @@ static NetworkManager *singleton = nil;
   
   NSString *count = [NSString stringWithFormat:@"%d",kEditionsTotal];
   
-#ifndef DISABLE_NEWS_CACHING
   NSDate *editionsSync = [[ContentManager shared].settings lastEditionsSync];
   if ( editionsSync && ![editionsSync isOlderThanInSeconds:10*60] ) {
     NSString *json = [[ContentManager shared].settings editionsJson];
@@ -481,7 +444,6 @@ static NetworkManager *singleton = nil;
       id jsonObj = [json JSONValue];
       if ( !jsonObj ) {
         NSLog(@"Bad cache on editions data ****************** ");
-        
       } else {
         NSDictionary *elements = @{
                                  @"chunk" : jsonObj,
@@ -489,19 +451,14 @@ static NetworkManager *singleton = nil;
                                  @"flags" : flagContainer
                                  };
       
-
-      
         [self processContentData:elements];
-    
         NSLog(@"Using cached editions from : %@",[NSDate stringFromDate:editionsSync withFormat:@"MM dd, hh:mm a"]);
-    
         return;
       }
     }
   }
   [[ContentManager shared].settings setEditionsJson:@""];
   [[ContentManager shared].settings setLastEditionsSync:[NSDate date]];
-#endif
   
   NSString *urlString = [NSString stringWithFormat:@"%@/editions?limit=%@",kServerBase,count];
   NSMutableDictionary *mutable = [[NSMutableDictionary alloc] init];
@@ -784,7 +741,6 @@ static NetworkManager *singleton = nil;
   
   NSArray *strips = (NSArray*)[Utilities loadJson:@"strippable"];
   NSMutableArray *stripItems = [[NSMutableArray alloc] init];
-  //NSString *currentReduction = [NSString stringWithString:fullContent];
   for ( NSString *pattern in strips ) {
     
     NSRegularExpression *regex = [NSRegularExpression
@@ -805,7 +761,6 @@ static NetworkManager *singleton = nil;
       [stripItems addObject:meta];
       
     }];
-    
   }
   
   NSArray *unmutable = [NSArray arrayWithArray:stripItems];
@@ -821,7 +776,6 @@ static NetworkManager *singleton = nil;
     fullContent = [fullContent stringByReplacingOccurrencesOfString:strip
                                                        withString:@""];
   }
-
   
   NSLog(@"Content after initial reduction : %@",fullContent);
   
@@ -838,12 +792,9 @@ static NetworkManager *singleton = nil;
     } else {
       title = @"Article";
     }
-    //NSLog(@"Number of ranges : %d",numberOfRanges);
-    //NSLog(@"Title found : %@",title);
   }];
   
   // AUDIOVISION CHEAT
-  
   NSString *articleRegEx = @"";
   
   __block NSString *shortened = [NSString stringWithString:fullContent];
@@ -886,11 +837,8 @@ static NetworkManager *singleton = nil;
         shortened = [NSString stringWithString:matched];
         
       }];
-      
     }
   }
-  
-
 
   __block BOOL imageFoundInInterestingPartOfBody = NO;
   NSMutableArray *images = [[NSMutableArray alloc] init];
@@ -910,7 +858,6 @@ static NetworkManager *singleton = nil;
     [images addObject:[fullContent substringWithRange:[match range]]];
   }];
 
-  
   CGFloat largestSize = 0.0;
   NSString *leadImage = nil;
   BOOL widthOrHeightFound = NO;
@@ -933,16 +880,14 @@ static NetworkManager *singleton = nil;
     if ( widthOrHeightFound ) {
       CGFloat product = width*height;
       if ( product > largestSize ) {
-        leadImage = /*[Utilities getValueForHTMLTag:@"src" inBody:img];*/ img;
+        leadImage = img;
         largestSize = product;
       }
     } else {
-      leadImage = /*[Utilities getValueForHTMLTag:@"src" inBody:[images objectAtIndex:0]]*/ [images objectAtIndex:0];
+      leadImage = [images objectAtIndex:0];
     }
   }
-  
 
-  
   if ( !leadImage ) {
     leadImage = @"";
   }
@@ -1019,15 +964,14 @@ static NetworkManager *singleton = nil;
   }
   
   NSLog(@" is : %@",shortened);
-  
+
   NSDictionary *reduced = @{ @"title" : title, @"content" : justPs, @"lead_image_url" : leadImage, @"byline" : candidateByline };
   [processor handleReducedArticle:reduced];
-  
+
   return @"";
 }
 
 - (void)remoteReductionForArticle:(NSString *)url processor:(id<ContentProcessor>)processor {
-  
 
   NSURL *reqURL = [NSURL URLWithString:url];
   NSLog(@"Reducing %@",url);
@@ -1040,24 +984,17 @@ static NetworkManager *singleton = nil;
                              NSLog(@"Error reducing article with Readability : %@",[e localizedDescription]);
                              return;
                            }
-                           
+
                            NSString *response = [[NSString alloc] initWithData:d
                                                                       encoding:NSUTF8StringEncoding];
                            
-                           
-                           //NSLog(@"Before : %@",response);
                            dispatch_sync(dispatch_get_main_queue(), ^{
                              [self localReduction:response processor:processor];
                            });
                          }];
 }
 
-
-
 #pragma mark - Processing
-
-
-
 - (void)processCompositeData:(NSDictionary *)compositeContent {
   @synchronized(self) {
     self.compositeMainNewsFetchFinished = YES;
@@ -1070,16 +1007,6 @@ static NetworkManager *singleton = nil;
   NSMutableDictionary *hash = [[NSMutableDictionary alloc] init];
   NSArray *trending = [compositeContent objectForKey:@"trending"];
   NSArray *general = [compositeContent objectForKey:@"general"];
-  
-#ifdef FAKE_EMBIGGENED
-  if ( [general count] > 0 ) {
-    NSDictionary *first = [general objectAtIndex:0];
-    if ( [first objectForKey:@"short_title"] ) {
-      NSString *hashedTitle = [Utilities sha1:[first objectForKey:@"short_title"]];
-      [hash setObject:@1 forKey:hashedTitle];
-    }
-  }
-#endif
   
   for ( NSDictionary *trendingArticle in trending ) {
     if ( [trendingArticle objectForKey:@"short_title"] ) {
@@ -1099,9 +1026,7 @@ static NetworkManager *singleton = nil;
                            @"totalCount" : [NSNumber numberWithInt:[general count]] };
   
   id<ContentProcessor> processor = [compositeContent objectForKey:@"processor"];
-  
 
-  
   NSMutableDictionary *temp = [compositeContent mutableCopy];
   [temp removeObjectForKey:@"processor"];
   NSDictionary *slimHash = [NSDictionary dictionaryWithDictionary:temp];
@@ -1124,7 +1049,6 @@ static NetworkManager *singleton = nil;
       [processor handleCompositeNews:final];
     }
   }
-  
 }
 
 - (void)finishJob:(NSTimer*)timer {
@@ -1149,24 +1073,8 @@ static NetworkManager *singleton = nil;
   NSMutableDictionary *real = [[NSMutableDictionary alloc] init];
   
   if ( ![Utilities pureNil:vpData] ) {
-    
     NSDictionary *leadEvent = [vpData objectAtIndex:0];
-    
-#ifdef FAKE_HAPPENING_EVENT
-    NSMutableDictionary *mutableEvent = [leadEvent mutableCopy];
-    NSDictionary *native = [Utilities loadJson:@"complicated2"];
-    NSMutableArray *assets = [[mutableEvent objectForKey:@"assets"] mutableCopy];
-    if ( assets ) {
-      [assets insertObject:native atIndex:0];
-    }
-    [mutableEvent setObject:[NSArray arrayWithArray:assets]
-                     forKey:@"assets"];
-    leadEvent = [NSDictionary dictionaryWithDictionary:mutableEvent];
-    [vpData replaceObjectAtIndex:0 withObject:leadEvent];
-#endif
-    
     NSMutableDictionary *bigPosts = [[NSMutableDictionary alloc] init];
-    
     
     if ( [[ScheduleManager shared] eventIsLive:leadEvent] ) {
       [bigPosts setObject:@1 forKey:[leadEvent objectForKey:@"id"]];
@@ -1181,7 +1089,6 @@ static NetworkManager *singleton = nil;
   }
   
   [processor handleEvents:real];
-  
 }
 
 - (void)processVideoPhotoData:(NSDictionary *)videoPhotoContent {
@@ -1256,23 +1163,6 @@ static NetworkManager *singleton = nil;
     if ( [flags objectForKey:@"composite"] ) {
       return;
     }
- 
-    /*
-    if ( [self compositeMainNewsFetchFinished] ) {
-    
-      if ( [self completionListenerEnabled] ) {
-        self.completionListenerEnabled = NO;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"editions_complete"
-                                                            object:nil];
-      }
-      
-    } else {
-    
-      [self processCompositeData:@{ @"general" : [[ContentManager shared].globalCompositeNews objectForKey:@"general"],
-                                  @"trending" : [[ContentManager shared].globalCompositeNews objectForKey:@"trending"],
-                                  @"display" : display}];
-      return;
-    }*/
   }
   
   
@@ -1286,8 +1176,6 @@ static NetworkManager *singleton = nil;
   } else {
     [display handleProcessedContent:data flags:flags];
   }
-  
-  
 }
 
 - (void)processContentAdditional:(NSDictionary*)content {
@@ -1304,6 +1192,5 @@ static NetworkManager *singleton = nil;
   id<ContentProcessor> display = [content objectForKey:@"port"];
   [display handleProcessedContent:@[data] flags:@{}];
 }
-
 
 @end
