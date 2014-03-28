@@ -120,10 +120,6 @@ II. Preprocessor Macros
    SANDBOX_PUSHES
    Use this macro to have the app subscribe to a non-production Parse channel called "sandbox_beta", which will allow for the developer to send push notifications to just the development app.
 
-   STOCK_PLAYER
-   This should always be left on. As part of a refactoring, the code should be modified to make the AVPlayer audio streaming code the default behavior without the need of this macro. As it is,
-   disabling this macro will cause the app to use the old streamer based on AudioStreamer, which will result in unexpected behavior.
-
    SUPPORT_LANDSCAPE
    This should also be left on. Disabling it will lock the app to portrait.
 
