@@ -23,7 +23,6 @@ static AnalyticsManager *singleton = nil;
   if ( !singleton ) {
     @synchronized(self) {
       singleton = [[AnalyticsManager alloc] init];
-      
       // Assembly line
       [[NSNotificationCenter defaultCenter] addObserver:singleton
                                                selector:@selector(logOut:)
@@ -31,8 +30,23 @@ static AnalyticsManager *singleton = nil;
                                                  object:nil];
     }
   }
-  
   return singleton;
+}
+
+- (void)primeAnalytics {
+  NSString *tfKey = [Utilities isIpad] ? [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPadKey"] : [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPhoneKey"];
+  [TestFlight takeOff:tfKey];
+  
+  [Flurry setCrashReportingEnabled:YES];
+#ifdef PRODUCTION
+  [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"ProductionKey"] ];
+#elif RELEASE
+  [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"ProductionKey"] ];
+#else
+  [Flurry setDebugLogEnabled:YES];
+  [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"DebugKey"] ];
+#endif
+  [Flurry setBackgroundSessionEnabled:NO];
 }
 
 #pragma mark - Ad serving
@@ -95,31 +109,24 @@ static AnalyticsManager *singleton = nil;
       [self setUrlHint:@"g.doubleclick.net/aclk"];
       [self setAdGtpID: [[[[FileManager shared] globalConfig] objectForKey:@"AdSettings"] objectForKey:@"AdGtpId"] ];
     }
-    
   }];
 }
 
 #pragma mark - Analytics Listening
-- (void)logOut:(NSNotification*)note {
-
-}
-
 - (void)openTimedSessionForContentType:(NSInteger)contentType {
   if ( contentType == self.screenContent ) {
     return;
   }
-  
+
   if ( self.timedSessionOpen ) {
     [self terminateTimedSessionForContentType:self.screenContent];
   }
-  
   self.sessionBegan = [[NSDate date] timeIntervalSince1970];
   self.screenContent = contentType;
   self.timedSessionOpen = YES;
 }
 
 - (void)terminateTimedSessionForContentType:(NSInteger)contentType {
-  
   if ( !self.timedSessionOpen ) {
     return;
   }
@@ -139,12 +146,9 @@ static AnalyticsManager *singleton = nil;
     [self logEvent:[NSString stringWithFormat:@"user_viewed_%@",name]
     withParameters:@{ @"duration_in_seconds" : lengthStr }];
   }
-
-  
 }
 
 - (NSDictionary*)paramsForArticle:(NSDictionary *)article {
-  
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
   if ( [article objectForKey:@"url"] ) {
     [params setObject:[article objectForKey:@"url"] forKey:@"article_url"];
@@ -152,28 +156,28 @@ static AnalyticsManager *singleton = nil;
     [params setObject:[article objectForKey:@"permalink"]
                forKey:@"article_url"];
   }
-  
+
   if ( [article objectForKey:@"id"] ) {
     [params setObject:[article objectForKey:@"id"]
                forKey:@"article_id"];
   }
-  
+
   if ( [article objectForKey:@"short_title"] ) {
     [params setObject:[article objectForKey:@"short_title"]
                forKey:@"article_title"];
   }
-  
+
   if ( [article objectForKey:@"headline"] ) {
     [params setObject:[article objectForKey:@"headline"]
                forKey:@"article_title"];
   }
-  
+
   return [NSDictionary dictionaryWithDictionary:params];
 }
 
 #pragma mark - Error Logging
 - (void)analyzeStreamError:(NSString *)comments {
-  
+
   NSURL *liveURL = [NSURL URLWithString:kLiveStreamURL];
   NetworkHealth netHealth = [[NetworkManager shared] checkNetworkHealth:[liveURL host]];
   if ( NetworkHealthNetworkDown == netHealth ) {
@@ -183,21 +187,19 @@ static AnalyticsManager *singleton = nil;
   } else {
     [self failStream:StreamStateUnknown comments:comments];
   }
-  
+
   NSLog(@"Stream error...");
 }
 
 - (void)networkDisappeared {
-  
+
   NSDictionary *analysis = @{ @"timeDropped" : [NSDate stringFromDate:[NSDate date]
                                                             withFormat:@"YYYY-MM-dd hh:mm:ss"] };
-  
   [Flurry logEvent:@"networkFailure" withParameters:[self mergeParametersWithUserInfo:analysis callingFunction:@"networkDropped"]];
-  
 }
 
 - (void)failureFetchingImage:(NSString *)link {
-  
+
   NSDictionary *analysis = @{ @"timeFailed" : [NSDate stringFromDate:[NSDate date]
                                                           withFormat:@"YYYY-MM-dd hh:mm:ss"],
                               @"failedLink" : link };
@@ -211,11 +213,9 @@ static AnalyticsManager *singleton = nil;
 - (void)failureFetchingContent:(NSString *)link {
   
   NSLog(@"Failure fetching content...");
- 
   dispatch_async(dispatch_get_main_queue(), ^{
     [self app404];
   });
-
   
   NSDictionary *analysis = @{ @"timeFailed" : [NSDate stringFromDate:[NSDate date]
                                                           withFormat:@"YYYY-MM-dd hh:mm:ss"],
@@ -225,9 +225,6 @@ static AnalyticsManager *singleton = nil;
     withParameters:[self mergeParametersWithUserInfo:analysis
                                      callingFunction:@"failedFetchingContent"]
                       timed:YES];
-  
-
-  
 }
 
 - (void)app404 {
@@ -235,22 +232,9 @@ static AnalyticsManager *singleton = nil;
   SCPR404ViewController *fourofour = [[SCPR404ViewController alloc] initWithNibName:[[DesignManager shared]
                                                                                      xibForPlatformWithName:@"SCPR404ViewController"]
                                                                              bundle:nil];
-  
+
   [del cloakUIWithCustomView:fourofour dismissible:YES];
   [del setServerDown:YES];
-  
-}
-
-- (void)logBadArticleToParse:(NSString *)body error:(NSError*)error {
-#ifdef LOG_BAD_ARTICLES
-  PFObject *badArticle = [PFObject objectWithClassName:@"FlaggedArticle"];
-  [badArticle setObject:[error localizedDescription]
-                 forKey:@"cause"];
-  [badArticle setObject:body
-                 forKey:@"content"];
-  [badArticle saveEventually];
-#endif
-  
 }
 
 #pragma mark - Stream Analytics
@@ -264,7 +248,7 @@ static AnalyticsManager *singleton = nil;
   if ( !comments ) {
     comments = @"";
   }
-  
+
   if ( self.audioStreamInFailedState ) {
     self.droppedPackets++;
   } else {
@@ -277,13 +261,8 @@ static AnalyticsManager *singleton = nil;
                                      callingFunction:@"streamFailure"]
                                                timed:YES];
   }
-  
-  
-
   NSLog(@"Sending stream failure report to Flurry");
 }
-
-
 
 - (void)unfailStream {
   if ( self.audioStreamInFailedState ) {
@@ -300,19 +279,18 @@ static AnalyticsManager *singleton = nil;
                               @"droppedPackets" : [NSString stringWithFormat:@"%d",self.droppedPackets]
                               
                             };
-    
+
     [Flurry logEvent:@"streamRestored"
     withParameters:[self mergeParametersWithUserInfo:analysis callingFunction:@"streamRestore"]
              timed:YES];
   }
-  
+
   @synchronized(self) {
     self.interruptionCause = StreamStateHealthy;
     self.droppedPackets = 0;
     self.streamRestored = nil;
     self.streamDropped = nil;
   }
-  
 }
 
 - (NSString*)stringForInterruptionCause:(StreamState)cause {
@@ -330,27 +308,7 @@ static AnalyticsManager *singleton = nil;
     default:
       break;
   }
-  
   return english;
-}
-
-
-
-- (void)primeAnalytics {
-
-  NSString *tfKey = [Utilities isIpad] ? [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPadKey"] : [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPhoneKey"];
-  [TestFlight takeOff:tfKey];
-
-  [Flurry setCrashReportingEnabled:YES];
-#ifdef PRODUCTION
-  [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"ProductionKey"] ];
-#elif RELEASE
-  [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"ProductionKey"] ];
-#else
-  [Flurry setDebugLogEnabled:YES];
-  [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"DebugKey"] ];
-#endif
-  [Flurry setBackgroundSessionEnabled:NO];
 }
 
 - (NSDictionary*)mergeParametersWithUserInfo:(NSDictionary *)extraParams callingFunction:(NSString *)callingFunction {
@@ -412,9 +370,6 @@ static AnalyticsManager *singleton = nil;
 - (void)logEvent:(NSString *)event withParameters:(NSDictionary *)parameters {
   
   NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-  /*[userInfo setObject:[[SocialManager shared] userName]
-               forKey:@"name"];*/
-  
   [userInfo setObject:[[ContentManager shared].settings deviceID]
                forKey:@"device_id"];
   
@@ -432,7 +387,6 @@ static AnalyticsManager *singleton = nil;
   NSLog(@"Logging to Flurry now - %@ - with params %@", event, parameters);
 #endif
   [Flurry logEvent:event withParameters:userInfo timed:YES];
-  
 }
 
 @end

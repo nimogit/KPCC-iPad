@@ -420,12 +420,7 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-  
   NSLog(@"Error on web content load : %@",[error localizedDescription]);
-  
-  [[AnalyticsManager shared] logBadArticleToParse:self.styledBody
-                                            error:error];
-  
   [self.delegate webContentFailed];
 }
 

@@ -57,13 +57,7 @@ static DesignManager *singleton = nil;
   if ( pivotOld == pivot ) {
     return;
   }
-  
-  
-  BOOL movingLeft = NO;
-  if ( pivot > pivotOld ) {
-    movingLeft = YES;
-  }
-  
+
   if ( [turnable leftFlap] ) {
     [turnable leftFlap].view.alpha = 1.0;
   }
