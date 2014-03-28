@@ -85,14 +85,14 @@ I. Dependencies
 
        The current project assumes the following directory structure:
        
-       Libraries Â¬
-         FacebookSDK Â¬
+       Libraries ¬
+         FacebookSDK ¬
             FacebookSDK.framework
        	 Parse.framework
 	   |
 	   |
 	   |
-	   KPCCRoot Â¬
+	   KPCCRoot ¬
 	     KPCC.xcodeproj
 	   |
 	   |
@@ -101,7 +101,6 @@ I. Dependencies
    <h3>Inline compilable dependencies:</h3>
 	
 	    Google DoubleClick for Publishers (v6.8.0)
-	    AudioStreamer (Deprecated) - ** This is a legacy library that I originally used for audio streaming but it was replaced by the Cocoa AVPlayer class
 	    Flurry (v4.3.2 for iPhone)
 	    SBJson (v3.2)
 	    TestFlight (v3.0.0)
@@ -159,9 +158,9 @@ IV. App views and hierarchy
 
    <h3>Hierarchy:</h3>
 
-   	Main Window Â¬
-     	   SCPRMasterRootViewController Â¬
-         	SCPRViewController Â¬
+   	Main Window ¬
+     	   SCPRMasterRootViewController ¬
+         	SCPRViewController ¬
             	   [ Navigation Views ]
 
    Essentially in this hierarchy we can ignore the Main Window for almost everything. All "window-level" top UI operations like masking the app with a spinner, showing the onboarding flow, having views display over all subviews etc. happen on the SCPRMasterRoot level which you can think of as our window even though technically it's not. The drawer, titlebar, and audio player bar also live as top-level subviews on the SCPRMasterRoot. The app uses SCPRViewController to handle content-related top level switching of what's displaying to the user. SCPRViewController is a monolithic dispatcher that's meant to serve as the viewport for mutable content. All full-screen views (News, Short List, Events etc.) get loaded as subviews of SCPRViewController. Examine the <STRONG>primeUI:newsPath:</STRONG> method in SCPRViewController to see how navigation is handled and rewritten to the screen as the user moves around.
