@@ -1706,11 +1706,11 @@
   self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
                                                    self.webContentLoader.webView.frame.origin.y,
                                                    self.webContentLoader.webView.frame.size.width,
-                                                   webHeight+110.0);
+                                                   webHeight+140.0);
   
   self.webContentLoader.webView.scrollView.scrollEnabled = NO;
   self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.frame.size.width,
-                                                      totalHeight+110.0);
+                                                      totalHeight+140.0);
   
   self.masterContentScroller.frame = CGRectMake(self.masterContentScroller.frame.origin.x,
                                                 self.masterContentScroller.frame.origin.y,
