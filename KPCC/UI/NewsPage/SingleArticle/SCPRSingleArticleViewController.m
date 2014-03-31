@@ -106,6 +106,10 @@
   }
 }
 
+- (void)arm {
+
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [[[Utilities del] globalTitleBar] applyKpccLogo];
 }
