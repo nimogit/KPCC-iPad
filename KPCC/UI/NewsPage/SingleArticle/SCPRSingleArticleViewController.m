@@ -51,11 +51,7 @@
   if ( !self.relatedArticle ) {
     [[NetworkManager shared] fetchContentForSingleArticle:self.relatedURL
                                                 display:self];
-  } else {
-    //[self arrangeContent];
   }
-  
-  //[[DesignManager shared] applyPerimeterShadowTo:self.view];
   
   self.basicTemplate.aspectCode = @"SingleArticle";
   self.basicTemplate.backgroundColor = [UIColor whiteColor];
@@ -80,27 +76,6 @@
 - (UIView*)bendableView {
   return self.view;
 }
-
-/*- (void)setObservableScroller:(UIScrollView *)observableScroller {
- 
-  if ( self.observableScroller && observableScroller != nil ) {
-    return;
-  }
- 
-  if ( _observableScroller && !observableScroller ) {
-    [_observableScroller removeObserver:self
-                             forKeyPath:@"contentOffset"];
-  }
- 
-  _observableScroller = observableScroller;
- 
-  if ( observableScroller ) {
-    [self.observableScroller addObserver:self
-                            forKeyPath:@"contentOffset"
-                               options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial
-                               context:nil];
-  }
-}*/
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
   
@@ -128,11 +103,8 @@
         }
       }
     }
-    
   }
-
 }
-
 
 - (void)viewDidAppear:(BOOL)animated {
   [[[Utilities del] globalTitleBar] applyKpccLogo];
@@ -147,48 +119,6 @@
       [svc.mainPageScroller setContentOffset:CGPointMake(0.0, offset)];
     }];
   }
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-
-}
-
-- (void)arm {
-  
-}
-
-- (void)fadeBand {
-  /*
-  [UIView animateWithDuration:0.4
-                   animations:^{
-                     self.textSheetView.alpha = 0.008;
-                   } completion:^(BOOL finished) {
-                     if ( self.tapper ) {
-                       [self.basicTemplate.image1 removeGestureRecognizer:self.tapper];
-                     }
-                     self.basicTemplate.image1.userInteractionEnabled = YES;
-                     self.tapper = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                              action:@selector(bringUpBand)];
-                     [self.basicTemplate.image1 addGestureRecognizer:self.tapper];
-                   }];*/
-}
-
-- (void)bringUpBand {
-  /*
-  [UIView animateWithDuration:0.4
-                   animations:^{
-                     self.textSheetView.alpha = 1.0;
-                   } completion:^(BOOL finished) {
-                     if ( self.tapper ) {
-                       [self.basicTemplate.image1 removeGestureRecognizer:self.tapper];
-                     }
-                     
-                     self.bandFadeTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
-                                                                           target:self
-                                                                         selector:@selector(fadeBand)
-                                                                         userInfo:nil
-                                                                          repeats:NO];
-                   }];*/
 }
 
 - (void)activate {
@@ -239,7 +169,6 @@
 - (void)killContent {
 
   NSString *title = [self.relatedArticle objectForKey:@"short_title"] ? [self.relatedArticle objectForKey:@"short_title"] : [self.relatedArticle objectForKey:@"title"];
-  //NSLog(@" **** KILLING CONTENT FOR :%@ **** ",title);
   NSString *code = [NSString stringWithFormat:@"%@%d",[Utilities sha1:title],
                     (NSInteger)[[NSDate date] timeIntervalSince1970]];
   self.deactivationToken = code;
@@ -258,13 +187,10 @@
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                          cachePolicy:NSURLCacheStorageAllowed
                                                      timeoutInterval:10.0];
-  
+
   [self.webContentLoader.webView stopLoading];
-  //[[NSURLCache sharedURLCache] removeCachedResponseForRequest:self.webContentLoader.webView.request];
-  
   self.webContentLoader.cleaningUp = YES;
   [self.webContentLoader.webView loadRequest:request];
-
 }
 
 - (void)safeKillContent {
@@ -276,8 +202,6 @@
   }
 }
 
-
-
 - (void)setRelatedArticle:(NSDictionary *)relatedArticle {
   _relatedArticle = relatedArticle;
   
@@ -287,73 +211,6 @@
 }
 
 - (void)handleMultipleAssets {
-#ifndef FAKE_NO_ASSET
-/*  if ( self.assetsHandled ) {
-    return;
-  }
-  
-  NSDictionary *assets = [self.relatedArticle objectForKey:@"assets"];
-  if ( [assets count] > 1 ) {
-    
-    self.armoireController = [[SCPRArmoireViewController alloc]
-                              initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRArmoireViewController"]
-                              bundle:nil];
-    CGRect r = CGRectMake(self.basicTemplate.matteView.frame.origin.x,
-                          self.basicTemplate.matteView.frame.origin.y,
-                          self.basicTemplate.matteView.frame.size.width,
-                          self.basicTemplate.matteView.frame.size.height+40.0);
-    
-    
-    self.armoireController.view.frame = r;
-    [self.armoireController.captionLabel snapText:[NSString stringWithFormat:@"View Slideshow (%d)",assets.count]
-                                             bold:YES];
-    [self.masterContentScroller addSubview:self.armoireController.view];
-    [self.masterContentScroller sendSubviewToBack:self.armoireController.view];
-    [self.masterContentScroller sendSubviewToBack:self.webContentLoader.webView];
-    [self.masterContentScroller sendSubviewToBack:self.textSheetView];
-    
-
-    self.armoireController.style = self.index;
-    self.armoireController.tintColor = [[DesignManager shared] obsidianColor:0.65];
-    self.armoireController.scrollerToDisable = self.masterContentScroller;
-    self.armoireController.parent = self;
-    self.armoireController.view.alpha = 0.0;
-    
-    self.matteCloak = [[UIView alloc] initWithFrame:CGRectMake(0.0,0.0,self.basicTemplate.matteView.frame.size.width,
-                                                               self.basicTemplate.matteView.frame.size.height)];
-    self.matteCloak.backgroundColor = [UIColor blackColor];
-    self.matteCloak.alpha = 0.0;
-    
-    [self.basicTemplate.matteView addSubview:self.matteCloak];
-    
-    CGFloat assetPush = 52.0;
-    [UIView animateWithDuration:0.22 animations:^{
-      self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
-                                                       self.webContentLoader.webView.frame.origin.y+assetPush,
-                                                       self.webContentLoader.webView.frame.size.width,
-                                                       self.webContentLoader.webView.frame.size.height-assetPush);
-      self.textSheetView.frame = CGRectMake(self.textSheetView.frame.origin.x,
-                                            self.textSheetView.frame.origin.y,
-                                            self.textSheetView.frame.size.width,
-                                            self.textSheetView.frame.size.height+assetPush);
-      self.basicTemplate.headLine.center = CGPointMake(self.basicTemplate.headLine.center.x,
-                                                       self.basicTemplate.headLine.center.y+assetPush);
-      self.basicTemplate.byLine.center = CGPointMake(self.basicTemplate.byLine.center.x,
-                                                     self.basicTemplate.byLine.center.y+assetPush);
-      self.queueButton.center = CGPointMake(self.queueButton.center.x,
-                                            self.queueButton.center.y+assetPush);
-      
-      self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.contentSize.width,
-                                                          self.masterContentScroller.contentSize.height+assetPush+10.0);
-      
-      self.armoireController.view.alpha = 1.0;
-      
-    } completion:^(BOOL finished) {
-      
-    }];
-    
-  }*/
-#endif
   self.assetsHandled = YES;
 }
 
@@ -403,8 +260,6 @@
     } @catch (NSException *e) {
       
     }
-  } else {
-    
   }
   
   [UIView animateWithDuration:0.12 animations:^{
@@ -414,18 +269,15 @@
 
 #pragma mark - Deactivatable
 - (void)deactivationMethod {
-  
   NSLog(@" ***** KILLING CONTENT ****** ");
-  
+
   self.webContentLoader.cleaningUp = YES;
   [self.webContentLoader.webView stopLoading];
   self.webContentLoader.delegate = nil;
   [self.webContentLoader.webView loadHTMLString:@"" baseURL:nil];
   
   self.okToDelete = YES;
-  
 }
-
 
 #pragma mark - Backable
 - (UIScrollView*)titlebarTraversalScroller {
@@ -437,9 +289,6 @@
 }
 
 - (void)backTapped {
-  
-
-  //[[ContentManager shared] saveContextOnMainThread];
 
   if ( [[[Utilities del] viewController] shareDrawerOpen] ) {
     [[[Utilities del] viewController] toggleShareDrawer];
@@ -475,8 +324,6 @@
       
     savc.trash = YES;
     [savc cleanup];
-      
-      
     [savc.navigationController popViewControllerAnimated:YES];
     [[DesignManager shared] setInSingleArticle:NO];
     [[ContentManager shared] popFromResizeVector];
@@ -490,18 +337,13 @@
     }
   }
   
-  
   @try {
-    
     [self.masterContentScroller removeObserver:self
                                     forKeyPath:@"contentOffset"];
-    
   } @catch (NSException *e) {
-    
+
   }
-  
   [[ContentManager shared] setUserIsViewingExpandedDetails:NO];
-  
 }
 
 #pragma mark - ContentProcessor
@@ -515,7 +357,6 @@
 }
 
 - (void)arrangeContent {
-  
   if ( self.contentArranged ) {
     return;
   }
@@ -534,8 +375,7 @@
   if ( [assets count] > 0 ) {
     primary = [assets objectAtIndex:0];
   }
-  
-  
+
 #ifdef DEBUG
   // -- Developer Note --
   // This is a way to override the contents of the article so you can look at specific use-cases of story content which is helpful for debugging.
@@ -611,9 +451,7 @@
       
     } else {
 
-      
       self.landscapeImageSheetView.alpha = 0.0;
-      
       CGFloat heightDiff = self.masterContentScroller.frame.size.height - (self.textSheetView.frame.origin.y+self.textSheetView.frame.size.height);
       self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
                                                        self.textSheetView.frame.origin.y+self.textSheetView.frame.size.height,
@@ -627,7 +465,7 @@
       
     }
   }
-  
+
   CGSize actual = [self.basicTemplate.image1 frameForImage].size;
   CGFloat actualWidth = self.basicTemplate.image1.image.size.width*actual.width;
   CGFloat widthToUse = fminf(actualWidth, self.basicTemplate.image1.frame.size.width);
@@ -666,7 +504,6 @@
                               direction:NeighborDirectionAbove
                                 padding:3.0];
   
-  //[[DesignManager shared] applyBaseShadowTo:self.basicTemplate.matteView];
   self.textSheetView.backgroundColor = [UIColor whiteColor];
   
   NSDictionary *category = [self.relatedArticle objectForKey:@"category"];
@@ -823,18 +660,15 @@
     }
     
   }
-  
-  
+
   if ( ![Utilities isLandscape] ) {
     [self.basicTemplate.image1 removeFromSuperview];
     [self.view addSubview:self.basicTemplate.image1];
     [self.view sendSubviewToBack:self.basicTemplate.image1];
-  
-  
+
     [[DesignManager shared] alignHorizontalCenterOf:self.basicTemplate.image1
                                          withView:self.masterContentScroller];
   }
-  
 
   // -- Developer Note -- //
   // This is what I referred to in RefactoringProposals.md about only now addressing the case of it being a Live Event context. All of this work
@@ -965,12 +799,8 @@
         
         [self.extraAssetsSeat addSubview:self.playOverlayButton];
         [[DesignManager shared] globalSetImageTo:@"" forButton:self.playOverlayButton];
-        
       }
-      
 
-    
-      
     } else {
       
       self.rsvpSeatView.frame = CGRectMake(0.0,self.basicTemplate.headLine.frame.origin.y+self.basicTemplate.headLine.frame.size.height,
@@ -981,7 +811,6 @@
     }
     
     if ( [Utilities isLandscape] && !noAsset ) {
-      
    
       [[DesignManager shared] avoidNeighbor:self.landscapeImageSheetView
                                      withView:self.webContentLoader.webView
@@ -1081,7 +910,6 @@
     
   } else {
     
-    
     if ( [assets count] > 1 ) {
       
       self.playOverlayButton.alpha = 1.0;
@@ -1107,22 +935,14 @@
                                                   self.landscapeImageSheetView.frame.size.width,
                                                   self.landscapeImageSheetView.frame.size.height);
         [self.landscapeImageSheetView addSubview:self.playOverlayButton];
-        
-        
       }
-      
     } else {
-      
       if ( primary ) {
         [self armCaption:primary];
       }
-      
       self.extraAssetsSeat.alpha = 0.0;
       self.playOverlayButton.alpha = 0.0;
-      
-      
     }
-    
   }
   
   if ( prime ) {
@@ -1145,7 +965,6 @@
                                              self.extraAssetsLabel.frame.origin.y,
                                              ceilf(tl.width+candidate),
                                              self.extraAssetsLabel.frame.size.height);
-    
     
     self.extraAssetsSeat.frame = CGRectMake(self.extraAssetsSeat.frame.origin.x,
                                             self.extraAssetsSeat.frame.origin.y,
@@ -1201,7 +1020,6 @@
                                       self.captionCreditLabel.frame.origin.y+self.captionCreditLabel.frame.size.height+self.captionLabel.frame.origin.y+2.0);
   
   self.captionView.alpha = 0.0;
-  
   [self.masterContentScroller addSubview:self.captionView];
   
   [[DesignManager shared] avoidNeighbor:self.textSheetView
@@ -1262,9 +1080,7 @@
 #pragma mark - Extra Assets
 
 - (void)playVideo:(id)sender {
-  
   [self presentVideo];
-  
 }
 
 - (void)presentSlideshow:(id)sender {
@@ -1289,10 +1105,8 @@
   
   if ( self.postProcessed )
     return;
-  
-  
+
   [self handleMultipleAssets];
-  
   self.postProcessed = YES;
 }
 
@@ -1393,9 +1207,7 @@
   if ( sacvc ) {
     NSLog(@"Parent Collection not actually nil!");
   }
-  
   return !sacvc.contentLock;
-  
 }
 
 - (void)queryParse {
@@ -1492,9 +1304,10 @@
   CGFloat accountForSocialSheet = 0.0;
   accountForSocialSheet = self.socialSheetView.frame.size.height;
   
-  [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x, self.webView.frame.origin.y + self.webView.frame.size.height - accountForSocialSheet - 50.0, self.socialSheetView.frame.size.width, self.socialSheetView.frame.size.height)];
-
-  //[self.masterContentScroller setContentSize:CGSizeMake(self.masterContentScroller.contentSize.width, self.masterContentScroller.contentSize.height + accountForSocialSheet)];
+  [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
+                                            self.webView.frame.origin.y + self.webView.frame.size.height - accountForSocialSheet - 50.0,
+                                            self.socialSheetView.frame.size.width,
+                                            self.socialSheetView.frame.size.height)];
   
   if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
     [self.masterContentScroller addSubview:self.socialSheetView];
@@ -1570,9 +1383,7 @@
     [self arrangeSocialData];
     self.masterContentScroller.scrollEnabled = YES;
   }
-  
 
-  
   [self.activity stopAnimating];
   self.activity.alpha = 0.0;
 }
@@ -1581,11 +1392,6 @@
 
 - (void)webContentFailed {
 
-  /*[[[UIAlertView alloc] initWithTitle:@"Error fetching content"
-                              message:nil
-                             delegate:self
-                    cancelButtonTitle:@"OK"
-                    otherButtonTitles:nil] show];*/
 }
 
 - (void)externalWebContentRequest:(NSURLRequest*)request {
@@ -1656,12 +1462,7 @@
   self.parentCollection = nil;
   self.leftFlap = nil;
   self.rightFlap = nil;
-  
-  
-  //NSLog(@"... FINISHING KILL CONTENT FOR SINGLE ARTICLE : %@ ...",[self.relatedArticle objectForKey:@"title"]);
-  
 
-  
   [self.view removeFromSuperview];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
@@ -1725,11 +1526,7 @@
                                    delegate:self];
     }
   }
-  
 }
-
-
-
 
 #pragma mark - UIAlertView
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -1774,8 +1571,7 @@
 }
 #endif
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
