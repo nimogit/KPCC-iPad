@@ -931,6 +931,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)finishTransition {
+  [[Utilities del] closeDrawer];
   [[Utilities del] setLaunchFinished:YES];
   
   [UIView animateWithDuration:0.25 animations:^{

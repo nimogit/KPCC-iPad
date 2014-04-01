@@ -63,6 +63,7 @@ typedef enum {
 - (void)armGlobalDismiss:(id)sender;
 - (void)disarmGlobalDismiss;
 - (void)openDrawer;
+- (void)closeDrawer;
 - (void)toggleDrawer;
 - (void)rotateDrawerForInterfaceOrientation:(UIInterfaceOrientation)orientation;
 - (void)cloakUIWithMessage:(NSString*)message;
