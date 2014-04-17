@@ -461,6 +461,8 @@
 
 - (void)openDrawer {
   
+  [[AnalyticsManager shared] logEvent: @"menu_open_drawer" withParameters:@{}];
+  
   self.globalDrawer.view.alpha = 1.0;
   
   CGFloat offset = UIDeviceOrientationIsLandscape(self.masterRootController.interfaceOrientation) ? 260.0 : 240.0;

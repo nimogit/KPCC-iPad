@@ -156,13 +156,11 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
          break;
        case ScreenContentTypeSnapshotPage:
          [[NetworkManager shared] fetchContentForSnapshotPage:self];
-         [[AnalyticsManager shared] logEvent: @"menu_select_editions" withParameters:@{}];
          break;
        case ScreenContentTypeCompositePage:
          [self wipePreviousContent];
          [self displaySimpleContent:@{}];
          [self finishTransition];
-         [[AnalyticsManager shared] logEvent: @"menu_select_news" withParameters:@{}];
          break;
        case ScreenContentTypeEventsPage:
          [[NetworkManager shared] fetchContentForEventsPage:@""
@@ -173,11 +171,9 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
          break;
        case ScreenContentTypeProgramAZPage:
          [[NetworkManager shared] fetchContentForProgramAZPage:self];
-         [[AnalyticsManager shared] logEvent: @"menu_select_programs" withParameters:@{}];
          break;
        case ScreenContentTypeVideoPhotoPage:
          [[NetworkManager shared] fetchContentForVideoPhotoPage:self];
-         [[AnalyticsManager shared] logEvent: @"menu_select_videophoto" withParameters:@{}];
          break;
          
       // The following two content types don't need any network calls so just present them
@@ -239,12 +235,15 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   if ( [[tokens objectAtIndex:0] intValue] == 0 ) {
     if ( [contentKey isEqualToString:@"News"] ) {
       [self primeUI:ScreenContentTypeCompositePage newsPath:@""];
+      [[AnalyticsManager shared] logEvent: @"menu_select_news" withParameters:@{}];
     }
     if ( [contentKey isEqualToString:@"The Short List"] ) {
       [self primeUI:ScreenContentTypeSnapshotPage newsPath:@""];
+      [[AnalyticsManager shared] logEvent: @"menu_select_editions" withParameters:@{}];
     }
     if ( [contentKey isEqualToString:@"Photo & Video"] ) {
       [self primeUI:ScreenContentTypeVideoPhotoPage newsPath:@""];
+      [[AnalyticsManager shared] logEvent: @"menu_select_videophoto" withParameters:@{}];
     }
     if ( [contentKey isEqualToString:@"Live Events"] ) {
       [self primeUI:ScreenContentTypeEventsPage newsPath:@""];
@@ -252,6 +251,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   } else if ( [[tokens objectAtIndex:0] intValue] == 1 ) {
     if ( [contentKey isEqualToString:@"All Programs"] ) {
       [self primeUI:ScreenContentTypeProgramAZPage newsPath:@""];
+      [[AnalyticsManager shared] logEvent: @"menu_select_programs" withParameters:@{}];
     } else {
       [self primeUI:ScreenContentTypeProgramPage newsPath:contentKey];
     }
