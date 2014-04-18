@@ -1033,7 +1033,6 @@
   
   [[DesignManager shared] alignHorizontalCenterOf:self.captionView
                                          withView:self.textSheetView];
-  
 }
 
 - (void)showCaption:(id)sender {
@@ -1242,6 +1241,10 @@
 
 - (void)socialDataLoaded {
   
+  if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
+    [self.masterContentScroller addSubview:self.socialSheetView];
+  }
+  
   if (self.socialCountHash) {
     NSString *facebookCount = [self.socialCountHash objectForKey:@"facebook_count"];
     NSString *twitterCount = [self.socialCountHash objectForKey:@"twitter_count"];
@@ -1304,20 +1307,6 @@
   
 }
 
-- (void)arrangeSocialData {
-  CGFloat accountForSocialSheet = 0.0;
-  accountForSocialSheet = self.socialSheetView.frame.size.height;
-  
-  [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
-                                            self.webView.frame.origin.y + self.webView.frame.size.height - accountForSocialSheet - 50.0,
-                                            self.socialSheetView.frame.size.width,
-                                            self.socialSheetView.frame.size.height)];
-  
-  if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
-    [self.masterContentScroller addSubview:self.socialSheetView];
-  }
-}
-
 - (void)toggleShareModal {
   if ( self.shareModalOpen ) {
     [self closeShareModal];
@@ -1377,14 +1366,12 @@
       
       self.webContentLoader.webView.alpha = 1.0;
     } completion:^(BOOL finished) {
-      [self arrangeSocialData];
-      
+
       self.masterContentScroller.scrollEnabled = YES;
 
     }];
     
   } else {
-    [self arrangeSocialData];
     self.masterContentScroller.scrollEnabled = YES;
   }
 
@@ -1521,6 +1508,12 @@
                                                 self.masterContentScroller.frame.origin.y,
                                                 self.masterContentScroller.frame.size.width,
                                                 self.masterContentScroller.frame.size.height);
+  
+  // Place the social sheetview below the article's contents and embeds
+  [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
+                                            self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height - 30.0,
+                                            self.socialSheetView.frame.size.width,
+                                            self.socialSheetView.frame.size.height)];
 }
 
 - (void)handleDelayedLoad {

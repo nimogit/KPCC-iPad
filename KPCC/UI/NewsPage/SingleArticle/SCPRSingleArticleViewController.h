@@ -72,7 +72,6 @@
 @property (nonatomic,strong) IBOutlet UIView *socialLineDivider;
 @property (nonatomic,strong) IBOutlet UIButton *socialShareButton;
 @property (nonatomic,strong) NSMutableDictionary *socialCountHash;
-- (void)arrangeSocialData;
 - (void)socialDataLoaded;
 - (void)toggleShareModal;
 @property BOOL shareModalOpen;
