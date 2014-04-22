@@ -1489,12 +1489,7 @@
     }
   }
   totalHeight += self.textSheetView.frame.size.height;
-  
-  if ( ![Utilities isIOS7] ) {
-    totalHeight += 60.0;
-    webHeight += 60.0;
-  }
-  
+
   self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
                                                    self.webContentLoader.webView.frame.origin.y,
                                                    self.webContentLoader.webView.frame.size.width,
@@ -1503,15 +1498,20 @@
   self.webContentLoader.webView.scrollView.scrollEnabled = NO;
   self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.frame.size.width,
                                                       totalHeight+140.0);
-  
+
   self.masterContentScroller.frame = CGRectMake(self.masterContentScroller.frame.origin.x,
                                                 self.masterContentScroller.frame.origin.y,
                                                 self.masterContentScroller.frame.size.width,
                                                 self.masterContentScroller.frame.size.height);
   
   // Place the social sheetview below the article's contents and embeds
+  CGFloat socialSheetVertAdjust = 30.0;
+  if (![Utilities isIOS7]) {
+    socialSheetVertAdjust += 26.0;
+  }
+
   [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
-                                            self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height - 30.0,
+                                            self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height - socialSheetVertAdjust,
                                             self.socialSheetView.frame.size.width,
                                             self.socialSheetView.frame.size.height)];
 }
