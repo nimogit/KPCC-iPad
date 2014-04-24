@@ -1221,15 +1221,12 @@
       [PFCloud callFunctionInBackground:@"social_data_no_constraints"
                          withParameters:@{@"articleIds": @[articleId]}
                                   block:^(NSDictionary *results, NSError *error) {
-                                    if (error) {
-                                      [[AnalyticsManager shared] failureFetchingContent:@"Parse Cloud Code: social_data_no_constraints"];
-                                      return;
+                                    if (!error) {
+                                      if ([results objectForKey:articleId]) {
+                                        self.socialCountHash = [results objectForKey:articleId];
+                                      }
+                                      [self socialDataLoaded];
                                     }
-                                    
-                                    if ([results objectForKey:articleId]) {
-                                      self.socialCountHash = [results objectForKey:articleId];
-                                    }
-                                    [self socialDataLoaded];
                                   }];
     }
   }  else {

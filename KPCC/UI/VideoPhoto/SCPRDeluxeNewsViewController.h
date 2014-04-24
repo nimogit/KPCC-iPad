@@ -13,6 +13,8 @@
 #import "global.h"
 #import "SCPRUsefulTransition.h"
 
+#define kNumberOfRegularStoriesPerRow 2
+
 typedef void (^FetchContentCallback)(BOOL);
 
 @interface SCPRDeluxeNewsViewController : UIViewController<ContentProcessor,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,Rotatable,AnimationDelegate>

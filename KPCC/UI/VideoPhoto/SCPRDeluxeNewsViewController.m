@@ -26,27 +26,22 @@
 
 @implementation SCPRDeluxeNewsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+      // Custom initialization
       [self supportedInterfaceOrientations];
-      
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)viewDidLoad {
+  [super viewDidLoad];
   
-  self.lookupForDuplicates = [@{} mutableCopy];
-  
-  self.numberOfRegularStoriesPerRow = [Utilities isLandscape] ? 2 : 2;
+  // Stretch bottom-most view for iOS7.
   [self stretch];
   
-  if ( [Utilities isIOS7] ) {
+  if ([Utilities isIOS7]) {
     if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
       self.photoVideoTable.frame = CGRectMake(self.photoVideoTable.frame.origin.x,
                                             self.photoVideoTable.frame.origin.y,
@@ -65,55 +60,47 @@
                                                name:@"update_news_feed_ui"
                                              object:nil];
   
-  self.loadingMoreNewsSpinner.color = [[DesignManager shared] periwinkleColor];
+  // Config table background colors, scroll appearance, and bottom loading spinner.
+  self.view.backgroundColor = [UIColor blackColor];
   self.photoVideoTable.showsVerticalScrollIndicator = NO;
   self.photoVideoTable.showsHorizontalScrollIndicator = NO;
-  self.masterCellHash = [[NSMutableDictionary alloc] init];
-  self.editionCellHash = [[NSMutableDictionary alloc] init];
   self.photoVideoTable.separatorColor = [UIColor clearColor];
   self.photoVideoTable.backgroundColor = [[DesignManager shared] silverCurtainsColor];
-  self.emptyFooter.backgroundColor = [[DesignManager shared] silverCurtainsColor];
   self.photoVideoTable.tableFooterView = self.emptyFooter;
   self.photoVideoTable.allowsSelection = NO;
-  self.view.backgroundColor = [UIColor blackColor]/*[[DesignManager shared] silverCurtainsColor]*/;
-  
-  //self.view.backgroundColor = [[DesignManager shared] consistentCharcolColor];
-  
+  self.emptyFooter.backgroundColor = [[DesignManager shared] silverCurtainsColor];
+  self.loadingMoreNewsSpinner.color = [[DesignManager shared] periwinkleColor];
   self.dummyHeader = [[DesignManager shared] deluxeHeaderWithText:@"EDITIONS: 123"];
   
-  if ( self.contentType == ScreenContentTypeCompositePage ) {
-    self.tableController.refreshControl = [[UIRefreshControl alloc] init];
-    [self.tableController.refreshControl addTarget:self
-                                          action:@selector(refreshTableContents)
-                                forControlEvents:UIControlEventValueChanged];
-  }
-  
+  self.lookupForDuplicates = [@{} mutableCopy];
+  self.masterCellHash = [[NSMutableDictionary alloc] init];
+  self.editionCellHash = [[NSMutableDictionary alloc] init];
+  self.numberOfRegularStoriesPerRow = kNumberOfRegularStoriesPerRow;
 
-  
-  if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
-    
+
+  if (self.contentType == ScreenContentTypeVideoPhotoPage) {
+
     [self sanitizeBigPosts];
     [self buildCells];
     
-  } else if ( self.contentType == ScreenContentTypeCompositePage ) {
-    
+  } else if (self.contentType == ScreenContentTypeCompositePage) {
+
+    // For 'Home' page, set bottom loading spinner to tableFooterView and add pull-to-refresh control.
     [self loadDummies];
     
     self.photoVideoTable.tableFooterView = self.spinnerFooter;
     self.spinnerFooter.backgroundColor = [[DesignManager shared] silverCurtainsColor];
     self.loadingMoreNewsSpinner.alpha = 0.0;
     
-    //[self sortNewsData];
+    self.tableController.refreshControl = [[UIRefreshControl alloc] init];
+    [self.tableController.refreshControl addTarget:self
+                                            action:@selector(refreshTableContents)
+                                  forControlEvents:UIControlEventValueChanged];
 
-  } else if ( self.contentType == ScreenContentTypeEventsPage ) {
-    
+  } else if (self.contentType == ScreenContentTypeEventsPage) {
     [self loadDummies:NO];
     [self buildCells];
-    
   }
-  
-
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)fetchContent:(FetchContentCallback) block {
@@ -295,21 +282,18 @@
                                                                                                             withParameters:@{@"articleIds": articleIdArray}
                                                                                                                      block:^(NSDictionary *results, NSError *error) {
                                                                                                                        
-                                                                                                                       if (error) {
-                                                                                                                         [[AnalyticsManager shared] failureFetchingContent:@"Parse Cloud Code: social_data"];
-                                                                                                                         return;
-                                                                                                                       }
-                                                                                                                       
-                                                                                                                       if (!self.socialShareCountHash) {
-                                                                                                                         self.socialShareCountHash = [[NSMutableDictionary alloc] init];
-                                                                                                                       }
-                                                                                                                       
-                                                                                                                       for (NSDictionary *eachArticle in results) {
-                                                                                                                         if ([[results objectForKey:eachArticle] objectForKey:@"facebook_count"] && [[results objectForKey:eachArticle] objectForKey:@"twitter_count"]){
-                                                                                                                           [self.socialShareCountHash setObject:[results objectForKey:eachArticle] forKey:eachArticle];
+                                                                                                                       if (!error) {
+                                                                                                                         if (!self.socialShareCountHash) {
+                                                                                                                           self.socialShareCountHash = [[NSMutableDictionary alloc] init];
                                                                                                                          }
+                                                                                                                         
+                                                                                                                         for (NSDictionary *eachArticle in results) {
+                                                                                                                           if ([[results objectForKey:eachArticle] objectForKey:@"facebook_count"] && [[results objectForKey:eachArticle] objectForKey:@"twitter_count"]){
+                                                                                                                             [self.socialShareCountHash setObject:[results objectForKey:eachArticle] forKey:eachArticle];
+                                                                                                                           }
+                                                                                                                         }
+                                                                                                                         [self.photoVideoTable reloadData];
                                                                                                                        }
-                                                                                                                       [self.photoVideoTable reloadData];
                                                                                                                      }];
 
                                                                                        }); // Dispatch in background closure
@@ -385,7 +369,7 @@
 
 - (void)sortNewsData:(FetchContentCallback)block {
   
-  self.numberOfRegularStoriesPerRow = [Utilities isIpad] ? 2 : 1;
+  self.numberOfRegularStoriesPerRow = kNumberOfRegularStoriesPerRow;
   
   self.dateCells = [[NSMutableDictionary alloc] init];
   self.cacheMutex = YES;
@@ -1223,7 +1207,9 @@
 }
 
 - (SCPRDeluxeEditionsCell*)editionCellFromEdition:(NSDictionary *)edition forceLoad:(BOOL)forceLoad {
-  
+
+  NSLog(@"## Building edition cell from edition");
+
   NSString *editionPD = [edition objectForKey:@"published_at"];
   if ( !editionPD ) {
     editionPD = @"DUMMY";
@@ -1257,19 +1243,6 @@
   
   return cell;
 }
-
-
-
-#pragma mark - AR
-/*
-- (NSUInteger)supportedInterfaceOrientations {
-  return UIInterfaceOrientationMaskAll;
-}
-
-- (BOOL)shouldAutorotate {
-  return YES;
-}
-*/
 
 - (void)finalizeAnimation {
 
@@ -1868,21 +1841,21 @@
 #pragma mark - ScrollView
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   
-  if ( self.contentType == ScreenContentTypeVideoPhotoPage || self.contentType == ScreenContentTypeEventsPage ) {
+  if (self.contentType == ScreenContentTypeVideoPhotoPage || self.contentType == ScreenContentTypeEventsPage) {
     return;
   }
   
-  if ( [[ContentManager shared] maxPagesReached] ) {
+  if ([[ContentManager shared] maxPagesReached]) {
     return;
   }
   
   CGRect frm = self.spinnerFooter.frame;
-  if ( !scrollView.scrollEnabled ) {
+  if (!scrollView.scrollEnabled) {
     return;
   }
-  
-  
-  if ( scrollView.contentOffset.y + scrollView.frame.size.height >= frm.origin.y ) {
+
+  // Scrolled to end of articles -- load more news.
+  if (scrollView.contentOffset.y + scrollView.frame.size.height >= frm.origin.y) {
     [UIView animateWithDuration:0.22 animations:^{
       self.previousOffset = scrollView.contentOffset;
       self.loadingMoreNewsSpinner.alpha = 1.0;
@@ -1896,7 +1869,31 @@
     [[AnalyticsManager shared] logEvent: @"load_more_news" withParameters:@{}];
   }
   
+}
 
+- (void)scrollViewDidScroll:(UITableView *)tableView {
+  if (self.contentType == ScreenContentTypeVideoPhotoPage || self.contentType == ScreenContentTypeEventsPage) {
+    return;
+  }
+  
+  if (!tableView.scrollEnabled) {
+    return;
+  }
+
+
+  CGRect row = [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+  NSLog(@"row rect - %@", NSStringFromCGRect(row));
+  NSLog(@"tableView - contentOffset y %f", tableView.contentOffset.y );
+  NSLog(@"tableView - framesize height %f", tableView.frame.size.height );
+  
+  // Scrolled past Short List -- hide Donate button in nav bar and show Sections button.
+  if (tableView.contentOffset.y > CGRectGetMaxY(row)) {
+    NSLog(@"you did it!");
+
+  } else if (tableView.contentOffset.y - 20.0 < CGRectGetMinY(row)) {
+    NSLog(@"revert");
+
+  }
 }
 
 #ifdef LOG_DEALLOCATIONS
