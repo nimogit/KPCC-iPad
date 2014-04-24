@@ -4539,8 +4539,8 @@
 			isa = PBXGroup;
 			children = (
 				28A0CF0C171E007300776579 /* SCPRTitlebarViewController.h */,
-				259AF5C418340E47008AFB2A /* SCPRTitlebarViewController.xib */,
 				28A0CF0D171E007300776579 /* SCPRTitlebarViewController.m */,
+				259AF5C418340E47008AFB2A /* SCPRTitlebarViewController.xib */,
 				28A0CF16171E032400776579 /* SCPRTitlebarViewController_iPad.xib */,
 				254CABA617396D700005341D /* SCPRSpecialTitlebarViewController.xib */,
 				255571731738AFFA00354D30 /* SCPRSpecialTitlebarViewController_iPad.xib */,

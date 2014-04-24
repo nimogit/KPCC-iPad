@@ -1835,6 +1835,7 @@
 }
 
 #pragma mark - ScrollView
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   
   if (self.contentType == ScreenContentTypeVideoPhotoPage || self.contentType == ScreenContentTypeEventsPage) {
@@ -1868,6 +1869,9 @@
 }
 
 - (void)scrollViewDidScroll:(UITableView *)tableView {
+  
+  NSDate *methodStart = [NSDate date];
+  
   if (self.contentType == ScreenContentTypeVideoPhotoPage || self.contentType == ScreenContentTypeEventsPage) {
     return;
   }
@@ -1876,26 +1880,31 @@
     return;
   }
 
-
   CGRect row = [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
   NSLog(@"row rect - %@", NSStringFromCGRect(row));
   NSLog(@"tableView - contentOffset y %f", tableView.contentOffset.y );
-  NSLog(@"tableView - framesize height %f", tableView.frame.size.height );
   
   // Scrolled past Short List -- hide Donate button in nav bar and show Sections button.
   if (tableView.contentOffset.y > CGRectGetMaxY(row)) {
-    NSLog(@"you did it!");
-
-    [[[Utilities del] globalTitleBar] morph:BarTypeDrawerWithCategories container:nil];
     
-
+    if ([[[Utilities del] globalTitleBar] isCategoriesButtonShown]) {
+      return;
+    }
+ 
+    [[[Utilities del] globalTitleBar] applyCategoriesButton];
 
   } else if (tableView.contentOffset.y - 20.0 < CGRectGetMinY(row)) {
-    NSLog(@"revert");
-    [[[Utilities del] globalTitleBar] morph:BarTypeDrawer container:nil];
-    [[[Utilities del] globalTitleBar] applyKpccLogo];
-    
+
+    if ([[[Utilities del] globalTitleBar] isDonateButtonShown]) {
+      return;
+    }
+
+    [[[Utilities del] globalTitleBar] applyDonateButton];
   }
+  
+  NSDate *methodFinish = [NSDate date];
+  NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
+  NSLog(@"scrollView executionTime = %f", executionTime);
 }
 
 #ifdef LOG_DEALLOCATIONS

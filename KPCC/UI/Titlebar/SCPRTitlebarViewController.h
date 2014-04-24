@@ -66,16 +66,21 @@ typedef enum {
 - (void)applyOnyxBackground;
 - (void)applyClearBackground;
 - (void)applyBackButtonText:(NSString*)backButtonText;
-- (void)applyDonateButton;
 - (void)applySharingButton;
 - (void)applySignoutButton;
+- (void)applyDonateButton;
 - (void)applyCategoriesButton;
+
+- (void)eraseDonateButton;
+- (void)eraseCategoriesButton;
 
 - (void)pushStyle:(BOOL)truePush;
 - (void)pushStyle;
 - (void)pop;
 - (void)pop:(BOOL)truePop;
 - (void)restamp;
-- (void)eraseDonateButton;
+
+- (BOOL)isCategoriesButtonShown;
+- (BOOL)isDonateButtonShown;
 
 @end

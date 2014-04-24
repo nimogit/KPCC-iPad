@@ -266,9 +266,8 @@
       break;
       
     case BarTypeDrawerWithCategories:
-      NSLog(@"BarTypeDrawerWithCategories");
-      self.suppressDonate = YES;
 
+      self.suppressDonate = YES;
       self.personalInfoButton.alpha = 0.0;
       self.drawerButton.frame =   CGRectMake(10.0,0.0,
                                              self.drawerButton.frame.size.width,
@@ -610,6 +609,23 @@
                                    forButton:self.parserOrFullButton];
     
   }
+}
+
+- (BOOL)isDonateButtonShown {
+  NSDate *methodStart = [NSDate date];
+  
+  BOOL donateShown = [self.view.subviews containsObject:self.donateButton];
+  
+  NSDate *methodFinish = [NSDate date];
+  NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
+  NSLog(@"!! - donateButtonShown - executionTime = %f", executionTime);
+  
+  return donateShown;
+  //return ([self.view.subviews containsObject:self.donateButton]);
+}
+
+- (BOOL)isCategoriesButtonShown {
+  return ([self.view.subviews containsObject:self.categoriesButton]);
 }
 
 #pragma mark - KVO
