@@ -18,8 +18,7 @@
 
 @implementation SCPRTitlebarViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -27,9 +26,8 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)viewDidLoad {
+  [super viewDidLoad];
   
   self.drawerButton.accessibilityLabel = @"Menu";
   
@@ -50,27 +48,23 @@
   self.originalLeftButtonFrame = self.drawerButton.frame;
   [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.editButton.titleLabel.font.pointSize]
                                 forButton:self.editButton];
-  
 }
 
 
 - (void)buttonTapped:(id)sender {
-  if ( sender == self.drawerButton ) {
+  if (sender == self.drawerButton) {
     SCPRAppDelegate *del = [Utilities del];
     [del toggleDrawer];
   }
-  if ( sender == self.backButton ) {
+  if (sender == self.backButton) {
     [self.container backTapped];
-    //[self morph:self.previousBarType container:self.previousContainer];
   }
-  if ( sender == self.personalInfoButton ) {
+  if (sender == self.personalInfoButton) {
     SCPRViewController *mvc = [[Utilities del] viewController];
     [mvc toggleShareDrawer];
   }
-  if ( sender == self.donateButton ) {
+  if (sender == self.donateButton) {
     [[AnalyticsManager shared] logEvent:@"tap_donate" withParameters:@{}];
-    /*SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
-    [root displayAtomicArticleWithURL:@"https://scprcontribute.publicradio.org"];*/
     NSURL *url = [NSURL URLWithString:kDonateURL];
     [[UIApplication sharedApplication] openURL:url];
   }
@@ -79,62 +73,53 @@
 - (void)morph:(BarType)barType container:(id<Backable>)container {
   
   self.reduced = NO;
-  
-  
-  if ( barType != BarTypeDrawer && !self.popping ) {
+
+  if (barType != BarTypeDrawer && !self.popping) {
     [self pushStyle];
   }
   
-  for ( UIView *v in [self.view subviews] ) {
+  // Remove old subviews from titleBar
+  for (UIView *v in [self.view subviews]) {
     [v removeFromSuperview];
   }
-  
 
-  
   [self.parserOrFullButton removeTarget:nil
-                     action:NULL
-           forControlEvents:UIControlEventAllEvents];
-  
-  [self.editButton removeTarget:nil
                                  action:NULL
                        forControlEvents:UIControlEventAllEvents];
+  
+  [self.editButton removeTarget:nil
+                         action:NULL
+               forControlEvents:UIControlEventAllEvents];
   
   [self.personalInfoButton removeTarget:nil
                                  action:NULL
                        forControlEvents:UIControlEventAllEvents];
   
-  NSString *text = [Utilities isIpad] ? @"EDIT FAVORITES" : @"EDIT";
-  [[DesignManager shared] globalSetTitleTo:text
+  [[DesignManager shared] globalSetTitleTo:@"EDIT FAVORITES"
                                  forButton:self.editButton];
   [[DesignManager shared] globalSetImageTo:@"queue_pencil_button.png"
                                  forButton:self.editButton];
-  [[DesignManager shared] globalSetTextColorTo:[[DesignManager shared]
-                                                gloomyCloudColor]
+  [[DesignManager shared] globalSetTextColorTo:[[DesignManager shared] gloomyCloudColor]
                                      forButton:self.editButton];
-  
 
-  
   self.previousBarType = self.barType;
   self.previousContainer = self.container;
 
-  
-  if ( self.observableScroller ) {
+  if (self.observableScroller) {
     self.observableScroller = nil;
   }
   
-  if ( [container respondsToSelector:@selector(titlebarTraversalScroller)] ) {
+  if ([container respondsToSelector:@selector(titlebarTraversalScroller)]) {
     self.observableScroller = [container titlebarTraversalScroller];
   }
-  
-  
+
   self.barType = barType;
-  
-  
+
   switch (barType) {
     case BarTypeDrawer:
-      NSLog(@"### BarTypeDrawer");
       self.personalInfoButton.alpha = 0.0;
-      self.drawerButton.frame =   CGRectMake(10.0,0.0,
+      self.drawerButton.frame =   CGRectMake(10.0,
+                                             0.0,
                                              self.drawerButton.frame.size.width,
                                              self.drawerButton.frame.size.height);
       
@@ -145,30 +130,23 @@
     case BarTypeModal:
       self.suppressDonate = YES;
       [self.view addSubview:self.backButtonSeat];
-      
-      
+
       self.container = container;
       [self applyBackButtonText:@"NEWS"];
-      
-      self.view.backgroundColor = [[DesignManager shared] deepOnyxColor];
 
-      
+      self.view.backgroundColor = [[DesignManager shared] deepOnyxColor];
       [self applySharingButton];
       
       break;
     case BarTypeEditions:
     {
       [self applyClearBackground];
-      
-      
       [self.view addSubview:self.backButtonSeat];
-      
       
       self.container = container;
       [self applyBackButtonText:@"Short List"];
       
       [self applyKpccLogo];
-      
       
       break;
     }
@@ -200,14 +178,10 @@
       
       [[DesignManager shared] alignVerticalCenterOf:self.personalInfoButton
                                            withView:self.parserOrFullButton];
-      
- 
+
       self.container = container;
       [self applyBackButtonText:@"Back"];
-      
-
       self.view.backgroundColor = [[DesignManager shared] deepOnyxColor];
-      //self.view.layer.backgroundColor = [UIColor clearColor].CGColor;
       
       break;
     }
@@ -215,7 +189,8 @@
     {
       self.suppressDonate = YES;
       self.personalInfoButton.alpha = 0.0;
-      self.drawerButton.frame =   CGRectMake(10.0,0.0,
+      self.drawerButton.frame =   CGRectMake(10.0,
+                                             0.0,
                                              self.drawerButton.frame.size.width,
                                              self.drawerButton.frame.size.height);
       [self.view addSubview:self.drawerButton];
@@ -223,8 +198,9 @@
       [self.view addSubview:self.editButton];
       
       self.editButton.frame = CGRectMake(self.view.frame.size.width-self.editButton.frame.size.width,
-                                                 0.0,self.editButton.frame.size.width,
-                                                 self.editButton.frame.size.height);
+                                         0.0,
+                                         self.editButton.frame.size.width,
+                                         self.editButton.frame.size.height);
       
       self.originalEditButtonInsets = self.editButton.titleEdgeInsets;
       
@@ -242,12 +218,10 @@
       
       self.pageTitleLabel.center = CGPointMake(self.view.frame.size.width/2.0,
                                                self.view.frame.size.height/2.0);
-      
 
       self.view.backgroundColor = [[DesignManager shared] deepOnyxColor];
       
       [Utilities primeTitlebarWithText:@"ALL PROGRAMS" shareEnabled:NO container:nil];
-      //self.view.layer.backgroundColor = [UIColor clearColor].CGColor;
       
       break;
     }
@@ -256,9 +230,7 @@
       self.suppressDonate = YES;
       [self eraseDonateButton];
       
-      
       [self.view addSubview:self.backButtonSeat];
-      
       
       self.container = container;
       [self applyBackButtonText:@"Programs"];
@@ -269,7 +241,8 @@
 
       self.suppressDonate = YES;
       self.personalInfoButton.alpha = 0.0;
-      self.drawerButton.frame =   CGRectMake(10.0,0.0,
+      self.drawerButton.frame =   CGRectMake(10.0,
+                                             0.0,
                                              self.drawerButton.frame.size.width,
                                              self.drawerButton.frame.size.height);
       
@@ -309,10 +282,11 @@
   
   CGFloat nudge = [Utilities isIpad] ? 2.0 : -6.0;
   self.donateButton.frame = CGRectMake(self.view.frame.size.width-self.donateButton.frame.size.width-nudge,
-                                             0.0,self.donateButton.frame.size.width,
-                                             self.donateButton.frame.size.height);
+                                       0.0,
+                                       self.donateButton.frame.size.width,
+                                       self.donateButton.frame.size.height);
   self.donateButton.center = CGPointMake(self.donateButton.center.x,
-                                               self.view.frame.size.height/2.0);
+                                         self.view.frame.size.height/2.0);
   [UIView animateWithDuration:0.22 animations:^{
     [self.donateButton setAlpha:1.0];
   }];
@@ -323,10 +297,11 @@
   [self.view addSubview:self.signoutButton];
 
   self.signoutButton.frame = CGRectMake(self.view.frame.size.width-self.signoutButton.frame.size.width-10.0,
-                                       0.0,self.signoutButton.frame.size.width,
-                                       self.signoutButton.frame.size.height);
+                                        0.0,
+                                        self.signoutButton.frame.size.width,
+                                        self.signoutButton.frame.size.height);
   self.signoutButton.center = CGPointMake(self.signoutButton.center.x,
-                                         self.view.frame.size.height/2.0);
+                                          self.view.frame.size.height/2.0);
   [UIView animateWithDuration:0.22 animations:^{
     [self.signoutButton setAlpha:1.0];
   }];
@@ -517,13 +492,12 @@
                       respectHeight:NO];
   
 
-  //if ( self.backButton.frame.origin.x < 20.0 ) {
   CGFloat nudge = [Utilities isIpad] ? 0.0 : -18.0;
-    self.backButtonSeat.frame = CGRectMake(nudge, self.backButtonSeat.frame.origin.y,
-                                       self.backButtonSeat.frame.size.width,
-                                       self.backButtonSeat.frame.size.height);
+  self.backButtonSeat.frame = CGRectMake(nudge,
+                                         self.backButtonSeat.frame.origin.y,
+                                         self.backButtonSeat.frame.size.width,
+                                         self.backButtonSeat.frame.size.height);
   
- // }
 }
 
 - (void)applySharingButton {
@@ -592,7 +566,6 @@
 
 - (void)applyGrayBackground {
   self.view.backgroundColor = [[DesignManager shared] deepOnyxColor];
-  //self.view.layer.backgroundColor = [UIColor clearColor].CGColor;
 }
 
 - (void)toggleReduced:(BOOL)reduced {
