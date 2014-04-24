@@ -39,6 +39,8 @@
                                 forButton:self.signoutButton];
   [[DesignManager shared] globalSetTextColorTo:[[DesignManager shared] pumpkinColor]
                                      forButton:self.donateButton];
+  [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.editButton.titleLabel.font.pointSize]
+                                forButton:self.categoriesButton];
   
   [self.donateButton addTarget:self
                         action:@selector(buttonTapped:)
@@ -130,7 +132,7 @@
   
   switch (barType) {
     case BarTypeDrawer:
-      
+      NSLog(@"### BarTypeDrawer");
       self.personalInfoButton.alpha = 0.0;
       self.drawerButton.frame =   CGRectMake(10.0,0.0,
                                              self.drawerButton.frame.size.width,
@@ -263,6 +265,22 @@
       
       break;
       
+    case BarTypeDrawerWithCategories:
+      NSLog(@"BarTypeDrawerWithCategories");
+      self.suppressDonate = YES;
+
+      self.personalInfoButton.alpha = 0.0;
+      self.drawerButton.frame =   CGRectMake(10.0,0.0,
+                                             self.drawerButton.frame.size.width,
+                                             self.drawerButton.frame.size.height);
+      
+      [self.view addSubview:self.drawerButton];
+      
+      [self applyKpccLogo];
+      [self applyCategoriesButton];
+      
+      break;
+
     case BarTypeUnknown:
       break;
       
@@ -275,10 +293,7 @@
   } else {
     self.suppressDonate = NO;
   }
-  
-  
-  
-  
+
 }
 
 - (void)eraseDonateButton {
@@ -290,6 +305,7 @@
 }
 
 - (void)applyDonateButton {
+  [self eraseCategoriesButton];
   [self.view addSubview:self.donateButton];
   
   CGFloat nudge = [Utilities isIpad] ? 2.0 : -6.0;
@@ -306,8 +322,7 @@
 - (void)applySignoutButton {
   [self eraseDonateButton];
   [self.view addSubview:self.signoutButton];
-  
-  
+
   self.signoutButton.frame = CGRectMake(self.view.frame.size.width-self.signoutButton.frame.size.width-10.0,
                                        0.0,self.signoutButton.frame.size.width,
                                        self.signoutButton.frame.size.height);
@@ -315,6 +330,28 @@
                                          self.view.frame.size.height/2.0);
   [UIView animateWithDuration:0.22 animations:^{
     [self.signoutButton setAlpha:1.0];
+  }];
+}
+
+- (void)eraseCategoriesButton {
+  [UIView animateWithDuration:0.22 animations:^{
+    [self.categoriesButton setAlpha:0.0];
+    [self.categoriesButton removeFromSuperview];
+  }];
+}
+
+- (void)applyCategoriesButton {
+  [self eraseDonateButton];
+  [self.view addSubview:self.categoriesButton];
+  
+  self.categoriesButton.frame = CGRectMake(self.view.frame.size.width - self.categoriesButton.frame.size.width - 10.0,
+                                           0.0,
+                                           self.categoriesButton.frame.size.width,
+                                           self.categoriesButton.frame.size.height);
+  self.categoriesButton.center = CGPointMake(self.categoriesButton.center.x,
+                                             self.view.frame.size.height / 2.0);
+  [UIView animateWithDuration:0.22 animations:^{
+    [self.categoriesButton setAlpha:1.0];
   }];
 }
 

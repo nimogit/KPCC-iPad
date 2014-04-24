@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPRTitlebarViewController">
@@ -10,6 +10,7 @@
                 <outlet property="backButton" destination="34" id="37"/>
                 <outlet property="backButtonSeat" destination="5jV-ZX-VeI" id="d8y-4m-oZI"/>
                 <outlet property="backButtonText" destination="bcy-ZP-MQF" id="tCS-5Z-csB"/>
+                <outlet property="categoriesButton" destination="r7Z-ui-DBH" id="EQs-x2-1dH"/>
                 <outlet property="donateButton" destination="xMx-Z6-xwZ" id="bA9-8O-t3g"/>
                 <outlet property="drawerButton" destination="4" id="23"/>
                 <outlet property="editButton" destination="42" id="44"/>
@@ -59,6 +60,23 @@
                     </state>
                     <connections>
                         <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="33"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="r7Z-ui-DBH">
+                    <rect key="frame" x="653" y="4" width="107" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="SECTIONS" image="sections_icon.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="6VB-nb-lcd"/>
                     </connections>
                 </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ALL PROGRAMS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="45">
@@ -185,6 +203,7 @@
         <image name="icon-share-active.png" width="20" height="20"/>
         <image name="kpcc-logo.png" width="116" height="17"/>
         <image name="queue_pencil_button.png" width="10" height="9"/>
+        <image name="sections_icon.png" width="14" height="15"/>
         <image name="stripes.png" width="21" height="15"/>
         <image name="website_icon.png" width="23" height="23"/>
     </resources>

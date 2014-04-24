@@ -16,7 +16,8 @@ typedef enum {
   BarTypeEditions,
   BarTypeExternalWeb,
   BarTypeProgramAtoZ,
-  BarTypeProgramSingle
+  BarTypeProgramSingle,
+  BarTypeDrawerWithCategories
 } BarType;
 
 @interface SCPRTitlebarViewController : UIViewController {
@@ -33,6 +34,7 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UIButton *backButton;
 @property (nonatomic,strong) IBOutlet UIButton *editButton;
 @property (nonatomic,strong) IBOutlet UIButton *signoutButton;
+@property (nonatomic,strong) IBOutlet UIButton *categoriesButton;
 @property (nonatomic,strong) IBOutlet UILabel *pageTitleLabel;
 @property (nonatomic,strong) IBOutlet UIImageView *editionsLogo;
 @property (nonatomic,weak) id<Backable> container;
@@ -59,14 +61,16 @@ typedef enum {
 - (void)toggleReduced:(BOOL)reduced;
 - (void)applyEditionsLabel;
 - (void)applyPagerWithCount:(NSInteger)count currentPage:(NSInteger)currentPage;
-- (void)applySharingButton;
-- (void)applySignoutButton;
-- (void)applyBackButtonText:(NSString*)backButtonText;
+- (void)applyKpccLogo;
 - (void)applyGrayBackground;
 - (void)applyOnyxBackground;
-- (void)applyDonateButton;
-- (void)applyKpccLogo;
 - (void)applyClearBackground;
+- (void)applyBackButtonText:(NSString*)backButtonText;
+- (void)applyDonateButton;
+- (void)applySharingButton;
+- (void)applySignoutButton;
+- (void)applyCategoriesButton;
+
 - (void)pushStyle:(BOOL)truePush;
 - (void)pushStyle;
 - (void)pop;

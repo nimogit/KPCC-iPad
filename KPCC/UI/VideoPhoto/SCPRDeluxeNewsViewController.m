@@ -1886,9 +1886,15 @@
   if (tableView.contentOffset.y > CGRectGetMaxY(row)) {
     NSLog(@"you did it!");
 
+    [[[Utilities del] globalTitleBar] morph:BarTypeDrawerWithCategories container:nil];
+    
+
+
   } else if (tableView.contentOffset.y - 20.0 < CGRectGetMinY(row)) {
     NSLog(@"revert");
-
+    [[[Utilities del] globalTitleBar] morph:BarTypeDrawer container:nil];
+    [[[Utilities del] globalTitleBar] applyKpccLogo];
+    
   }
 }
 

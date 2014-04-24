@@ -1780,6 +1780,10 @@
 		28DF6D37171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DF6D34171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib */; };
 		28DF6D38171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DF6D34171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib */; };
 		28DF6D3A171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DF6D39171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib */; };
+		763B61FC1909A2660021C530 /* sections_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E698001909A05800D373BF /* sections_icon.png */; };
+		763B61FD1909A2690021C530 /* sections_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E698011909A05800D373BF /* sections_icon@2x.png */; };
+		763B61FE1909A26B0021C530 /* sections_close_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E697FF1909A05800D373BF /* sections_close_icon.png */; };
+		763B61FF1909A26E0021C530 /* sections_close_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E697FE1909A05800D373BF /* sections_close_icon@2x.png */; };
 		76658B5718E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5418E1F43800026176 /* libFlurry_4.3.2.a */; };
 		76658B5818E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5418E1F43800026176 /* libFlurry_4.3.2.a */; };
 		76658B6018E2141C00026176 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5A18E2141C00026176 /* libTestFlight.a */; };
@@ -1829,6 +1833,10 @@
 		76D71F2618ABF3D500487864 /* icon-share-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D71F2218ABF3D500487864 /* icon-share-blue@2x.png */; };
 		76D71F2A18B555EC00487864 /* desk_customer_template.json in Resources */ = {isa = PBXBuildFile; fileRef = 76D71F2918B555EC00487864 /* desk_customer_template.json */; };
 		76D71F2B18B555EC00487864 /* desk_customer_template.json in Resources */ = {isa = PBXBuildFile; fileRef = 76D71F2918B555EC00487864 /* desk_customer_template.json */; };
+		76E698021909A05800D373BF /* sections_close_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E697FE1909A05800D373BF /* sections_close_icon@2x.png */; };
+		76E698031909A05800D373BF /* sections_close_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E697FF1909A05800D373BF /* sections_close_icon.png */; };
+		76E698041909A05800D373BF /* sections_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E698001909A05800D373BF /* sections_icon.png */; };
+		76E698051909A05800D373BF /* sections_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E698011909A05800D373BF /* sections_icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2946,6 +2954,10 @@
 		76D71F2118ABF3D500487864 /* icon-share-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-share-blue.png"; sourceTree = "<group>"; };
 		76D71F2218ABF3D500487864 /* icon-share-blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-share-blue@2x.png"; sourceTree = "<group>"; };
 		76D71F2918B555EC00487864 /* desk_customer_template.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = desk_customer_template.json; path = Assets/flatResources/desk_customer_template.json; sourceTree = "<group>"; };
+		76E697FE1909A05800D373BF /* sections_close_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sections_close_icon@2x.png"; sourceTree = "<group>"; };
+		76E697FF1909A05800D373BF /* sections_close_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sections_close_icon.png; sourceTree = "<group>"; };
+		76E698001909A05800D373BF /* sections_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sections_icon.png; sourceTree = "<group>"; };
+		76E698011909A05800D373BF /* sections_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sections_icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3421,6 +3433,10 @@
 		257001D618219B56008B43F6 /* Titlebar */ = {
 			isa = PBXGroup;
 			children = (
+				76E697FE1909A05800D373BF /* sections_close_icon@2x.png */,
+				76E697FF1909A05800D373BF /* sections_close_icon.png */,
+				76E698001909A05800D373BF /* sections_icon.png */,
+				76E698011909A05800D373BF /* sections_icon@2x.png */,
 				257001D718219B66008B43F6 /* icon-donate.png */,
 				257001D818219B66008B43F6 /* icon-donate@2x.png */,
 			);
@@ -4523,8 +4539,8 @@
 			isa = PBXGroup;
 			children = (
 				28A0CF0C171E007300776579 /* SCPRTitlebarViewController.h */,
-				28A0CF0D171E007300776579 /* SCPRTitlebarViewController.m */,
 				259AF5C418340E47008AFB2A /* SCPRTitlebarViewController.xib */,
+				28A0CF0D171E007300776579 /* SCPRTitlebarViewController.m */,
 				28A0CF16171E032400776579 /* SCPRTitlebarViewController_iPad.xib */,
 				254CABA617396D700005341D /* SCPRSpecialTitlebarViewController.xib */,
 				255571731738AFFA00354D30 /* SCPRSpecialTitlebarViewController_iPad.xib */,
@@ -5145,6 +5161,7 @@
 				259C87C4176943630099030F /* SCPREventDetailViewController_iPad.xib in Resources */,
 				2567342B17EA364400B80921 /* radio_tower_live@2x.png in Resources */,
 				25D113B81811E96F0001C434 /* gray_minus_circle@2x.png in Resources */,
+				763B61FD1909A2690021C530 /* sections_icon@2x.png in Resources */,
 				259C87CE176A79B30099030F /* SCPRTweetCell.xib in Resources */,
 				256421D918107391002F1C6A /* SCPRDeluxeNewsCellSingle34_iPadLandscape.xib in Resources */,
 				259C87D5176A8C040099030F /* SCPRReloadViewController.xib in Resources */,
@@ -5180,6 +5197,7 @@
 				257AB7D9177B6C3100D2F4EA /* SCPRProgramNavigatorViewController_iPad.xib in Resources */,
 				25A70C1117E142160024E654 /* SCPROnboardingStep1ViewController_iPad.xib in Resources */,
 				25A70BCD17E13C220024E654 /* arrow-back-dkgray.png in Resources */,
+				763B61FC1909A2660021C530 /* sections_icon.png in Resources */,
 				257AB7DC177B86A400D2F4EA /* SCPRProgramCell_iPadLandscape.xib in Resources */,
 				257AB7E3177B898600D2F4EA /* in_queue_button@2x.png in Resources */,
 				257AB7E5177B898600D2F4EA /* now_playing_button@2x.png in Resources */,
@@ -5451,6 +5469,7 @@
 				25E0B1ED17C2F0C7009C3C72 /* bullseye_splash@2x.jpg in Resources */,
 				25A70BCF17E13C220024E654 /* arrow-back-dkgray@2x.png in Resources */,
 				25E0B1EF17C2F0C7009C3C72 /* businessupdatewithmarklacter_splash.jpg in Resources */,
+				763B61FE1909A26B0021C530 /* sections_close_icon.png in Resources */,
 				25E0B1F117C2F0C7009C3C72 /* businessupdatewithmarklacter_splash@2x.jpg in Resources */,
 				25B5A9CF180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib in Resources */,
 				25E0B1F317C2F0C7009C3C72 /* cartalk_splash.jpg in Resources */,
@@ -5591,6 +5610,7 @@
 				25EC8DE017C4356000673DFF /* small_latinousa_splash.jpg in Resources */,
 				25EC8DE217C4356000673DFF /* small_latinousa_splash@2x.jpg in Resources */,
 				76A3087318B696630065D4B1 /* iRate.bundle in Resources */,
+				763B61FF1909A26E0021C530 /* sections_close_icon@2x.png in Resources */,
 				76D71F1B18A452D500487864 /* icon-social-twitter-disabled.png in Resources */,
 				25C9A49C17F4CBF400B6BBB6 /* icon-embed.png in Resources */,
 				25EC8DE417C4356000673DFF /* small_marketplace_splash.jpg in Resources */,
@@ -5734,6 +5754,7 @@
 				256C51CC1728B45A00D4054C /* SCPRNewsPageSingleTop320_iPad.xib in Resources */,
 				256C51CF1728B4FA00D4054C /* SCPRNewsPageSingleTop340_iPad.xib in Resources */,
 				256421C918106196002F1C6A /* blue_fave_heart.png in Resources */,
+				76E698041909A05800D373BF /* sections_icon.png in Resources */,
 				2571C0791729A46500B43422 /* SCPRNewsPageSplit230_iPad.xib in Resources */,
 				259AF5E9183419F6008AFB2A /* SCPRProgramCell.xib in Resources */,
 				2571C07B1729A46500B43422 /* SCPRNewsPageSplit430_iPad.xib in Resources */,
@@ -6009,6 +6030,7 @@
 				256FFD501822E4080060F538 /* SCPRBlankCell_iPad.xib in Resources */,
 				25FA27FB1784D8E600FFB70F /* fakeprogram_episodes.json in Resources */,
 				25F0D194178E0BDB0009F841 /* bigshadow@2x.png in Resources */,
+				76E698051909A05800D373BF /* sections_icon@2x.png in Resources */,
 				25F0D197178E0E000009F841 /* bigshadow.png in Resources */,
 				25F0D19B178E1A260009F841 /* selectedMask.png in Resources */,
 				25F0D19D178E1A260009F841 /* selectedMask@2x.png in Resources */,
@@ -6090,6 +6112,7 @@
 				2585355518356FAE00853085 /* SCPRScrollingAssetViewController.xib in Resources */,
 				2577165817A1B533003BDC2F /* top_gradient.png in Resources */,
 				251EF54B17A2E035002893AF /* programCellGradient.png in Resources */,
+				76E698031909A05800D373BF /* sections_close_icon.png in Resources */,
 				251EF54D17A2E035002893AF /* programCellGradient@2x.png in Resources */,
 				251EF55117A2E44F002893AF /* programFavorite.png in Resources */,
 				258535591835A23C00853085 /* SCPROnboardingFlowViewController_iPadLandscape.xib in Resources */,
@@ -6203,6 +6226,7 @@
 				25E0B1E617C2F0C7009C3C72 /* bbcworldservice_splash.jpg in Resources */,
 				25E0B1E817C2F0C7009C3C72 /* bbcworldservice_splash@2x.jpg in Resources */,
 				25E0B1EA17C2F0C7009C3C72 /* bullseye_splash.jpg in Resources */,
+				76E698021909A05800D373BF /* sections_close_icon@2x.png in Resources */,
 				25E0B1EC17C2F0C7009C3C72 /* bullseye_splash@2x.jpg in Resources */,
 				25E0B1EE17C2F0C7009C3C72 /* businessupdatewithmarklacter_splash.jpg in Resources */,
 				25A70C1B17E22BA80024E654 /* SCPROnboardingStep2ViewController_iPad.xib in Resources */,
