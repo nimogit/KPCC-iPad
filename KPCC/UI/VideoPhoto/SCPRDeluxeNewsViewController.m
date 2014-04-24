@@ -106,13 +106,8 @@
 - (void)fetchContent:(FetchContentCallback) block {
   
   // Get the first Short List
-  
   self.articleMapPerDate = [@{} mutableCopy];
-  
-  NSInteger slLimit = 1;
-
-  
-  NSString *urlString = [NSString stringWithFormat:@"%@/editions?limit=%d",kServerBase,slLimit];
+  NSString *urlString = [NSString stringWithFormat:@"%@/editions?limit=1",kServerBase];
   NSURL *url = [NSURL URLWithString:urlString];
   __block NSURLRequest *req = [NSURLRequest requestWithURL:url];
 
@@ -363,6 +358,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
   SCPRTitlebarViewController *tvc = [[Utilities del] globalTitleBar];
   tvc.view.layer.backgroundColor = [[DesignManager shared] deepOnyxColor].CGColor;
 }
