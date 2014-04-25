@@ -61,6 +61,7 @@
   [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.socialShareButton.titleLabel.font.pointSize]
                                 forButton:self.socialShareButton];
   
+  self.socialSheetView.alpha = 0.0;
   [[self.socialShareButton layer] setCornerRadius:3.0f];
   [[self.socialShareButton layer] setBorderWidth:1.0f];
   [[self.socialShareButton layer] setBorderColor:[UIColor colorWithRed:9.0/255.0 green:185.0/255.0 blue:243.0/255.0 alpha:1.0].CGColor];
@@ -1237,7 +1238,9 @@
 }
 
 - (void)socialDataLoaded {
-  
+
+  self.socialSheetView.alpha = 1.0;
+
   if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
     [self.masterContentScroller addSubview:self.socialSheetView];
   }
@@ -1472,7 +1475,7 @@
   CGFloat webHeight = fmaxf([output floatValue],self.originalWebViewHeight.size.height);
   
   if ( self.fromSnapshot ) {
-    webHeight += 140.0;
+    webHeight +=  20.0;
   }
   
   CGFloat totalHeight = webHeight;
@@ -1490,21 +1493,37 @@
   self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
                                                    self.webContentLoader.webView.frame.origin.y,
                                                    self.webContentLoader.webView.frame.size.width,
-                                                   webHeight+140.0);
+                                                   webHeight + 140.0);
   
   self.webContentLoader.webView.scrollView.scrollEnabled = NO;
-  self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.frame.size.width,
-                                                      totalHeight+140.0);
+  
+  // Nudge masterContentScroller height for Short List and non-iOS7 devices
+  CGFloat masterContentHeightAdjust = 0.0;
+  if (self.fromSnapshot) {
+    totalHeight += 120.0;
+    masterContentHeightAdjust = 70.0;
+    if (![Utilities isIOS7]) {
+      masterContentHeightAdjust += 16.0;
+    }
+  } else {
+    totalHeight += 140.0;
+  }
 
+  self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.frame.size.width,
+                                                      totalHeight);
+  
   self.masterContentScroller.frame = CGRectMake(self.masterContentScroller.frame.origin.x,
                                                 self.masterContentScroller.frame.origin.y,
                                                 self.masterContentScroller.frame.size.width,
-                                                self.masterContentScroller.frame.size.height);
+                                                self.masterContentScroller.frame.size.height - masterContentHeightAdjust);
   
   // Place the social sheetview below the article's contents and embeds
   CGFloat socialSheetVertAdjust = 30.0;
   if (![Utilities isIOS7]) {
     socialSheetVertAdjust += 26.0;
+    if (self.fromSnapshot) {
+      socialSheetVertAdjust -= 6.0;
+    }
   }
 
   [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
