@@ -1609,7 +1609,7 @@
 
 - (void)scrollViewDidScroll:(UITableView *)tableView {
   
-  NSDate *methodStart = [NSDate date];
+  TICK;
   
   if (self.contentType == ScreenContentTypeVideoPhotoPage || self.contentType == ScreenContentTypeEventsPage) {
     return;
@@ -1641,9 +1641,7 @@
     [[[Utilities del] globalTitleBar] applyDonateButton];
   }
   
-  NSDate *methodFinish = [NSDate date];
-  NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
-  NSLog(@"scrollView executionTime = %f", executionTime);
+  TOCK;
 }
 
 #ifdef LOG_DEALLOCATIONS

@@ -23,6 +23,9 @@
 #define NSLog //
 #endif
 
+#define TICK   NSDate *startTime = [NSDate date]
+#define TOCK   NSLog(@"Execution Time: %f  -- [ %s ]=[ Line %d ]", -[startTime timeIntervalSinceNow], __PRETTY_FUNCTION__, __LINE__)
+
 #import "ContentManager.h"
 #import "DesignManager.h"
 #import "Utilities.h"
