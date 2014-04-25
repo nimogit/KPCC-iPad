@@ -1475,6 +1475,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  NSLog(@"calling heightForRowAtIndexPath ");
   
   if (self.contentType == ScreenContentTypeVideoPhotoPage ) {
     SCPRDeluxeNewsCell *cell = [self.cells objectAtIndex:indexPath.row];
