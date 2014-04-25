@@ -44,22 +44,22 @@
   if ([Utilities isIOS7]) {
     if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
       self.photoVideoTable.frame = CGRectMake(self.photoVideoTable.frame.origin.x,
-                                            self.photoVideoTable.frame.origin.y,
-                                            self.photoVideoTable.frame.size.width,
-                                            self.photoVideoTable.frame.size.height-20.0);
+                                              self.photoVideoTable.frame.origin.y,
+                                              self.photoVideoTable.frame.size.width,
+                                              self.photoVideoTable.frame.size.height - 20.0);
     }
   } else {
     self.photoVideoTable.frame = CGRectMake(self.photoVideoTable.frame.origin.x,
-                                            self.photoVideoTable.frame.origin.y+20.0,
+                                            self.photoVideoTable.frame.origin.y + 20.0,
                                             self.photoVideoTable.frame.size.width,
-                                            self.photoVideoTable.frame.size.height-36.0);
+                                            self.photoVideoTable.frame.size.height - 36.0);
   }
   
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(processEditions)
                                                name:@"update_news_feed_ui"
                                              object:nil];
-  
+
   // Config table background colors, scroll appearance, and bottom loading spinner.
   self.view.backgroundColor = [UIColor blackColor];
   self.photoVideoTable.showsVerticalScrollIndicator = NO;
@@ -76,7 +76,6 @@
   self.masterCellHash = [[NSMutableDictionary alloc] init];
   self.editionCellHash = [[NSMutableDictionary alloc] init];
   self.numberOfRegularStoriesPerRow = kNumberOfRegularStoriesPerRow;
-
 
   if (self.contentType == ScreenContentTypeVideoPhotoPage) {
 
@@ -100,6 +99,36 @@
   } else if (self.contentType == ScreenContentTypeEventsPage) {
     [self loadDummies:NO];
     [self buildCells];
+  }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  SCPRTitlebarViewController *tvc = [[Utilities del] globalTitleBar];
+  tvc.view.layer.backgroundColor = [[DesignManager shared] deepOnyxColor].CGColor;
+}
+
+
+- (void)viewDidAppear:(BOOL)animated {
+  if (self.contentType == ScreenContentTypeVideoPhotoPage) {
+    [Utilities primeTitlebarWithText:@"PHOTO & VIDEO"
+                        shareEnabled:NO
+                           container:nil];
+    
+  } else {
+    [[[Utilities del] globalTitleBar] applyKpccLogo];
+  }
+  
+  if (self.contentType != ScreenContentTypeCompositePage) {
+    [[[Utilities del] globalTitleBar] eraseDonateButton];
+  }
+  
+  if (self.armToKill) {
+    [NSTimer scheduledTimerWithTimeInterval:0.5
+                                     target:self
+                                   selector:@selector(killCollection)
+                                   userInfo:nil
+                                    repeats:NO];
   }
 }
 
@@ -326,12 +355,12 @@
   NSArray *incumbent = [self.rawArticleHash objectForKey:@"general"];
   NSMutableDictionary *incumbentHash = [@{} mutableCopy];
   
-  for ( NSDictionary *incArticle in incumbent ) {
+  for (NSDictionary *incArticle in incumbent) {
     [incumbentHash setObject:@1 forKey:[incArticle objectForKey:@"id"]];
   }
   
-  for ( NSDictionary *article in mobileFeatured ) {
-    if ( [incumbentHash objectForKey:[article objectForKey:@"id"]] ) {
+  for (NSDictionary *article in mobileFeatured) {
+    if ([incumbentHash objectForKey:[article objectForKey:@"id"]]) {
       [newLookup setObject:@1 forKey:[article objectForKey:@"id"]];
     }
   }
@@ -348,19 +377,13 @@
 }
 
 - (void)loadDummies:(BOOL)editions {
-  if ( editions ) {
+  if (editions) {
     self.dummyEditions = [self editionCellFromEdition:@{} forceLoad:NO];
   }
   
   self.dummySingleSquare = [Utilities loadNib:@"SCPRDeluxeNewsCellSingleSq"];
   self.dummySingleRectangle = [Utilities loadNib:@"SCPRDeluxeNewsCellSingle43"];
   self.dummyDouble = [Utilities loadNib:@"SCPRDeluxeNewsCellDouble"];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  SCPRTitlebarViewController *tvc = [[Utilities del] globalTitleBar];
-  tvc.view.layer.backgroundColor = [[DesignManager shared] deepOnyxColor].CGColor;
 }
 
 - (void)sortNewsData:(FetchContentCallback)block {
@@ -570,12 +593,7 @@
       });
       
     }
-    
- 
-    
   });
-  
-
 }
 
 - (void)setupBigHash:(FetchContentCallback)block {
@@ -630,74 +648,13 @@
                  forKey:pretty];
     
   }
-  
-  /*NSDate *now = [NSDate date];
-  NSString *nowPretty = [NSDate stringFromDate:now
-                                    withFormat:@"YYYY-MM-dd"];
-  NSMutableDictionary *allButToday = [NSMutableDictionary dictionaryWithDictionary:dateHash];*/
-  //[allButToday removeObjectForKey:nowPretty];
-  
-  /*NSMutableArray *dates = [[allButToday allKeys] mutableCopy];
-  dates = [[dates sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-    NSString *ds1 = (NSString*)obj1;
-    NSString *ds2 = (NSString*)obj2;
-    
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"YYYY-MM-dd"];
-    
-    NSDate *d1 = [fmt dateFromString:ds1];
-    NSDate *d2 = [fmt dateFromString:ds2];
-    
-    if ( [d1 earlierDate:d2] == d1 ) {
-      return NSOrderedDescending;
-    } else {
-      return NSOrderedAscending;
-    }
-  }] mutableCopy];
-  
-  //[dates removeLastObject];
-  
-  NSMutableDictionary *editionsLookup = [[NSMutableDictionary alloc] init];
-  for ( NSString *key in dates ) {
-    [editionsLookup setObject:@1 forKey:key];
-  }
-  
-  
-  if ( [dates count] > 0 ) {
-    // Sprinkle in older editions
-    NSString *json = [[ContentManager shared].settings editionsJson];
-    if ( ![Utilities pureNil:json] ) {
-      NSArray *editions = (NSArray*)[json JSONValue];
-      for ( unsigned j = 0; j < [editions count]; j++ ) {
-        if ( j == 0 ) {
-          continue;
-        }
-        
-        NSDictionary *edition = [editions objectAtIndex:j];
-        NSString *published = [edition objectForKey:@"published_at"];
-        NSDate *dateObj = [Utilities dateFromRFCString:published];
-        NSString *pretty = [NSDate stringFromDate:dateObj
-                                       withFormat:@"YYYY-MM-dd"];
-        
-        if ( ![editionsLookup objectForKey:pretty] ) {
-          continue;
-        }
-        
-        NSMutableArray *day = [dateHash objectForKey:pretty];
-        if ( day ) {
-          [day addObject:edition];
-        }
-      }
-    }
-  }*/
-  
+
   self.bigHash = @{ @"lookup" : [self.bigHash objectForKey:@"lookup"],
                     @"general" : dateHash };
   
   if (block) {
     block(YES);
   }
-
 }
 
 - (void)processEditions {
@@ -706,198 +663,76 @@
   
   [self.photoVideoTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0
                                                                     inSection:0]]
-                                                 withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
-
-
-- (void)buildGeneralCells {
-  self.cacheMutex = YES;
-  
-  
-  
-  //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    self.dateCells = [[NSMutableDictionary alloc] init];
-    NSDictionary *lookup = [self.bigHash objectForKey:@"lookup"];
-    NSDictionary *temporal = [self.bigHash objectForKey:@"general"];
-    NSInteger totalCount = 0;
-    
-    for ( NSString *dateKey in [temporal allKeys] ) {
-      if ( [dateKey isEqualToString:@"totalCount"] ) {
-        continue;
-      }
-      
-      NSMutableArray *day = [temporal objectForKey:dateKey];
-      NSMutableArray *cellForDay = [[NSMutableArray alloc] init];
-      BOOL grabTwo = NO;
-      for ( unsigned i = 0; i < [day count]; i++ ) {
-        
-        NSDictionary *article = [day objectAtIndex:i];
-        if ( [article objectForKey:@"abstracts"] ) {
-          SCPRDeluxeEditionsCell *cell = [self editionCellFromEdition:article forceLoad:NO];
-          cell.mainEdition = article;
-          [cellForDay addObject:cell];
-          continue;
-        }
-        NSString *hash = [Utilities sha1:[article objectForKey:@"short_title"]];
-        NSString *baseFormat = @"SCPRDeluxeNewsCellDouble";
-        NSString *aspectCode = @"";
-        NSDictionary *post = [day objectAtIndex:i];
-        if ( [lookup objectForKey:hash] ) {
-
-          // Embiggen
-          aspectCode = [[DesignManager shared] aspectCodeForContentItem:post
-                                                                quality:AssetQualityFull];
-          baseFormat = @"SCPRDeluxeNewsCellSingle";
-          grabTwo = NO;
-          
-        } else {
-          
-          // Small
-          grabTwo = YES;
-          aspectCode = @"";
-          
-        }
-        
-        aspectCode = [aspectCode stringByReplacingOccurrencesOfString:@"_clip" withString:@""];
-        NSString *template = [NSString stringWithFormat:@"%@%@",baseFormat,aspectCode];
-        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
-                                                                xibForPlatformWithName:template]
-                                                         owner:nil
-                                                       options:nil];
-        
-        SCPRDeluxeNewsCell *vpc = (SCPRDeluxeNewsCell*)[objects objectAtIndex:0];
-        NSInteger k = i;
-
-        if ( grabTwo ) {
-          if ( i+1 >= [day count] ) {
-            vpc.posts = @[post];
-            vpc.facade1.view.alpha = 0.0;
-          } else {
-            NSDictionary *secondary = [day objectAtIndex:i+1];
-            
-            if ( [secondary objectForKey:@"abstracts"] ) {
-              // This is an edition, don't stuff it into a double
-              vpc.posts = @[post];
-              vpc.facade1.view.alpha = 0.0;
-            } else {
-              i++;
-              vpc.posts = @[post,secondary];
-            }
-          }
-        } else {
-          vpc.posts = @[post];
-          vpc.facade0.embiggened = YES;
-        }
-        vpc.facade0.contentType = self.contentType;
-        vpc.facade1.contentType = self.contentType;
-        
-        vpc.selectionStyle = UITableViewCellSelectionStyleNone;
-        totalCount++;
-        
-        if ( k == 0 ) {
-          [vpc squish];
-        }
-        
-        [cellForDay addObject:vpc];
-        [self.dateCells setObject:cellForDay forKey:dateKey];
-
-        
-      }
-      
-      [self.dateCells setObject:cellForDay forKey:dateKey];
-      
-
-
-    }
-    
-    self.sortedKeyArrayCache = [self sortedKeysForCellDates];
-    self.cacheMutex = NO;
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [self.photoVideoTable reloadData];
-    });
-  
-  
-  
+                              withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)buildCells {
-  
   self.cells = [[NSMutableArray alloc] init];
-  
-    for ( unsigned i = 0; i < [self.posts count]; i++ ) {
-      NSString *baseFormat = @"SCPRDeluxeNewsCellDouble";
-      NSString *aspectCode = @"";
-      NSDictionary *post = [self.posts objectAtIndex:i];
-      BOOL grabTwo = YES;
-      BOOL composite = self.contentType == ScreenContentTypeCompositePage;
-      
-      if ( ((i == 0 && composite) || [self.bigHash objectForKey:[post objectForKey:@"id"]]) && [Utilities isIpad] ) {
-        // BIG
-        aspectCode = [[DesignManager shared] aspectCodeForContentItem:post
-                                                              quality:AssetQualityFull];
-        baseFormat = @"SCPRDeluxeNewsCellSingle";
-        grabTwo = NO;
-      } else {
-        
-        // SMALL
-        aspectCode = @"";
-      }
-      
-      // Do some cooking
-      aspectCode = [aspectCode stringByReplacingOccurrencesOfString:@"_clip" withString:@""];
-      NSString *template = [NSString stringWithFormat:@"%@%@",baseFormat,aspectCode];
-      
-      
-      
-      NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
-                                                                xibForPlatformWithName:template]
-                                                         owner:nil
-                                                       options:nil];
-      SCPRDeluxeNewsCell *vpc = (SCPRDeluxeNewsCell*)[objects objectAtIndex:0];
-    
-      grabTwo = [Utilities isIpad] ? grabTwo : NO;
-      if ( grabTwo ) {
-        if ( i+1 >= [self.posts count] ) {
-          vpc.posts = @[post];
-          vpc.facade1.view.alpha = 0.0;
-        } else {
-          NSDictionary *secondary = [self.posts objectAtIndex:i+1];
-          i++;
-          vpc.posts = @[post,secondary];
-        }
-      } else {
-        vpc.posts = @[post];
-        vpc.facade0.embiggened = [Utilities isIpad];
-      }
-      
-      vpc.facade0.parentPVController = self;
-      vpc.facade1.parentPVController = self;
-      vpc.facade0.contentType = self.contentType;
-      vpc.facade1.contentType = self.contentType;
-      vpc.selectionStyle = UITableViewCellSelectionStyleNone;
-      [self.cells addObject:vpc];
-    
-    
 
+  for ( unsigned i = 0; i < [self.posts count]; i++ ) {
+    NSString *baseFormat = @"SCPRDeluxeNewsCellDouble";
+    NSString *aspectCode = @"";
+    NSDictionary *post = [self.posts objectAtIndex:i];
+    BOOL grabTwo = YES;
+    BOOL composite = self.contentType == ScreenContentTypeCompositePage;
+    
+    if (((i == 0 && composite) || [self.bigHash objectForKey:[post objectForKey:@"id"]]) && [Utilities isIpad]) {
+      // BIG
+      aspectCode = [[DesignManager shared] aspectCodeForContentItem:post
+                                                            quality:AssetQualityFull];
+      baseFormat = @"SCPRDeluxeNewsCellSingle";
+      grabTwo = NO;
+    } else {
+      // SMALL
+      aspectCode = @"";
     }
+    
+    // Do some cooking
+    aspectCode = [aspectCode stringByReplacingOccurrencesOfString:@"_clip" withString:@""];
+    NSString *template = [NSString stringWithFormat:@"%@%@",baseFormat,aspectCode];
 
+    NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared] xibForPlatformWithName:template]
+                                                     owner:nil
+                                                   options:nil];
+    SCPRDeluxeNewsCell *vpc = (SCPRDeluxeNewsCell*)[objects objectAtIndex:0];
+  
+    if (grabTwo) {
+      if (i+1 >= [self.posts count]) {
+        vpc.posts = @[post];
+        vpc.facade1.view.alpha = 0.0;
+      } else {
+        NSDictionary *secondary = [self.posts objectAtIndex:i+1];
+        i++;
+        vpc.posts = @[post,secondary];
+      }
+    } else {
+      vpc.posts = @[post];
+      vpc.facade0.embiggened = [Utilities isIpad];
+    }
+    
+    vpc.facade0.parentPVController = self;
+    vpc.facade1.parentPVController = self;
+    vpc.facade0.contentType = self.contentType;
+    vpc.facade1.contentType = self.contentType;
+    vpc.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self.cells addObject:vpc];
+  }
 }
 
 - (void)sanitizeBigPosts {
   
   NSMutableDictionary *fresh = [[NSMutableDictionary alloc] init];
   NSLog(@"Number of big Video/Photo stories before filter : %d",[self.bigHash count]);
-  for ( NSString *key in [self.bigHash allKeys] ) {
+  for (NSString *key in [self.bigHash allKeys]) {
     BOOL present = NO;
-    for ( NSDictionary *vpData in self.posts ) {
+    for (NSDictionary *vpData in self.posts) {
       NSString *candidate = [vpData objectForKey:@"id"];
-      if ( [candidate isEqualToString:key] ) {
+      if ([candidate isEqualToString:key]) {
         present = YES;
         break;
       }
     }
-    if ( present ) {
+    if (present) {
       [fresh setObject:@1 forKey:key];
     }
   }
@@ -905,29 +740,6 @@
    NSLog(@"Number of big Video/Photo stories after filter : %d",[self.bigHash count]);
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
-    [Utilities primeTitlebarWithText:@"PHOTO & VIDEO"
-                        shareEnabled:NO
-                           container:nil];
-    
-  } else {
-    [[[Utilities del] globalTitleBar] applyKpccLogo];
-  }
-  
-  if ( self.contentType != ScreenContentTypeCompositePage ) {
-    [[[Utilities del] globalTitleBar] eraseDonateButton];
-  }
-  
-  if ( self.armToKill ) {
-    [NSTimer scheduledTimerWithTimeInterval:0.5
-                                     target:self
-                                   selector:@selector(killCollection)
-                                   userInfo:nil
-                                    repeats:NO];
-  }
-  
-}
 
 - (void)killCollection {
   NSLog(@"Killing pushed content...");
@@ -936,8 +748,7 @@
 }
 
 - (void)handleDrillDown:(NSDictionary *)story {
-  
-  
+
   if ( [story objectForKey:@"summary"] ) {
     
     NSArray *abstracts = nil;
@@ -986,22 +797,11 @@
                    andIndex:index];
     
     self.pushedContent = emvc;
-    
 
-    
-
-    
-
-
-    
     [self.navigationController pushViewController:emvc
-                                            animated:YES];
-    
-    
-    
+                                         animated:YES];
   } else {
-    
-    if ( self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage ) {
+    if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage) {
       SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc]
                                                              initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
                                                              bundle:nil];
@@ -1028,7 +828,6 @@
         [clean addObject:d];
       }
       
-      
       collectionType = [NSArray arrayWithArray:clean];
       
       self.pushedCollection = collection;
@@ -1036,7 +835,6 @@
       SCPRViewController *mvc = (SCPRViewController*)del.viewController;
     
       collection.view.frame = collection.view.frame;
-
     
       NSUInteger index = 0;
       for ( unsigned i = 0; i < [collectionType count]; i++ ) {
@@ -1137,11 +935,8 @@
                                   container:collection];
       
       NSString *title = [[ContentManager shared] prettyNameForScreenContentType:self.contentType];
-      
-      
-      [[[Utilities del] globalTitleBar] applyBackButtonText:[title uppercaseString]];
 
-       
+      [[[Utilities del] globalTitleBar] applyBackButtonText:[title uppercaseString]];
     }
   }
 
@@ -1322,60 +1117,44 @@
 - (void)handleRotationPre {
   self.reorienting = YES;
   
-  
   [UIView animateWithDuration:0.12 animations:^{
     self.photoVideoTable.alpha = 0.0;
   }];
-
 }
 
 - (void)handleRotationPost {
-  
-  if ( self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeEventsPage ) {
+  if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeEventsPage) {
     
     CGFloat width = [Utilities isLandscape] ? 1024.0 : 768.0;
     CGFloat height = [Utilities isLandscape] ? 673.0 : 926.0;
     self.view.frame = CGRectMake(0.0, 0.0, width, [Utilities isLandscape] ? 768.0 : 1024.0);
     
-    self.photoVideoTable.frame = CGRectMake(0.0,self.photoVideoTable.frame.origin.y,width,height);
-    self.photoVideoTable.center = CGPointMake(self.view.frame.size.width/2.0,
+    self.photoVideoTable.frame = CGRectMake(0.0,
+                                            self.photoVideoTable.frame.origin.y,
+                                            width,
+                                            height);
+    self.photoVideoTable.center = CGPointMake(self.view.frame.size.width / 2.0,
                                               self.photoVideoTable.center.y);
     
-    if ( self.contentType == ScreenContentTypeCompositePage ) {
-      
+    if (self.contentType == ScreenContentTypeCompositePage) {
       [self.masterCellHash removeAllObjects];
       [self.editionCellHash removeAllObjects];
       [self loadDummies];
       [self prepTableTransition];
       [self.photoVideoTable reloadData];
-      
     } else {
-      
       [self buildCells];
       [self prepTableTransition];
       [self.photoVideoTable reloadData];
-      
     }
-    
   } else  {
-    
     [self buildCells];
     [self prepTableTransition];
     [self.photoVideoTable reloadData];
-    
   }
-  
 
-  /*
-  [UIView animateWithDuration:0.12 animations:^{
-    self.photoVideoTable.alpha = 1.0;
-  }];
-  */
-  
   [[[Utilities del] masterRootController] uncloak];
-  
   self.reorienting = NO;
-  
 }
 
 - (void)prepTableTransition {
@@ -1404,104 +1183,87 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   // Return the number of sections.
-  
-  if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
+  if (self.contentType == ScreenContentTypeVideoPhotoPage) {
     return 1;
   }
-  if ( self.contentType == ScreenContentTypeCompositePage ) {
-    
-    if ( self.hasAerticles ) {
-      if ( self.articleMapPerDate ) {
+  if (self.contentType == ScreenContentTypeCompositePage) {
+    if (self.hasAerticles) {
+      if (self.articleMapPerDate) {
         return [[self.articleMapPerDate allValues] count]+1;
       }
-    } else if ( self.hasAShortList ) {
+    } else if (self.hasAShortList) {
       return 1;
     } else {
       return 0;
     }
-    
   }
-  if ( self.contentType == ScreenContentTypeEventsPage ) {
-    if ( [self.bigHash count] > 0 ) {
+  if (self.contentType == ScreenContentTypeEventsPage) {
+    if ([self.bigHash count] > 0) {
       return 2;
     }
-    
     return 1;
   }
-  
   return 0;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   
-  if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
+  if (self.contentType == ScreenContentTypeVideoPhotoPage) {
     return [self.cells count];
   }
-  if ( self.contentType == ScreenContentTypeCompositePage ) {
-    if ( section == 0 ) {
+
+  if (self.contentType == ScreenContentTypeCompositePage) {
+    if (section == 0) {
       return 1;
     } else {
-      
       NSInteger offset = section - 1;
-      if ( [self.sortedKeyArrayCache count] == 0 ) {
+      if ([self.sortedKeyArrayCache count] == 0) {
         return 0;
       }
-      
       NSString *dateKey = [self.sortedKeyArrayCache objectAtIndex:offset];
       NSMutableArray *map = [self.articleMapPerDate objectForKey:dateKey];
-      
       return [map count];
     }
   }
-  if ( self.contentType == ScreenContentTypeEventsPage ) {
-    if ( [self.bigHash count] > 0 ) {
-      if ( section == 0 ) {
+
+  if (self.contentType == ScreenContentTypeEventsPage) {
+    if ([self.bigHash count] > 0) {
+      if (section == 0) {
         return 1;
       } else {
         return [self.cells count]-1;
       }
     }
-    
     return [self.cells count];
-    
   }
   
   return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
-
+  if (self.contentType == ScreenContentTypeVideoPhotoPage) {
     return [self.cells objectAtIndex:indexPath.row];
-    
   }
   
-  if ( self.contentType == ScreenContentTypeEventsPage ) {
-    
-    if ( [self.bigHash count] > 0 ) {
-      if ( indexPath.section == 0 ) {
+  if (self.contentType == ScreenContentTypeEventsPage) {
+    if ([self.bigHash count] > 0) {
+      if (indexPath.section == 0) {
         return [self.cells objectAtIndex:0];
       } else {
-      
         return [self.cells objectAtIndex:indexPath.row+1];
-      
       }
     } else {
       return [self.cells objectAtIndex:indexPath.row];
     }
   }
   
-  if ( indexPath.section == 0 ) {
-    
-    if ( !self.editionsData ) {
+  if (indexPath.section == 0) {
+    if (!self.editionsData) {
       self.editionsData = (NSArray*)[[[ContentManager shared].settings editionsJson] JSONValue];
-      if ( !self.editionsData ) {
+      if (!self.editionsData) {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(updateTableContents)
                                                      name:@"editions_complete"
@@ -1519,7 +1281,6 @@
                                                             userInfo:nil
                                                              repeats:NO];
         return cell;
-        
       }
     }
     
@@ -1527,12 +1288,11 @@
     SCPRDeluxeEditionsCell *cell = [self editionCellFromEdition:edition forceLoad:NO];
     [cell squish];
     return cell;
-    
   }
   
   NSString *cellKey = [NSString stringWithFormat:@"%d%d",indexPath.section,indexPath.row];
   UITableViewCell *c = [self.masterCellHash objectForKey:cellKey];
-  if ( c ) {
+  if (c) {
     return c;
   }
   
@@ -1543,7 +1303,7 @@
   NSDictionary *info = [map objectAtIndex:indexPath.row];
   
   NSString *type = [info objectForKey:@"type"];
-  if ( [type isEqualToString:@"regular"] ) {
+  if ([type isEqualToString:@"regular"]) {
     
     NSMutableArray *posts = [info objectForKey:@"posts"];
     NSDictionary *article = [posts objectAtIndex:0];
@@ -1552,33 +1312,30 @@
     aspect = [aspect stringByReplacingOccurrencesOfString:@"_clip"
                                                withString:@""];
     
-    if ( [posts count] == 2 ) {
+    if ([posts count] == 2) {
       aspect = @"";
     }
     
     NSString *reuse = [NSString stringWithFormat:@"vpc%d%@",[posts count],orientation];
 
     SCPRDeluxeNewsCell *cell = nil;
-    if ( !self.reorienting ) {
+    if (!self.reorienting) {
       cell = [self.photoVideoTable dequeueReusableCellWithIdentifier:reuse];
     } else {
       NSLog(@"Reorientation lock successful .... ");
     }
     
-    //NSString *lookup = [NSString stringWithFormat:@"%d%d",cell.currentIndexPath.section,cell.currentIndexPath.row];
-    if ( cell.facade0.noAsset || cell.facade1.noAsset ) {
+    if (cell.facade0.noAsset || cell.facade1.noAsset) {
       cell = nil;
     }
-    if ( !cell /*|| [self.masterCellHash objectForKey:lookup]*/ ) {
-      
+    if (!cell /*|| [self.masterCellHash objectForKey:lookup]*/) {
       NSString *template = [NSString stringWithFormat:@"%@",@"SCPRDeluxeNewsCellDouble"];
       NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
                                                               xibForPlatformWithName:template]
                                                        owner:nil
                                                      options:nil];
-      
+
       cell = (SCPRDeluxeNewsCell*)[objects objectAtIndex:0];
-      
     }
 
     // Set social share counts for each post in the current cell row.
@@ -1591,7 +1348,7 @@
     }
     
     cell.posts = posts;
-    if ( [posts count] == 1 ) {
+    if ([posts count] == 1) {
       cell.facade1.view.alpha = 0.0;
     }
     
@@ -1600,13 +1357,11 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.currentIndexPath = indexPath;
     cell.landscape = [Utilities isLandscape];
-    
-    
+
     return cell;
-    
   }
   
-  if ( [type isEqualToString:@"editions"] ) {
+  if ([type isEqualToString:@"editions"]) {
     
     NSMutableArray *posts = [info objectForKey:@"posts"];
     SCPRDeluxeEditionsCell *cell = [self editionCellFromEdition:[posts lastObject]
@@ -1614,7 +1369,7 @@
     
     return cell;
   }
-  if ( [type isEqualToString:@"embiggened"] ) {
+  if ([type isEqualToString:@"embiggened"]) {
     
     NSMutableArray *posts = [info objectForKey:@"posts"];
     NSDictionary *article = [posts objectAtIndex:0];
@@ -1636,10 +1391,8 @@
     NSString *reuse = [NSString stringWithFormat:@"vpcbig%@1%@",aspect,orientation];
     SCPRDeluxeNewsCell *cell = [self.photoVideoTable dequeueReusableCellWithIdentifier:reuse];
     NSString *lookup = [NSString stringWithFormat:@"%d%d",cell.currentIndexPath.section,cell.currentIndexPath.row];
-    if ( !cell || [self.masterCellHash objectForKey:lookup] ) {
-      
 
-      
+    if (!cell || [self.masterCellHash objectForKey:lookup]) {
       NSString *template = [NSString stringWithFormat:@"%@%@",@"SCPRDeluxeNewsCellSingle",aspect];
       NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
                                                               xibForPlatformWithName:template]
@@ -1647,7 +1400,6 @@
                                                      options:nil];
       
       cell = (SCPRDeluxeNewsCell*)[objects objectAtIndex:0];
-      
     }
 
     cell.facade0.embiggened = YES;
@@ -1656,23 +1408,21 @@
     cell.currentIndexPath = indexPath;
     cell.landscape = [Utilities isLandscape];
 
-    
     return cell;
   }
-  
+
   return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                 reuseIdentifier:@""];
-
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  if ( self.contentType == ScreenContentTypeCompositePage ) {
-    if ( section == 0 ) {
+  if (self.contentType == ScreenContentTypeCompositePage) {
+    if (section == 0) {
       return nil;
     } else {
       
       NSArray *keys = [self sortedKeysForCellDates];
-      if ( [keys count] == 0 ) {
+      if ([keys count] == 0) {
         return nil;
       }
       
@@ -1685,13 +1435,12 @@
       NSString *pretty = [NSDate stringFromDate:d
                                      withFormat:@"MMM d"];
       
-      if ( section == 1 ) {
+      if (section == 1) {
         pretty = [NSString stringWithFormat:@"LATEST NEWS: %@",pretty];
       } else {
         pretty = [NSString stringWithFormat:@"NEWS FROM %@",pretty];
       }
       return [[DesignManager shared] deluxeHeaderWithText:pretty];
-      
     }
   }
   
@@ -1712,79 +1461,71 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 
-  if ( self.contentType == ScreenContentTypeCompositePage ) {
-    if ( section > 0 ) {
+  if (self.contentType == ScreenContentTypeCompositePage) {
+    if (section > 0) {
       return self.dummyHeader.frame.size.height;
     }
   }
-  if ( self.contentType == ScreenContentTypeEventsPage ) {
+
+  if (self.contentType == ScreenContentTypeEventsPage) {
     return self.dummyHeader.frame.size.height;
   }
-  
+
   return 0.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  if ( self.contentType == ScreenContentTypeVideoPhotoPage  ) {
+  if (self.contentType == ScreenContentTypeVideoPhotoPage ) {
     SCPRDeluxeNewsCell *cell = [self.cells objectAtIndex:indexPath.row];
     return cell.frame.size.height;
+  } else if (self.contentType == ScreenContentTypeCompositePage) {
     
-  } else if ( self.contentType == ScreenContentTypeCompositePage ) {
-    
-    if ( indexPath.section > 0 ) {
-      
+    if (indexPath.section > 0) {
       NSInteger offset = indexPath.section - 1;
-      if ( [self.sortedKeyArrayCache count] == 0 ) {
+      if ([self.sortedKeyArrayCache count] == 0) {
         return 0;
       }
-      
+
       NSString *dateKey = [self.sortedKeyArrayCache objectAtIndex:offset];
       NSMutableArray *map = [self.articleMapPerDate objectForKey:dateKey];
       NSDictionary *meta = [map objectAtIndex:indexPath.row];
       NSString *type = [meta objectForKey:@"type"];
       NSMutableArray *posts = [meta objectForKey:@"posts"];
       CGFloat squish = indexPath.row == 0 ? 23.0 : 0.0;
-      if ( [type isEqualToString:@"editions"] ) {
+
+      if ([type isEqualToString:@"editions"]) {
         return self.dummyEditions.frame.size.height;
       }
-      if ( [type isEqualToString:@"regular"] ) {
+
+      if ([type isEqualToString:@"regular"]) {
         return self.dummyDouble.frame.size.height-squish;
       }
-      if ( [type isEqualToString:@"embiggened"] ) {
-        
-        
+
+      if ([type isEqualToString:@"embiggened"]) {
         NSString *aspect = [[DesignManager shared]
                             aspectCodeForContentItem:[posts lastObject]
                             quality:AssetQualityFull];
         aspect = [aspect stringByReplacingOccurrencesOfString:@"_clip"
                                                    withString:@""];
         
-        if ( [aspect isEqualToString:@"23"] ||
+        if ([aspect isEqualToString:@"23"] ||
             [aspect isEqualToString:@"34"] ||
-            [aspect isEqualToString:@"Sq"] ) {
-          
+            [aspect isEqualToString:@"Sq"]) {
           return self.dummySingleSquare.frame.size.height-squish;
-          
         } else {
-          
           return self.dummySingleRectangle.frame.size.height-squish;
         }
-        
       }
-      
-
     } else {
-    
       return self.dummyEditions.frame.size.height;
-      
     }
-    
-  } else if ( self.contentType == ScreenContentTypeEventsPage ) {
+
+  } else if (self.contentType == ScreenContentTypeEventsPage) {
   
     SCPRDeluxeNewsCell *cell = nil;
-    if ( [self.bigHash count] > 0 ) {
-      if ( indexPath.section == 0 ) {
+    if ([self.bigHash count] > 0) {
+      if (indexPath.section == 0) {
         cell = [self.cells objectAtIndex:0];
         return cell.frame.size.height;
       }
@@ -1797,10 +1538,7 @@
       cell = [self.cells objectAtIndex:indexPath.row];
       return cell.frame.size.height-squish;
     }
-
   }
-  
-  
   return 0.0;
 }
 

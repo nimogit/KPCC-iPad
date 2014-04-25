@@ -74,7 +74,6 @@ typedef void (^FetchContentCallback)(BOOL);
 - (void)handleDrillDown:(NSDictionary*)story;
 - (void)sanitizeBigPosts;
 - (void)buildCells;
-- (void)buildGeneralCells;
 - (void)sortNewsData:(FetchContentCallback)block;
 - (void)setupBigHash:(FetchContentCallback)block;
 - (void)processEditions;
