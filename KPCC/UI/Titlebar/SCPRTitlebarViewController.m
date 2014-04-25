@@ -68,6 +68,9 @@
     NSURL *url = [NSURL URLWithString:kDonateURL];
     [[UIApplication sharedApplication] openURL:url];
   }
+  if (sender == self.categoriesButton) {
+    NSLog(@"Sections button tapped");
+  }
 }
 
 - (void)morph:(BarType)barType container:(id<Backable>)container {
@@ -153,13 +156,14 @@
     case BarTypeExternalWeb:
     {
       self.suppressDonate = YES;
-      self.backButtonSeat.frame = CGRectMake(0.0,0.0,
-                                         self.backButtonSeat.frame.size.width,
-                                         self.backButtonSeat.frame.size.height);
+      self.backButtonSeat.frame = CGRectMake(0.0,
+                                             0.0,
+                                             self.backButtonSeat.frame.size.width,
+                                             self.backButtonSeat.frame.size.height);
       
       [self.view addSubview:self.backButtonSeat];
       
-      if ( self.reduced ) {
+      if (self.reduced) {
         [[DesignManager shared] globalSetImageTo:@"website_icon.png"
                                        forButton:self.parserOrFullButton];
       } else {
@@ -273,20 +277,18 @@
     [self.donateButton setAlpha:0.0];
     [self.donateButton removeFromSuperview];
   }];
-  
 }
 
 - (void)applyDonateButton {
   [self eraseCategoriesButton];
   [self.view addSubview:self.donateButton];
-  
-  CGFloat nudge = [Utilities isIpad] ? 2.0 : -6.0;
-  self.donateButton.frame = CGRectMake(self.view.frame.size.width-self.donateButton.frame.size.width-nudge,
+
+  self.donateButton.frame = CGRectMake(self.view.frame.size.width - self.donateButton.frame.size.width - 2.0,
                                        0.0,
                                        self.donateButton.frame.size.width,
                                        self.donateButton.frame.size.height);
   self.donateButton.center = CGPointMake(self.donateButton.center.x,
-                                         self.view.frame.size.height/2.0);
+                                         self.view.frame.size.height / 2.0);
   [UIView animateWithDuration:0.22 animations:^{
     [self.donateButton setAlpha:1.0];
   }];
@@ -296,12 +298,12 @@
   [self eraseDonateButton];
   [self.view addSubview:self.signoutButton];
 
-  self.signoutButton.frame = CGRectMake(self.view.frame.size.width-self.signoutButton.frame.size.width-10.0,
+  self.signoutButton.frame = CGRectMake(self.view.frame.size.width - self.signoutButton.frame.size.width - 10.0,
                                         0.0,
                                         self.signoutButton.frame.size.width,
                                         self.signoutButton.frame.size.height);
   self.signoutButton.center = CGPointMake(self.signoutButton.center.x,
-                                          self.view.frame.size.height/2.0);
+                                          self.view.frame.size.height / 2.0);
   [UIView animateWithDuration:0.22 animations:^{
     [self.signoutButton setAlpha:1.0];
   }];
@@ -344,7 +346,7 @@
 //
 - (void)pushStyle:(BOOL)truePush {
   NSMutableDictionary *state = [[NSMutableDictionary alloc] init];
-  if ( self.container ) {
+  if (self.container) {
     [state setObject:self.container
               forKey:@"container"];
   }
@@ -366,16 +368,16 @@
   [state setObject:[NSNumber numberWithInt:self.pager.currentPage]
             forKey:@"currentPage"];
   
-  for ( id v in [self.view subviews] ) {
-    if ( [v isKindOfClass:[UIPageControl class]] ) {
+  for (id v in [self.view subviews]) {
+    if ([v isKindOfClass:[UIPageControl class]]) {
       [state setObject:@1 forKey:@"hasPager"];
     }
-    if ( v == self.donateButton ) {
+    if (v == self.donateButton) {
       [state setObject:@1 forKey:@"hasDonate"];
     }
   }
   
-  if ( truePush ) {
+  if (truePush) {
     [self.navStack addObject:state];
   } else {
     self.currentState = state;
@@ -393,14 +395,14 @@
   @try {
     
     NSDictionary *items = nil;
-    if ( truePop ) {
+    if (truePop) {
       items = [self.navStack lastObject];
     } else {
       items = self.currentState;
     }
     
-    if ( items ) {
-      if ( [items objectForKey:@"container"] ) {
+    if (items) {
+      if ([items objectForKey:@"container"]) {
         [self morph:(BarType)[[items objectForKey:@"type"] intValue]
           container:[items objectForKey:@"container"]];
       } else {
@@ -410,35 +412,35 @@
       
       self.view.backgroundColor = [items objectForKey:@"bgcolor"];
       NSArray *svs = [items objectForKey:@"subviews"];
-      for ( UIView *v in svs ) {
+      for (UIView *v in svs) {
         [self.view addSubview:v];
       }
       
-      if ( [items objectForKey:@"backtitle"] ) {
+      if ([items objectForKey:@"backtitle"]) {
         [self applyBackButtonText:[items objectForKey:@"backtitle"]];
       }
       
-      if ( [items objectForKey:@"pageCount"] ) {
+      if ([items objectForKey:@"pageCount"]) {
         self.pager.numberOfPages = [[items objectForKey:@"pageCount"] intValue];
       }
       
-      if ( [items objectForKey:@"currentPage"] ) {
+      if ([items objectForKey:@"currentPage"]) {
         self.pager.currentPage = [[items objectForKey:@"currentPage"] intValue];
         
       }
       
-      if ( [items objectForKey:@"hasPager"] ) {
+      if ([items objectForKey:@"hasPager"]) {
         [self applyPagerWithCount:self.pager.numberOfPages currentPage:self.pager.currentPage];
       }
       
       NSNumber *donate = [items objectForKey:@"hasDonate"];
-      if ( [items objectForKey:@"hasDonate"] ) {
-        if ( [donate intValue] == 1 ) {
+      if ([items objectForKey:@"hasDonate"]) {
+        if ([donate intValue] == 1) {
           [self applyDonateButton];
         }
       }
       
-      if ( truePop ) {
+      if (truePop) {
         [self.navStack removeLastObject];
       }
     }
@@ -450,7 +452,7 @@
 }
 
 - (void)restamp {
-  if ( self.barType == BarTypeEditions ) {
+  if (self.barType == BarTypeEditions) {
     [self applyPagerWithCount:self.pager.numberOfPages currentPage:self.pager.currentPage];
   }
 }
@@ -473,13 +475,9 @@
 
 - (void)applyBackButtonText:(NSString *)backButtonText {
   
-  if ( ![Utilities isIpad] ) {
-    backButtonText = @"";
-  }
-  
   if ( [backButtonText length] < [@"PHOTO & VIDEO" length] ) {
     NSInteger diff = abs([backButtonText length]-[@"PHOTO & VIDEO" length]);
-    for ( unsigned i = 0; i < diff-1; i++ ) {
+    for (unsigned i = 0; i < diff-1; i++) {
       backButtonText = [backButtonText stringByAppendingString:@"   "];
     }
   }
@@ -490,74 +488,62 @@
   [self.backButtonText titleizeText:backButtonText
                                bold:NO
                       respectHeight:NO];
-  
 
-  CGFloat nudge = [Utilities isIpad] ? 0.0 : -18.0;
-  self.backButtonSeat.frame = CGRectMake(nudge,
+  self.backButtonSeat.frame = CGRectMake(0.0,
                                          self.backButtonSeat.frame.origin.y,
                                          self.backButtonSeat.frame.size.width,
                                          self.backButtonSeat.frame.size.height);
-  
 }
 
 - (void)applySharingButton {
   [self eraseDonateButton];
   
   self.personalInfoButton.alpha = 1.0;
-  
-  CGFloat nudge = [Utilities isIpad] ? 10.0 : -6.0;
-  self.personalInfoButton.frame = CGRectMake(self.view.frame.size.width-self.personalInfoButton.frame.size.width-nudge,
-                                             0.0,self.personalInfoButton.frame.size.width,
+  self.personalInfoButton.frame = CGRectMake(self.view.frame.size.width - self.personalInfoButton.frame.size.width - 10.0,
+                                             0.0,
+                                             self.personalInfoButton.frame.size.width,
                                              self.personalInfoButton.frame.size.height);
   self.personalInfoButton.center = CGPointMake(self.personalInfoButton.center.x,
-                                               self.view.frame.size.height/2.0);
-  
-  if ( ![Utilities isIpad] ) {
-    [self.personalInfoButton setImageEdgeInsets:UIEdgeInsetsMake(0.0, 10.0, 0.0, 0.0)];
-  }
-  
-  NSString *text = [Utilities isIpad] ? @"SHARE" : @"";
-  [[DesignManager shared] globalSetTitleTo:text
+                                               self.view.frame.size.height / 2.0);
+
+  [[DesignManager shared] globalSetTitleTo:@"SHARE"
                                  forButton:self.personalInfoButton];
-  
-  
+
   [[DesignManager shared] globalSetImageTo:@"icon-share-active.png"
                                  forButton:self.personalInfoButton];
-  
+
   [self.view addSubview:self.personalInfoButton];
-  
   [self.personalInfoButton addTarget:[[Utilities del] viewController]
                               action:@selector(toggleShareDrawer)
                     forControlEvents:UIControlEventTouchUpInside];
-  
 }
 
 - (void)applyEditionsLabel {
   [self.view addSubview:self.editionsLogo];
   
-  self.editionsLogo.center = CGPointMake(self.view.frame.size.width/2.0,
-                                         self.view.frame.size.height/2.0);
+  self.editionsLogo.center = CGPointMake(self.view.frame.size.width / 2.0,
+                                         self.view.frame.size.height / 2.0);
 }
 
 - (void)applyKpccLogo {
   [self.view addSubview:self.kpccLogo];
   
-  self.kpccLogo.center = CGPointMake(self.view.frame.size.width/2.0,
-                                         self.view.frame.size.height/2.0);
+  self.kpccLogo.center = CGPointMake(self.view.frame.size.width / 2.0,
+                                         self.view.frame.size.height / 2.0);
 }
 
 - (void)applyPagerWithCount:(NSInteger)count currentPage:(NSInteger)currentPage {
   
   [self eraseDonateButton];
-  
   [self.pager removeFromSuperview];
   [self.view addSubview:self.pager];
   self.pager.numberOfPages = count;
   CGFloat nudge = 0.0;
-  if ( count >= 14 ) {
+  if (count >= 14) {
     nudge = 20.0;
   }
-  self.pager.frame = CGRectMake(self.view.frame.size.width-self.pager.frame.size.width-20.0-nudge,self.view.frame.size.height/2.0-(self.pager.frame.size.height/2.0),
+  self.pager.frame = CGRectMake(self.view.frame.size.width - self.pager.frame.size.width - 20.0 - nudge,
+                                self.view.frame.size.height / 2.0 - (self.pager.frame.size.height / 2.0),
                                 self.pager.frame.size.width,
                                 self.pager.frame.size.height);
   self.pager.currentPage = currentPage;
@@ -571,16 +557,12 @@
 - (void)toggleReduced:(BOOL)reduced {
   self.reduced = reduced;
   
-  if ( !self.reduced ) {
-    
+  if (!self.reduced) {
     [[DesignManager shared] globalSetImageTo:@"glasses.png"
                                    forButton:self.parserOrFullButton];
-    
   } else {
-    
     [[DesignManager shared] globalSetImageTo:@"website_icon.png"
                                    forButton:self.parserOrFullButton];
-    
   }
 }
 
@@ -601,30 +583,9 @@
   return ([self.view.subviews containsObject:self.categoriesButton]);
 }
 
-#pragma mark - KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
- /* CGPoint p = [[change objectForKey:@"new"] CGPointValue];
-  
-  CGFloat term = p.y / [self.container traversableTitlebarArea];
-  if ( term < .9 ) {
-    [UIView animateWithDuration:0.28 animations:^{
-      self.view.layer.backgroundColor = [[DesignManager shared] deepOnyxColor].CGColor;
-    }];
-    
-    return;
-  }
-  
-  [UIView animateWithDuration:0.28 animations:^{
-    self.view.layer.backgroundColor = [[DesignManager shared] deepOnyxColor].CGColor;
-  }];*/
-  
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 @end
