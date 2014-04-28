@@ -1784,10 +1784,10 @@
 		763B61FD1909A2690021C530 /* sections_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E698011909A05800D373BF /* sections_icon@2x.png */; };
 		763B61FE1909A26B0021C530 /* sections_close_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E697FF1909A05800D373BF /* sections_close_icon.png */; };
 		763B61FF1909A26E0021C530 /* sections_close_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E697FE1909A05800D373BF /* sections_close_icon@2x.png */; };
-		763B6203190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B6201190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.m */; };
-		763B6204190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B6201190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.m */; };
-		763B6205190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 763B6202190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.xib */; };
-		763B6206190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 763B6202190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.xib */; };
+		763B620A190EDC370021C530 /* SCPRNewsSectionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B6208190EDC370021C530 /* SCPRNewsSectionTableViewController.m */; };
+		763B620B190EDC370021C530 /* SCPRNewsSectionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B6208190EDC370021C530 /* SCPRNewsSectionTableViewController.m */; };
+		763B620C190EDC370021C530 /* SCPRNewsSectionTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 763B6209190EDC370021C530 /* SCPRNewsSectionTableViewController.xib */; };
+		763B620D190EDC370021C530 /* SCPRNewsSectionTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 763B6209190EDC370021C530 /* SCPRNewsSectionTableViewController.xib */; };
 		76658B5718E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5418E1F43800026176 /* libFlurry_4.3.2.a */; };
 		76658B5818E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5418E1F43800026176 /* libFlurry_4.3.2.a */; };
 		76658B6018E2141C00026176 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5A18E2141C00026176 /* libTestFlight.a */; };
@@ -2925,9 +2925,9 @@
 		28DF6D33171DCAF7002F0F99 /* SCPRNewsPageContainerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRNewsPageContainerController.m; path = UI/NewsPage/SCPRNewsPageContainerController.m; sourceTree = "<group>"; };
 		28DF6D34171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRNewsPageContainerController.xib; path = UI/NewsPage/SCPRNewsPageContainerController.xib; sourceTree = "<group>"; };
 		28DF6D39171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRNewsPageContainerController_iPad.xib; path = UI/NewsPage/SCPRNewsPageContainerController_iPad.xib; sourceTree = "<group>"; };
-		763B6200190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRNewsSectionsTableViewContollerTableViewController.h; path = UI/VideoPhoto/SCPRNewsSectionsTableViewContollerTableViewController.h; sourceTree = "<group>"; };
-		763B6201190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRNewsSectionsTableViewContollerTableViewController.m; path = UI/VideoPhoto/SCPRNewsSectionsTableViewContollerTableViewController.m; sourceTree = "<group>"; };
-		763B6202190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRNewsSectionsTableViewContollerTableViewController.xib; path = UI/VideoPhoto/SCPRNewsSectionsTableViewContollerTableViewController.xib; sourceTree = "<group>"; };
+		763B6207190EDC370021C530 /* SCPRNewsSectionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRNewsSectionTableViewController.h; path = UI/VideoPhoto/SCPRNewsSectionTableViewController.h; sourceTree = "<group>"; };
+		763B6208190EDC370021C530 /* SCPRNewsSectionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRNewsSectionTableViewController.m; path = UI/VideoPhoto/SCPRNewsSectionTableViewController.m; sourceTree = "<group>"; };
+		763B6209190EDC370021C530 /* SCPRNewsSectionTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRNewsSectionTableViewController.xib; path = UI/VideoPhoto/SCPRNewsSectionTableViewController.xib; sourceTree = "<group>"; };
 		76658B5318E1F43800026176 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		76658B5418E1F43800026176 /* libFlurry_4.3.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.2.a; sourceTree = "<group>"; };
 		76658B5A18E2141C00026176 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
@@ -3081,9 +3081,9 @@
 				256FFD4C1822E3F30060F538 /* SCPRBlankCell.m */,
 				2585354C1835534D00853085 /* SCPRBlankCell.xib */,
 				256FFD4F1822E4080060F538 /* SCPRBlankCell_iPad.xib */,
-				763B6200190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.h */,
-				763B6201190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.m */,
-				763B6202190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.xib */,
+				763B6207190EDC370021C530 /* SCPRNewsSectionTableViewController.h */,
+				763B6208190EDC370021C530 /* SCPRNewsSectionTableViewController.m */,
+				763B6209190EDC370021C530 /* SCPRNewsSectionTableViewController.xib */,
 			);
 			name = AV/News/Events;
 			sourceTree = "<group>";
@@ -5142,7 +5142,6 @@
 				2527F85E1759180900A85319 /* SCPRSnapshotSquashedCell_iPad.xib in Resources */,
 				2527F86117591EC500A85319 /* youtube_container.html in Resources */,
 				2527F86917593DF500A85319 /* basic.css in Resources */,
-				763B6206190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.xib in Resources */,
 				2527F87817594D5B00A85319 /* SCPRShareCellViewController_iPad.xib in Resources */,
 				2527F87F17594D8B00A85319 /* SCPRShareDrawerViewController_iPad.xib in Resources */,
 				25C9A49017F4CBF400B6BBB6 /* icon-audio-listening.png in Resources */,
@@ -5449,6 +5448,7 @@
 				256FFD421822DD7E0060F538 /* icon-listenhistory@2x.png in Resources */,
 				256421CE18106196002F1C6A /* white_fave_heart.png in Resources */,
 				252AC02117B9A86900C55432 /* add_to_queue_button@2x.png in Resources */,
+				763B620D190EDC370021C530 /* SCPRNewsSectionTableViewController.xib in Resources */,
 				76D71F1C18A452D500487864 /* icon-social-facebook-disabled.png in Resources */,
 				25E0B1A617C2AC1B009C3C72 /* SCPRDeluxeNewsCellDouble_iPad.xib in Resources */,
 				25E0B1AF17C2E088009C3C72 /* videoPlayButton.png in Resources */,
@@ -6359,7 +6359,6 @@
 				259AF5D7183412E9008AFB2A /* SCPRDeluxeNewsCellSingle34.xib in Resources */,
 				25EC8DC517C4356000673DFF /* small_bbcworldservice_splash@2x.jpg in Resources */,
 				25C9A44C17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib in Resources */,
-				763B6205190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.xib in Resources */,
 				2585355E1835A38E00853085 /* SCPRProfileListenedCell.xib in Resources */,
 				25EC8DC717C4356000673DFF /* small_bullseye_splash.jpg in Resources */,
 				25EC8DC917C4356000673DFF /* small_bullseye_splash@2x.jpg in Resources */,
@@ -6390,6 +6389,7 @@
 				76D71F1718A44B3700487864 /* icon-social-twitter@2x.png in Resources */,
 				25EC8DE317C4356000673DFF /* small_marketplace_splash.jpg in Resources */,
 				25EC8DE517C4356000673DFF /* small_marketplace_splash@2x.jpg in Resources */,
+				763B620C190EDC370021C530 /* SCPRNewsSectionTableViewController.xib in Resources */,
 				25EC8DE717C4356000673DFF /* small_marketplacemorningreport_splash.jpg in Resources */,
 				25EC8DE917C4356000673DFF /* small_marketplacemorningreport_splash@2x.jpg in Resources */,
 				25EC8DEB17C4356000673DFF /* small_morningedition_splash.jpg in Resources */,
@@ -6599,6 +6599,7 @@
 				2599507D176F9B8700C12183 /* SCPRLogoGeneratorViewController.m in Sources */,
 				25AB297A1773836B00948026 /* SCPRSpinnerViewController.m in Sources */,
 				259EA07817790E6B00C381ED /* SCPRProfileViewController.m in Sources */,
+				763B620B190EDC370021C530 /* SCPRNewsSectionTableViewController.m in Sources */,
 				259EA07E17791A4200C381ED /* SCPRProfileListenedCell.m in Sources */,
 				2549BD67177A13E800EE57D0 /* SCPRProgramAZViewController.m in Sources */,
 				256FFD4E1822E3F30060F538 /* SCPRBlankCell.m in Sources */,
@@ -6632,7 +6633,6 @@
 				25AC7D2D17BB00B8008B1599 /* XMLDictionary.m in Sources */,
 				25E0B1A317C2AC04009C3C72 /* SCPRDeluxeNewsCell.m in Sources */,
 				25E0B1AA17C2B09E009C3C72 /* SCPRDeluxeNewsFacadeViewController.m in Sources */,
-				763B6204190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.m in Sources */,
 				25E0B2B317C2F4AC009C3C72 /* SCPRSmallCutViewController.m in Sources */,
 				25EC8E5417C4364100673DFF /* SCPRCompBaseCell.m in Sources */,
 				25EC8E5F17C5529500673DFF /* SCPRFloatingEmbedViewController.m in Sources */,
@@ -6756,6 +6756,7 @@
 				259C87D2176A8C040099030F /* SCPRReloadViewController.m in Sources */,
 				2599507C176F9B8700C12183 /* SCPRLogoGeneratorViewController.m in Sources */,
 				25AB29791773836B00948026 /* SCPRSpinnerViewController.m in Sources */,
+				763B620A190EDC370021C530 /* SCPRNewsSectionTableViewController.m in Sources */,
 				259EA07717790E6B00C381ED /* SCPRProfileViewController.m in Sources */,
 				259EA07D17791A4200C381ED /* SCPRProfileListenedCell.m in Sources */,
 				2549BD66177A13E800EE57D0 /* SCPRProgramAZViewController.m in Sources */,
@@ -6789,7 +6790,6 @@
 				25A70C4917E378F90024E654 /* SCPROnboardingStep5ViewController.m in Sources */,
 				25AC7D2C17BB00B8008B1599 /* XMLDictionary.m in Sources */,
 				25E0B1A217C2AC04009C3C72 /* SCPRDeluxeNewsCell.m in Sources */,
-				763B6203190ED9BD0021C530 /* SCPRNewsSectionsTableViewContollerTableViewController.m in Sources */,
 				25E0B1A917C2B09E009C3C72 /* SCPRDeluxeNewsFacadeViewController.m in Sources */,
 				25E0B2B217C2F4AC009C3C72 /* SCPRSmallCutViewController.m in Sources */,
 				25EC8E5317C4364100673DFF /* SCPRCompBaseCell.m in Sources */,

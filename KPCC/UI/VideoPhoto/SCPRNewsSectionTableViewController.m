@@ -1,18 +1,18 @@
 //
-//  SCPRNewsSectionsTableViewContollerTableViewController.m
+//  SCPRNewsSectionTableViewController.m
 //  KPCC
 //
 //  Created by John Meeker on 4/28/14.
 //  Copyright (c) 2014 scpr. All rights reserved.
 //
 
-#import "SCPRNewsSectionsTableViewContollerTableViewController.h"
+#import "SCPRNewsSectionTableViewController.h"
 
-@interface SCPRNewsSectionsTableViewContollerTableViewController ()
+@interface SCPRNewsSectionTableViewController ()
 
 @end
 
-@implementation SCPRNewsSectionsTableViewContollerTableViewController
+@implementation SCPRNewsSectionTableViewController
 
 - (void)viewDidLoad
 {
