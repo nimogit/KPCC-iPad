@@ -21,7 +21,6 @@
 #define kPreemptivePrimeThreshold 25
 
 @interface SCPRDeluxeNewsViewController ()
-
 @end
 
 @implementation SCPRDeluxeNewsViewController
@@ -38,8 +37,16 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  [[Utilities del] globalTitleBar].delegate = self;
+  
   // Stretch bottom-most view for iOS7.
   [self stretch];
+  
+  if (self.contentType == ScreenContentTypeCompositePage) {
+    self.categoriesSheetView.alpha = 0.0;
+    [self.view addSubview:self.categoriesSheetView];
+  }
+  
   
   if ([Utilities isIOS7]) {
     if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
@@ -131,6 +138,14 @@
                                     repeats:NO];
   }
 }
+
+
+#pragma mark - SCPRTitlebarDelegate
+- (void)sectionsTapped {
+  NSLog(@"sections tapped!");
+}
+
+
 
 - (void)fetchContent:(FetchContentCallback) block {
   

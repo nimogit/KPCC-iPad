@@ -20,6 +20,12 @@ typedef enum {
   BarTypeDrawerWithCategories
 } BarType;
 
+@protocol SCPRTitlebarDelegate <NSObject>
+@optional
+- (void)sectionsTapped;
+
+@end
+
 @interface SCPRTitlebarViewController : UIViewController {
   UIButton *_drawerButton;
   UIButton *_personalInfoButton;
@@ -57,6 +63,8 @@ typedef enum {
 @property BOOL popping;
 @property BOOL reduced;
 @property BOOL suppressDonate;
+
+@property (nonatomic,weak) id<SCPRTitlebarDelegate> delegate;
 
 - (void)morph:(BarType)barType container:(id<Backable>)container;
 - (void)toggleReduced:(BOOL)reduced;

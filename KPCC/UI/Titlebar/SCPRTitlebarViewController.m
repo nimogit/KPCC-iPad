@@ -73,8 +73,9 @@
     [[UIApplication sharedApplication] openURL:url];
   }
   if (sender == self.categoriesButton) {
-    SCPRNewsSectionTableViewController *stvc = [[SCPRNewsSectionTableViewController alloc] init];
-    [[[Utilities del] viewController] presentViewController:stvc animated:YES completion:nil];
+    //SCPRNewsSectionTableViewController *stvc = [[SCPRNewsSectionTableViewController alloc] init];
+    //[[[Utilities del] viewController] presentViewController:stvc animated:YES completion:nil];
+    [self.delegate sectionsTapped];
     [self applyCloseCategoriesButton];
   }
   if (sender == self.closeCategoriesButton) {

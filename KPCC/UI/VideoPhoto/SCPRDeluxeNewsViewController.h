@@ -17,7 +17,12 @@
 
 typedef void (^FetchContentCallback)(BOOL);
 
-@interface SCPRDeluxeNewsViewController : UIViewController<ContentProcessor,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,Rotatable,AnimationDelegate>
+/*@protocol SCPRDeluxeNewsViewDelegate <NSObject>
+@optional
+- (void)categoriesTapped;
+@end*/
+
+@interface SCPRDeluxeNewsViewController : UIViewController<ContentProcessor,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,Rotatable,AnimationDelegate, SCPRTitlebarDelegate>
 
 // UI
 @property (nonatomic,strong) IBOutlet UITableView *photoVideoTable;
@@ -25,6 +30,9 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) IBOutlet UIView *emptyFooter;
 @property (nonatomic,strong) IBOutlet UIView *spinnerFooter;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *loadingMoreNewsSpinner;
+@property (nonatomic,strong) IBOutlet UIView *categoriesSheetView;
+@property (nonatomic,strong) IBOutlet UITableView *categoriesTableView;
+@property (nonatomic,strong) IBOutlet UITableViewController *categoriesTableViewController;
 
 // Article, cell, social, short list data stores
 @property (nonatomic,strong) NSArray *posts;
@@ -80,6 +88,7 @@ typedef void (^FetchContentCallback)(BOOL);
 - (void)loadDummies;
 - (void)loadDummies:(BOOL)editions;
 - (void)prepTableTransition;
+- (void)categoriesTapped;
 
 - (NSArray*)newsForDayReferencedBySection:(NSInteger)section;
 - (NSArray*)sortedKeysForCellDates;
