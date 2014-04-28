@@ -41,6 +41,8 @@
                                      forButton:self.donateButton];
   [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.editButton.titleLabel.font.pointSize]
                                 forButton:self.categoriesButton];
+  [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.editButton.titleLabel.font.pointSize]
+                                forButton:self.closeCategoriesButton];
   
   [self.donateButton addTarget:self
                         action:@selector(buttonTapped:)
@@ -72,12 +74,12 @@
   }
   if (sender == self.categoriesButton) {
     SCPRNewsSectionTableViewController *stvc = [[SCPRNewsSectionTableViewController alloc] init];
-    stvc.view.frame = CGRectMake(0, 20.0, stvc.view.frame.size.width, stvc.view.frame.size.height);
     [[[Utilities del] viewController] presentViewController:stvc animated:YES completion:nil];
     [self applyCloseCategoriesButton];
   }
   if (sender == self.closeCategoriesButton) {
     [[[Utilities del] viewController] dismissViewControllerAnimated:YES completion:nil];
+    [self eraseCloseCategoriesButton];
     [self applyCategoriesButton];
   }
 }
@@ -326,8 +328,13 @@
 }
 
 - (void)applyCategoriesButton {
+  
+  if ([self.view.subviews containsObject:self.closeCategoriesButton]) {
+    return;
+  }
+
   [self eraseDonateButton];
-  [self eraseCloseCategoriesButton];
+  //[self eraseCloseCategoriesButton];
   [self.view addSubview:self.categoriesButton];
   
   self.categoriesButton.frame = CGRectMake(self.view.frame.size.width - self.categoriesButton.frame.size.width - 10.0,
@@ -350,6 +357,7 @@
 
 - (void)applyCloseCategoriesButton {
   [self eraseCategoriesButton];
+  [self eraseDonateButton];
   [self.view addSubview:self.closeCategoriesButton];
   
   
