@@ -9,6 +9,8 @@
 #import "SCPRTitlebarViewController.h"
 #import "SCPRViewController.h"
 #import "SCPRMasterRootViewController.h"
+#import "SCPRNewsSectionTableViewController.h"
+
 
 #import "global.h"
 
@@ -69,7 +71,14 @@
     [[UIApplication sharedApplication] openURL:url];
   }
   if (sender == self.categoriesButton) {
-    NSLog(@"Sections button tapped");
+    SCPRNewsSectionTableViewController *stvc = [[SCPRNewsSectionTableViewController alloc] init];
+    stvc.view.frame = CGRectMake(0, 20.0, stvc.view.frame.size.width, stvc.view.frame.size.height);
+    [[[Utilities del] viewController] presentViewController:stvc animated:YES completion:nil];
+    [self applyCloseCategoriesButton];
+  }
+  if (sender == self.closeCategoriesButton) {
+    [[[Utilities del] viewController] dismissViewControllerAnimated:YES completion:nil];
+    [self applyCategoriesButton];
   }
 }
 
@@ -318,6 +327,7 @@
 
 - (void)applyCategoriesButton {
   [self eraseDonateButton];
+  [self eraseCloseCategoriesButton];
   [self.view addSubview:self.categoriesButton];
   
   self.categoriesButton.frame = CGRectMake(self.view.frame.size.width - self.categoriesButton.frame.size.width - 10.0,
@@ -328,6 +338,30 @@
                                              self.view.frame.size.height / 2.0);
   [UIView animateWithDuration:0.22 animations:^{
     [self.categoriesButton setAlpha:1.0];
+  }];
+}
+
+- (void)eraseCloseCategoriesButton {
+  [UIView animateWithDuration:0.22 animations:^{
+    [self.closeCategoriesButton setAlpha:0.0];
+    [self.closeCategoriesButton removeFromSuperview];
+  }];
+}
+
+- (void)applyCloseCategoriesButton {
+  [self eraseCategoriesButton];
+  [self.view addSubview:self.closeCategoriesButton];
+  
+  
+  self.closeCategoriesButton.frame = CGRectMake(self.view.frame.size.width - self.closeCategoriesButton.frame.size.width - 10.0,
+                                           0.0,
+                                           self.closeCategoriesButton.frame.size.width,
+                                           self.closeCategoriesButton.frame.size.height);
+  self.closeCategoriesButton.center = CGPointMake(self.closeCategoriesButton.center.x,
+                                             self.view.frame.size.height / 2.0);
+  
+  [UIView animateWithDuration:0.22 animations:^{
+    [self.closeCategoriesButton setAlpha:1.0];
   }];
 }
 

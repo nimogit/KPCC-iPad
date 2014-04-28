@@ -35,6 +35,7 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UIButton *editButton;
 @property (nonatomic,strong) IBOutlet UIButton *signoutButton;
 @property (nonatomic,strong) IBOutlet UIButton *categoriesButton;
+@property (nonatomic,strong) IBOutlet UIButton *closeCategoriesButton;
 @property (nonatomic,strong) IBOutlet UILabel *pageTitleLabel;
 @property (nonatomic,strong) IBOutlet UIImageView *editionsLogo;
 @property (nonatomic,weak) id<Backable> container;
@@ -70,9 +71,11 @@ typedef enum {
 - (void)applySignoutButton;
 - (void)applyDonateButton;
 - (void)applyCategoriesButton;
+- (void)applyCloseCategoriesButton;
 
 - (void)eraseDonateButton;
 - (void)eraseCategoriesButton;
+- (void)eraseCloseCategoriesButton;
 
 - (void)pushStyle:(BOOL)truePush;
 - (void)pushStyle;

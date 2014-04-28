@@ -10,4 +10,5 @@
 
 @interface SCPRNewsSectionTableViewController : UITableViewController
 
+@property (nonatomic,strong) NSMutableArray *sections;
 @end

@@ -14,15 +14,23 @@
 
 @implementation SCPRNewsSectionTableViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)viewDidLoad {
+  [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  self.sections = [[NSMutableArray alloc] initWithArray:@[@"Home", @"Politics", @"Business", @"Crime & Justice", @"Health", @"Education", @"Arts & Entertainment", @"Emerging Communities", @"Local", @"US & World", @"Science", @"Dogecoin"]];
+  
+  
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 40.0, self.view.frame.size.width, self.view.frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,28 +43,29 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [self.sections count];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsSectionTableViewCell"];
+  if (!cell) {
+    cell = [[UITableViewCell alloc]init];
+  }
+  cell.backgroundColor = [UIColor clearColor];
+  cell.textLabel.text = [self.sections objectAtIndex:indexPath.row];
+  return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -96,21 +105,15 @@
 }
 */
 
-/*
+
 #pragma mark - Table view delegate
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
-    
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
-*/
+
 
 @end
