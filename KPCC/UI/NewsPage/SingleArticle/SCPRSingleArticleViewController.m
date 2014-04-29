@@ -1489,7 +1489,10 @@
         totalHeight += self.landscapeImageSheetView.frame.size.height;
       }
     } else {
-      totalHeight += self.basicTemplate.matteView.frame.size.height;
+      // Only increase totalHeight if article as an image loaded in the top template.
+      if ([self.basicTemplate.image1 frameForImage].size.height > 0) {
+        totalHeight += self.basicTemplate.matteView.frame.size.height;
+      }
     }
   }
   totalHeight += self.textSheetView.frame.size.height;
