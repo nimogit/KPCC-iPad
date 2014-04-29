@@ -1052,15 +1052,21 @@
 #pragma mark - SCPRTitlebarDelegate
 - (void)openSectionsTapped {
   NSLog(@"sections tapped!");
-  //SCPRNewsSectionTableViewController *stvc = [[SCPRNewsSectionTableViewController alloc] init];
-  //[[[Utilities del] viewController] presentViewController:stvc animated:YES completion:nil];
-  //[[ContentManager shared] pushToResizeVector:self.categoriesTableViewController];
+  self.categoriesTableViewController.view.alpha = 1;
   [self presentViewController:self.categoriesTableViewController animated:YES completion:nil];
 }
 
 - (void)closeSectionsTapped {
   //[self dismissViewControllerAnimated:YES completion:nil];
-  [self.categoriesTableViewController dismissViewControllerAnimated:YES completion:nil];
+  
+  [UIView animateWithDuration:1.0f animations:^{
+    self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    self.categoriesTableViewController.view.alpha = 0;
+  } completion:^(BOOL finished) {
+    //self.view.transform = CGAffineTransformIdentity;
+    //[transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+    [self.categoriesTableViewController dismissViewControllerAnimated:NO completion:nil];
+  }];
 }
 
 #pragma mark - SCPRNewsSectionDelegate

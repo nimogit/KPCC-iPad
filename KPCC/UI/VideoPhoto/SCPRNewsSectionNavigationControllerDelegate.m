@@ -57,7 +57,8 @@
   if (operation == UINavigationControllerOperationPop) {
     return self.animator;
   }
-  return nil;
+  //return nil;
+  return self.animator;
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
