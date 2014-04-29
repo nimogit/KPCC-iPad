@@ -44,6 +44,7 @@
   self.textSheetView.alpha = 0.0;
   self.cloakView.alpha = 0.0;
   self.queueButton.alpha = 0.0;
+  self.socialSheetView.alpha = 0.0;
   self.basicTemplate.headLine.textColor = [UIColor blackColor]/*[[DesignManager shared] darkoalColor]*/;
   self.basicTemplate.byLine.textColor = [UIColor blackColor]/*[[DesignManager shared] darkoalColor]*/;
   self.view.backgroundColor = [UIColor whiteColor];/*[[DesignManager shared] charcoalColor];*/
@@ -61,7 +62,6 @@
   [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.socialShareButton.titleLabel.font.pointSize]
                                 forButton:self.socialShareButton];
   
-  self.socialSheetView.alpha = 0.0;
   [[self.socialShareButton layer] setCornerRadius:3.0f];
   [[self.socialShareButton layer] setBorderWidth:1.0f];
   [[self.socialShareButton layer] setBorderColor:[UIColor colorWithRed:9.0/255.0 green:185.0/255.0 blue:243.0/255.0 alpha:1.0].CGColor];
@@ -1239,9 +1239,12 @@
 
 - (void)socialDataLoaded {
 
-  self.socialSheetView.alpha = 1.0;
-
   if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
+    [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
+                                              self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height,
+                                              self.socialSheetView.frame.size.width,
+                                              self.socialSheetView.frame.size.height)];
+    
     [self.masterContentScroller addSubview:self.socialSheetView];
   }
   
@@ -1305,6 +1308,7 @@
                                              self.twitterCountLabel.frame.size.width,
                                              origTwitterFrame.size.height);
   
+  self.socialSheetView.alpha = 1.0;
 }
 
 - (void)toggleShareModal {

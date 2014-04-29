@@ -473,18 +473,21 @@
   CGFloat newIndex = self.articleScroller.contentOffset.x;
   CGFloat oldIndex = self.currentOffset.x;
 
-  if ([self.articles count] - self.currentIndex <= 4 && !self.fetchLock) {
-    @synchronized(self) {
-      self.fetchLock = YES;
-      SCPRDeluxeNewsViewController *dnc = (SCPRDeluxeNewsViewController*)self.parentDeluxeNewsPage;
-      [dnc fetchContent:^(BOOL finished) {
-        if (finished) {
-          [self setupWithCollection:dnc.monolithicNewsVector
-                 beginningAtIndex:self.currentIndex
-                     processIndex:YES];
-          self.fetchLock = NO;
-        }
-      }];
+  // Fetch more news if we are less than 3 swipes from the end of the article stack. Don't fetch for any CollectionTypes other than News.
+  if (self.category == ContentCategoryNews) {
+    if ([self.articles count] - self.currentIndex <= 4 && !self.fetchLock) {
+      @synchronized(self) {
+        self.fetchLock = YES;
+        SCPRDeluxeNewsViewController *dnc = (SCPRDeluxeNewsViewController*)self.parentDeluxeNewsPage;
+        [dnc fetchContent:^(BOOL finished) {
+          if (finished) {
+            [self setupWithCollection:dnc.monolithicNewsVector
+                     beginningAtIndex:self.currentIndex
+                         processIndex:YES];
+            self.fetchLock = NO;
+          }
+        }];
+      }
     }
   }
   
