@@ -8,6 +8,7 @@
 
 #import "SCPRNewsSectionTableViewController.h"
 #import "SCPRDeluxeNewsViewController.h"
+#import "SCPRNewsSectionNavigationControllerDelegate.h"
 
 @interface SCPRNewsSectionTableViewController ()
 

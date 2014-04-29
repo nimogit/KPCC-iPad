@@ -1059,7 +1059,8 @@
 }
 
 - (void)closeSectionsTapped {
-  [self dismissViewControllerAnimated:YES completion:nil];
+  //[self dismissViewControllerAnimated:YES completion:nil];
+  [self.categoriesTableViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - SCPRNewsSectionDelegate
