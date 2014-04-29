@@ -12,17 +12,14 @@
 #import "SCPRViewController.h"
 #import "global.h"
 #import "SCPRUsefulTransition.h"
+#import "SCPRNewsSectionTableViewController.h"
 
 #define kNumberOfRegularStoriesPerRow 2
 
 typedef void (^FetchContentCallback)(BOOL);
 
-/*@protocol SCPRDeluxeNewsViewDelegate <NSObject>
-@optional
-- (void)categoriesTapped;
-@end*/
 
-@interface SCPRDeluxeNewsViewController : UIViewController<ContentProcessor,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,Rotatable,AnimationDelegate, SCPRTitlebarDelegate>
+@interface SCPRDeluxeNewsViewController : UIViewController<ContentProcessor,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,Rotatable,AnimationDelegate, SCPRTitlebarDelegate, SCPRNewsSectionDelegate>
 
 // UI
 @property (nonatomic,strong) IBOutlet UITableView *photoVideoTable;
@@ -88,7 +85,6 @@ typedef void (^FetchContentCallback)(BOOL);
 - (void)loadDummies;
 - (void)loadDummies:(BOOL)editions;
 - (void)prepTableTransition;
-- (void)categoriesTapped;
 
 - (NSArray*)newsForDayReferencedBySection:(NSInteger)section;
 - (NSArray*)sortedKeysForCellDates;

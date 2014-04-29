@@ -17,7 +17,6 @@
 #import "SCPREditionMoleculeViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRBlankCell.h"
-#import "SCPRNewsSectionTableViewController.h"
 
 #define kPreemptivePrimeThreshold 25
 
@@ -1066,6 +1065,11 @@
 
 - (void)closeSectionsTapped {
   [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - SCPRNewsSectionDelegate
+- (void)sectionSelected {
+  
 }
 
 
