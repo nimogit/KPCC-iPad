@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "global.h"
+#import "SCPRViewController.h"
 
 @protocol SCPRNewsSectionDelegate <NSObject>
 @optional
 - (void)sectionSelected;
 @end
 
-@interface SCPRNewsSectionTableViewController : UITableViewController
+@interface SCPRNewsSectionTableViewController : UITableViewController<Rotatable>
 
 @property (nonatomic,strong) NSMutableArray *sections;
 @end

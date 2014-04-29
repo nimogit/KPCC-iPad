@@ -42,13 +42,6 @@
   // Stretch bottom-most view for iOS7.
   [self stretch];
   
-  if (self.contentType == ScreenContentTypeCompositePage) {
-    self.categoriesTableView.alpha = 0.0;
-    self.categoriesTableView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 20.0, self.view.frame.size.width, self.view.frame.size.height);
-    [self.view addSubview:self.categoriesTableView];
-  }
-  
-  
   if ([Utilities isIOS7]) {
     if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
       self.photoVideoTable.frame = CGRectMake(self.photoVideoTable.frame.origin.x,
@@ -1059,9 +1052,10 @@
 #pragma mark - SCPRTitlebarDelegate
 - (void)openSectionsTapped {
   NSLog(@"sections tapped!");
-  SCPRNewsSectionTableViewController *stvc = [[SCPRNewsSectionTableViewController alloc] init];
+  //SCPRNewsSectionTableViewController *stvc = [[SCPRNewsSectionTableViewController alloc] init];
   //[[[Utilities del] viewController] presentViewController:stvc animated:YES completion:nil];
-  [self presentViewController:stvc animated:YES completion:nil];
+  //[[ContentManager shared] pushToResizeVector:self.categoriesTableViewController];
+  [self presentViewController:self.categoriesTableViewController animated:YES completion:nil];
 }
 
 - (void)closeSectionsTapped {
