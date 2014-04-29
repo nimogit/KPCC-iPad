@@ -22,8 +22,8 @@ typedef enum {
 
 @protocol SCPRTitlebarDelegate <NSObject>
 @optional
-- (void)sectionsTapped;
-
+- (void)openSectionsTapped;
+- (void)closeSectionsTapped;
 @end
 
 @interface SCPRTitlebarViewController : UIViewController {

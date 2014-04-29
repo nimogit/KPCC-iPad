@@ -17,6 +17,7 @@
 #import "SCPREditionMoleculeViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRBlankCell.h"
+#import "SCPRNewsSectionTableViewController.h"
 
 #define kPreemptivePrimeThreshold 25
 
@@ -138,13 +139,6 @@
                                     repeats:NO];
   }
 }
-
-
-#pragma mark - SCPRTitlebarDelegate
-- (void)sectionsTapped {
-  NSLog(@"sections tapped!");
-}
-
 
 
 - (void)fetchContent:(FetchContentCallback) block {
@@ -1061,6 +1055,19 @@
     }];
   }
 }
+
+#pragma mark - SCPRTitlebarDelegate
+- (void)openSectionsTapped {
+  NSLog(@"sections tapped!");
+  SCPRNewsSectionTableViewController *stvc = [[SCPRNewsSectionTableViewController alloc] init];
+  //[[[Utilities del] viewController] presentViewController:stvc animated:YES completion:nil];
+  [self presentViewController:stvc animated:YES completion:nil];
+}
+
+- (void)closeSectionsTapped {
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 #pragma mark - Refresh
 - (void)refreshTableContents {

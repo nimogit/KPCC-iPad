@@ -73,13 +73,12 @@
     [[UIApplication sharedApplication] openURL:url];
   }
   if (sender == self.categoriesButton) {
-    //SCPRNewsSectionTableViewController *stvc = [[SCPRNewsSectionTableViewController alloc] init];
-    //[[[Utilities del] viewController] presentViewController:stvc animated:YES completion:nil];
-    [self.delegate sectionsTapped];
+    [self.delegate openSectionsTapped];
     [self applyCloseCategoriesButton];
   }
   if (sender == self.closeCategoriesButton) {
-    [[[Utilities del] viewController] dismissViewControllerAnimated:YES completion:nil];
+    //[[[Utilities del] viewController] dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate closeSectionsTapped];
     [self eraseCloseCategoriesButton];
     [self applyCategoriesButton];
   }
