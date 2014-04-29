@@ -43,8 +43,9 @@
   [self stretch];
   
   if (self.contentType == ScreenContentTypeCompositePage) {
-    self.categoriesSheetView.alpha = 0.0;
-    [self.view addSubview:self.categoriesSheetView];
+    self.categoriesTableView.alpha = 0.0;
+    self.categoriesTableView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 20.0, self.view.frame.size.width, self.view.frame.size.height);
+    [self.view addSubview:self.categoriesTableView];
   }
   
   

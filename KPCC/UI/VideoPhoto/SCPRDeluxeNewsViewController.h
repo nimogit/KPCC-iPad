@@ -27,7 +27,6 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) IBOutlet UIView *emptyFooter;
 @property (nonatomic,strong) IBOutlet UIView *spinnerFooter;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *loadingMoreNewsSpinner;
-@property (nonatomic,strong) IBOutlet UIView *categoriesSheetView;
 @property (nonatomic,strong) IBOutlet UITableView *categoriesTableView;
 @property (nonatomic,strong) IBOutlet UITableViewController *categoriesTableViewController;
 
