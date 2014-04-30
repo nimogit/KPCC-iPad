@@ -11,7 +11,7 @@
 @implementation SCPRControllerOverlayAnimator
 
 - (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext {
-  return 1;
+  return 0.5;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -30,9 +30,9 @@
     toView.layer.masksToBounds = YES;
     
     // Set initial scale to zero
-    toView.transform = CGAffineTransformMakeScale(0.0, 0.0);
+    toView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
     [containerView addSubview:toView];
-    
+
     // Scale up to 90%
     [UIView animateWithDuration:duration animations: ^{
       toView.transform = CGAffineTransformMakeScale(0.9, 0.9);
@@ -47,7 +47,7 @@
     
     // Scale down to 0
     [UIView animateWithDuration:duration animations: ^{
-      fromView.transform = CGAffineTransformMakeScale(0.0, 0.0);
+      fromView.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
       toView.alpha = 1.0;
     } completion: ^(BOOL finished) {
       [fromView removeFromSuperview];

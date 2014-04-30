@@ -1064,7 +1064,7 @@
   self.categoriesTableViewController.transitioningDelegate = self;
   self.categoriesTableViewController.modalPresentationStyle = UIModalPresentationCustom;
   
-  [self presentViewController:self.categoriesTableViewController animated:YES completion:nil];
+  [self.view.window.rootViewController presentViewController:self.categoriesTableViewController animated:YES completion:nil];
   
   [Utilities primeTitlebarWithText:@"SECTIONS"
                       shareEnabled:NO
@@ -1078,7 +1078,7 @@
                          container:nil];
   [[[Utilities del] globalTitleBar] applyKpccLogo];
 
-  [self dismissViewControllerAnimated:YES completion:^{
+  [self.view.window.rootViewController dismissViewControllerAnimated:YES completion:^{
     [self.categoriesTableViewController setTransitioningDelegate:nil];
   }];
 }
