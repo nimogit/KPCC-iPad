@@ -78,10 +78,5 @@
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
             <nil key="simulatedDestinationMetrics"/>
         </tableViewController>
-        <customObject id="E6q-TM-xgD" customClass="SCPRNewsSectionNavigationControllerDelegate">
-            <connections>
-                <outlet property="deluxeViewController" destination="-1" id="fGT-1y-fc5"/>
-            </connections>
-        </customObject>
     </objects>
 </document>

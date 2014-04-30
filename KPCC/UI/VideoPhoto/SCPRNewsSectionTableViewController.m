@@ -8,7 +8,6 @@
 
 #import "SCPRNewsSectionTableViewController.h"
 #import "SCPRDeluxeNewsViewController.h"
-#import "SCPRNewsSectionNavigationControllerDelegate.h"
 
 @interface SCPRNewsSectionTableViewController ()
 
@@ -23,10 +22,10 @@
 
 }
 
-- (void) viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
+- (void) viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
 
-  self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 40.0, self.view.frame.size.width, self.view.frame.size.height);
+  self.tableView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 40.0, self.view.frame.size.width, self.view.frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning

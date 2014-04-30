@@ -17,10 +17,14 @@
 #import "SCPREditionMoleculeViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRBlankCell.h"
+#import "SCPRControllerOverlayAnimator.h"
 
 #define kPreemptivePrimeThreshold 25
 
 @interface SCPRDeluxeNewsViewController ()
+
+@property (strong, nonatomic) SCPRControllerOverlayAnimator* animator;
+
 @end
 
 @implementation SCPRDeluxeNewsViewController
@@ -1052,7 +1056,14 @@
 #pragma mark - SCPRTitlebarDelegate
 - (void)openSectionsTapped {
   NSLog(@"sections tapped!");
-  self.categoriesTableViewController.view.alpha = 1;
+  /*if (!self.categoriesTableViewController) {
+    self.categoriesTableViewController = [[SCPRNewsSectionTableViewController alloc] init];
+  }*/
+  
+  self.categoriesTableViewController.view.alpha = 0.85;
+  self.categoriesTableViewController.transitioningDelegate = self;
+  self.categoriesTableViewController.modalPresentationStyle = UIModalPresentationCustom;
+  
   [self presentViewController:self.categoriesTableViewController animated:YES completion:nil];
   
   [Utilities primeTitlebarWithText:@"SECTIONS"
@@ -1061,22 +1072,38 @@
 }
 
 - (void)closeSectionsTapped {
-  //[self dismissViewControllerAnimated:YES completion:nil];
-  
-  [UIView animateWithDuration:1.0f animations:^{
-    [Utilities primeTitlebarWithText:@""
-                        shareEnabled:NO
-                           container:nil];
-    [[[Utilities del] globalTitleBar] applyKpccLogo];
 
-    self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
-    self.categoriesTableViewController.view.alpha = 0;
-  } completion:^(BOOL finished) {
-    //self.view.transform = CGAffineTransformIdentity;
-    //[transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-    [self.categoriesTableViewController dismissViewControllerAnimated:NO completion:nil];
-    
+  [Utilities primeTitlebarWithText:@""
+                      shareEnabled:NO
+                         container:nil];
+  [[[Utilities del] globalTitleBar] applyKpccLogo];
+
+  [self dismissViewControllerAnimated:YES completion:^{
+    [self.categoriesTableViewController setTransitioningDelegate:nil];
   }];
+}
+
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                  presentingController:(UIViewController *)presenting
+                                                                      sourceController:(UIViewController *)source
+{
+  
+  id<UIViewControllerAnimatedTransitioning> animationController;
+
+  SCPRControllerOverlayAnimator *animate = [[SCPRControllerOverlayAnimator alloc] init];
+  animate.appearing = YES;
+  animationController = animate;
+  return animationController;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+  id<UIViewControllerAnimatedTransitioning> animationController;
+  SCPRControllerOverlayAnimator *animate = [[SCPRControllerOverlayAnimator alloc] init];
+  animate.appearing = NO;
+  animationController = animate;
+  return animationController;
 }
 
 #pragma mark - SCPRNewsSectionDelegate

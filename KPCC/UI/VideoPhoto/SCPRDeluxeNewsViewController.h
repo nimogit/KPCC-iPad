@@ -19,7 +19,7 @@
 typedef void (^FetchContentCallback)(BOOL);
 
 
-@interface SCPRDeluxeNewsViewController : UIViewController<ContentProcessor,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,Rotatable,AnimationDelegate, SCPRTitlebarDelegate, SCPRNewsSectionDelegate>
+@interface SCPRDeluxeNewsViewController : UIViewController<ContentProcessor,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,Rotatable,AnimationDelegate,SCPRTitlebarDelegate,SCPRNewsSectionDelegate,UIViewControllerTransitioningDelegate>
 
 // UI
 @property (nonatomic,strong) IBOutlet UITableView *photoVideoTable;

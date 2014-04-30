@@ -1796,8 +1796,6 @@
 		76658B6318E2141C00026176 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5B18E2141C00026176 /* README.md */; };
 		76658B6418E2141C00026176 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5C18E2141C00026176 /* release_notes.md */; };
 		76658B6518E2141C00026176 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5C18E2141C00026176 /* release_notes.md */; };
-		76709F3B19106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F3A19106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.m */; };
-		76709F3C19106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F3A19106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.m */; };
 		76709F3F19106DD200E0574C /* SCPRControllerOverlayAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */; };
 		76709F4019106DD200E0574C /* SCPRControllerOverlayAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */; };
 		76A3087318B696630065D4B1 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 76A3087018B696630065D4B1 /* iRate.bundle */; };
@@ -2940,8 +2938,6 @@
 		76658B5D18E2141C00026176 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
 		76658B5E18E2141C00026176 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		76658B5F18E2141C00026176 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
-		76709F3919106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRNewsSectionNavigationControllerDelegate.h; path = UI/VideoPhoto/SCPRNewsSectionNavigationControllerDelegate.h; sourceTree = "<group>"; };
-		76709F3A19106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRNewsSectionNavigationControllerDelegate.m; path = UI/VideoPhoto/SCPRNewsSectionNavigationControllerDelegate.m; sourceTree = "<group>"; };
 		76709F3D19106DD200E0574C /* SCPRControllerOverlayAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRControllerOverlayAnimator.h; path = Helpers/SCPRControllerOverlayAnimator.h; sourceTree = "<group>"; };
 		76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRControllerOverlayAnimator.m; path = Helpers/SCPRControllerOverlayAnimator.m; sourceTree = "<group>"; };
 		76A3087018B696630065D4B1 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
@@ -3092,8 +3088,6 @@
 				763B6207190EDC370021C530 /* SCPRNewsSectionTableViewController.h */,
 				763B6208190EDC370021C530 /* SCPRNewsSectionTableViewController.m */,
 				763B6209190EDC370021C530 /* SCPRNewsSectionTableViewController.xib */,
-				76709F3919106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.h */,
-				76709F3A19106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.m */,
 			);
 			name = AV/News/Events;
 			sourceTree = "<group>";
@@ -6543,7 +6537,6 @@
 				76A3089118BD5ABA0065D4B1 /* AlarmManager.m in Sources */,
 				25A70C5117E3E87C0024E654 /* SCPROnboardingStep6ViewController.m in Sources */,
 				28036A9C1718A344007DBDE2 /* Keyword.m in Sources */,
-				76709F3C19106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.m in Sources */,
 				25A6774E18285EF600565925 /* SCPRIntroductionViewController.m in Sources */,
 				28036A9D1718A344007DBDE2 /* Segment.m in Sources */,
 				28036A9E1718A344007DBDE2 /* SCPRVolumeWidgetViewController.m in Sources */,
@@ -6702,7 +6695,6 @@
 				76A3089018BD5ABA0065D4B1 /* AlarmManager.m in Sources */,
 				28DF6D35171DCAF7002F0F99 /* SCPRNewsPageContainerController.m in Sources */,
 				28A0CF0F171E007300776579 /* SCPRTitlebarViewController.m in Sources */,
-				76709F3B19106D2400E0574C /* SCPRNewsSectionNavigationControllerDelegate.m in Sources */,
 				28A0CF20171E080800776579 /* SCPRDrawerViewController.m in Sources */,
 				28A0CF26171E090500776579 /* SCPRDrawerCell.m in Sources */,
 				2531BEC4172093BE001215C6 /* SCPRTopicSchema.m in Sources */,
