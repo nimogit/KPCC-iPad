@@ -1054,18 +1054,28 @@
   NSLog(@"sections tapped!");
   self.categoriesTableViewController.view.alpha = 1;
   [self presentViewController:self.categoriesTableViewController animated:YES completion:nil];
+  
+  [Utilities primeTitlebarWithText:@"SECTIONS"
+                      shareEnabled:NO
+                         container:nil];
 }
 
 - (void)closeSectionsTapped {
   //[self dismissViewControllerAnimated:YES completion:nil];
   
   [UIView animateWithDuration:1.0f animations:^{
+    [Utilities primeTitlebarWithText:@""
+                        shareEnabled:NO
+                           container:nil];
+    [[[Utilities del] globalTitleBar] applyKpccLogo];
+
     self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
     self.categoriesTableViewController.view.alpha = 0;
   } completion:^(BOOL finished) {
     //self.view.transform = CGAffineTransformIdentity;
     //[transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     [self.categoriesTableViewController dismissViewControllerAnimated:NO completion:nil];
+    
   }];
 }
 
