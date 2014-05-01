@@ -1063,6 +1063,8 @@
   self.categoriesTableViewController.view.alpha = 0.85;
   self.categoriesTableViewController.transitioningDelegate = self;
   self.categoriesTableViewController.modalPresentationStyle = UIModalPresentationCustom;
+
+  //[[Utilities del] cloakUIWithCustomView:self.categoriesTableViewController dismissible:YES push:40.0];
   
   [self.view.window.rootViewController presentViewController:self.categoriesTableViewController animated:YES completion:nil];
   

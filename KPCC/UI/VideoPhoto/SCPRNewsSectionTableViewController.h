@@ -15,7 +15,7 @@
 - (void)sectionSelected;
 @end
 
-@interface SCPRNewsSectionTableViewController : UITableViewController<Rotatable>
+@interface SCPRNewsSectionTableViewController : UITableViewController<Rotatable, Cloakable>
 
 @property (nonatomic,strong) NSMutableArray *sections;
 @end

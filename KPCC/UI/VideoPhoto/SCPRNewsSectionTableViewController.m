@@ -19,13 +19,15 @@
   [super viewDidLoad];
 
   self.sections = [[NSMutableArray alloc] initWithArray:@[@"Home", @"Politics", @"Business", @"Crime & Justice", @"Health", @"Education", @"Arts & Entertainment", @"Emerging Communities", @"Local", @"US & World", @"Science"]];
+  
+  self.tableView.scrollEnabled = NO;
 
 }
 
 - (void) viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  self.tableView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 40.0, self.view.frame.size.width, self.view.frame.size.height);
+  self.tableView.frame = CGRectMake(self.view.frame.origin.x + 36.0 , self.view.frame.origin.y + 40.0, self.view.frame.size.width, self.view.frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,7 +59,9 @@
     cell = [[UITableViewCell alloc]init];
   }
   cell.backgroundColor = [UIColor clearColor];
+  cell.textLabel.textColor = [UIColor whiteColor];
   cell.textLabel.text = [self.sections objectAtIndex:indexPath.row];
+  cell.textLabel.font = [[DesignManager shared] latoLight:29.0f];
   return cell;
 }
 
@@ -83,5 +87,13 @@
   
 }
 
+
+# pragma mark - Cloakable
+- (void)deactivate {
+  [Utilities primeTitlebarWithText:@"" shareEnabled:NO container:nil];
+  [[[Utilities del] globalTitleBar] applyKpccLogo];
+  [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
+  [[[Utilities del] globalTitleBar] applyCategoriesButton];
+}
 
 @end
