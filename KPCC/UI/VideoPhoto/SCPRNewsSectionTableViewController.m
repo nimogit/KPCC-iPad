@@ -25,11 +25,32 @@
   self.tableView.sizeToFit;
 }
 
-- (void) viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
   self.tableView.frame = CGRectMake(self.tableView.frame.origin.x + 36.0, self.tableView.frame.origin.y + 40.0, self.tableView.frame.size.width, self.tableView.frame.size.height);
+}
 
+- (void)viewDidAppear:(BOOL)animated  {
+  [super viewDidAppear:animated];
+
+  [Utilities primeTitlebarWithText:@"SECTIONS"
+                      shareEnabled:NO
+                         container:nil];
+  [[[Utilities del] globalTitleBar] eraseCategoriesButton];
+  [[[Utilities del] globalTitleBar] applyCloseCategoriesButton];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  
+  [Utilities primeTitlebarWithText:@""
+                      shareEnabled:NO
+                         container:nil];
+
+  [[[Utilities del] globalTitleBar] applyKpccLogo];
+  [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
+  [[[Utilities del] globalTitleBar] applyCategoriesButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,15 +61,13 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     // Return the number of sections.
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return [self.sections count];
 }
@@ -74,6 +93,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  
+  // Send Category slug to DeluxeNewsViewController
+  [self.sectionsDelegate sectionSelected:[self.sections objectAtIndex:indexPath.row]];
+  
   [self dismissViewControllerAnimated:YES completion:nil];
   [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
   [[[Utilities del] globalTitleBar] applyCategoriesButton];

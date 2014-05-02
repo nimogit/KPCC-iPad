@@ -28,7 +28,7 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) IBOutlet UIView *spinnerFooter;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *loadingMoreNewsSpinner;
 @property (nonatomic,strong) IBOutlet UITableView *categoriesTableView;
-@property (nonatomic,strong) IBOutlet UITableViewController *categoriesTableViewController;
+@property (nonatomic,strong) IBOutlet SCPRNewsSectionTableViewController *categoriesTableViewController;
 
 // Article, cell, social, short list data stores
 @property (nonatomic,strong) NSArray *posts;

@@ -12,10 +12,12 @@
 
 @protocol SCPRNewsSectionDelegate <NSObject>
 @optional
-- (void)sectionSelected;
+- (void)sectionSelected:(NSString *)sectionSlug;
 @end
 
 @interface SCPRNewsSectionTableViewController : UITableViewController<Rotatable, Cloakable>
 
+@property (nonatomic,weak) id<SCPRNewsSectionDelegate> sectionsDelegate;
 @property (nonatomic,strong) NSMutableArray *sections;
+
 @end

@@ -1060,31 +1060,24 @@
     self.categoriesTableViewController = [[SCPRNewsSectionTableViewController alloc] init];
   }*/
   
+  self.categoriesTableViewController.sectionsDelegate = self;
   self.categoriesTableViewController.view.alpha = 0.85;
-  self.categoriesTableViewController.transitioningDelegate = self;
+  if ([Utilities isIOS7]) {
+    self.categoriesTableViewController.transitioningDelegate = self;
+  }
   self.categoriesTableViewController.modalPresentationStyle = UIModalPresentationCustom;
-
-  //[[Utilities del] cloakUIWithCustomView:self.categoriesTableViewController dismissible:YES push:40.0];
   
   [self.view.window.rootViewController presentViewController:self.categoriesTableViewController animated:YES completion:nil];
-  
-  [Utilities primeTitlebarWithText:@"SECTIONS"
-                      shareEnabled:NO
-                         container:nil];
 }
 
 - (void)closeSectionsTapped {
-
-  [Utilities primeTitlebarWithText:@""
-                      shareEnabled:NO
-                         container:nil];
-  [[[Utilities del] globalTitleBar] applyKpccLogo];
-
   [self.view.window.rootViewController dismissViewControllerAnimated:YES completion:^{
     [self.categoriesTableViewController setTransitioningDelegate:nil];
   }];
 }
 
+
+# pragma mark - UIViewControllerTransitioningDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
                                                                   presentingController:(UIViewController *)presenting
@@ -1109,8 +1102,8 @@
 }
 
 #pragma mark - SCPRNewsSectionDelegate
-- (void)sectionSelected {
-  
+- (void)sectionSelected:(NSString *)sectionSlug {
+  NSLog(@"sectionSelected %@", sectionSlug);
 }
 
 
