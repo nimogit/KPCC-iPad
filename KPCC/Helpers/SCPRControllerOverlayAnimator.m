@@ -3,7 +3,7 @@
 //  KPCC
 //
 //  Created by John Meeker on 4/29/14.
-//  Copyright (c) 2014 scpr. All rights reserved.
+//  Copyright (c) 2014 ;. All rights reserved.
 //
 
 #import "SCPRControllerOverlayAnimator.h"
@@ -18,12 +18,18 @@
   UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   UIView *fromView = fromVC.view;
+  
   UIView *toView = toVC.view;
   UIView *containerView = [transitionContext containerView];
   CGFloat duration = [self transitionDuration:transitionContext];
   
   // Presenting
   if (self.appearing) {
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:containerView.frame];
+    blurView.blurRadius = 5;
+    blurView.tintColor = [UIColor clearColor];
+    [containerView addSubview:blurView];
+    
     fromView.userInteractionEnabled = NO;
     
     toView.layer.cornerRadius = 5;
@@ -32,11 +38,13 @@
     // Set initial scale to zero
     toView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
     [containerView addSubview:toView];
+    
 
     // Scale up to 90%
     [UIView animateWithDuration:duration animations: ^{
       toView.transform = CGAffineTransformMakeScale(0.9, 0.9);
       fromView.alpha = 0.5;
+      blurView.blurRadius = 40;
     } completion: ^(BOOL finished) {
       [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];

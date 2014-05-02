@@ -1798,6 +1798,9 @@
 		76658B6518E2141C00026176 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5C18E2141C00026176 /* release_notes.md */; };
 		76709F3F19106DD200E0574C /* SCPRControllerOverlayAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */; };
 		76709F4019106DD200E0574C /* SCPRControllerOverlayAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */; };
+		76709F44191318FA00E0574C /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F43191318FA00E0574C /* FXBlurView.m */; };
+		76709F45191318FA00E0574C /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F43191318FA00E0574C /* FXBlurView.m */; };
+		76709F4719131A6600E0574C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76709F4619131A6600E0574C /* Accelerate.framework */; };
 		76A3087318B696630065D4B1 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 76A3087018B696630065D4B1 /* iRate.bundle */; };
 		76A3087418B696630065D4B1 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3087218B696630065D4B1 /* iRate.m */; };
 		76A3088018BBDFD00065D4B1 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FA086D1821D758008BADF2 /* libGoogleAdMobAds.a */; };
@@ -2940,6 +2943,9 @@
 		76658B5F18E2141C00026176 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		76709F3D19106DD200E0574C /* SCPRControllerOverlayAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRControllerOverlayAnimator.h; path = Helpers/SCPRControllerOverlayAnimator.h; sourceTree = "<group>"; };
 		76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRControllerOverlayAnimator.m; path = Helpers/SCPRControllerOverlayAnimator.m; sourceTree = "<group>"; };
+		76709F42191318FA00E0574C /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
+		76709F43191318FA00E0574C /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		76709F4619131A6600E0574C /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		76A3087018B696630065D4B1 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		76A3087118B696630065D4B1 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		76A3087218B696630065D4B1 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -2976,6 +2982,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76709F4719131A6600E0574C /* Accelerate.framework in Frameworks */,
 				28036AA81718A344007DBDE2 /* libz.dylib in Frameworks */,
 				2594146317E7DD52006DC6A6 /* StoreKit.framework in Frameworks */,
 				76658B6118E2141C00026176 /* libTestFlight.a in Frameworks */,
@@ -4434,6 +4441,7 @@
 		28683CB9170B9BBD00346B6E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76709F4619131A6600E0574C /* Accelerate.framework */,
 				76A3087E18BBDE400065D4B1 /* libFlurry_4.3.2.a */,
 				2594146217E7DD52006DC6A6 /* StoreKit.framework */,
 				25332B8F1760FF8400ADAB3B /* CoreLocation.framework */,
@@ -4797,6 +4805,7 @@
 		28C9E776170D064200ED18FB /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				76709F41191318FA00E0574C /* FXBlurView */,
 				76658B5918E2141C00026176 /* TestFlight */,
 				76658AC618E1F43700026176 /* Flurry */,
 				76A3086F18B696630065D4B1 /* iRate */,
@@ -4892,6 +4901,15 @@
 			);
 			name = TestFlight;
 			path = ThirdParty/TestFlight;
+			sourceTree = "<group>";
+		};
+		76709F41191318FA00E0574C /* FXBlurView */ = {
+			isa = PBXGroup;
+			children = (
+				76709F42191318FA00E0574C /* FXBlurView.h */,
+				76709F43191318FA00E0574C /* FXBlurView.m */,
+			);
+			path = FXBlurView;
 			sourceTree = "<group>";
 		};
 		76A3086F18B696630065D4B1 /* iRate */ = {
@@ -6514,6 +6532,7 @@
 				28036A851718A344007DBDE2 /* Utilities.m in Sources */,
 				28036A861718A344007DBDE2 /* NSDate+Helper.m in Sources */,
 				28036A871718A344007DBDE2 /* NSURLRequest+IgnoreSSL.m in Sources */,
+				76709F45191318FA00E0574C /* FXBlurView.m in Sources */,
 				28036A881718A344007DBDE2 /* Reachability.m in Sources */,
 				28036A891718A344007DBDE2 /* NSObject+SBJson.m in Sources */,
 				28036A8A1718A344007DBDE2 /* SBJsonParser.m in Sources */,
@@ -6672,6 +6691,7 @@
 				28C9E7A1170D065800ED18FB /* SBJsonStreamWriterAccumulator.m in Sources */,
 				28C9E7A2170D065800ED18FB /* SBJsonStreamWriterState.m in Sources */,
 				28C9E7A3170D065800ED18FB /* SBJsonTokeniser.m in Sources */,
+				76709F44191318FA00E0574C /* FXBlurView.m in Sources */,
 				28C9E7A4170D065800ED18FB /* SBJsonUTF8Stream.m in Sources */,
 				25A70C3517E288020024E654 /* SCPROnboardingStep4ViewController.m in Sources */,
 				28C9E7A5170D065800ED18FB /* SBJsonWriter.m in Sources */,
