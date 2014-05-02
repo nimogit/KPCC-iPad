@@ -25,34 +25,39 @@
   
   FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:containerView.frame];
   blurView.blurRadius = 5;
-  blurView.tintColor = [UIColor grayColor];
-  //blurView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+  blurView.tintColor = [UIColor blueColor];
   
+  UIView *darkView = [[UIView alloc]initWithFrame:blurView.frame];
+  darkView.backgroundColor = [UIColor darkGrayColor];
   
   // Presenting
   if (self.appearing) {
     
-    //blurView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
     blurView.alpha = 0.0;
-   [containerView addSubview:blurView];
+    darkView.alpha = 0.0;
+    
+    [containerView addSubview:blurView];
+    [containerView addSubview:darkView];
     
     fromView.userInteractionEnabled = NO;
     
     toView.layer.cornerRadius = 5;
     toView.layer.masksToBounds = YES;
     
-    // Set initial scale to zero
-    toView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+    // Set initial scale to 1.5
+    toView.transform = CGAffineTransformMakeScale(1.5, 1.5);
     [containerView addSubview:toView];
     
 
-    // Scale up to 90%
+    // Scale down to 90%
     [UIView animateWithDuration:duration animations: ^{
       toView.transform = CGAffineTransformMakeScale(0.9, 0.9);
-      //blurView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-      fromView.alpha = 0.5;
+
+      darkView.alpha = 0.8;
+      
       blurView.alpha = 1.0;
       blurView.blurRadius = 30;
+
     } completion: ^(BOOL finished) {
       [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];
@@ -60,22 +65,47 @@
   // Dismissing
   else {
     NSLog(@"Dismissing");
-    
     NSLog(@"fromViews subviews %@", fromView.subviews);
+    NSLog(@"toViews subviews %@", toView.subviews);
+    NSLog(@"containerView subviews %@", containerView.subviews);
+    
+    // Locate the FXBlurView and darkview within the containerView subviews if possible
+    FXBlurView *blurViewToBeRemoved;
+    UIView *darkViewToBeRemoved;
+    for (UIView *subview in containerView.subviews) {
+      if ([subview isKindOfClass:[FXBlurView class]]) {
+        blurViewToBeRemoved = (FXBlurView *) subview;
+      }
+      
+      if (subview.backgroundColor == [UIColor darkGrayColor]) {
+        darkViewToBeRemoved = subview;
+      }
+    }
     
     // Scale down to 0
     [UIView animateWithDuration:duration animations: ^{
       fromView.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
-
       fromView.alpha = 0.0;
       
-      blurView.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
-      blurView.blurRadius = 0;
-      blurView.alpha = 0.0;
-      toView.alpha = 1.0;
+      // Fade out blur view
+      if (blurViewToBeRemoved) {
+        blurViewToBeRemoved.alpha = 0.0;
+      }
+
+      // Clear out dark background view
+      if (darkViewToBeRemoved) {
+        [darkViewToBeRemoved setBackgroundColor:[UIColor clearColor]];
+      }
+
     } completion: ^(BOOL finished) {
       [fromView removeFromSuperview];
-      //[blurView removeFromSuperview];
+      if (blurViewToBeRemoved) {
+        [blurViewToBeRemoved removeFromSuperview];
+      }
+      if (darkViewToBeRemoved) {
+        [darkViewToBeRemoved removeFromSuperview];
+      }
+      
       toView.userInteractionEnabled = YES;
       [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];

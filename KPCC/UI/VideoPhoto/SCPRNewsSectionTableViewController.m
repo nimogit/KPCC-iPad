@@ -21,13 +21,15 @@
   self.sections = [[NSMutableArray alloc] initWithArray:@[@"Home", @"Politics", @"Business", @"Crime & Justice", @"Health", @"Education", @"Arts & Entertainment", @"Emerging Communities", @"Local", @"US & World", @"Science"]];
   
   self.tableView.scrollEnabled = NO;
-
+  self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width - 72.0, self.tableView.frame.size.height);
+  self.tableView.sizeToFit;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  self.tableView.frame = CGRectMake(self.view.frame.origin.x + 36.0 , self.view.frame.origin.y + 40.0, self.view.frame.size.width, self.view.frame.size.height);
+  self.tableView.frame = CGRectMake(self.tableView.frame.origin.x + 36.0, self.tableView.frame.origin.y + 40.0, self.tableView.frame.size.width, self.tableView.frame.size.height);
+
 }
 
 - (void)didReceiveMemoryWarning
