@@ -23,12 +23,18 @@
   UIView *containerView = [transitionContext containerView];
   CGFloat duration = [self transitionDuration:transitionContext];
   
+  FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:containerView.frame];
+  blurView.blurRadius = 5;
+  blurView.tintColor = [UIColor grayColor];
+  //blurView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+  
+  
   // Presenting
   if (self.appearing) {
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:containerView.frame];
-    blurView.blurRadius = 5;
-    blurView.tintColor = [UIColor clearColor];
-    [containerView addSubview:blurView];
+    
+    //blurView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+    blurView.alpha = 0.0;
+   [containerView addSubview:blurView];
     
     fromView.userInteractionEnabled = NO;
     
@@ -43,8 +49,10 @@
     // Scale up to 90%
     [UIView animateWithDuration:duration animations: ^{
       toView.transform = CGAffineTransformMakeScale(0.9, 0.9);
+      //blurView.transform = CGAffineTransformMakeScale(1.0, 1.0);
       fromView.alpha = 0.5;
-      blurView.blurRadius = 40;
+      blurView.alpha = 1.0;
+      blurView.blurRadius = 30;
     } completion: ^(BOOL finished) {
       [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];
@@ -53,12 +61,21 @@
   else {
     NSLog(@"Dismissing");
     
+    NSLog(@"fromViews subviews %@", fromView.subviews);
+    
     // Scale down to 0
     [UIView animateWithDuration:duration animations: ^{
       fromView.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
+
+      fromView.alpha = 0.0;
+      
+      blurView.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
+      blurView.blurRadius = 0;
+      blurView.alpha = 0.0;
       toView.alpha = 1.0;
     } completion: ^(BOOL finished) {
       [fromView removeFromSuperview];
+      //[blurView removeFromSuperview];
       toView.userInteractionEnabled = YES;
       [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];
