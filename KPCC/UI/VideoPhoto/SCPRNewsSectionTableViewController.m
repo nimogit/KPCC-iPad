@@ -20,6 +20,9 @@
 
   self.sections = [Utilities loadJson:@"categories"];
   
+  CGFloat width = [Utilities isLandscape] ? 1024.0 : 768.0;
+  self.view.frame = CGRectMake(0.0, 20.0, width, ([Utilities isLandscape] ? 768.0 : 1024.0) - 20.0);
+
   //self.tableView.scrollEnabled = NO;
   self.tableView.showsVerticalScrollIndicator = NO;
   self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width - 72.0, self.tableView.frame.size.height);
