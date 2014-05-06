@@ -18,9 +18,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.sections = [[NSMutableArray alloc] initWithArray:@[@"Home", @"Politics", @"Business", @"Crime & Justice", @"Health", @"Education", @"Arts & Entertainment", @"Emerging Communities", @"Local", @"US & World", @"Science"]];
+  self.sections = [Utilities loadJson:@"categories"];
   
-  self.tableView.scrollEnabled = NO;
+  //self.tableView.scrollEnabled = NO;
+  self.tableView.showsVerticalScrollIndicator = NO;
   self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width - 72.0, self.tableView.frame.size.height);
   self.tableView.sizeToFit;
 }
@@ -81,7 +82,7 @@
   }
   cell.backgroundColor = [UIColor clearColor];
   cell.textLabel.textColor = [UIColor whiteColor];
-  cell.textLabel.text = [self.sections objectAtIndex:indexPath.row];
+  cell.textLabel.text = [[self.sections objectAtIndex:indexPath.row] objectForKey:@"title"];
   cell.textLabel.font = [[DesignManager shared] latoLight:29.0f];
   return cell;
 }
