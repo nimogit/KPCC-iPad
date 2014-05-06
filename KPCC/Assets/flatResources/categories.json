@@ -1,0 +1,107 @@
+ [
+  {
+  "id": 1,
+  "slug": "local",
+  "title": "Local",
+  "public_url": "http://www.scpr.org/local",
+  "url": "http://www.scpr.org/local"
+  },
+  {
+  "id": 2,
+  "slug": "california",
+  "title": "California",
+  "public_url": "http://www.scpr.org/california",
+  "url": "http://www.scpr.org/california"
+  },
+  {
+  "id": 3,
+  "slug": "world",
+  "title": "U.S. / World",
+  "public_url": "http://www.scpr.org/world",
+  "url": "http://www.scpr.org/world"
+  },
+  {
+  "id": 4,
+  "slug": "environment",
+  "title": "Environment / Science",
+  "public_url": "http://www.scpr.org/environment",
+  "url": "http://www.scpr.org/environment"
+  },
+  {
+  "id": 5,
+  "slug": "politics",
+  "title": "Politics & Government",
+  "public_url": "http://www.scpr.org/politics",
+  "url": "http://www.scpr.org/politics"
+  },
+  {
+  "id": 6,
+  "slug": "money",
+  "title": "Business",
+  "public_url": "http://www.scpr.org/money",
+  "url": "http://www.scpr.org/money"
+  },
+  {
+  "id": 7,
+  "slug": "crime",
+  "title": "Crime",
+  "public_url": "http://www.scpr.org/crime",
+  "url": "http://www.scpr.org/crime"
+  },
+  {
+  "id": 8,
+  "slug": "education",
+  "title": "Education",
+  "public_url": "http://www.scpr.org/education",
+  "url": "http://www.scpr.org/education"
+  },
+  {
+  "id": 9,
+  "slug": "health",
+  "title": "Health",
+  "public_url": "http://www.scpr.org/health",
+  "url": "http://www.scpr.org/health"
+  },
+  {
+  "id": 10,
+  "slug": "culture",
+  "title": "Culture",
+  "public_url": "http://www.scpr.org/culture",
+  "url": "http://www.scpr.org/culture"
+  },
+  {
+  "id": 11,
+  "slug": "books",
+  "title": "Books",
+  "public_url": "http://www.scpr.org/books",
+  "url": "http://www.scpr.org/books"
+  },
+  {
+  "id": 12,
+  "slug": "film",
+  "title": "Film / Television",
+  "public_url": "http://www.scpr.org/film",
+  "url": "http://www.scpr.org/film"
+  },
+  {
+  "id": 13,
+  "slug": "music",
+  "title": "Music",
+  "public_url": "http://www.scpr.org/music",
+  "url": "http://www.scpr.org/music"
+  },
+  {
+  "id": 14,
+  "slug": "food",
+  "title": "Food",
+  "public_url": "http://www.scpr.org/food",
+  "url": "http://www.scpr.org/food"
+  },
+  {
+  "id": 15,
+  "slug": "arts",
+  "title": "Arts",
+  "public_url": "http://www.scpr.org/arts",
+  "url": "http://www.scpr.org/arts"
+  }
+  ]
