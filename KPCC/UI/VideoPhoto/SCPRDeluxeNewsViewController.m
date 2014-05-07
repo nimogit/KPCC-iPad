@@ -1063,11 +1063,11 @@
   // Init blur view and view to darken the news table in the background.
   self.categoriesBlurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
   self.categoriesBlurView.blurRadius = 5;
-  self.categoriesBlurView.tintColor = [UIColor darkGrayColor];
+  self.categoriesBlurView.tintColor = [UIColor clearColor];
   self.categoriesBlurView.dynamic = NO;
   
   self.categoriesDarkView = [[UIView alloc] initWithFrame:self.categoriesBlurView.frame];
-  self.categoriesDarkView.backgroundColor = [UIColor darkGrayColor];
+  self.categoriesDarkView.backgroundColor = [UIColor blackColor];
   
   self.categoriesBlurView.alpha = 0.0;
   self.categoriesDarkView.alpha = 0.0;
@@ -1094,11 +1094,9 @@
     self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
     
     // Fade in the dark bg view and blur view
-    self.categoriesDarkView.alpha = 0.8;
+    self.categoriesDarkView.alpha = 0.7;
     self.categoriesBlurView.alpha = 1.0;
-    self.categoriesBlurView.blurRadius = 25;
-  } completion: ^(BOOL finished) {
-    
+    self.categoriesBlurView.blurRadius = 30;
   }];
 }
 
@@ -1292,7 +1290,7 @@
           self.categoriesBlurView.alpha = 1.0;
         }
         if ([self.view.subviews containsObject: self.categoriesDarkView]) {
-          self.categoriesDarkView.alpha = 0.8;
+          self.categoriesDarkView.alpha = 0.7;
         }
         if ([self.view.subviews containsObject: self.categoriesTableViewController.view]) {
           self.categoriesTableViewController.view.alpha = 1.0;
