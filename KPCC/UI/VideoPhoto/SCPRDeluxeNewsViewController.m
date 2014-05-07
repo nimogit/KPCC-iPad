@@ -1057,6 +1057,10 @@
 - (void)openSectionsTapped {
   NSLog(@"sections tapped!");
   
+  [Utilities primeTitlebarWithText:@"SECTIONS"
+                      shareEnabled:NO
+                         container:nil];
+  
   // Force scrolling on the news table to hard stop.
   CGPoint offset = self.photoVideoTable.contentOffset;
   [self.photoVideoTable setContentOffset:offset animated:NO];
@@ -1078,8 +1082,8 @@
   self.categoriesBlurView.alpha = 0.0;
   self.categoriesDarkView.alpha = 0.0;
   
-  [self.view addSubview:self.categoriesBlurView];
-  [self.view addSubview:self.categoriesDarkView];
+  [[[Utilities del] viewController].view addSubview:self.categoriesBlurView];
+  [[[Utilities del] viewController].view addSubview:self.categoriesDarkView];
   
   self.photoVideoTable.userInteractionEnabled = NO;
   
@@ -1088,7 +1092,7 @@
   
   // Set initial scale to 1.5
   self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(1.5, 1.5);
-  [self.view addSubview:self.categoriesTableViewController.view];
+  [[[Utilities del] viewController].view addSubview:self.categoriesTableViewController.view];
   
   
   // Scale down to 90%

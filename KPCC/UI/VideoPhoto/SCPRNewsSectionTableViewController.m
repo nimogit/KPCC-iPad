@@ -22,19 +22,6 @@
   
   //CGFloat width = [Utilities isLandscape] ? 1024.0 : 768.0;
   //self.view.frame = CGRectMake(0.0, 20.0, width, ([Utilities isLandscape] ? 768.0 : 1024.0) - 20.0);
-  
-  if ([Utilities isLandscape]) {
-    NSLog(@"CURR in landscape");
-    
-    //[self.view setNeedsLayout];
-    //[self.tableView setNeedsLayout];
-    
-    //[self.sectionsDelegate performSelector:@selector(presentViewController:animated:completion:) withObject:self];
-    
-    //self.tableView.transform = CGAffineTransformMakeRotation([Utilities degreesToRadians:90.0]);
-    //[self shouldAutorotateToInterfaceOrientation:UIInterfaceOrientationLandscapeLeft];
-     //[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft  animated:NO];
-  }
 
   
   //self.tableView.scrollEnabled = NO;
@@ -67,8 +54,6 @@
   NSLog(@"viewWillAppear news section");
   
   
-  
-  
   [self.view convertRect:self.tableView.frame fromView:self.view];
   
   self.tableView.frame = CGRectMake(self.tableView.frame.origin.x + 36.0, self.tableView.frame.origin.y + 40.0, self.tableView.frame.size.width, self.tableView.frame.size.height);
@@ -88,16 +73,6 @@
 
 - (void) viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  
-  /*[Utilities primeTitlebarWithText:@""
-                      shareEnabled:NO
-                         container:nil];
-
-  [[[Utilities del] globalTitleBar] applyKpccLogo];
-  [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
-  [[[Utilities del] globalTitleBar] applyCategoriesButton];*/
-  
-  
   
 }
 
@@ -144,10 +119,6 @@
   
   // Send Category slug to DeluxeNewsViewController
   [self.sectionsDelegate sectionSelected:[self.sections objectAtIndex:indexPath.row]];
-  
-  //[self dismissViewControllerAnimated:YES completion:nil];
-  //[[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
-  //[[[Utilities del] globalTitleBar] applyCategoriesButton];
 }
 
 
@@ -160,13 +131,5 @@
   NSLog(@"handleRotationPOST");
 }
 
-
-# pragma mark - Cloakable
-- (void)deactivate {
-  [Utilities primeTitlebarWithText:@"" shareEnabled:NO container:nil];
-  [[[Utilities del] globalTitleBar] applyKpccLogo];
-  [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
-  [[[Utilities del] globalTitleBar] applyCategoriesButton];
-}
 
 @end
