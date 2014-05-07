@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "global.h"
-#import "SCPRViewController.h"
 #import "FXBlurView.h"
 
 @protocol SCPRNewsSectionDelegate <NSObject>

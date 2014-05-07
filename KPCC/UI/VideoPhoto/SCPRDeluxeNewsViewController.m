@@ -1284,7 +1284,7 @@
                                                  [Utilities isLandscape] ? 1024.0 : 768.0,
                                                  [Utilities isLandscape] ? 768.0 : 1024.0);
       
-      // Unfade the categories table and associated views if they are present
+      // Unfade the Sections table and associated views if they are present
       [UIView animateWithDuration:0.12 animations:^{
         if ([self.view.subviews containsObject:self.categoriesBlurView]) {
           self.categoriesBlurView.alpha = 1.0;
@@ -1315,12 +1315,6 @@
   }
 
   [[[Utilities del] masterRootController] uncloak];
-  
-  // Update UI for the categories blur view and dark bg view
-  if (self.contentType == ScreenContentTypeCompositePage) {
-    //[self.categoriesBlurView updateAsynchronously:YES completion:nil];
-  }
-
   self.reorienting = NO;
 }
 
@@ -1642,8 +1636,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  NSLog(@"calling heightForRowAtIndexPath ");
-  
   if (self.contentType == ScreenContentTypeVideoPhotoPage ) {
     SCPRDeluxeNewsCell *cell = [self.cells objectAtIndex:indexPath.row];
     return cell.frame.size.height;
@@ -1775,9 +1767,7 @@
 }
 
 - (void)scrollViewDidScroll:(UITableView *)tableView {
-  
-  TICK;
-  
+
   if (self.contentType == ScreenContentTypeVideoPhotoPage || self.contentType == ScreenContentTypeEventsPage) {
     return;
   }
@@ -1787,8 +1777,6 @@
   }
 
   CGRect row = [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-  NSLog(@"row rect - %@", NSStringFromCGRect(row));
-  NSLog(@"tableView - contentOffset y %f", tableView.contentOffset.y );
   
   // Scrolled past Short List -- hide Donate button in nav bar and show Sections button.
   if (tableView.contentOffset.y > CGRectGetMaxY(row)) {
@@ -1807,8 +1795,6 @@
 
     [[[Utilities del] globalTitleBar] applyDonateButton];
   }
-  
-  TOCK;
 }
 
 #ifdef LOG_DEALLOCATIONS

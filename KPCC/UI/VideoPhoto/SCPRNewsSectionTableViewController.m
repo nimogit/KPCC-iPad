@@ -19,12 +19,7 @@
   [super viewDidLoad];
 
   self.sections = [Utilities loadJson:@"categories"];
-  
-  //CGFloat width = [Utilities isLandscape] ? 1024.0 : 768.0;
-  //self.view.frame = CGRectMake(0.0, 20.0, width, ([Utilities isLandscape] ? 768.0 : 1024.0) - 20.0);
 
-  
-  //self.tableView.scrollEnabled = NO;
   self.tableView.backgroundColor = [UIColor clearColor];
   self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.tableView.showsVerticalScrollIndicator = NO;
@@ -63,11 +58,6 @@
 
 - (void)viewDidAppear:(BOOL)animated  {
   [super viewDidAppear:animated];
-}
-
-- (void) viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-  
 }
 
 - (void)didReceiveMemoryWarning
