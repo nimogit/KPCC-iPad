@@ -1111,7 +1111,7 @@
   [UIView animateWithDuration:0.4f animations: ^{
     
     // Scale categories table down to 0
-    self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
+    self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(1.75f, 1.75f);
     self.categoriesTableViewController.view.alpha = 0.0;
     
     // Fade out blur view
