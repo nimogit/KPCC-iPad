@@ -1055,8 +1055,8 @@
 
 #pragma mark - SCPRTitlebarDelegate
 - (void)openSectionsTapped {
-  NSLog(@"sections tapped!");
-  
+
+  // Update the title bar UI
   [Utilities primeTitlebarWithText:@"SECTIONS"
                       shareEnabled:NO
                          container:nil];
@@ -1075,6 +1075,7 @@
   self.categoriesBlurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
   self.categoriesBlurView.blurRadius = 5;
   self.categoriesBlurView.tintColor = [UIColor darkGrayColor];
+  self.categoriesBlurView.dynamic = NO;
   
   self.categoriesDarkView = [[UIView alloc] initWithFrame:self.categoriesBlurView.frame];
   self.categoriesDarkView.backgroundColor = [UIColor darkGrayColor];
@@ -1082,51 +1083,52 @@
   self.categoriesBlurView.alpha = 0.0;
   self.categoriesDarkView.alpha = 0.0;
   
-  [[[Utilities del] viewController].view addSubview:self.categoriesBlurView];
-  [[[Utilities del] viewController].view addSubview:self.categoriesDarkView];
+  [self.view addSubview:self.categoriesBlurView];
+  [self.view addSubview:self.categoriesDarkView];
   
+  // Turn off interaction with news table
   self.photoVideoTable.userInteractionEnabled = NO;
   
   self.categoriesTableViewController.view.layer.cornerRadius = 5;
   self.categoriesTableViewController.view.layer.masksToBounds = YES;
   
-  // Set initial scale to 1.5
-  self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(1.5, 1.5);
-  [[[Utilities del] viewController].view addSubview:self.categoriesTableViewController.view];
+  // Set initial scale of the categories table
+  self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(1.8, 1.8);
+  [self.view addSubview:self.categoriesTableViewController.view];
+
+  // Hide the player widget
+  [[[Utilities del] viewController] hidePlayer];
   
-  
-  // Scale down to 90%
-  [UIView animateWithDuration:0.4f animations: ^{
+  [UIView animateWithDuration:0.3f animations: ^{
+
+    // Scale categories table down to 90%
     self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
     
+    // Fade in the dark bg view and blur view
     self.categoriesDarkView.alpha = 0.8;
-    
     self.categoriesBlurView.alpha = 1.0;
     self.categoriesBlurView.blurRadius = 25;
-    
   } completion: ^(BOOL finished) {
-
+    
   }];
-
-  //[self.view.window.rootViewController presentViewController:self.categoriesTableViewController animated:YES completion:nil];
 }
 
 - (void)closeSectionsTapped {
   
+  // Update the title bar UI
   [Utilities primeTitlebarWithText:@""
                       shareEnabled:NO
                          container:nil];
-  
   [[[Utilities del] globalTitleBar] applyKpccLogo];
   [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
   [[[Utilities del] globalTitleBar] applyCategoriesButton];
   
-  /*[self.view.window.rootViewController dismissViewControllerAnimated:YES completion:^{
-    [self.categoriesTableViewController setTransitioningDelegate:nil];
-  }];*/
+  // Show the player widget
+  [[[Utilities del] viewController] displayPlayer];
 
-  // Scale down to 0
   [UIView animateWithDuration:0.4f animations: ^{
+    
+    // Scale categories table down to 0
     self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
     self.categoriesTableViewController.view.alpha = 0.0;
     
@@ -1135,11 +1137,10 @@
       self.categoriesBlurView.alpha = 0.0;
     }
     
-    // Clear out dark background view
+    // Fade out dark background view
     if (self.categoriesDarkView) {
       [self.categoriesDarkView setBackgroundColor:[UIColor clearColor]];
     }
-    
     
   } completion: ^(BOOL finished) {
     [self.categoriesTableViewController.view removeFromSuperview];
@@ -1150,6 +1151,7 @@
       [self.categoriesDarkView removeFromSuperview];
     }
     
+    // Re-enable  interaction with news table
     self.photoVideoTable.userInteractionEnabled = YES;
   }];
 }

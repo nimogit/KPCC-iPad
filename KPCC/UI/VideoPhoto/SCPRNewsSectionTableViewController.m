@@ -56,7 +56,7 @@
   
   [self.view convertRect:self.tableView.frame fromView:self.view];
   
-  self.tableView.frame = CGRectMake(self.tableView.frame.origin.x + 36.0, self.tableView.frame.origin.y + 40.0, self.tableView.frame.size.width, self.tableView.frame.size.height);
+  self.tableView.frame = CGRectMake(self.tableView.frame.origin.x + 36.0, self.tableView.frame.origin.y + 20.0, self.tableView.frame.size.width, self.tableView.frame.size.height);
   
   
 }
