@@ -1036,11 +1036,8 @@
   [self.editionCellHash setObject:@{ @"abstracts" : abstracts,
                                      @"editionCell" : cell }
                            forKey:[Utilities sha1:editionPD]];
-  
-  
   return cell;
 }
-
 
 
 #pragma mark - SCPRTitlebarDelegate

@@ -16,8 +16,7 @@ typedef enum {
   BarTypeEditions,
   BarTypeExternalWeb,
   BarTypeProgramAtoZ,
-  BarTypeProgramSingle,
-  BarTypeDrawerWithCategories
+  BarTypeProgramSingle
 } BarType;
 
 @protocol SCPRTitlebarDelegate <NSObject>

@@ -19,51 +19,17 @@
   [super viewDidLoad];
 
   self.sections = [Utilities loadJson:@"categories"];
+  
+  CGFloat height = [Utilities isLandscape] ? 748.0 : 1004.0;
 
   self.tableView.backgroundColor = [UIColor clearColor];
   self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.tableView.showsVerticalScrollIndicator = NO;
-  self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width - 72.0, self.tableView.frame.size.height);
-  self.tableView.sizeToFit;
+  self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + 20.0, self.tableView.frame.size.width, height);
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  NSLog(@"HEREE!!");
-  return YES;
-}
-
-/*- (NSUInteger)supportedInterfaceOrientations {
-  return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationLandscapeLeft | UIInterfaceOrientationLandscapeRight;
-}*/
 
 - (BOOL)shouldAutorotate {
   return YES;
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  NSLog(@"WILL ANIMATE!!! ROTAETEA");
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  NSLog(@"viewWillAppear news section");
-  
-  
-  [self.view convertRect:self.tableView.frame fromView:self.view];
-  
-  self.tableView.frame = CGRectMake(self.tableView.frame.origin.x + 36.0, self.tableView.frame.origin.y + 20.0, self.tableView.frame.size.width, self.tableView.frame.size.height);
-  
-  
-}
-
-- (void)viewDidAppear:(BOOL)animated  {
-  [super viewDidAppear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -90,6 +56,11 @@
   cell.textLabel.textColor = [UIColor whiteColor];
   cell.textLabel.text = [[self.sections objectAtIndex:indexPath.row] objectForKey:@"title"];
   cell.textLabel.font = [[DesignManager shared] latoLight:29.0f];
+  
+  if (![Utilities isIOS7]) {
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  }
+  
   return cell;
 }
 
@@ -115,5 +86,9 @@
   NSLog(@"handleRotationPOST");
 }
 
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
+}
 
 @end

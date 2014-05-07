@@ -618,6 +618,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)displaySimpleContent:(NSDictionary *)contentObjects {
+  NSLog(@"displaing SIMPLE content");
+  
   [[QueueManager shared] setStories:contentObjects];
   if ( self.silentlyFetchingNews ) {
     return;

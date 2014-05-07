@@ -251,22 +251,6 @@
       [self applyBackButtonText:@"Programs"];
       
       break;
-      
-    case BarTypeDrawerWithCategories:
-
-      self.suppressDonate = YES;
-      self.personalInfoButton.alpha = 0.0;
-      self.drawerButton.frame =   CGRectMake(10.0,
-                                             0.0,
-                                             self.drawerButton.frame.size.width,
-                                             self.drawerButton.frame.size.height);
-      
-      [self.view addSubview:self.drawerButton];
-      
-      [self applyKpccLogo];
-      [self applyCategoriesButton];
-      
-      break;
 
     case BarTypeUnknown:
       break;
