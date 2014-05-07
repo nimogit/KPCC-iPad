@@ -1056,10 +1056,9 @@
 #pragma mark - SCPRTitlebarDelegate
 - (void)openSectionsTapped {
   NSLog(@"sections tapped!");
-  /*if (!self.categoriesTableViewController) {
-    self.categoriesTableViewController = [[SCPRNewsSectionTableViewController alloc] init];
-  }*/
-  
+
+  self.categoriesTableViewController = [[SCPRNewsSectionTableViewController alloc] init];
+  self.categoriesTableView = self.categoriesTableViewController.tableView;
   self.categoriesTableViewController.sectionsDelegate = self;
   self.categoriesTableViewController.view.alpha = 0.85;
   if ([Utilities isIOS7]) {
@@ -1077,7 +1076,7 @@
 }
 
 
-# pragma mark - UIViewControllerTransitioningDelegate
+# pragma mark - UIViewControllerTransitioningDelegate - iOS7+
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
                                                                   presentingController:(UIViewController *)presenting
