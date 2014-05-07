@@ -723,7 +723,14 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
     
     [titlebar.view addSubview:titlebar.pageTitleLabel];
     [titlebar.pageTitleLabel titleizeText:text bold:YES];
-    [titlebar.pageTitleLabel setTextColor:[UIColor whiteColor]];
+    
+    // For showing NewsSectionTableViewController
+    if (text && [text isEqualToString:@"SECTIONS"]) {
+      [titlebar.pageTitleLabel setTextColor:[[DesignManager shared] sectionsBlueColor]];
+    } else {
+      [titlebar.pageTitleLabel setTextColor:[UIColor whiteColor]];
+    }
+    
     //titlebar.view.layer.backgroundColor = [UIColor clearColor].CGColor;
     titlebar.view.layer.backgroundColor = [[DesignManager shared] deepOnyxColor].CGColor;
     titlebar.pageTitleLabel.alpha = 1.0;

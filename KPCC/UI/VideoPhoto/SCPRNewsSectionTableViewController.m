@@ -32,10 +32,10 @@
   self.tableView.sizeToFit;
 }
 
-/*- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   NSLog(@"HEREE!!");
   return YES;
-}*/
+}
 
 /*- (NSUInteger)supportedInterfaceOrientations {
   return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationLandscapeLeft | UIInterfaceOrientationLandscapeRight;

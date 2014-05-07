@@ -1074,7 +1074,7 @@
   self.categoriesBlurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
   self.categoriesBlurView.blurRadius = 5;
   self.categoriesBlurView.tintColor = [UIColor darkGrayColor];
-  self.categoriesBlurView.dynamic = NO;
+  //self.categoriesBlurView.dynamic = NO;
   
   self.categoriesDarkView = [[UIView alloc] initWithFrame:self.categoriesBlurView.frame];
   self.categoriesDarkView.backgroundColor = [UIColor darkGrayColor];
@@ -1231,6 +1231,12 @@
   
   [UIView animateWithDuration:0.12 animations:^{
     self.photoVideoTable.alpha = 0.0;
+    
+    if (self.contentType == ScreenContentTypeCompositePage) {
+      self.categoriesBlurView.alpha = 0.0;
+      self.categoriesDarkView.alpha = 0.0;
+    }
+    
   }];
 }
 
@@ -1249,11 +1255,24 @@
                                               self.photoVideoTable.center.y);
     
     if (self.contentType == ScreenContentTypeCompositePage) {
+      //[self.categoriesBlurView updateAsynchronously:YES completion:nil];
+      self.categoriesDarkView.frame = CGRectMake(0.0,
+                                                  0.0,
+                                                  [Utilities isLandscape] ? 1024.0 : 768.0,
+                                                  [Utilities isLandscape] ? 768.0 : 1024.0);
+      
+      self.categoriesBlurView.frame = CGRectMake(0.0,
+                                                 0.0,
+                                                 [Utilities isLandscape] ? 1024.0 : 768.0,
+                                                 [Utilities isLandscape] ? 768.0 : 1024.0);
+      
+      
       [self.masterCellHash removeAllObjects];
       [self.editionCellHash removeAllObjects];
       [self loadDummies];
       [self prepTableTransition];
       [self.photoVideoTable reloadData];
+
     } else {
       [self buildCells];
       [self prepTableTransition];
@@ -1266,6 +1285,12 @@
   }
 
   [[[Utilities del] masterRootController] uncloak];
+  
+  // Update UI for the categories blur view and dark bg view
+  if (self.contentType == ScreenContentTypeCompositePage) {
+    //[self.categoriesBlurView updateAsynchronously:YES completion:nil];
+  }
+
   self.reorienting = NO;
 }
 
@@ -1282,6 +1307,8 @@
   transition.key = @"TableFade";
   [[self.photoVideoTable layer] addAnimation:transition
                                       forKey:@"UITableViewReloadDataAnimationKey"];
+  
+  //[self.categoriesBlurView updateAsynchronously:YES completion:nil];
 }
 
 - (void)unplug {
