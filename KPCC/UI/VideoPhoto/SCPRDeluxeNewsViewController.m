@@ -1041,17 +1041,7 @@
   return cell;
 }
 
-- (void)finalizeAnimation {
 
-}
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-  if ( [anim isKindOfClass:[SCPRUsefulTransition class]] ) {
-    [UIView animateWithDuration:0.12 animations:^{
-      self.photoVideoTable.alpha = 1.0;
-    }];
-  }
-}
 
 #pragma mark - SCPRTitlebarDelegate
 
@@ -1074,7 +1064,7 @@
   self.categoriesBlurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
   self.categoriesBlurView.blurRadius = 5;
   self.categoriesBlurView.tintColor = [UIColor darkGrayColor];
-  //self.categoriesBlurView.dynamic = NO;
+  self.categoriesBlurView.dynamic = NO;
   
   self.categoriesDarkView = [[UIView alloc] initWithFrame:self.categoriesBlurView.frame];
   self.categoriesDarkView.backgroundColor = [UIColor darkGrayColor];
@@ -1224,19 +1214,49 @@
   
 }
 
+# pragma mark - AnimationDelegate
+- (void)finalizeAnimation {
+  
+  
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+
+  if ( [anim isKindOfClass:[SCPRUsefulTransition class]] ) {
+    [UIView animateWithDuration:0.12 animations:^{
+      self.photoVideoTable.alpha = 1.0;
+    } completion:^(BOOL finished) {
+      
+      // Force the category blur view to redraw its background contents
+      if (self.contentType == ScreenContentTypeCompositePage) {
+        if ([self.view.subviews containsObject:self.categoriesBlurView]) {
+          [self.categoriesBlurView updateAsynchronously:NO completion:nil];
+        }
+      }
+    }];
+  }
+}
 
 #pragma mark - Rotatable
 - (void)handleRotationPre {
   self.reorienting = YES;
   
   [UIView animateWithDuration:0.12 animations:^{
-    self.photoVideoTable.alpha = 0.0;
-    
+
+    // Fade out the categories table and associated views
     if (self.contentType == ScreenContentTypeCompositePage) {
-      self.categoriesBlurView.alpha = 0.0;
-      self.categoriesDarkView.alpha = 0.0;
+      if ([self.view.subviews containsObject:self.categoriesBlurView]) {
+          self.categoriesBlurView.alpha = 0.0;
+      }
+      if ([self.view.subviews containsObject: self.categoriesDarkView]) {
+        self.categoriesDarkView.alpha = 0.0;
+      }
+      if ([self.view.subviews containsObject: self.categoriesTableViewController.view]) {
+        self.categoriesTableViewController.view.alpha = 0.0;
+      }
     }
     
+    self.photoVideoTable.alpha = 0.0;
   }];
 }
 
@@ -1255,7 +1275,7 @@
                                               self.photoVideoTable.center.y);
     
     if (self.contentType == ScreenContentTypeCompositePage) {
-      //[self.categoriesBlurView updateAsynchronously:YES completion:nil];
+
       self.categoriesDarkView.frame = CGRectMake(0.0,
                                                   0.0,
                                                   [Utilities isLandscape] ? 1024.0 : 768.0,
@@ -1266,6 +1286,18 @@
                                                  [Utilities isLandscape] ? 1024.0 : 768.0,
                                                  [Utilities isLandscape] ? 768.0 : 1024.0);
       
+      // Unfade the categories table and associated views if they are present
+      [UIView animateWithDuration:0.12 animations:^{
+        if ([self.view.subviews containsObject:self.categoriesBlurView]) {
+          self.categoriesBlurView.alpha = 1.0;
+        }
+        if ([self.view.subviews containsObject: self.categoriesDarkView]) {
+          self.categoriesDarkView.alpha = 0.8;
+        }
+        if ([self.view.subviews containsObject: self.categoriesTableViewController.view]) {
+          self.categoriesTableViewController.view.alpha = 1.0;
+        }
+      }];
       
       [self.masterCellHash removeAllObjects];
       [self.editionCellHash removeAllObjects];
@@ -1307,8 +1339,6 @@
   transition.key = @"TableFade";
   [[self.photoVideoTable layer] addAnimation:transition
                                       forKey:@"UITableViewReloadDataAnimationKey"];
-  
-  //[self.categoriesBlurView updateAsynchronously:YES completion:nil];
 }
 
 - (void)unplug {
