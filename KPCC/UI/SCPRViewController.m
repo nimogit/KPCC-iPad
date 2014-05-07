@@ -659,7 +659,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   
   [self.contentVector addObject:vpvc];
   [[ContentManager shared] setCurrentNewsPage:1];
-  [vpvc fetchContent:nil];
+  [vpvc fetchContent:nil withCallback:nil];
 }
 
 - (void)displayEventsPage:(NSMutableDictionary *)contentObjects {

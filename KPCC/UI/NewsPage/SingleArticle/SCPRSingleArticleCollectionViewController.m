@@ -479,7 +479,7 @@
       @synchronized(self) {
         self.fetchLock = YES;
         SCPRDeluxeNewsViewController *dnc = (SCPRDeluxeNewsViewController*)self.parentDeluxeNewsPage;
-        [dnc fetchContent:^(BOOL finished) {
+        [dnc fetchContent:nil withCallback:^(BOOL finished) {
           if (finished) {
             [self setupWithCollection:dnc.monolithicNewsVector
                      beginningAtIndex:self.currentIndex

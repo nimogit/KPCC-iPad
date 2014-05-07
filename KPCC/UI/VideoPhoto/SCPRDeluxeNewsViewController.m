@@ -138,7 +138,7 @@
 }
 
 
-- (void)fetchContent:(FetchContentCallback) block {
+- (void)fetchContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
   
   // Get the first Short List
   self.articleMapPerDate = [@{} mutableCopy];
@@ -290,7 +290,7 @@
                                                                                            self.loadingMoreNewsSpinner.alpha = 0.0;
                                                                                            self.photoVideoTable.scrollEnabled = YES;
                                                                                          } completion:^(BOOL finished) {
-                                                                                           [self applyEmbiggening:articles withBlock:block];
+                                                                                           [self applyEmbiggening:articles withCallback:callback];
                                                                                          }];
                                                                                          
                                                                                          
@@ -353,7 +353,7 @@
   
 }
 
-- (void)applyEmbiggening:(NSMutableArray *)mobileFeatured withBlock:(FetchContentCallback)block {
+- (void)applyEmbiggening:(NSMutableArray *)mobileFeatured withCallback:(FetchContentCallback)callback {
   
   [self setHasAerticles:YES];
   
@@ -374,7 +374,7 @@
   NSMutableDictionary *bhM = [self.rawArticleHash mutableCopy];
   [bhM setObject:newLookup forKey:@"lookup"];
   self.rawArticleHash = [[NSDictionary dictionaryWithDictionary:bhM] mutableCopy];
-  [self sortNewsData:block];
+  [self sortNewsData:callback];
   
 }
 
@@ -392,14 +392,14 @@
   self.dummyDouble = [Utilities loadNib:@"SCPRDeluxeNewsCellDouble"];
 }
 
-- (void)sortNewsData:(FetchContentCallback)block {
+- (void)sortNewsData:(FetchContentCallback)callback {
   
   self.numberOfRegularStoriesPerRow = kNumberOfRegularStoriesPerRow;
   
   self.dateCells = [[NSMutableDictionary alloc] init];
   self.cacheMutex = YES;
   
-  [self setupBigHash:block];
+  [self setupBigHash:callback];
   
   NSDictionary *lookup = [self.bigHash objectForKey:@"lookup"];
   NSDictionary *temporal = [self.bigHash objectForKey:@"general"];
@@ -602,7 +602,7 @@
   });
 }
 
-- (void)setupBigHash:(FetchContentCallback)block {
+- (void)setupBigHash:(FetchContentCallback)callback {
 
   self.bigHash = @{};
   self.lookupForDuplicates = [@{} mutableCopy];
@@ -658,8 +658,8 @@
   self.bigHash = @{ @"lookup" : [self.bigHash objectForKey:@"lookup"],
                     @"general" : dateHash };
   
-  if (block) {
-    block(YES);
+  if (callback) {
+    callback(YES);
   }
 }
 
@@ -1152,7 +1152,7 @@
   [self.tableController.refreshControl beginRefreshing];
   [[ContentManager shared] resetNewsContent];
   [[ContentManager shared] setCurrentNewsPage:1];
-  [self fetchContent:nil];
+  [self fetchContent:nil withCallback:nil];
   
   [[AnalyticsManager shared] logEvent: @"load_pulldown_refresh" withParameters:@{}];
 }
@@ -1755,7 +1755,7 @@
     } completion:^(BOOL finished) {
       
       [self.loadingMoreNewsSpinner startAnimating];
-      [self fetchContent:nil];
+      [self fetchContent:nil withCallback:nil];
       
     }];
     [[AnalyticsManager shared] logEvent: @"load_more_news" withParameters:@{}];

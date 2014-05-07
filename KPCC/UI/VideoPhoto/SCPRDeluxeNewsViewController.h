@@ -84,8 +84,8 @@ typedef void (^FetchContentCallback)(BOOL);
 - (void)handleDrillDown:(NSDictionary*)story;
 - (void)sanitizeBigPosts;
 - (void)buildCells;
-- (void)sortNewsData:(FetchContentCallback)block;
-- (void)setupBigHash:(FetchContentCallback)block;
+- (void)sortNewsData:(FetchContentCallback)callback;
+- (void)setupBigHash:(FetchContentCallback)callback;
 - (void)processEditions;
 - (void)loadDummies;
 - (void)loadDummies:(BOOL)editions;
@@ -105,8 +105,8 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) NSMutableDictionary *embiggenedHash;
 @property BOOL lockPageCount;
 
-- (void)fetchContent:(FetchContentCallback)callback;
-- (void)applyEmbiggening:(NSArray*)mobileFeatured withBlock:(FetchContentCallback)block;
+- (void)fetchContent:(NSString*)categorySlug withCallback:(FetchContentCallback)callback;
+- (void)applyEmbiggening:(NSArray*)mobileFeatured withCallback:(FetchContentCallback)callback;
 
 
 @end
