@@ -73,7 +73,7 @@
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
   // Send Category slug to DeluxeNewsViewController
-  [self.sectionsDelegate sectionSelected:[self.sections objectAtIndex:indexPath.row]];
+  [self.sectionsDelegate sectionSelected:[[self.sections objectAtIndex:indexPath.row] objectForKey:@"slug"]];
 }
 
 

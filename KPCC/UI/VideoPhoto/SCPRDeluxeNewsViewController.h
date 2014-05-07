@@ -96,7 +96,7 @@ typedef void (^FetchContentCallback)(BOOL);
 - (NSMutableArray*)dateSort:(NSMutableArray*)articles;
 
 - (SCPRDeluxeEditionsCell*)editionCellFromEdition:(NSDictionary*)edition forceLoad:(BOOL)forceLoad;
-- (void)refreshTableContents;
+- (void)refreshTableContents:(NSString*)categorySlug;
 - (NSDictionary*)marshalledIndex:(NSDictionary*)article;
 
 // COMPOSITE PAGE REFACTOR

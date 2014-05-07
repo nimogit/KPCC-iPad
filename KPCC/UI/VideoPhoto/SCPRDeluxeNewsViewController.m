@@ -179,9 +179,15 @@
                            } completion:^(BOOL finished) {
                              
                              [self.loadingMoreNewsSpinner startAnimating];
-
                              
-                             NSString *allstr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d",kServerBase,[[ContentManager shared] currentNewsPage]];
+                             NSString *allstr;
+                             if (categorySlug) {
+                               allstr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d&categories=%@",kServerBase,[[ContentManager shared] currentNewsPage], categorySlug];
+                             } else {
+                               allstr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d",kServerBase,[[ContentManager shared] currentNewsPage]];
+                             }
+                             
+                             
                              NSURL *allUrl = [NSURL URLWithString:allstr];
                              NSURLRequest *allReq = [NSURLRequest requestWithURL:allUrl];
                              [NSURLConnection sendAsynchronousRequest:allReq
@@ -1138,23 +1144,31 @@
 
 #pragma mark - SCPRNewsSectionDelegate
 - (void)sectionSelected:(NSString *)sectionSlug {
+
   NSLog(@"sectionSelected %@", sectionSlug);
-  
+
+  //[self fetchContent:sectionSlug withCallback:nil];
+  [self refreshTableContents:sectionSlug];
+
   [self closeSectionsTapped];
 }
 
 
 #pragma mark - Refresh
-- (void)refreshTableContents {
+- (void)refreshTableContents:(NSString *)categorySlug {
   
   self.lookupForDuplicates = [@{} mutableCopy];
   self.hardReset = YES;
   [self.tableController.refreshControl beginRefreshing];
   [[ContentManager shared] resetNewsContent];
   [[ContentManager shared] setCurrentNewsPage:1];
-  [self fetchContent:nil withCallback:nil];
   
-  [[AnalyticsManager shared] logEvent: @"load_pulldown_refresh" withParameters:@{}];
+  if (categorySlug) {
+    [self fetchContent:categorySlug withCallback:nil];
+  } else {
+    [self fetchContent:nil withCallback:nil];
+    [[AnalyticsManager shared] logEvent: @"load_pulldown_refresh" withParameters:@{}];
+  }
 }
 
 - (void)updateTableContents {
@@ -1807,7 +1821,7 @@
   if ( self.contentType == ScreenContentTypeCompositePage ) {
     [self.masterCellHash removeAllObjects];
     [[ContentManager shared] setCurrentNewsPage:1];
-    [self refreshTableContents];
+    [self refreshTableContents:nil];
   }
   
     // Dispose of any resources that can be recreated.
