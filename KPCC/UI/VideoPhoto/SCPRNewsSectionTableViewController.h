@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "global.h"
 #import "SCPRViewController.h"
+#import "FXBlurView.h"
 
 @protocol SCPRNewsSectionDelegate <NSObject>
 @optional
 - (void)sectionSelected:(NSString *)sectionSlug;
 @end
 
-@interface SCPRNewsSectionTableViewController : UITableViewController<Rotatable, Cloakable>
+@interface SCPRNewsSectionTableViewController : UITableViewController<Rotatable>
 
 @property (nonatomic,weak) id<SCPRNewsSectionDelegate> sectionsDelegate;
 @property (nonatomic,strong) NSMutableArray *sections;

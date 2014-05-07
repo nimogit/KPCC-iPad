@@ -1056,53 +1056,106 @@
 #pragma mark - SCPRTitlebarDelegate
 - (void)openSectionsTapped {
   NSLog(@"sections tapped!");
+  
+  // Force scrolling on the news table to hard stop.
+  CGPoint offset = self.photoVideoTable.contentOffset;
+  [self.photoVideoTable setContentOffset:offset animated:NO];
 
+  // Init categories table controller and set delegates
   self.categoriesTableViewController = [[SCPRNewsSectionTableViewController alloc] init];
   self.categoriesTableView = self.categoriesTableViewController.tableView;
   self.categoriesTableViewController.sectionsDelegate = self;
-  self.categoriesTableViewController.view.alpha = 0.85;
-  if ([Utilities isIOS7]) {
-    self.categoriesTableViewController.transitioningDelegate = self;
-  }
-  self.categoriesTableViewController.modalPresentationStyle = UIModalPresentationCustom;
+
   
-  [self.view.window.rootViewController presentViewController:self.categoriesTableViewController animated:YES completion:nil];
+  // Init blur view and view to darken the news table in the background.
+  self.categoriesBlurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+  self.categoriesBlurView.blurRadius = 5;
+  self.categoriesBlurView.tintColor = [UIColor darkGrayColor];
+  
+  self.categoriesDarkView = [[UIView alloc] initWithFrame:self.categoriesBlurView.frame];
+  self.categoriesDarkView.backgroundColor = [UIColor darkGrayColor];
+  
+  self.categoriesBlurView.alpha = 0.0;
+  self.categoriesDarkView.alpha = 0.0;
+  
+  [self.view addSubview:self.categoriesBlurView];
+  [self.view addSubview:self.categoriesDarkView];
+  
+  self.photoVideoTable.userInteractionEnabled = NO;
+  
+  self.categoriesTableViewController.view.layer.cornerRadius = 5;
+  self.categoriesTableViewController.view.layer.masksToBounds = YES;
+  
+  // Set initial scale to 1.5
+  self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(1.5, 1.5);
+  [self.view addSubview:self.categoriesTableViewController.view];
+  
+  
+  // Scale down to 90%
+  [UIView animateWithDuration:0.4f animations: ^{
+    self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+    
+    self.categoriesDarkView.alpha = 0.8;
+    
+    self.categoriesBlurView.alpha = 1.0;
+    self.categoriesBlurView.blurRadius = 25;
+    
+  } completion: ^(BOOL finished) {
+
+  }];
+
+  //[self.view.window.rootViewController presentViewController:self.categoriesTableViewController animated:YES completion:nil];
 }
 
 - (void)closeSectionsTapped {
-  [self.view.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+  
+  [Utilities primeTitlebarWithText:@""
+                      shareEnabled:NO
+                         container:nil];
+  
+  [[[Utilities del] globalTitleBar] applyKpccLogo];
+  [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
+  [[[Utilities del] globalTitleBar] applyCategoriesButton];
+  
+  /*[self.view.window.rootViewController dismissViewControllerAnimated:YES completion:^{
     [self.categoriesTableViewController setTransitioningDelegate:nil];
+  }];*/
+
+  // Scale down to 0
+  [UIView animateWithDuration:0.4f animations: ^{
+    self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
+    self.categoriesTableViewController.view.alpha = 0.0;
+    
+    // Fade out blur view
+    if (self.categoriesBlurView) {
+      self.categoriesBlurView.alpha = 0.0;
+    }
+    
+    // Clear out dark background view
+    if (self.categoriesDarkView) {
+      [self.categoriesDarkView setBackgroundColor:[UIColor clearColor]];
+    }
+    
+    
+  } completion: ^(BOOL finished) {
+    [self.categoriesTableViewController.view removeFromSuperview];
+    if (self.categoriesBlurView) {
+      [self.categoriesBlurView removeFromSuperview];
+    }
+    if (self.categoriesDarkView) {
+      [self.categoriesDarkView removeFromSuperview];
+    }
+    
+    self.photoVideoTable.userInteractionEnabled = YES;
   }];
 }
 
 
-# pragma mark - UIViewControllerTransitioningDelegate - iOS7+
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
-                                                                  presentingController:(UIViewController *)presenting
-                                                                      sourceController:(UIViewController *)source
-{
-  
-  id<UIViewControllerAnimatedTransitioning> animationController;
-
-  SCPRControllerOverlayAnimator *animate = [[SCPRControllerOverlayAnimator alloc] init];
-  animate.appearing = YES;
-  animationController = animate;
-  return animationController;
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
-{
-  id<UIViewControllerAnimatedTransitioning> animationController;
-  SCPRControllerOverlayAnimator *animate = [[SCPRControllerOverlayAnimator alloc] init];
-  animate.appearing = NO;
-  animationController = animate;
-  return animationController;
-}
-
 #pragma mark - SCPRNewsSectionDelegate
 - (void)sectionSelected:(NSString *)sectionSlug {
   NSLog(@"sectionSelected %@", sectionSlug);
+  
+  [self closeSectionsTapped];
 }
 
 

@@ -20,19 +20,60 @@
 
   self.sections = [Utilities loadJson:@"categories"];
   
-  CGFloat width = [Utilities isLandscape] ? 1024.0 : 768.0;
-  self.view.frame = CGRectMake(0.0, 20.0, width, ([Utilities isLandscape] ? 768.0 : 1024.0) - 20.0);
+  //CGFloat width = [Utilities isLandscape] ? 1024.0 : 768.0;
+  //self.view.frame = CGRectMake(0.0, 20.0, width, ([Utilities isLandscape] ? 768.0 : 1024.0) - 20.0);
+  
+  if ([Utilities isLandscape]) {
+    NSLog(@"CURR in landscape");
+    
+    //[self.view setNeedsLayout];
+    //[self.tableView setNeedsLayout];
+    
+    //[self.sectionsDelegate performSelector:@selector(presentViewController:animated:completion:) withObject:self];
+    
+    //self.tableView.transform = CGAffineTransformMakeRotation([Utilities degreesToRadians:90.0]);
+    //[self shouldAutorotateToInterfaceOrientation:UIInterfaceOrientationLandscapeLeft];
+     //[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft  animated:NO];
+  }
 
+  
   //self.tableView.scrollEnabled = NO;
+  self.tableView.backgroundColor = [UIColor clearColor];
+  self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.tableView.showsVerticalScrollIndicator = NO;
   self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width - 72.0, self.tableView.frame.size.height);
   self.tableView.sizeToFit;
 }
 
+/*- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  NSLog(@"HEREE!!");
+  return YES;
+}*/
+
+/*- (NSUInteger)supportedInterfaceOrientations {
+  return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationLandscapeLeft | UIInterfaceOrientationLandscapeRight;
+}*/
+
+- (BOOL)shouldAutorotate {
+  return YES;
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+  NSLog(@"WILL ANIMATE!!! ROTAETEA");
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-
+  NSLog(@"viewWillAppear news section");
+  
+  
+  
+  
+  [self.view convertRect:self.tableView.frame fromView:self.view];
+  
   self.tableView.frame = CGRectMake(self.tableView.frame.origin.x + 36.0, self.tableView.frame.origin.y + 40.0, self.tableView.frame.size.width, self.tableView.frame.size.height);
+  
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated  {
@@ -48,13 +89,16 @@
 - (void) viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   
-  [Utilities primeTitlebarWithText:@""
+  /*[Utilities primeTitlebarWithText:@""
                       shareEnabled:NO
                          container:nil];
 
   [[[Utilities del] globalTitleBar] applyKpccLogo];
   [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
-  [[[Utilities del] globalTitleBar] applyCategoriesButton];
+  [[[Utilities del] globalTitleBar] applyCategoriesButton];*/
+  
+  
+  
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,19 +145,19 @@
   // Send Category slug to DeluxeNewsViewController
   [self.sectionsDelegate sectionSelected:[self.sections objectAtIndex:indexPath.row]];
   
-  [self dismissViewControllerAnimated:YES completion:nil];
-  [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
-  [[[Utilities del] globalTitleBar] applyCategoriesButton];
+  //[self dismissViewControllerAnimated:YES completion:nil];
+  //[[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
+  //[[[Utilities del] globalTitleBar] applyCategoriesButton];
 }
 
 
 # pragma mark - Rotatable
 - (void)handleRotationPre {
-  
+  NSLog(@"handleRotationPRE");
 }
 
 - (void)handleRotationPost {
-  
+  NSLog(@"handleRotationPOST");
 }
 
 

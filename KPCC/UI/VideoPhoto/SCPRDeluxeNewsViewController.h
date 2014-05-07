@@ -13,13 +13,14 @@
 #import "global.h"
 #import "SCPRUsefulTransition.h"
 #import "SCPRNewsSectionTableViewController.h"
+#import "FXBlurView.h"
 
 #define kNumberOfRegularStoriesPerRow 2
 
 typedef void (^FetchContentCallback)(BOOL);
 
 
-@interface SCPRDeluxeNewsViewController : UIViewController<ContentProcessor,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,Rotatable,AnimationDelegate,SCPRTitlebarDelegate,SCPRNewsSectionDelegate,UIViewControllerTransitioningDelegate>
+@interface SCPRDeluxeNewsViewController : UIViewController<ContentProcessor,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,Rotatable,AnimationDelegate,SCPRTitlebarDelegate,SCPRNewsSectionDelegate>
 
 // UI
 @property (nonatomic,strong) IBOutlet UITableView *photoVideoTable;
@@ -27,8 +28,13 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) IBOutlet UIView *emptyFooter;
 @property (nonatomic,strong) IBOutlet UIView *spinnerFooter;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *loadingMoreNewsSpinner;
-@property (nonatomic,strong) IBOutlet UITableView *categoriesTableView;
-@property (nonatomic,strong) IBOutlet SCPRNewsSectionTableViewController *categoriesTableViewController;
+
+// For Categories table overlay
+@property (nonatomic,strong) UITableView *categoriesTableView;
+@property (nonatomic,strong) SCPRNewsSectionTableViewController *categoriesTableViewController;
+@property (nonatomic,strong) FXBlurView *categoriesBlurView;
+@property (nonatomic,strong) UIView *categoriesDarkView;
+
 
 // Article, cell, social, short list data stores
 @property (nonatomic,strong) NSArray *posts;
