@@ -838,6 +838,13 @@ static DesignManager *singleton = nil;
                          alpha:1.0];
 }
 
+- (UIColor*)sectionsBlueColor {
+  return [UIColor colorWithRed:0.0/255.0
+                         green:185.0/255.0
+                          blue:242.0/255.0
+                         alpha:1.0];
+}
+
 - (UIColor*)pumpkinColor {
   return [UIColor colorWithRed:240.0/255.0
                          green:101.0/255.0

@@ -81,6 +81,9 @@ typedef enum {
 - (void)applyCategoriesButton;
 - (void)applyCloseCategoriesButton;
 
+- (void)applyCategoriesUI;
+- (void)removeCategoriesUI;
+
 - (void)eraseDonateButton;
 - (void)eraseCategoriesButton;
 - (void)eraseCloseCategoriesButton;

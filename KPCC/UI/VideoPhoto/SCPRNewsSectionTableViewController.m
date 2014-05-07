@@ -63,12 +63,6 @@
 
 - (void)viewDidAppear:(BOOL)animated  {
   [super viewDidAppear:animated];
-
-  [Utilities primeTitlebarWithText:@"SECTIONS"
-                      shareEnabled:NO
-                         container:nil];
-  [[[Utilities del] globalTitleBar] eraseCategoriesButton];
-  [[[Utilities del] globalTitleBar] applyCloseCategoriesButton];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {

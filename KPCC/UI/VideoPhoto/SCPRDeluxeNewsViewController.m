@@ -1054,12 +1054,11 @@
 }
 
 #pragma mark - SCPRTitlebarDelegate
+
 - (void)openSectionsTapped {
 
   // Update the title bar UI
-  [Utilities primeTitlebarWithText:@"SECTIONS"
-                      shareEnabled:NO
-                         container:nil];
+  [[[Utilities del] globalTitleBar] applyCategoriesUI];
   
   // Force scrolling on the news table to hard stop.
   CGPoint offset = self.photoVideoTable.contentOffset;
@@ -1116,12 +1115,7 @@
 - (void)closeSectionsTapped {
   
   // Update the title bar UI
-  [Utilities primeTitlebarWithText:@""
-                      shareEnabled:NO
-                         container:nil];
-  [[[Utilities del] globalTitleBar] applyKpccLogo];
-  [[[Utilities del] globalTitleBar] eraseCloseCategoriesButton];
-  [[[Utilities del] globalTitleBar] applyCategoriesButton];
+  [[[Utilities del] globalTitleBar] removeCategoriesUI];
   
   // Show the player widget
   [[[Utilities del] viewController] displayPlayer];

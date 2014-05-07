@@ -150,6 +150,7 @@ typedef enum {
 - (UIColor*)auburnColor;
 - (UIColor*)kingCrimsonColor;
 - (UIColor*)transparentWhiteColor;
+- (UIColor*)sectionsBlueColor;
 
 // Queue colors
 - (UIColor*)doneGreenColor;

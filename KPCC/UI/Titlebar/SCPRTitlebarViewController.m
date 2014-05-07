@@ -320,6 +320,31 @@
   }];
 }
 
+- (void)applyCategoriesUI {
+  [self.drawerButton removeFromSuperview];
+  [self eraseCloseCategoriesButton];
+  [self applyCategoriesButton];
+  
+  [Utilities primeTitlebarWithText:@"SECTIONS"
+                      shareEnabled:NO
+                         container:nil];
+}
+
+- (void)removeCategoriesUI {
+  self.drawerButton.frame = CGRectMake(10.0,
+                                       0.0,
+                                       self.drawerButton.frame.size.width,
+                                       self.drawerButton.frame.size.height);
+  [self.view addSubview:self.drawerButton];
+  
+  [Utilities primeTitlebarWithText:@""
+                      shareEnabled:NO
+                         container:nil];
+  [self applyKpccLogo];
+  [self eraseCloseCategoriesButton];
+  [self applyCategoriesButton];
+}
+
 - (void)eraseCategoriesButton {
   [UIView animateWithDuration:0.22 animations:^{
     [self.categoriesButton setAlpha:0.0];
@@ -334,7 +359,6 @@
   }
 
   [self eraseDonateButton];
-  //[self eraseCloseCategoriesButton];
   [self.view addSubview:self.categoriesButton];
   
   self.categoriesButton.frame = CGRectMake(self.view.frame.size.width - self.categoriesButton.frame.size.width - 10.0,
@@ -609,16 +633,7 @@
 }
 
 - (BOOL)isDonateButtonShown {
-  NSDate *methodStart = [NSDate date];
-  
-  BOOL donateShown = [self.view.subviews containsObject:self.donateButton];
-  
-  NSDate *methodFinish = [NSDate date];
-  NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
-  NSLog(@"!! - donateButtonShown - executionTime = %f", executionTime);
-  
-  return donateShown;
-  //return ([self.view.subviews containsObject:self.donateButton]);
+  return ([self.view.subviews containsObject:self.donateButton]);
 }
 
 - (BOOL)isCategoriesButtonShown {
