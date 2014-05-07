@@ -8,7 +8,6 @@
 #import <Accelerate/Accelerate.h>
 #import <Foundation/Foundation.h>
 #import "FXBlurView.h"
-#import "global.h"
 
 @interface SCPRControllerOverlayAnimator : NSObject <UIViewControllerAnimatedTransitioning>
 

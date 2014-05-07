@@ -5,6 +5,7 @@
 //  Created by John Meeker on 4/29/14.
 //  Copyright (c) 2014 ;. All rights reserved.
 //
+// *** Requires >= iOS 7 ***
 
 #import "SCPRControllerOverlayAnimator.h"
 
@@ -40,7 +41,7 @@
     [containerView addSubview:darkView];
     
     fromView.userInteractionEnabled = NO;
-    
+
     toView.layer.cornerRadius = 5;
     toView.layer.masksToBounds = YES;
     
@@ -64,11 +65,7 @@
   }
   // Dismissing
   else {
-    NSLog(@"Dismissing");
-    NSLog(@"fromViews subviews %@", fromView.subviews);
-    NSLog(@"toViews subviews %@", toView.subviews);
-    NSLog(@"containerView subviews %@", containerView.subviews);
-    
+
     // Locate the FXBlurView and darkview within the containerView subviews if possible
     FXBlurView *blurViewToBeRemoved;
     UIView *darkViewToBeRemoved;
