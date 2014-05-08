@@ -137,6 +137,18 @@
   }
 }
 
+#pragma mark - Load dummy cells from nibs 
+- (void)loadDummies {
+  [self loadDummies:YES];
+}
+- (void)loadDummies:(BOOL)editions {
+  if (editions) {
+    self.dummyEditions = [self editionCellFromEdition:@{} forceLoad:NO];
+  }
+  self.dummySingleSquare = [Utilities loadNib:@"SCPRDeluxeNewsCellSingleSq"];
+  self.dummySingleRectangle = [Utilities loadNib:@"SCPRDeluxeNewsCellSingle43"];
+  self.dummyDouble = [Utilities loadNib:@"SCPRDeluxeNewsCellDouble"];
+}
 
 - (void)fetchContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
   
@@ -392,19 +404,6 @@
   
 }
 
-- (void)loadDummies {
-  [self loadDummies:YES];
-}
-
-- (void)loadDummies:(BOOL)editions {
-  if (editions) {
-    self.dummyEditions = [self editionCellFromEdition:@{} forceLoad:NO];
-  }
-  
-  self.dummySingleSquare = [Utilities loadNib:@"SCPRDeluxeNewsCellSingleSq"];
-  self.dummySingleRectangle = [Utilities loadNib:@"SCPRDeluxeNewsCellSingle43"];
-  self.dummyDouble = [Utilities loadNib:@"SCPRDeluxeNewsCellDouble"];
-}
 
 - (void)sortNewsData:(FetchContentCallback)callback {
   
@@ -1161,11 +1160,9 @@
 - (void)sectionSelected:(NSString *)sectionSlug {
 
   NSLog(@"sectionSelected %@", sectionSlug);
-
-  //[self fetchContent:sectionSlug withCallback:nil];
-  [self refreshTableContents:sectionSlug];
-
   [self closeSectionsTapped];
+
+  [self refreshTableContents:sectionSlug];
 }
 
 #pragma mark - Pull to Refresh
@@ -1177,7 +1174,7 @@
 }
 
 
-#pragma mark - Refresh
+#pragma mark - Refresh table contents
 - (void)refreshTableContents:(NSString *)categorySlug {
   NSLog(@"refreshing table contents withSlug: %@", categorySlug);
   
@@ -1236,13 +1233,6 @@
   }];
 }
 
-- (void)handleProcessedContent:(NSArray *)content flags:(NSDictionary *)flags {
-  
-}
-
-- (void)handleAdditionalContent:(NSArray *)content forTopic:(NSString *)topic {
-  
-}
 
 # pragma mark - AnimationDelegate
 - (void)finalizeAnimation {
@@ -1828,6 +1818,14 @@
     [[[Utilities del] globalTitleBar] applyDonateButton];
   }
 }
+
+
+# pragma mark - ContentProcessor *deprecated*
+/*- (void)handleProcessedContent:(NSArray *)content flags:(NSDictionary *)flags {
+}
+
+- (void)handleAdditionalContent:(NSArray *)content forTopic:(NSString *)topic {
+}*/
 
 #ifdef LOG_DEALLOCATIONS
 - (void)dealloc {
