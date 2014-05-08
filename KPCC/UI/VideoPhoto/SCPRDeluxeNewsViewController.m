@@ -18,6 +18,7 @@
 #import "SCPRMasterRootViewController.h"
 #import "SCPRBlankCell.h"
 #import "SCPRControllerOverlayAnimator.h"
+#import <AFNetworking/AFNetworking.h>
 
 #define kPreemptivePrimeThreshold 25
 
@@ -150,10 +151,84 @@
   self.dummyDouble = [Utilities loadNib:@"SCPRDeluxeNewsCellDouble"];
 }
 
-- (void)fetchContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
+
+- (void)fetchArticleData:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
+
+  NSString *requestStr;
+  if (categorySlug) {
+    requestStr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d&categories=%@",kServerBase,[[ContentManager shared] currentNewsPage], categorySlug];
+  } else {
+    requestStr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d",kServerBase,[[ContentManager shared] currentNewsPage]];
+  }
   
-  // Get the first Short List
+  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  [manager GET:requestStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if (responseObject) {
+
+      
+      
+      
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+  }];
+
+
+}
+
+- (void)fetchContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
+
   self.articleMapPerDate = [@{} mutableCopy];
+  
+  AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  [manager GET:[NSString stringWithFormat:@"%@/editions?limit=1", kServerBase] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+    if (responseObject) {
+
+      NSLog(@"editionsData %@", responseObject);
+      NSLog(@"is array %d",[responseObject isKindOfClass:[NSArray class]]);
+      if ([responseObject isKindOfClass:[NSArray class]]) {
+        self.editionsData = (NSArray*)responseObject;
+      }
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self setHasAShortList:YES];
+        
+        if ([[ContentManager shared] currentNewsPage] == 1) {
+          [self prepTableTransition];
+          [self.photoVideoTable reloadData];
+        }
+        
+        [UIView animateWithDuration:0.22 animations:^{
+          self.loadingMoreNewsSpinner.alpha = 1.0;
+          self.photoVideoTable.scrollEnabled = NO;
+        } completion:^(BOOL finished) {
+          
+          [self.loadingMoreNewsSpinner startAnimating];
+          
+
+          [self fetchArticleData:categorySlug withCallback:callback];
+
+        }];
+          
+      });
+
+    }
+    
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+  }];
+
+  
+  
+  /**
+   * OLD!
+   */
+
   NSString *urlString = [NSString stringWithFormat:@"%@/editions?limit=1",kServerBase];
   NSURL *url = [NSURL URLWithString:urlString];
   __block NSURLRequest *req = [NSURLRequest requestWithURL:url];
@@ -174,13 +249,13 @@
                          
                          NSArray *shortLists = (NSArray*)[s JSONValue];
                          self.editionsData = shortLists;
-                         
+
                          
                          dispatch_async(dispatch_get_main_queue(), ^{
                            
                            [self setHasAShortList:YES];
                            
-                           if ( [[ContentManager shared] currentNewsPage] == 1 ) {
+                           if ([[ContentManager shared] currentNewsPage] == 1) {
                              [self prepTableTransition];
                              [self.photoVideoTable reloadData];
                            }

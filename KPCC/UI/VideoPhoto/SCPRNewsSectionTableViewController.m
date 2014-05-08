@@ -23,6 +23,8 @@
   CGFloat height = [Utilities isLandscape] ? 748.0 : 1004.0;
 
   self.tableView.backgroundColor = [UIColor clearColor];
+  self.tableView.separatorColor = [UIColor clearColor];
+  self.tableView.rowHeight = 72.0f;
   self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.tableView.showsVerticalScrollIndicator = NO;
   self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + 20.0, self.tableView.frame.size.width, height);
