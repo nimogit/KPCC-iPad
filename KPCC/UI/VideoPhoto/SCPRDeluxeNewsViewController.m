@@ -98,7 +98,7 @@
     
     self.tableController.refreshControl = [[UIRefreshControl alloc] init];
     [self.tableController.refreshControl addTarget:self
-                                            action:@selector(refreshTableContents)
+                                            action:@selector(pullToRefreshTriggered)
                                   forControlEvents:UIControlEventValueChanged];
 
   } else if (self.contentType == ScreenContentTypeEventsPage) {
@@ -212,10 +212,17 @@
                                                           NSMutableArray *composite = [[self.rawArticleHash objectForKey:@"general"] mutableCopy];
                                                           [composite addObjectsFromArray:allChunk];
                                                           allChunk = [NSArray arrayWithArray:composite];
+                                                          self.photoVideoTable.contentOffset = self.previousOffset;
                                                         }
                                                         
-                                                        if ([[ContentManager shared] currentNewsPage] > 1 || categorySlug) {
-                                                          self.photoVideoTable.contentOffset = self.previousOffset;
+                                                        if (categorySlug && self.contentType == ScreenContentTypeCompositePage) {
+                                                          CGRect row = [self.photoVideoTable rectForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                                                          CGFloat maxY = CGRectGetMaxY(row);
+                                                          NSLog(@"short list rect - %@", NSStringFromCGRect(row));
+                                                          NSLog(@"short list maxY - %f", maxY);
+                                                          NSLog(@"photovideo table contentOffset - %@", NSStringFromCGPoint(self.photoVideoTable.contentOffset));
+                                                          self.photoVideoTable.contentOffset = CGPointMake(0.0, maxY);
+                                                          NSLog(@"photovideo table contentOffset now - %@", NSStringFromCGPoint(self.photoVideoTable.contentOffset));
                                                         }
                                                         
                                                         // Check if this is part of a p2r
@@ -1047,9 +1054,11 @@
 
 - (void)openSectionsTapped {
 
-  if ([self isSectionsOpen]) {
+  if (self.sectionsTableOpen) {
     return;
   }
+  
+  _sectionsTableOpen = YES;
   
   // Update the title bar UI
   [[[Utilities del] globalTitleBar] applyCategoriesUI];
@@ -1106,6 +1115,12 @@
 
 - (void)closeSectionsTapped {
   
+  if (!self.sectionsTableOpen) {
+    return;
+  }
+  
+  _sectionsTableOpen = NO;
+  
   // Update the title bar UI
   [[[Utilities del] globalTitleBar] removeCategoriesUI];
   
@@ -1142,11 +1157,6 @@
   }];
 }
 
-- (BOOL)isSectionsOpen {
-  return ([self.view.subviews containsObject:self.categoriesTableView]);
-}
-
-
 #pragma mark - SCPRNewsSectionDelegate
 - (void)sectionSelected:(NSString *)sectionSlug {
 
@@ -1158,23 +1168,27 @@
   [self closeSectionsTapped];
 }
 
+#pragma mark - Pull to Refresh
+- (void)pullToRefreshTriggered {
+  self.hardReset = YES;
+  [self.tableController.refreshControl beginRefreshing];
+  [self refreshTableContents:nil];
+  [[AnalyticsManager shared] logEvent: @"load_pulldown_refresh" withParameters:@{}];
+}
+
 
 #pragma mark - Refresh
 - (void)refreshTableContents:(NSString *)categorySlug {
+  NSLog(@"refreshing table contents withSlug: %@", categorySlug);
   
   self.lookupForDuplicates = [@{} mutableCopy];
   [[ContentManager shared] resetNewsContent];
   [[ContentManager shared] setCurrentNewsPage:1];
   
   if (categorySlug) {
-    self.previousOffset = self.photoVideoTable.contentOffset;
     [self fetchContent:categorySlug withCallback:nil];
-
   } else {
-    self.hardReset = YES;
-    [self.tableController.refreshControl beginRefreshing];
     [self fetchContent:nil withCallback:nil];
-    [[AnalyticsManager shared] logEvent: @"load_pulldown_refresh" withParameters:@{}];
   }
 }
 

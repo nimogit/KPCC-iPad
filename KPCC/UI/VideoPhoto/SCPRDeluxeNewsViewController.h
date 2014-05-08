@@ -35,6 +35,7 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) FXBlurView *categoriesBlurView;
 @property (nonatomic,strong) UIView *categoriesDarkView;
 @property (nonatomic,strong) NSString *currentNewsCategory;
+@property BOOL sectionsTableOpen;
 
 
 // Article, cell, social, short list data stores
@@ -92,12 +93,14 @@ typedef void (^FetchContentCallback)(BOOL);
 - (void)loadDummies:(BOOL)editions;
 - (void)prepTableTransition;
 
+// Pull to refresh components - only used on ScreenContentTypeCompositePage.
+- (void)pullToRefreshTriggered;
+- (void)refreshTableContents:(NSString*)categorySlug;
+
 - (NSArray*)newsForDayReferencedBySection:(NSInteger)section;
 - (NSArray*)sortedKeysForCellDates;
 - (NSMutableArray*)dateSort:(NSMutableArray*)articles;
-
 - (SCPRDeluxeEditionsCell*)editionCellFromEdition:(NSDictionary*)edition forceLoad:(BOOL)forceLoad;
-- (void)refreshTableContents:(NSString*)categorySlug;
 - (NSDictionary*)marshalledIndex:(NSDictionary*)article;
 
 // COMPOSITE PAGE REFACTOR
