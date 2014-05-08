@@ -1820,13 +1820,6 @@
 }
 
 
-# pragma mark - ContentProcessor *deprecated*
-/*- (void)handleProcessedContent:(NSArray *)content flags:(NSDictionary *)flags {
-}
-
-- (void)handleAdditionalContent:(NSArray *)content forTopic:(NSString *)topic {
-}*/
-
 #ifdef LOG_DEALLOCATIONS
 - (void)dealloc {
   NSLog(@"DEALLOCATING DELUXE NEWS VIEW CONTROLLER");
