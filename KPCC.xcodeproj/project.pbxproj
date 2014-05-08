@@ -1846,6 +1846,7 @@
 		76E698031909A05800D373BF /* sections_close_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E697FF1909A05800D373BF /* sections_close_icon.png */; };
 		76E698041909A05800D373BF /* sections_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E698001909A05800D373BF /* sections_icon.png */; };
 		76E698051909A05800D373BF /* sections_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E698011909A05800D373BF /* sections_icon@2x.png */; };
+		A4E561D4B96F480DA13CFFC0 /* libPods-KPCC iPad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E26265E2D24A4BB971374B /* libPods-KPCC iPad.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2930,6 +2931,7 @@
 		28DF6D33171DCAF7002F0F99 /* SCPRNewsPageContainerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRNewsPageContainerController.m; path = UI/NewsPage/SCPRNewsPageContainerController.m; sourceTree = "<group>"; };
 		28DF6D34171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRNewsPageContainerController.xib; path = UI/NewsPage/SCPRNewsPageContainerController.xib; sourceTree = "<group>"; };
 		28DF6D39171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRNewsPageContainerController_iPad.xib; path = UI/NewsPage/SCPRNewsPageContainerController_iPad.xib; sourceTree = "<group>"; };
+		6537323181BB4F1393CF905E /* Pods-KPCC iPad.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPCC iPad.xcconfig"; path = "Pods/Pods-KPCC iPad.xcconfig"; sourceTree = "<group>"; };
 		763B6207190EDC370021C530 /* SCPRNewsSectionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRNewsSectionTableViewController.h; path = UI/VideoPhoto/SCPRNewsSectionTableViewController.h; sourceTree = "<group>"; };
 		763B6208190EDC370021C530 /* SCPRNewsSectionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRNewsSectionTableViewController.m; path = UI/VideoPhoto/SCPRNewsSectionTableViewController.m; sourceTree = "<group>"; };
 		76658B5318E1F43800026176 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
@@ -2975,6 +2977,7 @@
 		76E697FF1909A05800D373BF /* sections_close_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sections_close_icon.png; sourceTree = "<group>"; };
 		76E698001909A05800D373BF /* sections_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sections_icon.png; sourceTree = "<group>"; };
 		76E698011909A05800D373BF /* sections_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sections_icon@2x.png"; sourceTree = "<group>"; };
+		C1E26265E2D24A4BB971374B /* libPods-KPCC iPad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPCC iPad.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3013,6 +3016,7 @@
 				28036AAE1718A344007DBDE2 /* CoreGraphics.framework in Frameworks */,
 				25A8249D1757C9310061C889 /* FacebookSDK.framework in Frameworks */,
 				25332B8E1760FD3F00ADAB3B /* Parse.framework in Frameworks */,
+				A4E561D4B96F480DA13CFFC0 /* libPods-KPCC iPad.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4424,6 +4428,7 @@
 				28683CC0170B9BBD00346B6E /* KPCC */,
 				28683CB9170B9BBD00346B6E /* Frameworks */,
 				28683CB8170B9BBD00346B6E /* Products */,
+				6537323181BB4F1393CF905E /* Pods-KPCC iPad.xcconfig */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -4473,6 +4478,7 @@
 				25A824A51757CFF50061C889 /* libsqlite3.dylib */,
 				28C9E7B8170DFB2F00ED18FB /* libz.dylib */,
 				28C9E7B6170DFB2500ED18FB /* libxml2.dylib */,
+				C1E26265E2D24A4BB971374B /* libPods-KPCC iPad.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4941,9 +4947,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28036AC61718A344007DBDE2 /* Build configuration list for PBXNativeTarget "KPCC iPad" */;
 			buildPhases = (
+				33F2928416DD4127868A42A8 /* Check Pods Manifest.lock */,
 				28036A7D1718A344007DBDE2 /* Sources */,
 				28036AA11718A344007DBDE2 /* Frameworks */,
 				28036AB21718A344007DBDE2 /* Resources */,
+				EE28B06421894B928CD484E4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -6507,6 +6515,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		33F2928416DD4127868A42A8 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EE28B06421894B928CD484E4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-KPCC iPad-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		28036A7D1718A344007DBDE2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -6906,6 +6947,7 @@
 		};
 		259210EF18315B0A001EDFB2 /* Production */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6537323181BB4F1393CF905E /* Pods-KPCC iPad.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
@@ -6921,8 +6963,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KPCC/KPCC-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					IPAD_VERSION,
 					"${inherited}",
+					IPAD_VERSION,
 					USE_PARSE,
 					USE_BACKGROUND_PERSISTENCE,
 					MOST_VIEWED_STYLE_FETCHING,
@@ -6934,7 +6976,7 @@
 					TURN_OFF_UNTESTED_FEATURES,
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/KPCC/KPCC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -6943,7 +6985,11 @@
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "C3535C4B-4E4E-453A-A8E9-271BB543A3C1";
@@ -7030,6 +7076,7 @@
 		};
 		25E21ACF183ADA660057E91D /* NFR */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6537323181BB4F1393CF905E /* Pods-KPCC iPad.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUNDLE_ID = org.scpr.ipad.kpcc;
@@ -7045,8 +7092,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KPCC/KPCC-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					IPAD_VERSION,
 					"${inherited}",
+					IPAD_VERSION,
 					USE_PARSE,
 					USE_BACKGROUND_PERSISTENCE,
 					MOST_VIEWED_STYLE_FETCHING,
@@ -7055,7 +7102,7 @@
 					VERBOSE_VERSION,
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/KPCC/KPCC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -7064,7 +7111,11 @@
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "";
@@ -7078,6 +7129,7 @@
 		};
 		28036AC71718A344007DBDE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6537323181BB4F1393CF905E /* Pods-KPCC iPad.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
@@ -7092,8 +7144,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KPCC/KPCC-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					IPAD_VERSION,
 					"${inherited}",
+					IPAD_VERSION,
 					USE_BACKGROUND_PERSISTENCE,
 					SANDBOX_PUSHES,
 					SUPPORT_LANDSCAPE,
@@ -7105,7 +7157,7 @@
 					FORCE_MAIN_THREAD_SETTINGS,
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/KPCC/KPCC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -7114,7 +7166,11 @@
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "98B9414C-9ACD-47B5-9BB1-862462A71141";
@@ -7128,6 +7184,7 @@
 		};
 		28036AC81718A344007DBDE2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6537323181BB4F1393CF905E /* Pods-KPCC iPad.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
@@ -7143,8 +7200,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KPCC/KPCC-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					IPAD_VERSION,
 					"${inherited}",
+					IPAD_VERSION,
 					USE_PARSE,
 					USE_BACKGROUND_PERSISTENCE,
 					MOST_VIEWED_STYLE_FETCHING,
@@ -7155,7 +7212,7 @@
 					TURN_OFF_LOGGING,
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/KPCC/KPCC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -7164,7 +7221,11 @@
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "C3535C4B-4E4E-453A-A8E9-271BB543A3C1";
