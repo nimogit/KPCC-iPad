@@ -1050,6 +1050,10 @@
 
 - (void)openSectionsTapped {
 
+  if ([self isSectionsOpen]) {
+    return;
+  }
+  
   // Update the title bar UI
   [[[Utilities del] globalTitleBar] applyCategoriesUI];
   
@@ -1139,6 +1143,10 @@
     // Re-enable  interaction with news table
     self.photoVideoTable.userInteractionEnabled = YES;
   }];
+}
+
+- (BOOL)isSectionsOpen {
+  return ([self.view.subviews containsObject:self.categoriesTableView]);
 }
 
 
