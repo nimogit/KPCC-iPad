@@ -208,13 +208,14 @@
                                                         __block NSArray *allChunk = (NSArray*)[allResponse JSONValue];
                                                         [currentFetchedArticles addObjectsFromArray: allChunk];
                                                         
-                                                        if ( [[ContentManager shared] currentNewsPage] > 1 ) {
-                                                          
+                                                        if ([[ContentManager shared] currentNewsPage] > 1) {
                                                           NSMutableArray *composite = [[self.rawArticleHash objectForKey:@"general"] mutableCopy];
                                                           [composite addObjectsFromArray:allChunk];
                                                           allChunk = [NSArray arrayWithArray:composite];
+                                                        }
+                                                        
+                                                        if ([[ContentManager shared] currentNewsPage] > 1 || categorySlug) {
                                                           self.photoVideoTable.contentOffset = self.previousOffset;
-                                                          
                                                         }
                                                         
                                                         // Check if this is part of a p2r
@@ -452,8 +453,6 @@
         
 
         NSString *hash = [article objectForKey:@"id"];
-        
-        //NSLog(@"ARTICLE : %@",hash);
         
         // Look for editions
         if ( [article objectForKey:@"abstracts"] ) {
@@ -1011,8 +1010,6 @@
 
 - (SCPRDeluxeEditionsCell*)editionCellFromEdition:(NSDictionary *)edition forceLoad:(BOOL)forceLoad {
 
-  NSLog(@"## Building edition cell from edition");
-
   NSString *editionPD = [edition objectForKey:@"published_at"];
   if ( !editionPD ) {
     editionPD = @"DUMMY";
@@ -1166,14 +1163,16 @@
 - (void)refreshTableContents:(NSString *)categorySlug {
   
   self.lookupForDuplicates = [@{} mutableCopy];
-  self.hardReset = YES;
-  [self.tableController.refreshControl beginRefreshing];
   [[ContentManager shared] resetNewsContent];
   [[ContentManager shared] setCurrentNewsPage:1];
   
   if (categorySlug) {
+    self.previousOffset = self.photoVideoTable.contentOffset;
     [self fetchContent:categorySlug withCallback:nil];
+
   } else {
+    self.hardReset = YES;
+    [self.tableController.refreshControl beginRefreshing];
     [self fetchContent:nil withCallback:nil];
     [[AnalyticsManager shared] logEvent: @"load_pulldown_refresh" withParameters:@{}];
   }

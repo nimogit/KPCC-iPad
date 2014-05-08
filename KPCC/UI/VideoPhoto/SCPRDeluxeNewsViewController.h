@@ -29,11 +29,12 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) IBOutlet UIView *spinnerFooter;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *loadingMoreNewsSpinner;
 
-// For Categories table overlay
+// For Sections UI and data handling - only used on ScreenContentTypeCompositePage.
 @property (nonatomic,strong) UITableView *categoriesTableView;
 @property (nonatomic,strong) SCPRNewsSectionTableViewController *categoriesTableViewController;
 @property (nonatomic,strong) FXBlurView *categoriesBlurView;
 @property (nonatomic,strong) UIView *categoriesDarkView;
+@property (nonatomic,strong) NSString *currentNewsCategory;
 
 
 // Article, cell, social, short list data stores
