@@ -213,113 +213,105 @@
           [[ContentManager shared] setCurrentNewsPage:cp];
         }
         
-        NSString *urlString = [NSString stringWithFormat:@"%@/buckets/mobile-featured?limit=16",kServerBase];
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[[NSOperationQueue alloc] init]
-                               completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
-                                 
-                                 if ( e ) {
-                                   [[AnalyticsManager shared] failureFetchingContent:urlString];
-                                   return;
-                                 }
-                                 
-                                 NSString *dataString = [[NSString alloc] initWithData:d
-                                                                              encoding:NSUTF8StringEncoding];
-                                 
-                                 if ( !dataString ) {
-                                   [[AnalyticsManager shared] failureFetchingContent:urlString];
-                                   return;
-                                 }
-                                 
-                                 id chunk = [dataString JSONValue];
-                                 if ( chunk ) {
-                                   
-                                   NSDictionary *bucket = (NSDictionary*)chunk;
-                                   NSMutableArray *articles = [[bucket objectForKey:@"articles"] mutableCopy];
-                                   if ( [articles count] >= 16 ) {
-                                     articles = [[articles subarrayWithRange:NSMakeRange(0, 14)] mutableCopy];
-                                   }
-                                   
+        
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSString *mobileFeaturedUrl = [NSString stringWithFormat:@"%@/buckets/mobile-featured?limit=16",kServerBase];
+        [manager GET:mobileFeaturedUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+          if (responseObject) {
+            
+            NSDictionary *bucket = (NSDictionary*)responseObject;
+            
+            
+            NSMutableArray *articles = [[bucket objectForKey:@"articles"] mutableCopy];
+            if ( [articles count] >= 16 ) {
+              articles = [[articles subarrayWithRange:NSMakeRange(0, 14)] mutableCopy];
+            }
+            
 #ifdef DEBUG
-                                   /************************/
-                                   // -- Developer Note --
-                                   //
-                                   // In debug, always embiggen 1 article for testing purposes
-                                   //
-                                   NSArray *incumbent = [self.rawArticleHash objectForKey:@"general"];
-                                   NSDictionary *realArticle = [incumbent objectAtIndex:5];
-                                   BOOL okToAdd = YES;
-                                   for ( NSDictionary *article in articles ) {
-                                     if ( [Utilities article:article isSameAs:realArticle] ) {
-                                       okToAdd = NO;
-                                       break;
-                                     }
-                                   }
-                                   
-                                   if ( okToAdd ) {
-                                     [articles addObject:realArticle];
-                                   }
+            /************************/
+            // -- Developer Note --
+            //
+            // In debug, always embiggen 1 article for testing purposes
+            //
+            NSArray *incumbent = [self.rawArticleHash objectForKey:@"general"];
+            NSDictionary *realArticle = [incumbent objectAtIndex:5];
+            BOOL okToAdd = YES;
+            for ( NSDictionary *article in articles ) {
+              if ( [Utilities article:article isSameAs:realArticle] ) {
+                okToAdd = NO;
+                break;
+              }
+            }
+            
+            if ( okToAdd ) {
+              [articles addObject:realArticle];
+            }
 #endif
-                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                     [UIView animateWithDuration:0.22 animations:^{
-                                       self.loadingMoreNewsSpinner.alpha = 0.0;
-                                       self.photoVideoTable.scrollEnabled = YES;
-                                     } completion:^(BOOL finished) {
-                                       [self applyEmbiggening:articles withCallback:callback];
-                                     }];
-                                     
-                                     
-                                     // Add the most recent embiggened article
-                                     if ([articles count] >= 1) {
-                                       [currentFetchedArticles addObject:[articles objectAtIndex:0]];
-                                     }
-                                     
-                                     // Construct an array of ids from articles.
-                                     NSMutableArray *articleIdArray = [[NSMutableArray alloc]init];
-                                     for (NSDictionary *article  in currentFetchedArticles) {
-                                       if ([article objectForKey:@"id"]) {
-                                         [articleIdArray addObject:[article objectForKey:@"id"]];
-                                       }
-                                     }
-                                     
-                                     // Make request to our Parse Cloud Code function and retrieve social share counts for given articles.
-                                     [PFCloud callFunctionInBackground:@"social_data"
-                                                        withParameters:@{@"articleIds": articleIdArray}
-                                                                 block:^(NSDictionary *results, NSError *error) {
-                                                                   
-                                                                   if (!error) {
-                                                                     if (!self.socialShareCountHash) {
-                                                                       self.socialShareCountHash = [[NSMutableDictionary alloc] init];
-                                                                     }
-                                                                     
-                                                                     for (NSDictionary *eachArticle in results) {
-                                                                       if ([[results objectForKey:eachArticle] objectForKey:@"facebook_count"] && [[results objectForKey:eachArticle] objectForKey:@"twitter_count"]){
-                                                                         [self.socialShareCountHash setObject:[results objectForKey:eachArticle] forKey:eachArticle];
-                                                                       }
-                                                                     }
-                                                                     [self.photoVideoTable reloadData];
-                                                                   }
-                                                                 }];
-                                     
-                                   }); // Dispatch in background closure
-                                   
-                                 } // if ( chunk )
-                                 
-                               }]; // Asynch request to mobile-featured bucket
+            dispatch_async(dispatch_get_main_queue(), ^{
+              [UIView animateWithDuration:0.22 animations:^{
+                self.loadingMoreNewsSpinner.alpha = 0.0;
+                self.photoVideoTable.scrollEnabled = YES;
+              } completion:^(BOOL finished) {
+                [self applyEmbiggening:articles withCallback:callback];
+              }];
+              
+              
+              // Add the most recent embiggened article
+              if ([articles count] >= 1) {
+                [currentFetchedArticles addObject:[articles objectAtIndex:0]];
+              }
+              
+              // Construct an array of ids from articles.
+              NSMutableArray *articleIdArray = [[NSMutableArray alloc]init];
+              for (NSDictionary *article  in currentFetchedArticles) {
+                if ([article objectForKey:@"id"]) {
+                  [articleIdArray addObject:[article objectForKey:@"id"]];
+                }
+              }
+              
+              // Make request to our Parse Cloud Code function and retrieve social share counts for given articles.
+              [PFCloud callFunctionInBackground:@"social_data"
+                                 withParameters:@{@"articleIds": articleIdArray}
+                                          block:^(NSDictionary *results, NSError *error) {
+                                            
+                                            if (!error) {
+                                              if (!self.socialShareCountHash) {
+                                                self.socialShareCountHash = [[NSMutableDictionary alloc] init];
+                                              }
+                                              
+                                              for (NSDictionary *eachArticle in results) {
+                                                if ([[results objectForKey:eachArticle] objectForKey:@"facebook_count"] && [[results objectForKey:eachArticle] objectForKey:@"twitter_count"]){
+                                                  [self.socialShareCountHash setObject:[results objectForKey:eachArticle] forKey:eachArticle];
+                                                }
+                                              }
+                                              [self.photoVideoTable reloadData];
+                                            }
+                                          }];
+              
+            }); // Dispatch in background closure
+            
+          }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          
+          NSLog(@"Error: %@", error);
+          [[AnalyticsManager shared] failureFetchingContent:mobileFeaturedUrl];
+          return;
+        
+        }];
         
         
       }); // Dispatch in background closure
       
-      
-      
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    NSLog(@"Error: %@", error);
-  }];
 
+    NSLog(@"Error: %@", error);
+    [[AnalyticsManager shared] failureFetchingContent:requestStr];
+    return;
+  }];
 
 }
 
