@@ -57,7 +57,13 @@
   cell.backgroundColor = [UIColor clearColor];
   cell.textLabel.textColor = [UIColor whiteColor];
   cell.textLabel.text = [[self.sections objectAtIndex:indexPath.row] objectForKey:@"title"];
-  cell.textLabel.font = [[DesignManager shared] latoLight:29.0f];
+  
+  if (self.currentSectionSlug && [self.currentSectionSlug isEqualToString:[[self.sections objectAtIndex:indexPath.row] objectForKey:@"slug"]]) {
+    cell.textLabel.font = [[DesignManager shared] latoRegular:29.0f];
+  } else {
+    cell.textLabel.font = [[DesignManager shared] latoLight:29.0f];
+  }
+  
   
   if (![Utilities isIOS7]) {
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

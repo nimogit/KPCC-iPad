@@ -1077,9 +1077,9 @@
 
   // Init categories table controller and set delegates
   self.categoriesTableViewController = [[SCPRNewsSectionTableViewController alloc] init];
+  self.categoriesTableViewController.currentSectionSlug = self.currentNewsCategory;
   self.categoriesTableView = self.categoriesTableViewController.tableView;
   self.categoriesTableViewController.sectionsDelegate = self;
-
   
   // Init blur view and view to darken the news table in the background.
   self.categoriesBlurView = [[FXBlurView alloc] initWithFrame:self.view.frame];

@@ -19,5 +19,6 @@
 
 @property (nonatomic,weak) id<SCPRNewsSectionDelegate> sectionsDelegate;
 @property (nonatomic,strong) NSMutableArray *sections;
+@property (nonatomic,strong) NSString *currentSectionSlug;
 
 @end
