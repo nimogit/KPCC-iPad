@@ -24,9 +24,8 @@
 
 @interface SCPRDeluxeNewsViewController ()
 
-//@property (strong, nonatomic) SCPRControllerOverlayAnimator* animator;
-
 @property (strong, nonatomic) NSDate *startTime;
+
 @end
 
 @implementation SCPRDeluxeNewsViewController
@@ -156,8 +155,6 @@
 # pragma mark - Network Calls
 - (void)fetchContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
 
-  self.startTime = [NSDate date];
-
   self.articleMapPerDate = [@{} mutableCopy];
   
   AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -188,247 +185,16 @@
           // Fetch content from Articles endpoint
           [self fetchArticleData:categorySlug withCallback:callback];
         }];
-        
       });
-
     }
-    
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"Error: %@", error);
   }];
-
-  
-  
-  /**
-   * OLD!
-   */
-  /*
-  NSString *urlString = [NSString stringWithFormat:@"%@/editions?limit=1",kServerBase];
-  NSURL *url = [NSURL URLWithString:urlString];
-  __block NSURLRequest *req = [NSURLRequest requestWithURL:url];
-
-  [NSURLConnection sendAsynchronousRequest:req
-                                     queue:[[NSOperationQueue alloc] init]
-                         completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                           
-                       if ( connectionError ) {
-                         NSLog(@"Problem with Editionals... : %@",[connectionError userInfo]);
-                         return;
-                       }
-                       
-                       if ( data ) {
-                         
-                         NSString *s = [[NSString alloc] initWithData:data
-                                                             encoding:NSUTF8StringEncoding];
-                         
-                         NSArray *shortLists = (NSArray*)[s JSONValue];
-                         self.editionsData = shortLists;
-
-                         
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                           
-                           [self setHasAShortList:YES];
-                           
-                           if ([[ContentManager shared] currentNewsPage] == 1) {
-                             [self prepTableTransition];
-                             [self.photoVideoTable reloadData];
-                           }
-                           
-                           [UIView animateWithDuration:0.22 animations:^{
-                             self.loadingMoreNewsSpinner.alpha = 1.0;
-                             self.photoVideoTable.scrollEnabled = NO;
-                           } completion:^(BOOL finished) {
-                             
-                             [self.loadingMoreNewsSpinner startAnimating];
-
-                             NSString *allstr;
-                             if (categorySlug) {
-                               allstr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d&categories=%@",kServerBase,[[ContentManager shared] currentNewsPage], categorySlug];
-                             } else {
-                               allstr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d",kServerBase,[[ContentManager shared] currentNewsPage]];
-                             }
-                             
-                             
-                             NSURL *allUrl = [NSURL URLWithString:allstr];
-                             NSURLRequest *allReq = [NSURLRequest requestWithURL:allUrl];
-                             [NSURLConnection sendAsynchronousRequest:allReq
-                                                                queue:[[NSOperationQueue alloc] init]
-                                                    completionHandler:^(NSURLResponse *allR, NSData *allD, NSError *allE) {
-                                                      
-                                                      if ( allE ) {
-                                                        [[AnalyticsManager shared] failureFetchingContent:allstr];
-                                                        return;
-                                                      }
-                                                      NSString *allResponse = [[NSString alloc]
-                                                                               initWithData:allD
-                                                                               encoding:NSUTF8StringEncoding];
-                                                      
-                                                      NSMutableArray *currentFetchedArticles = [[NSMutableArray alloc] init];
-                                                      
-                                                      if ( allResponse ) {
-                                                        __block NSArray *allChunk = (NSArray*)[allResponse JSONValue];
-                                                        [currentFetchedArticles addObjectsFromArray: allChunk];
-                                                        
-                                                        if ([[ContentManager shared] currentNewsPage] > 1) {
-                                                          NSMutableArray *composite = [[self.rawArticleHash objectForKey:@"general"] mutableCopy];
-                                                          [composite addObjectsFromArray:allChunk];
-                                                          allChunk = [NSArray arrayWithArray:composite];
-                                                          self.photoVideoTable.contentOffset = self.previousOffset;
-                                                        }
-                                                        
-                                                        if (categorySlug && self.contentType == ScreenContentTypeCompositePage) {
-                                                          CGRect row = [self.photoVideoTable rectForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                                                          CGFloat maxY = CGRectGetMaxY(row);
-                                                          NSLog(@"short list rect - %@", NSStringFromCGRect(row));
-                                                          NSLog(@"short list maxY - %f", maxY);
-                                                          NSLog(@"photovideo table contentOffset - %@", NSStringFromCGPoint(self.photoVideoTable.contentOffset));
-                                                          self.photoVideoTable.contentOffset = CGPointMake(0.0, maxY);
-                                                          NSLog(@"photovideo table contentOffset now - %@", NSStringFromCGPoint(self.photoVideoTable.contentOffset));
-                                                        }
-                                                        
-                                                        // Check if this is part of a p2r
-                                                        if ( self.hardReset ) {
-                                                          self.hardReset = NO;
-                                                          [self.tableController.refreshControl endRefreshing];
-                                                        }
-                                                        
-                                                        self.rawArticleHash = [@{ @"general" : allChunk,
-                                                                                  @"lookup" : @{} } mutableCopy];
- 
-                                                        // -- Developer Note --
-                                                        // Give the QueueManager a reference to the latest news so if the user
-                                                        // launches the queue and asks for 5 stories there are articles to work with
-                                                        //
-                                                        [[QueueManager shared] setStories:self.rawArticleHash];
-                                                        
-                                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                                          
-                                                          if ( self.lockPageCount ) {
-                                                            self.lockPageCount = NO;
-                                                          } else {
-                                                            NSInteger cp = [[ContentManager shared] currentNewsPage];
-                                                            cp++;
-                                                            [[ContentManager shared] setCurrentNewsPage:cp];
-                                                          }
-                                                          
-                                                            NSString *urlString = [NSString stringWithFormat:@"%@/buckets/mobile-featured?limit=16",kServerBase];
-                                                            NSURL *url = [NSURL URLWithString:urlString];
-                                                            NSURLRequest *request = [NSURLRequest requestWithURL:url];
-                                                            [NSURLConnection sendAsynchronousRequest:request
-                                                                                               queue:[[NSOperationQueue alloc] init]
-                                                                                   completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
-                                                                                     
-                                                                                     if ( e ) {
-                                                                                       [[AnalyticsManager shared] failureFetchingContent:urlString];
-                                                                                       return;
-                                                                                     }
-                                                                                    
-                                                                                     NSString *dataString = [[NSString alloc] initWithData:d
-                                                                                                                                  encoding:NSUTF8StringEncoding];
-                                                                                     
-                                                                                     if ( !dataString ) {
-                                                                                       [[AnalyticsManager shared] failureFetchingContent:urlString];
-                                                                                       return;
-                                                                                     }
-                                                                                     
-                                                                                     id chunk = [dataString JSONValue];
-                                                                                     if ( chunk ) {
-                                                                                       
-                                                                                       NSDictionary *bucket = (NSDictionary*)chunk;
-                                                                                       NSMutableArray *articles = [[bucket objectForKey:@"articles"] mutableCopy];
-                                                                                       if ( [articles count] >= 16 ) {
-                                                                                         articles = [[articles subarrayWithRange:NSMakeRange(0, 14)] mutableCopy];
-                                                                                       }
-                                                                                       
-#ifdef DEBUG
-                                                                                       // -- Developer Note --
-                                                                                       //
-                                                                                       // In debug, always embiggen 1 article for testing purposes
-                                                                                       //
-                                                                                       NSArray *incumbent = [self.rawArticleHash objectForKey:@"general"];
-                                                                                       NSDictionary *realArticle = [incumbent objectAtIndex:5];
-                                                                                       BOOL okToAdd = YES;
-                                                                                       for ( NSDictionary *article in articles ) {
-                                                                                         if ( [Utilities article:article isSameAs:realArticle] ) {
-                                                                                           okToAdd = NO;
-                                                                                           break;
-                                                                                         }
-                                                                                       }
-                                                                                       
-                                                                                       if ( okToAdd ) {
-                                                                                         [articles addObject:realArticle];
-                                                                                       }
-#endif
-                                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                         [UIView animateWithDuration:0.22 animations:^{
-                                                                                           self.loadingMoreNewsSpinner.alpha = 0.0;
-                                                                                           self.photoVideoTable.scrollEnabled = YES;
-                                                                                         } completion:^(BOOL finished) {
-                                                                                           [self applyEmbiggening:articles withCallback:callback];
-                                                                                         }];
-                                                                                         
-                                                                                         
-                                                                                         // Add the most recent embiggened article
-                                                                                         if ([articles count] >= 1) {
-                                                                                           [currentFetchedArticles addObject:[articles objectAtIndex:0]];
-                                                                                         }
-
-                                                                                         // Construct an array of ids from articles.
-                                                                                         NSMutableArray *articleIdArray = [[NSMutableArray alloc]init];
-                                                                                         for (NSDictionary *article  in currentFetchedArticles) {
-                                                                                           if ([article objectForKey:@"id"]) {
-                                                                                             [articleIdArray addObject:[article objectForKey:@"id"]];
-                                                                                           }
-                                                                                         }
-
-                                                                                         // Make request to our Parse Cloud Code function and retrieve social share counts for given articles.
-                                                                                         [PFCloud callFunctionInBackground:@"social_data"
-                                                                                                            withParameters:@{@"articleIds": articleIdArray}
-                                                                                                                     block:^(NSDictionary *results, NSError *error) {
-                                                                                                                       
-                                                                                                                       if (!error) {
-                                                                                                                         if (!self.socialShareCountHash) {
-                                                                                                                           self.socialShareCountHash = [[NSMutableDictionary alloc] init];
-                                                                                                                         }
-                                                                                                                         
-                                                                                                                         for (NSDictionary *eachArticle in results) {
-                                                                                                                           if ([[results objectForKey:eachArticle] objectForKey:@"facebook_count"] && [[results objectForKey:eachArticle] objectForKey:@"twitter_count"]){
-                                                                                                                             [self.socialShareCountHash setObject:[results objectForKey:eachArticle] forKey:eachArticle];
-                                                                                                                           }
-                                                                                                                         }
-                                                                                                                         [self.photoVideoTable reloadData];
-
-                                                                                                                       }
-                                                                                                                     }];
-
-                                                                                       }); // Dispatch in background closure
-                                                                                       
-                                                                                     } // if ( chunk )
-                                                                                     
-                                                                                   }]; // Asynch request to mobile-featured bucket
-
-                                                          
-                                                        }); // Dispatch in background closure
-                                                        
-                                                      } // if ( allResponse )
-                                                      
-                                                    }]; // Aysnchronous request to articles endpoint
-                           }]; // Animation completion of loading spinner
-                           
-
-            
-                           
-                         }); // Dispatch on main queue closure
-                         
-                         
-                       } // if ( data )
-                       
-                     }]; // Asynchronous request out to editions endpoint
-
-  */
 }
 
 - (void)fetchArticleData:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
+  
+  self.startTime = [NSDate date];
   
   NSString *requestStr;
   if (categorySlug) {
@@ -490,7 +256,7 @@
         }
         
         // Skip fetch from Mobile-Featured bucket
-        if ([[ContentManager shared] currentNewsPage] >= 2) {
+        if ([[ContentManager shared] currentNewsPage] < 2) {
 
           NSLog(@"skipping mobile featured");
 
