@@ -162,15 +162,19 @@
   }
   
   AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+  manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions: NSJSONReadingMutableContainers];
   [manager GET:requestStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
     
     if (responseObject && [responseObject isKindOfClass:[NSArray class]]) {
 
-      NSMutableArray *currentFetchedArticles = [[NSMutableArray alloc] init];
-
-      __block NSArray *allChunk = (NSArray*)responseObject;
-      [currentFetchedArticles addObjectsFromArray: allChunk];
+      __block NSArray *allChunk = (NSMutableArray*)responseObject;
+      NSMutableArray *currentFetchedArticles = [[NSMutableArray alloc] initWithArray:allChunk];
       
+      // -- Developer Note --
+      // If scrolling past the first news page
+      // 1) Grab old articles from rawArticleHash and append new articles to it
+      // 2) Match content offset of the tableView to the previous one
       if ([[ContentManager shared] currentNewsPage] > 1) {
         NSMutableArray *composite = [[self.rawArticleHash objectForKey:@"general"] mutableCopy];
         [composite addObjectsFromArray:allChunk];
@@ -178,19 +182,16 @@
         self.photoVideoTable.contentOffset = self.previousOffset;
       }
       
+      // If filtering news by Category, save previous content offset the tableView
       if (categorySlug && self.contentType == ScreenContentTypeCompositePage) {
-        CGRect row = [self.photoVideoTable rectForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        CGFloat maxY = CGRectGetMaxY(row);
-        NSLog(@"short list rect - %@", NSStringFromCGRect(row));
-        NSLog(@"short list maxY - %f", maxY);
-        NSLog(@"photovideo table contentOffset - %@", NSStringFromCGPoint(self.photoVideoTable.contentOffset));
-        self.photoVideoTable.contentOffset = CGPointMake(0.0, maxY);
-        NSLog(@"photovideo table contentOffset now - %@", NSStringFromCGPoint(self.photoVideoTable.contentOffset));
+        _performingSectionFilter = YES;
+        self.photoVideoTable.contentOffset = self.previousOffset;
       }
       
-      // Check if this is part of a p2r
-      if ( self.hardReset ) {
+      // Check if this is part of a pull to refresh
+      if (self.hardReset) {
         self.hardReset = NO;
+        self.currentNewsCategory = nil;
         [self.tableController.refreshControl endRefreshing];
       }
       
@@ -200,12 +201,11 @@
       // -- Developer Note --
       // Give the QueueManager a reference to the latest news so if the user
       // launches the queue and asks for 5 stories there are articles to work with
-      //
       [[QueueManager shared] setStories:self.rawArticleHash];
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
-        if ( self.lockPageCount ) {
+        if (self.lockPageCount) {
           self.lockPageCount = NO;
         } else {
           NSInteger cp = [[ContentManager shared] currentNewsPage];
@@ -213,39 +213,30 @@
           [[ContentManager shared] setCurrentNewsPage:cp];
         }
         
-        
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSString *mobileFeaturedUrl = [NSString stringWithFormat:@"%@/buckets/mobile-featured?limit=16",kServerBase];
+        //AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSString *mobileFeaturedUrl = [NSString stringWithFormat:@"%@/buckets/mobile-featured?limit=8",kServerBase];
         [manager GET:mobileFeaturedUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
           if (responseObject) {
             
             NSDictionary *bucket = (NSDictionary*)responseObject;
-            
-            
             NSMutableArray *articles = [[bucket objectForKey:@"articles"] mutableCopy];
-            if ( [articles count] >= 16 ) {
-              articles = [[articles subarrayWithRange:NSMakeRange(0, 14)] mutableCopy];
+            if ([articles count] >= 8) {
+              articles = [[articles subarrayWithRange:NSMakeRange(0, 6)] mutableCopy];
             }
             
 #ifdef DEBUG
-            /************************/
             // -- Developer Note --
-            //
             // In debug, always embiggen 1 article for testing purposes
-            //
-            NSArray *incumbent = [self.rawArticleHash objectForKey:@"general"];
-            NSDictionary *realArticle = [incumbent objectAtIndex:5];
+            NSDictionary *realArticle = [[self.rawArticleHash objectForKey:@"general"] objectAtIndex:5];
             BOOL okToAdd = YES;
-            for ( NSDictionary *article in articles ) {
-              if ( [Utilities article:article isSameAs:realArticle] ) {
+            for (NSDictionary *article in articles) {
+              if ([Utilities article:article isSameAs:realArticle]) {
                 okToAdd = NO;
                 break;
               }
             }
-            
-            if ( okToAdd ) {
+            if (okToAdd) {
               [articles addObject:realArticle];
             }
 #endif
@@ -256,54 +247,25 @@
               } completion:^(BOOL finished) {
                 [self applyEmbiggening:articles withCallback:callback];
               }];
-              
-              
-              // Add the most recent embiggened article
+
+              // Grab the most recent article from the Mobile Featured bucket so we can scan Parse for it
               if ([articles count] >= 1) {
                 [currentFetchedArticles addObject:[articles objectAtIndex:0]];
               }
               
-              // Construct an array of ids from articles.
-              NSMutableArray *articleIdArray = [[NSMutableArray alloc]init];
-              for (NSDictionary *article  in currentFetchedArticles) {
-                if ([article objectForKey:@"id"]) {
-                  [articleIdArray addObject:[article objectForKey:@"id"]];
-                }
-              }
-              
-              // Make request to our Parse Cloud Code function and retrieve social share counts for given articles.
-              [PFCloud callFunctionInBackground:@"social_data"
-                                 withParameters:@{@"articleIds": articleIdArray}
-                                          block:^(NSDictionary *results, NSError *error) {
-                                            
-                                            if (!error) {
-                                              if (!self.socialShareCountHash) {
-                                                self.socialShareCountHash = [[NSMutableDictionary alloc] init];
-                                              }
-                                              
-                                              for (NSDictionary *eachArticle in results) {
-                                                if ([[results objectForKey:eachArticle] objectForKey:@"facebook_count"] && [[results objectForKey:eachArticle] objectForKey:@"twitter_count"]){
-                                                  [self.socialShareCountHash setObject:[results objectForKey:eachArticle] forKey:eachArticle];
-                                                }
-                                              }
-                                              [self.photoVideoTable reloadData];
-                                            }
-                                          }];
+              // Make a call to Parse and fetch social data for the current set of fetched articles
+              [self fetchSocialDataForArticles:currentFetchedArticles];
               
             }); // Dispatch in background closure
-            
           }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          
-          NSLog(@"Error: %@", error);
+
           [[AnalyticsManager shared] failureFetchingContent:mobileFeaturedUrl];
           return;
-        
-        }];
-        
+
+        }]; // Fetch from Mobile-Featured endpoint
         
       }); // Dispatch in background closure
-      
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -311,8 +273,38 @@
     NSLog(@"Error: %@", error);
     [[AnalyticsManager shared] failureFetchingContent:requestStr];
     return;
-  }];
+  }]; // Fetch from Articles endpoint
 
+}
+
+- (void)fetchSocialDataForArticles:(NSArray *)articles{
+  
+  // Construct an array of ids from articles.
+  NSMutableArray *articleIdArray = [[NSMutableArray alloc]init];
+  for (NSDictionary *article  in articles) {
+    if ([article objectForKey:@"id"]) {
+      [articleIdArray addObject:[article objectForKey:@"id"]];
+    }
+  }
+  
+  // Make request to our Parse Cloud Code function and retrieve social share counts for given articles.
+  [PFCloud callFunctionInBackground:@"social_data"
+                     withParameters:@{@"articleIds": articleIdArray}
+                              block:^(NSDictionary *results, NSError *error) {
+                                
+                                if (!error) {
+                                  if (!self.socialShareCountHash) {
+                                    self.socialShareCountHash = [[NSMutableDictionary alloc] init];
+                                  }
+                                  
+                                  for (NSDictionary *eachArticle in results) {
+                                    if ([[results objectForKey:eachArticle] objectForKey:@"facebook_count"] && [[results objectForKey:eachArticle] objectForKey:@"twitter_count"]){
+                                      [self.socialShareCountHash setObject:[results objectForKey:eachArticle] forKey:eachArticle];
+                                    }
+                                  }
+                                  [self.photoVideoTable reloadData];
+                                }
+                              }];
 }
 
 - (void)fetchContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
@@ -343,16 +335,14 @@
         } completion:^(BOOL finished) {
           
           [self.loadingMoreNewsSpinner startAnimating];
-          
 
+          // Fetch content from Articles endpoint
           [self fetchArticleData:categorySlug withCallback:callback];
-
         }];
         
       });
 
     }
-    
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"Error: %@", error);
@@ -584,8 +574,8 @@
                        } // if ( data )
                        
                      }]; // Asynchronous request out to editions endpoint
-*/
-  
+
+  */
 }
 
 - (void)applyEmbiggening:(NSMutableArray *)mobileFeatured withCallback:(FetchContentCallback)callback {
@@ -610,7 +600,6 @@
   [bhM setObject:newLookup forKey:@"lookup"];
   self.rawArticleHash = [[NSDictionary dictionaryWithDictionary:bhM] mutableCopy];
   [self sortNewsData:callback];
-  
 }
 
 
@@ -812,9 +801,26 @@
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
+
         self.cacheMutex = NO;
         [self prepTableTransition];
         [self.photoVideoTable reloadData];
+        
+        // If filtering by Section, adjust content offset of tableView to proper location
+        if (self.performingSectionFilter) {
+          _performingSectionFilter = NO;
+          
+          if ([[ContentManager shared] currentNewsPage] <= 2) {
+            [UIView animateWithDuration:0.5 animations:^{
+              NSLog(@"animating");
+              self.photoVideoTable.contentOffset = CGPointMake(0.0, self.dummyEditions.frame.size.height);
+            }];
+          } else {
+            self.photoVideoTable.contentOffset = self.previousOffset;
+          }
+          
+          NSLog(@"### -- IN sortNews - after reload %@", NSStringFromCGPoint( self.photoVideoTable.contentOffset));
+        }
         
       });
       
@@ -1265,7 +1271,7 @@
   if (self.sectionsTableOpen) {
     return;
   }
-  
+  NSLog(@"### what is table offset now? %@", NSStringFromCGPoint( self.photoVideoTable.contentOffset));
   _sectionsTableOpen = YES;
   
   // Update the title bar UI
@@ -1367,11 +1373,9 @@
 
 #pragma mark - SCPRNewsSectionDelegate
 - (void)sectionSelected:(NSString *)sectionSlug {
-
-  NSLog(@"sectionSelected %@", sectionSlug);
   [self closeSectionsTapped];
-
-  [self refreshTableContents:sectionSlug];
+  self.currentNewsCategory = sectionSlug;
+  [self refreshTableContents:self.currentNewsCategory];
 }
 
 #pragma mark - Pull to Refresh
@@ -1392,7 +1396,8 @@
   [[ContentManager shared] setCurrentNewsPage:1];
   
   if (categorySlug) {
-    [self fetchContent:categorySlug withCallback:nil];
+    self.previousOffset = self.photoVideoTable.contentOffset;
+    [self fetchArticleData:categorySlug withCallback:nil];
   } else {
     [self fetchContent:nil withCallback:nil];
   }
@@ -1429,12 +1434,12 @@
     
     [self sortNewsData:nil];
     
-    if ( self.hardReset ) {
+    if (self.hardReset) {
       self.hardReset = NO;
       [self.photoVideoTable reloadData];
       [self.tableController.refreshControl endRefreshing];
     } else {
-      if ( self.lockScrollUpdates ) {
+      if (self.lockScrollUpdates) {
         self.lockScrollUpdates = NO;
       }
     }
@@ -1734,7 +1739,11 @@
     if (self.socialShareCountHash) {
       for (NSMutableDictionary *post in posts) {
         if ([self.socialShareCountHash objectForKey:[post objectForKey:@"id"]]) {
-          [post setObject:[self.socialShareCountHash objectForKey:[post objectForKey:@"id"]] forKey:@"social_data"];
+          @try {
+            [post setObject:[self.socialShareCountHash objectForKey:[post objectForKey:@"id"]] forKey:@"social_data"];
+          } @catch(NSException *e) {
+            NSLog(@"%@",e);
+          }
         }
       }
     }
@@ -1775,7 +1784,11 @@
     if (self.socialShareCountHash) {
       for (NSMutableDictionary *post in posts) {
         if ([self.socialShareCountHash objectForKey:[post objectForKey:@"id"]]) {
-          [post setObject:[self.socialShareCountHash objectForKey:[post objectForKey:@"id"]] forKey:@"social_data"];
+          @try {
+            [post setObject:[self.socialShareCountHash objectForKey:[post objectForKey:@"id"]] forKey:@"social_data"];
+          } @catch (NSException *e) {
+            NSLog(@"%@",e);
+          }
         }
       }
     }
@@ -1989,7 +2002,7 @@
     } completion:^(BOOL finished) {
       
       [self.loadingMoreNewsSpinner startAnimating];
-      [self fetchContent:nil withCallback:nil];
+      [self fetchArticleData:self.currentNewsCategory withCallback:nil];
       
     }];
     [[AnalyticsManager shared] logEvent: @"load_more_news" withParameters:@{}];

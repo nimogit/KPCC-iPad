@@ -36,6 +36,7 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) UIView *categoriesDarkView;
 @property (nonatomic,strong) NSString *currentNewsCategory;
 @property BOOL sectionsTableOpen;
+@property BOOL performingSectionFilter;
 
 
 // Article, cell, social, short list data stores
