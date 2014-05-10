@@ -153,7 +153,7 @@
 
 
 # pragma mark - Network Calls
-- (void)fetchContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
+- (void)fetchAllContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
 
   self.articleMapPerDate = [@{} mutableCopy];
   
@@ -183,7 +183,7 @@
           [self.loadingMoreNewsSpinner startAnimating];
 
           // Fetch content from Articles endpoint
-          [self fetchArticleData:categorySlug withCallback:callback];
+          [self fetchArticleContent:categorySlug withCallback:callback];
         }];
       });
     }
@@ -192,7 +192,7 @@
   }];
 }
 
-- (void)fetchArticleData:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
+- (void)fetchArticleContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
   
   self.startTime = [NSDate date];
   
@@ -1192,9 +1192,9 @@
   
   if (categorySlug) {
     self.previousOffset = self.photoVideoTable.contentOffset;
-    [self fetchArticleData:categorySlug withCallback:nil];
+    [self fetchArticleContent:categorySlug withCallback:nil];
   } else {
-    [self fetchContent:nil withCallback:nil];
+    [self fetchAllContent:nil withCallback:nil];
   }
 }
 
@@ -1797,7 +1797,7 @@
     } completion:^(BOOL finished) {
       
       [self.loadingMoreNewsSpinner startAnimating];
-      [self fetchArticleData:self.currentNewsCategory withCallback:nil];
+      [self fetchArticleContent:self.currentNewsCategory withCallback:nil];
       
     }];
     [[AnalyticsManager shared] logEvent: @"load_more_news" withParameters:@{}];

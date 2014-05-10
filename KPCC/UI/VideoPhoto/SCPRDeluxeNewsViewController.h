@@ -110,7 +110,8 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) NSMutableDictionary *embiggenedHash;
 @property BOOL lockPageCount;
 
-- (void)fetchContent:(NSString*)categorySlug withCallback:(FetchContentCallback)callback;
+- (void)fetchAllContent:(NSString*)categorySlug withCallback:(FetchContentCallback)callback;
+- (void)fetchArticleContent:(NSString*)categorySlug withCallback:(FetchContentCallback)callback;
 - (void)applyEmbiggening:(NSArray*)mobileFeatured withCallback:(FetchContentCallback)callback;
 
 
