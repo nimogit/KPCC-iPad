@@ -1195,7 +1195,12 @@
 - (void)sectionSelected:(NSString *)sectionSlug {
   [self closeSectionsTapped];
   self.currentNewsCategory = sectionSlug;
-  [self refreshTableContents:self.currentNewsCategory];
+
+  // Hold off the news fetch for a split-second to let the Sections-close animation go smoothly.
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC);
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [self refreshTableContents:self.currentNewsCategory];
+  });
 }
 
 
