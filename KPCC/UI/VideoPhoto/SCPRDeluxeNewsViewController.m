@@ -94,6 +94,8 @@
     // For 'Home' page, set bottom loading spinner to tableFooterView and add pull-to-refresh control.
     [self loadDummies];
     
+    self.currentNewsCategory = @"home";
+    
     self.photoVideoTable.tableFooterView = self.spinnerFooter;
     self.spinnerFooter.backgroundColor = [[DesignManager shared] silverCurtainsColor];
     self.loadingMoreNewsSpinner.alpha = 0.0;
@@ -208,7 +210,7 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.dimBackground = YES;
     hud.labelFont = [[DesignManager shared] latoLight:19.0f];
-    hud.labelText = [NSString stringWithFormat:@"Loading %@ stories...", categorySlug.capitalizedString];
+    hud.labelText = [NSString stringWithFormat:@"Loading %@ stories...", [categorySlug isEqualToString:@"home"] ? @"all" : categorySlug.capitalizedString];
   }
   
   AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -241,7 +243,7 @@
       // Check if this is part of a pull to refresh
       if (self.hardReset) {
         self.hardReset = NO;
-        self.currentNewsCategory = nil;
+        self.currentNewsCategory = @"home";
         [self.tableController.refreshControl endRefreshing];
       }
       
