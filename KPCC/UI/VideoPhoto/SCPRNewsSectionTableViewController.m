@@ -86,16 +86,6 @@
   [self.sectionsDelegate sectionSelected:[[self.categories objectAtIndex:indexPath.row] objectForKey:@"slug"]];
 }
 
-
-# pragma mark - Rotatable
-- (void)handleRotationPre {
-  NSLog(@"handleRotationPRE");
-}
-
-- (void)handleRotationPost {
-  NSLog(@"handleRotationPOST");
-}
-
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
