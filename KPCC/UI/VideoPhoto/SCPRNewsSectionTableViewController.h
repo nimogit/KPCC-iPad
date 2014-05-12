@@ -18,7 +18,7 @@
 @interface SCPRNewsSectionTableViewController : UITableViewController<Rotatable>
 
 @property (nonatomic,weak) id<SCPRNewsSectionDelegate> sectionsDelegate;
-@property (nonatomic,strong) NSMutableArray *sections;
+@property (nonatomic,strong) NSMutableArray *categories;
 @property (nonatomic,strong) NSString *currentSectionSlug;
 
 @end

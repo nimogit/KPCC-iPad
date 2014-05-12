@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.sections = [Utilities loadJson:@"categories"];
+  self.categories = [Utilities loadJson:@"categories"];
   
   CGFloat height = [Utilities isLandscape] ? 748.0 : 1004.0;
 
@@ -44,7 +44,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.sections count];
+    return [self.categories count];
 }
 
 
@@ -56,14 +56,16 @@
   }
   cell.backgroundColor = [UIColor clearColor];
   cell.textLabel.textColor = [UIColor whiteColor];
-  cell.textLabel.text = [[self.sections objectAtIndex:indexPath.row] objectForKey:@"title"];
+  cell.textLabel.text = [[self.categories objectAtIndex:indexPath.row] objectForKey:@"title"];
   
-  if (self.currentSectionSlug && [self.currentSectionSlug isEqualToString:[[self.sections objectAtIndex:indexPath.row] objectForKey:@"slug"]]) {
+  if (self.currentSectionSlug && [self.currentSectionSlug isEqualToString:[[self.categories objectAtIndex:indexPath.row] objectForKey:@"slug"]]) {
     cell.textLabel.font = [[DesignManager shared] latoRegular:29.0f];
+    UIView *verticalBlueDiv = [[UIView alloc] initWithFrame:CGRectMake(4.0, 20.0, 2.0, cell.frame.size.height - 10.0)];
+    verticalBlueDiv.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:185.0/255.0 blue:242.0/255.0 alpha:1.0];
+    [cell addSubview:verticalBlueDiv];
   } else {
     cell.textLabel.font = [[DesignManager shared] latoLight:29.0f];
   }
-  
   
   if (![Utilities isIOS7]) {
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -81,7 +83,7 @@
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   
   // Send Category slug to DeluxeNewsViewController
-  [self.sectionsDelegate sectionSelected:[[self.sections objectAtIndex:indexPath.row] objectForKey:@"slug"]];
+  [self.sectionsDelegate sectionSelected:[[self.categories objectAtIndex:indexPath.row] objectForKey:@"slug"]];
 }
 
 
