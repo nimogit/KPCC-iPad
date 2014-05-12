@@ -195,8 +195,6 @@
 
 - (void)fetchArticleContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
   
-  self.startTime = [NSDate date];
-  
   NSString *requestStr;
   if (categorySlug) {
     requestStr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d&categories=%@",kServerBase,[[ContentManager shared] currentNewsPage], categorySlug];
@@ -204,7 +202,9 @@
     requestStr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d",kServerBase,[[ContentManager shared] currentNewsPage]];
   }
   
-  if (categorySlug) {
+  // -- Developer Note --
+  // If loading a Category, show progress HUD on the first news page
+  if (categorySlug && [[ContentManager shared] currentNewsPage] < 2) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.dimBackground = YES;
     hud.labelFont = [[DesignManager shared] latoLight:19.0f];
@@ -263,11 +263,13 @@
           [[ContentManager shared] setCurrentNewsPage:cp];
         }
         
-        // Skip fetch from Mobile-Featured bucket
-        if ([[ContentManager shared] currentNewsPage] < 2) {
-
-          NSLog(@"skipping mobile featured");
-
+        // -- Developer Note --
+        // Skip fetch from Mobile-Featured bucket when scrolling farther down through news content.
+        // This sends the currently-fetched-articles directly to post-processing and queries Parse
+        // to grab their Social Data counts. It seemed beneficial to cut out an necessary network call
+        // here, but this should definitely be tweaked in the future if we produce a higher volume of
+        // mobile-featured content.
+        if ([[ContentManager shared] currentNewsPage] > 2) {
           dispatch_async(dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.22 animations:^{
               self.loadingMoreNewsSpinner.alpha = 0.0;
@@ -312,18 +314,18 @@
                   self.photoVideoTable.scrollEnabled = YES;
                 } completion:^(BOOL finished) {
                   [self applyEmbiggening:articles withCallback:callback];
+                  
+                  // Grab the most recent article from the Mobile Featured bucket so we can scan Parse for it
+                  if ([articles count] >= 1) {
+                    [currentFetchedArticles addObject:[articles objectAtIndex:0]];
+                  }
+                  
+                  // Make a call to Parse and fetch social data for the current set of fetched articles
+                  [self fetchSocialDataForArticles:currentFetchedArticles];
                 }];
-              
-                // Grab the most recent article from the Mobile Featured bucket so we can scan Parse for it
-                if ([articles count] >= 1) {
-                  [currentFetchedArticles addObject:[articles objectAtIndex:0]];
-                }
-              
-                // Make a call to Parse and fetch social data for the current set of fetched articles
-                [self fetchSocialDataForArticles:currentFetchedArticles];
-              
+
               }); // Dispatch in background closure
-          }
+            }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
           
             [[AnalyticsManager shared] failureFetchingContent:mobileFeaturedUrl];
@@ -369,8 +371,6 @@
                                     }
                                   }
                                   [self.photoVideoTable reloadData];
-                                  
-                                  NSLog(@"Execution Time: %f  -- [ %s ]=[ Line %d ]", -[self.startTime timeIntervalSinceNow], __PRETTY_FUNCTION__, __LINE__);
                                 }
                               }];
 }
