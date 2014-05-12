@@ -76,12 +76,12 @@ Config
 I. Dependencies
 ===============
 
-  The app relies on several third party dependencies most of which have been included in the repository as inline compilable source but there are several external dependencies that will need to be placed properly into a "../Libraries" directory in order for the project to compile. Here are the dependencies:
+  The app relies on several third party dependencies most of which have been included in the repository as inline compilable source but there are several external dependencies that will need to be placed properly into a "../Libraries" directory in order for the project to compile. Cocoapods is used to manage all other libraries, mainly those that can be updated frequently. Here are the dependencies:
 
    <h3>External Dependencies:</h3>
 
        Facebook SDK (FacebookSDK.framework) (v3.1.0)
-       Parse (Parse.framework) (v1.2.11)
+       Parse (Parse.framework) (v1.2.18)
 
        The current project assumes the following directory structure:
        
@@ -90,12 +90,8 @@ I. Dependencies
             FacebookSDK.framework
        	 Parse.framework
 	   |
-	   |
-	   |
 	   KPCCRoot ¬
 	     KPCC.xcodeproj
-	   |
-	   |
 	   |
 	
    <h3>Inline compilable dependencies:</h3>
@@ -104,6 +100,12 @@ I. Dependencies
 	    Flurry (v4.3.2 for iPhone)
 	    SBJson (v3.2)
 	    TestFlight (v3.0.0)
+
+
+    <h3>Cocoapods:</h3>
+
+      AFNetworking ~> 2.0
+      MBProgressHUD ~> 0.8
 	
 II. Preprocessor Macros
 ================
