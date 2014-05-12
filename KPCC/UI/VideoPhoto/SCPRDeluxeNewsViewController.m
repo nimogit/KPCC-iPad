@@ -19,6 +19,7 @@
 #import "SCPRBlankCell.h"
 #import "SCPRControllerOverlayAnimator.h"
 #import <AFNetworking/AFNetworking.h>
+#import "MBProgressHud.h"
 
 #define kPreemptivePrimeThreshold 25
 
@@ -202,6 +203,16 @@
   } else {
     requestStr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d",kServerBase,[[ContentManager shared] currentNewsPage]];
   }
+  
+  if (categorySlug) {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelFont = [[DesignManager shared] latoLight:19.0f];
+    hud.labelText = [NSString stringWithFormat:@"Loading %@ stories...", categorySlug.capitalizedString];
+  }
+  /*dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    // Do something...
+    
+  });*/
   
   AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
   manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions: NSJSONReadingMutableContainers];
@@ -591,7 +602,6 @@
                                  forKey:dateKey];
       
       dispatch_async(dispatch_get_main_queue(), ^{
-        
 
         self.cacheMutex = NO;
         [self prepTableTransition];
@@ -601,16 +611,23 @@
         if (self.performingSectionFilter) {
           _performingSectionFilter = NO;
           
+          [MBProgressHUD hideHUDForView:self.view animated:YES];
+          
           if ([[ContentManager shared] currentNewsPage] <= 2) {
-            [UIView animateWithDuration:0.5 animations:^{
-              NSLog(@"animating");
-              self.photoVideoTable.contentOffset = CGPointMake(0.0, self.dummyEditions.frame.size.height);
-            }];
+            [UIView animateWithDuration:0.56
+                                  delay:0.0
+                 usingSpringWithDamping:0.65
+                  initialSpringVelocity:0.0
+                                options:UIViewAnimationOptionBeginFromCurrentState
+                             animations:^{
+                               NSLog(@"animating");
+                               self.photoVideoTable.contentOffset = CGPointMake(0.0, self.dummyEditions.frame.size.height);
+                             } completion:^(BOOL finished) {
+                               
+                             }];
           } else {
             self.photoVideoTable.contentOffset = self.previousOffset;
           }
-          
-          NSLog(@"### -- IN sortNews - after reload %@", NSStringFromCGPoint( self.photoVideoTable.contentOffset));
         }
         
       });
@@ -1067,21 +1084,18 @@
   }
 
   _sectionsTableOpen = YES;
-  
-  // Update the title bar UI
+
   [[[Utilities del] globalTitleBar] applyCategoriesUI];
   
-  // Force scrolling on the news table to hard stop.
+  // Force scrolling on the news table to hard stop
   CGPoint offset = self.photoVideoTable.contentOffset;
   [self.photoVideoTable setContentOffset:offset animated:NO];
 
-  // Init categories table controller and set delegates
   self.categoriesTableViewController = [[SCPRNewsSectionTableViewController alloc] init];
   self.categoriesTableViewController.currentSectionSlug = self.currentNewsCategory;
   self.categoriesTableView = self.categoriesTableViewController.tableView;
   self.categoriesTableViewController.sectionsDelegate = self;
-  
-  // Init blur view and view to darken the news table in the background.
+
   self.categoriesBlurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
   self.categoriesBlurView.blurRadius = 5;
   self.categoriesBlurView.tintColor = [UIColor clearColor];
@@ -1101,24 +1115,33 @@
   
   self.categoriesTableViewController.view.layer.cornerRadius = 5;
   self.categoriesTableViewController.view.layer.masksToBounds = YES;
-  
-  // Set initial scale of the categories table
+
   self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(1.8, 1.8);
   [self.view addSubview:self.categoriesTableViewController.view];
 
   // Hide the player widget
   [[[Utilities del] viewController] hidePlayer];
   
-  [UIView animateWithDuration:0.3f animations: ^{
-
-    // Scale categories table down to 90%
+  [UIView animateWithDuration:0.45
+                        delay:0.0
+       usingSpringWithDamping:0.75
+        initialSpringVelocity:0.0
+                      options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+                     self.categoriesDarkView.alpha = 0.7;
+                     self.categoriesBlurView.alpha = 1.0;
+                     self.categoriesBlurView.blurRadius = 30;
+                   } completion:^(BOOL finished) {
+                     
+                   }];
+  
+  /*[UIView animateWithDuration:0.3f animations: ^{
     self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
-    
-    // Fade in the dark bg view and blur view
     self.categoriesDarkView.alpha = 0.7;
     self.categoriesBlurView.alpha = 1.0;
     self.categoriesBlurView.blurRadius = 30;
-  }];
+  }];*/
 }
 
 - (void)closeSectionsTapped {
@@ -1128,25 +1151,19 @@
   }
   
   _sectionsTableOpen = NO;
-  
-  // Update the title bar UI
+
   [[[Utilities del] globalTitleBar] removeCategoriesUI];
   
   // Show the player widget
   [[[Utilities del] viewController] displayPlayer];
 
   [UIView animateWithDuration:0.4f animations: ^{
-    
-    // Scale categories table down to 0
     self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(1.75f, 1.75f);
     self.categoriesTableViewController.view.alpha = 0.0;
-    
-    // Fade out blur view
+
     if (self.categoriesBlurView) {
       self.categoriesBlurView.alpha = 0.0;
     }
-    
-    // Fade out dark background view
     if (self.categoriesDarkView) {
       [self.categoriesDarkView setBackgroundColor:[UIColor clearColor]];
     }

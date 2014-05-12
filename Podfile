@@ -8,5 +8,6 @@ end
 target "KPCC iPad" do
 pod 'AFNetworking', '~> 2.0'
 pod 'pop', '~> 1.0'
+pod 'MBProgressHUD', '~> 0.8'
 end
 
