@@ -206,13 +206,10 @@
   
   if (categorySlug) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.dimBackground = YES;
     hud.labelFont = [[DesignManager shared] latoLight:19.0f];
     hud.labelText = [NSString stringWithFormat:@"Loading %@ stories...", categorySlug.capitalizedString];
   }
-  /*dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-    // Do something...
-    
-  });*/
   
   AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
   manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions: NSJSONReadingMutableContainers];
@@ -614,17 +611,28 @@
           [MBProgressHUD hideHUDForView:self.view animated:YES];
           
           if ([[ContentManager shared] currentNewsPage] <= 2) {
-            [UIView animateWithDuration:0.56
-                                  delay:0.0
-                 usingSpringWithDamping:0.65
-                  initialSpringVelocity:0.0
-                                options:UIViewAnimationOptionBeginFromCurrentState
-                             animations:^{
-                               NSLog(@"animating");
-                               self.photoVideoTable.contentOffset = CGPointMake(0.0, self.dummyEditions.frame.size.height);
-                             } completion:^(BOOL finished) {
-                               
-                             }];
+            
+            if ([Utilities isIOS7]) {
+              [UIView animateWithDuration:0.56
+                                    delay:0.0
+                   usingSpringWithDamping:0.65
+                    initialSpringVelocity:0.0
+                                  options:UIViewAnimationOptionBeginFromCurrentState
+                               animations:^{
+                                 self.photoVideoTable.contentOffset = CGPointMake(0.0, self.dummyEditions.frame.size.height);
+                               } completion:^(BOOL finished) {
+                                 
+                               }];
+            } else {
+              [UIView animateWithDuration:0.56
+                                    delay:0.0
+                                  options:UIViewAnimationOptionCurveEaseInOut
+                               animations:^{
+                                 self.photoVideoTable.contentOffset = CGPointMake(0.0, self.dummyEditions.frame.size.height);
+                               } completion:^(BOOL finished) {
+
+                               }];
+            }
           } else {
             self.photoVideoTable.contentOffset = self.previousOffset;
           }
@@ -1122,26 +1130,26 @@
   // Hide the player widget
   [[[Utilities del] viewController] hidePlayer];
   
-  [UIView animateWithDuration:0.45
-                        delay:0.0
-       usingSpringWithDamping:0.75
-        initialSpringVelocity:0.0
-                      options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
-                     self.categoriesDarkView.alpha = 0.7;
-                     self.categoriesBlurView.alpha = 1.0;
-                     self.categoriesBlurView.blurRadius = 30;
-                   } completion:^(BOOL finished) {
-                     
-                   }];
-  
-  /*[UIView animateWithDuration:0.3f animations: ^{
-    self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
-    self.categoriesDarkView.alpha = 0.7;
-    self.categoriesBlurView.alpha = 1.0;
-    self.categoriesBlurView.blurRadius = 30;
-  }];*/
+  if ([Utilities isIOS7]) {
+    [UIView animateWithDuration:0.45
+                          delay:0.0
+         usingSpringWithDamping:0.75
+          initialSpringVelocity:0.0
+                        options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                       self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+                       self.categoriesDarkView.alpha = 0.7;
+                       self.categoriesBlurView.alpha = 1.0;
+                       self.categoriesBlurView.blurRadius = 30;
+                     } completion:nil];
+  } else {
+    [UIView animateWithDuration:0.3f animations: ^{
+     self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+     self.categoriesDarkView.alpha = 0.7;
+     self.categoriesBlurView.alpha = 1.0;
+     self.categoriesBlurView.blurRadius = 30;
+     }];
+  }
 }
 
 - (void)closeSectionsTapped {
