@@ -11,7 +11,7 @@
 
 @protocol SCPRNewsSectionDelegate <NSObject>
 @optional
-- (void)sectionSelected:(NSString *)sectionSlug;
+- (void)sectionSelected:(NSDictionary *)section;
 @end
 
 @interface SCPRNewsSectionTableViewController : UITableViewController

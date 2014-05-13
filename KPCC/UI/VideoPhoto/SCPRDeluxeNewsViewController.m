@@ -94,8 +94,9 @@
     // For 'Home' page, set bottom loading spinner to tableFooterView and add pull-to-refresh control.
     [self loadDummies];
     
-    self.currentNewsCategory = @"home";
-    
+    self.currentNewsCategorySlug = @"home";
+    self.currentNewsCategoryLongTitle = nil;
+
     self.photoVideoTable.tableFooterView = self.spinnerFooter;
     self.spinnerFooter.backgroundColor = [[DesignManager shared] silverCurtainsColor];
     self.loadingMoreNewsSpinner.alpha = 0.0;
@@ -243,7 +244,8 @@
       // Check if this is part of a pull to refresh
       if (self.hardReset) {
         self.hardReset = NO;
-        self.currentNewsCategory = @"home";
+        self.currentNewsCategorySlug = @"home";
+        self.currentNewsCategoryLongTitle = nil;
         [self.tableController.refreshControl endRefreshing];
       }
       
@@ -1102,7 +1104,7 @@
   [self.photoVideoTable setContentOffset:offset animated:NO];
 
   self.categoriesTableViewController = [[SCPRNewsSectionTableViewController alloc] init];
-  self.categoriesTableViewController.currentSectionSlug = self.currentNewsCategory;
+  self.categoriesTableViewController.currentSectionSlug = self.currentNewsCategorySlug;
   self.categoriesTableView = self.categoriesTableViewController.tableView;
   self.categoriesTableViewController.sectionsDelegate = self;
 
@@ -1194,14 +1196,16 @@
 
 
 #pragma mark - SCPRNewsSectionDelegate
-- (void)sectionSelected:(NSString *)sectionSlug {
+- (void)sectionSelected:(NSDictionary *)section {
   [self closeSectionsTapped];
-  self.currentNewsCategory = sectionSlug;
+
+  self.currentNewsCategorySlug = [section objectForKey:@"slug"];
+  self.currentNewsCategoryLongTitle = [[section objectForKey:@"title"] isEqualToString:@"Home"] ? nil : [section objectForKey:@"title"];
 
   // Hold off the news fetch for a split-second to let the Sections-close animation go smoothly.
   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC);
   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    [self refreshTableContents:self.currentNewsCategory];
+    [self refreshTableContents:self.currentNewsCategorySlug];
   });
 }
 
@@ -1668,7 +1672,11 @@
                                      withFormat:@"MMM d"];
       
       if (section == 1) {
-        pretty = [NSString stringWithFormat:@"LATEST NEWS: %@",pretty];
+        if (self.currentNewsCategoryLongTitle) {
+          pretty = [NSString stringWithFormat:@"LATEST HEADLINES: %@",self.currentNewsCategoryLongTitle];
+        } else {
+          pretty = [NSString stringWithFormat:@"LATEST NEWS: %@",pretty];
+        }
       } else {
         pretty = [NSString stringWithFormat:@"NEWS FROM %@",pretty];
       }
@@ -1829,7 +1837,7 @@
     } completion:^(BOOL finished) {
       
       [self.loadingMoreNewsSpinner startAnimating];
-      [self fetchArticleContent:self.currentNewsCategory withCallback:nil];
+      [self fetchArticleContent:self.currentNewsCategorySlug withCallback:nil];
       
     }];
     [[AnalyticsManager shared] logEvent: @"load_more_news" withParameters:@{}];

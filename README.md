@@ -102,7 +102,7 @@ I. Dependencies
 	    TestFlight (v3.0.0)
 
 
-    <h3>Cocoapods:</h3>
+   <h3>Cocoapods:</h3>
 
       AFNetworking ~> 2.0
       MBProgressHUD ~> 0.8

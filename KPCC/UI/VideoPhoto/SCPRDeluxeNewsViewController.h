@@ -34,7 +34,8 @@ typedef void (^FetchContentCallback)(BOOL);
 @property (nonatomic,strong) SCPRNewsSectionTableViewController *categoriesTableViewController;
 @property (nonatomic,strong) FXBlurView *categoriesBlurView;
 @property (nonatomic,strong) UIView *categoriesDarkView;
-@property (nonatomic,strong) NSString *currentNewsCategory;
+@property (nonatomic,strong) NSString *currentNewsCategorySlug;
+@property (nonatomic,strong) NSString *currentNewsCategoryLongTitle;
 @property BOOL sectionsTableOpen;
 @property BOOL performingSectionFilter;
 
