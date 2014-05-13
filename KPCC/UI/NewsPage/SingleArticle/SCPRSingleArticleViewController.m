@@ -1307,7 +1307,8 @@
                                              origTwitterFrame.origin.y,
                                              self.twitterCountLabel.frame.size.width,
                                              origTwitterFrame.size.height);
-  
+
+  [self refreshHeight];
   self.socialSheetView.alpha = 1.0;
 }
 
