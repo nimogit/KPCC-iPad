@@ -366,13 +366,15 @@
     return;
   }
 
-  [self queryParse];
-
   self.categorySeat.backgroundColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
   
   SCPRSingleArticleCollectionViewController *pc = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
   if ( pc.category == ContentCategoryEvents ) {
     self.liveEvent = [[ScheduleManager shared] eventIsLive:self.relatedArticle];
+  }
+  
+  if (pc.category == ContentCategoryNews) {
+    [self queryParse];
   }
   
   NSArray *assets = [self.relatedArticle objectForKey:@"assets"];
