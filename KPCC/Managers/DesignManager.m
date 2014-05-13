@@ -405,6 +405,13 @@ static DesignManager *singleton = nil;
 
     [mAttr addAttribute:NSFontAttributeName value:boldFont range:cooked];
     [mAttr addAttribute:NSFontAttributeName value:regularFont range:secondPartCooked];
+    
+    if ([text rangeOfString:@"LATEST HEADLINES"].location != NSNotFound) {
+      [mAttr addAttribute:NSForegroundColorAttributeName
+                    value:self.sectionsBlueColor
+                    range:NSMakeRange(colonRange.location + 1, text.length - colonRange.location - 1)];
+    }
+      
     dv.textLabel.attributedText = mAttr;
   } else {
 

@@ -61,7 +61,7 @@
   if (self.currentSectionSlug && [self.currentSectionSlug isEqualToString:[[self.categories objectAtIndex:indexPath.row] objectForKey:@"slug"]]) {
     cell.textLabel.font = [[DesignManager shared] latoRegular:29.0f];
     UIView *verticalBlueDiv = [[UIView alloc] initWithFrame:CGRectMake(4.0, 20.0, 2.0, cell.frame.size.height - 10.0)];
-    verticalBlueDiv.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:185.0/255.0 blue:242.0/255.0 alpha:1.0];
+    verticalBlueDiv.backgroundColor = [[DesignManager shared] sectionsBlueColor];
     [cell addSubview:verticalBlueDiv];
   } else {
     cell.textLabel.font = [[DesignManager shared] latoLight:29.0f];
