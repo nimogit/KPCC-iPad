@@ -107,9 +107,9 @@ static FileManager *singleton = nil;
                                       destName:retinaIcon
                                           root:NO];
     }
+    
+    [singleton setupConfigFile];
   }
-
-  [singleton setupConfigFile];
 
   return singleton;
 }
