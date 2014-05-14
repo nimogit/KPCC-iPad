@@ -161,8 +161,10 @@
 
   self.articleMapPerDate = [@{} mutableCopy];
   
+  NSString *editionsRequestStr = [NSString stringWithFormat:@"%@/editions?limit=1", kServerBase];
+  
   AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-  [manager GET:[NSString stringWithFormat:@"%@/editions?limit=1", kServerBase] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [manager GET:editionsRequestStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
     if (responseObject) {
 
@@ -193,6 +195,8 @@
     }
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"Error: %@", error);
+    [[AnalyticsManager shared] failureFetchingContent:editionsRequestStr];
+    return;
   }];
 }
 
@@ -1095,8 +1099,6 @@
     return;
   }
 
-  _sectionsTableOpen = YES;
-
   [[[Utilities del] globalTitleBar] applyCategoriesUI];
   
   // Force scrolling on the news table to hard stop
@@ -1105,7 +1107,6 @@
 
   self.categoriesTableViewController = [[SCPRNewsSectionTableViewController alloc] init];
   self.categoriesTableViewController.currentSectionSlug = self.currentNewsCategorySlug;
-  self.categoriesTableView = self.categoriesTableViewController.tableView;
   self.categoriesTableViewController.sectionsDelegate = self;
 
   self.categoriesBlurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
@@ -1121,10 +1122,7 @@
   
   [self.view addSubview:self.categoriesBlurView];
   [self.view addSubview:self.categoriesDarkView];
-  
-  // Turn off interaction with news table
-  self.photoVideoTable.userInteractionEnabled = NO;
-  
+
   self.categoriesTableViewController.view.layer.cornerRadius = 5;
   self.categoriesTableViewController.view.layer.masksToBounds = YES;
 
@@ -1145,13 +1143,17 @@
                        self.categoriesDarkView.alpha = 0.7;
                        self.categoriesBlurView.alpha = 1.0;
                        self.categoriesBlurView.blurRadius = 30;
-                     } completion:nil];
+                     } completion:^(BOOL finished){
+                         _sectionsTableOpen = YES;
+                     }];
   } else {
     [UIView animateWithDuration:0.3f animations: ^{
      self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
      self.categoriesDarkView.alpha = 0.7;
      self.categoriesBlurView.alpha = 1.0;
      self.categoriesBlurView.blurRadius = 30;
+     } completion:^(BOOL finished) {
+         _sectionsTableOpen = YES;
      }];
   }
 }
@@ -1161,8 +1163,6 @@
   if (!self.sectionsTableOpen) {
     return;
   }
-  
-  _sectionsTableOpen = NO;
 
   [[[Utilities del] globalTitleBar] removeCategoriesUI];
   
@@ -1188,9 +1188,8 @@
     if (self.categoriesDarkView) {
       [self.categoriesDarkView removeFromSuperview];
     }
-    
-    // Re-enable  interaction with news table
-    self.photoVideoTable.userInteractionEnabled = YES;
+
+    _sectionsTableOpen = NO;
   }];
 }
 
@@ -1890,7 +1889,8 @@
   if ( self.contentType == ScreenContentTypeCompositePage ) {
     [self.masterCellHash removeAllObjects];
     [[ContentManager shared] setCurrentNewsPage:1];
-    [self refreshTableContents:nil];
+    [[ContentManager shared] resetNewsContent];
+    //[self refreshTableContents:nil];
   }
   
     // Dispose of any resources that can be recreated.

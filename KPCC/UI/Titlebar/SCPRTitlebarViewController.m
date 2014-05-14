@@ -73,14 +73,14 @@
     [[UIApplication sharedApplication] openURL:url];
   }
   if (sender == self.categoriesButton) {
-    [self.delegate openSectionsTapped];
-    [self applyCloseCategoriesButton];
+    if ([self.delegate respondsToSelector:@selector(openSectionsTapped)]) {
+      [self.delegate openSectionsTapped];
+    }
   }
   if (sender == self.closeCategoriesButton) {
-    //[[[Utilities del] viewController] dismissViewControllerAnimated:YES completion:nil];
-    [self.delegate closeSectionsTapped];
-    [self eraseCloseCategoriesButton];
-    [self applyCategoriesButton];
+    if ([self.delegate respondsToSelector:@selector(closeSectionsTapped)]) {
+      [self.delegate closeSectionsTapped];
+    }
   }
 }
 
@@ -306,8 +306,8 @@
 
 - (void)applyCategoriesUI {
   [self.drawerButton removeFromSuperview];
-  [self eraseCloseCategoriesButton];
-  [self applyCategoriesButton];
+  [self eraseCategoriesButton];
+  [self applyCloseCategoriesButton];
   
   [Utilities primeTitlebarWithText:@"SECTIONS"
                       shareEnabled:NO
@@ -337,12 +337,8 @@
 }
 
 - (void)applyCategoriesButton {
-  
-  if ([self.view.subviews containsObject:self.closeCategoriesButton]) {
-    return;
-  }
-
   [self eraseDonateButton];
+  [self eraseCloseCategoriesButton];
   [self.view addSubview:self.categoriesButton];
   
   self.categoriesButton.frame = CGRectMake(self.view.frame.size.width - self.categoriesButton.frame.size.width - 10.0,
