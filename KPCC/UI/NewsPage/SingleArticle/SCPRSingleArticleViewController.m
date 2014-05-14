@@ -374,7 +374,7 @@
   }
   
   if (pc.category == ContentCategoryNews) {
-    [self queryParse];
+    [self queryParse];  
   }
   
   NSArray *assets = [self.relatedArticle objectForKey:@"assets"];
