@@ -156,6 +156,11 @@
 }
 
 
+// -- Developer Note --
+// Here, fetchAllContent refers to fetching the Short List, individual articles, mobile-featured articles, and then social data counts
+// from Parse for all of these pieces of content. The FetchContentCallback is primarily used to handle a refresh within an
+// SCPRSingleArticleCollectionViewController (ie. when scrolling left right between individual articles). Otherwise, the FetchContentCallback
+// can be set to nil - as used from within this class .
 # pragma mark - Network Calls
 - (void)fetchAllContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
 
@@ -203,7 +208,7 @@
 - (void)fetchArticleContent:(NSString *)categorySlug withCallback:(FetchContentCallback)callback {
   
   NSString *requestStr;
-  if (categorySlug) {
+  if (categorySlug && ![categorySlug isEqualToString:@"home"]) {
     requestStr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d&categories=%@",kServerBase,[[ContentManager shared] currentNewsPage], categorySlug];
   } else {
     requestStr = [NSString stringWithFormat:@"%@/articles?types=news,blogs&limit=18&page=%d",kServerBase,[[ContentManager shared] currentNewsPage]];
@@ -1909,7 +1914,6 @@
     [self.masterCellHash removeAllObjects];
     [[ContentManager shared] setCurrentNewsPage:1];
     [[ContentManager shared] resetNewsContent];
-    //[self refreshTableContents:nil];
   }
   
     // Dispose of any resources that can be recreated.
