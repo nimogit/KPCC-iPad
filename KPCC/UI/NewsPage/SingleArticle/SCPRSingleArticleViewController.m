@@ -1312,7 +1312,6 @@
                                              origTwitterFrame.size.height);
 
   [self refreshHeight];
-  self.socialSheetView.alpha = 1.0;
 }
 
 - (void)toggleShareModal {
@@ -1385,6 +1384,8 @@
 
   [self.activity stopAnimating];
   self.activity.alpha = 0.0;
+  
+  self.socialSheetView.alpha = 1.0;
 }
 
 
@@ -1536,6 +1537,14 @@
                                               self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height - socialSheetVertAdjust,
                                               self.socialSheetView.frame.size.width,
                                               self.socialSheetView.frame.size.height)];
+
+    if (self.activity.alpha == 0.0 && self.socialSheetView.alpha == 0.0) {
+      [UIView animateWithDuration: 0.0
+                            delay:0.2 options:UIViewAnimationOptionCurveEaseInOut
+                       animations:^{
+                         self.socialSheetView.alpha = 1.0;
+                       } completion:nil];
+    }
   }
 }
 
