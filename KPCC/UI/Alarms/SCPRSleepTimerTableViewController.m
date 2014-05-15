@@ -111,6 +111,8 @@
       [UIView animateWithDuration:0.22 animations:^{
         qvc.sleepTimerActiveView.alpha = 1.0;
         qvc.sleepTimerInactiveView.alpha = 0.0;
+      } completion:^(BOOL finished) {
+        [[AnalyticsManager shared] logEvent:@"live_stream_timer" withParameters:@{ @"duration" : sleepTimerDurationMinutes }];
       }];
     }
   }
