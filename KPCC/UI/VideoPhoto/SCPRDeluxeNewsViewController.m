@@ -236,13 +236,17 @@
         NSMutableArray *composite = [[self.rawArticleHash objectForKey:@"general"] mutableCopy];
         [composite addObjectsFromArray:allChunk];
         allChunk = [NSArray arrayWithArray:composite];
-        self.photoVideoTable.contentOffset = self.previousOffset;
+        if (!callback) {
+          self.photoVideoTable.contentOffset = self.previousOffset;
+        }
       }
       
       // If filtering news by Category, save previous content offset the tableView
       if (categorySlug && self.contentType == ScreenContentTypeCompositePage) {
         _performingSectionFilter = YES;
-        self.photoVideoTable.contentOffset = self.previousOffset;
+        if (!callback) {
+          self.photoVideoTable.contentOffset = self.previousOffset;
+        }
       }
       
       // Check if this is part of a pull to refresh
@@ -642,11 +646,13 @@
                                }];
             }
           } else {
-            self.photoVideoTable.contentOffset = self.previousOffset;
+            if (!callback) {
+              self.photoVideoTable.contentOffset = self.previousOffset;
+            }
           }
-        }
+        } // if self.performingSectionFilter
         
-      });
+      }); // dispatch_async
       
     }
   });
@@ -1841,12 +1847,12 @@
       
       [self.loadingMoreNewsSpinner startAnimating];
       [self fetchArticleContent:self.currentNewsCategorySlug withCallback:nil];
+
+      [[AnalyticsManager shared] logEvent: @"load_more_news"
+                           withParameters:@{ @"active_topic" : !self.currentNewsCategorySlug || [self.currentNewsCategorySlug isEqualToString:@"home"]? @"NO" : @"YES" }];
       
     }];
-    [[AnalyticsManager shared] logEvent: @"load_more_news"
-                         withParameters:@{ @"active_topic" : !self.currentNewsCategorySlug || [self.currentNewsCategorySlug isEqualToString:@"home"]? @"NO" : @"YES" }];
   }
-  
 }
 
 - (void)scrollViewDidScroll:(UITableView *)tableView {
@@ -1871,13 +1877,21 @@
     [[[Utilities del] globalTitleBar] applyCategoriesButton];
 
   } else if (tableView.contentOffset.y - 20.0 < CGRectGetMinY(row)) {
-
+    
     if ([[[Utilities del] globalTitleBar] isDonateButtonShown]) {
       return;
     }
-
+    
     [[[Utilities del] globalTitleBar] applyDonateButton];
   }
+}
+
+- (void)scrollViewDidScrollToTop:(UITableView *)tableView {
+  if (self.contentType == ScreenContentTypeVideoPhotoPage || self.contentType == ScreenContentTypeEventsPage) {
+    return;
+  }
+  
+  
 }
 
 

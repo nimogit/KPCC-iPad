@@ -267,6 +267,182 @@
 
 }
 
+
+
+- (void)pushStyle {
+  [self pushStyle:YES];
+}
+
+/******************************************************/
+// -- Developer Note --
+// This function is called every time "morph" is called UNLESS it's popping the stack in which case it's ignored.
+// As a result, you probably will never need to call this method directly. Instead call morph.
+//
+// This is a method that helps save the state of the titlebar before it's changed by a view that's about to be pushed on top
+// of the current view. Keep in mind that this method should be updated if the titlebar's basic function needs to be altered.
+// Study this method closely to see what's happening in it, and then look at the pop: method
+//
+- (void)pushStyle:(BOOL)truePush {
+  NSMutableDictionary *state = [[NSMutableDictionary alloc] init];
+  if (self.container) {
+    [state setObject:self.container
+              forKey:@"container"];
+  }
+  [state setObject:self.view.backgroundColor
+            forKey:@"bgcolor"];
+  
+  if ( self.backButton.titleLabel.text ) {
+    [state setObject:self.backButton.titleLabel.text
+              forKey:@"backtitle"];
+  }
+  [state setObject:[self.view subviews]
+            forKey:@"subviews"];
+  [state setObject:[NSNumber numberWithInt:self.barType]
+            forKey:@"type"];
+  
+  [state setObject:[NSNumber numberWithInt:self.pager.numberOfPages]
+            forKey:@"pageCount"];
+  
+  [state setObject:[NSNumber numberWithInt:self.pager.currentPage]
+            forKey:@"currentPage"];
+  
+  for (id v in [self.view subviews]) {
+    if ([v isKindOfClass:[UIPageControl class]]) {
+      [state setObject:@1 forKey:@"hasPager"];
+    }
+    if (v == self.donateButton) {
+      [state setObject:@1 forKey:@"hasDonate"];
+    }
+    if (v == self.categoriesButton) {
+      [state setObject:@1 forKey:@"hasCategories"];
+    }
+  }
+  
+  if (truePush) {
+    [self.navStack addObject:state];
+  } else {
+    self.currentState = state;
+  }
+}
+
+- (void)pop:(BOOL)truePop {
+  if ( self.navStack.count == 0 ) {
+    return;
+  }
+  
+  self.suppressDonate = YES;
+  self.popping = YES;
+  
+  @try {
+    
+    NSDictionary *items = nil;
+    if (truePop) {
+      items = [self.navStack lastObject];
+    } else {
+      items = self.currentState;
+    }
+    
+    if (items) {
+      if ([items objectForKey:@"container"]) {
+        [self morph:(BarType)[[items objectForKey:@"type"] intValue]
+          container:[items objectForKey:@"container"]];
+      } else {
+        [self morph:(BarType)[[items objectForKey:@"type"] intValue]
+          container:nil];
+      }
+      
+      self.view.backgroundColor = [items objectForKey:@"bgcolor"];
+      NSArray *svs = [items objectForKey:@"subviews"];
+      for (UIView *v in svs) {
+        [self.view addSubview:v];
+      }
+      
+      if ([items objectForKey:@"backtitle"]) {
+        [self applyBackButtonText:[items objectForKey:@"backtitle"]];
+      }
+      
+      if ([items objectForKey:@"pageCount"]) {
+        self.pager.numberOfPages = [[items objectForKey:@"pageCount"] intValue];
+      }
+      
+      if ([items objectForKey:@"currentPage"]) {
+        self.pager.currentPage = [[items objectForKey:@"currentPage"] intValue];
+        
+      }
+      
+      if ([items objectForKey:@"hasPager"]) {
+        [self applyPagerWithCount:self.pager.numberOfPages currentPage:self.pager.currentPage];
+      }
+      
+      NSNumber *donate = [items objectForKey:@"hasDonate"];
+      if ([items objectForKey:@"hasDonate"]) {
+        if ([donate intValue] == 1) {
+          [self applyDonateButton];
+        }
+      }
+
+      NSNumber *categories = [items objectForKey:@"hasCategories"];
+      if ([items objectForKey:@"hasCategories"]) {
+        if ([categories intValue] == 1) {
+          [self applyCategoriesButton];
+        }
+      }
+
+      if (truePop) {
+        [self.navStack removeLastObject];
+      }
+    }
+  } @catch (NSException *e) {
+    NSLog(@"Exception when popping titlebar : %@",[e description]);
+  }
+  
+  self.popping = NO;
+}
+
+- (void)restamp {
+  if (self.barType == BarTypeEditions) {
+    [self applyPagerWithCount:self.pager.numberOfPages currentPage:self.pager.currentPage];
+  }
+}
+
+- (void)pop {
+  [self pop:YES];
+}
+
+- (void)applyClearBackground {
+  [UIView animateWithDuration:0.22 animations:^{
+    self.view.layer.backgroundColor = [UIColor clearColor].CGColor;
+  }];
+}
+
+- (void)applyOnyxBackground {
+  [UIView animateWithDuration:0.22 animations:^{
+    self.view.layer.backgroundColor = [[DesignManager shared] onyxColor].CGColor;
+  }];
+}
+
+- (void)applyBackButtonText:(NSString *)backButtonText {
+  
+  if ( [backButtonText length] < [@"PHOTO & VIDEO" length] ) {
+    NSInteger diff = abs([backButtonText length]-[@"PHOTO & VIDEO" length]);
+    for (unsigned i = 0; i < diff-1; i++) {
+      backButtonText = [backButtonText stringByAppendingString:@"   "];
+    }
+  }
+  
+  backButtonText = [backButtonText lowercaseString];
+  backButtonText = [backButtonText capitalizedString];
+  
+  [self.backButtonText titleizeText:backButtonText
+                               bold:NO
+                      respectHeight:NO];
+
+  self.backButtonSeat.frame = CGRectMake(0.0,
+                                         self.backButtonSeat.frame.origin.y,
+                                         self.backButtonSeat.frame.size.width,
+                                         self.backButtonSeat.frame.size.height);
+}
+
 - (void)eraseDonateButton {
   [UIView animateWithDuration:0.22 animations:^{
     [self.donateButton setAlpha:0.0];
@@ -275,9 +451,10 @@
 }
 
 - (void)applyDonateButton {
+  [self eraseSharingButton];
   [self eraseCategoriesButton];
   [self.view addSubview:self.donateButton];
-
+  
   self.donateButton.frame = CGRectMake(self.view.frame.size.width - self.donateButton.frame.size.width - 2.0,
                                        0.0,
                                        self.donateButton.frame.size.width,
@@ -292,7 +469,7 @@
 - (void)applySignoutButton {
   [self eraseDonateButton];
   [self.view addSubview:self.signoutButton];
-
+  
   self.signoutButton.frame = CGRectMake(self.view.frame.size.width - self.signoutButton.frame.size.width - 10.0,
                                         0.0,
                                         self.signoutButton.frame.size.width,
@@ -366,179 +543,15 @@
   
   
   self.closeCategoriesButton.frame = CGRectMake(self.view.frame.size.width - self.closeCategoriesButton.frame.size.width - 10.0,
-                                           0.0,
-                                           self.closeCategoriesButton.frame.size.width,
-                                           self.closeCategoriesButton.frame.size.height);
+                                                0.0,
+                                                self.closeCategoriesButton.frame.size.width,
+                                                self.closeCategoriesButton.frame.size.height);
   self.closeCategoriesButton.center = CGPointMake(self.closeCategoriesButton.center.x,
-                                             self.view.frame.size.height / 2.0);
+                                                  self.view.frame.size.height / 2.0);
   
   [UIView animateWithDuration:0.22 animations:^{
     [self.closeCategoriesButton setAlpha:1.0];
   }];
-}
-
-- (void)pushStyle {
-  [self pushStyle:YES];
-}
-
-/******************************************************/
-// -- Developer Note --
-// This function is called every time "morph" is called UNLESS it's popping the stack in which case it's ignored.
-// As a result, you probably will never need to call this method directly. Instead call morph.
-//
-// This is a method that helps save the state of the titlebar before it's changed by a view that's about to be pushed on top
-// of the current view. Keep in mind that this method should be updated if the titlebar's basic function needs to be altered.
-// Study this method closely to see what's happening in it, and then look at the pop: method
-//
-- (void)pushStyle:(BOOL)truePush {
-  NSMutableDictionary *state = [[NSMutableDictionary alloc] init];
-  if (self.container) {
-    [state setObject:self.container
-              forKey:@"container"];
-  }
-  [state setObject:self.view.backgroundColor
-            forKey:@"bgcolor"];
-  
-  if ( self.backButton.titleLabel.text ) {
-    [state setObject:self.backButton.titleLabel.text
-              forKey:@"backtitle"];
-  }
-  [state setObject:[self.view subviews]
-            forKey:@"subviews"];
-  [state setObject:[NSNumber numberWithInt:self.barType]
-            forKey:@"type"];
-  
-  [state setObject:[NSNumber numberWithInt:self.pager.numberOfPages]
-            forKey:@"pageCount"];
-  
-  [state setObject:[NSNumber numberWithInt:self.pager.currentPage]
-            forKey:@"currentPage"];
-  
-  for (id v in [self.view subviews]) {
-    if ([v isKindOfClass:[UIPageControl class]]) {
-      [state setObject:@1 forKey:@"hasPager"];
-    }
-    if (v == self.donateButton) {
-      [state setObject:@1 forKey:@"hasDonate"];
-    }
-  }
-  
-  if (truePush) {
-    [self.navStack addObject:state];
-  } else {
-    self.currentState = state;
-  }
-}
-
-- (void)pop:(BOOL)truePop {
-  if ( self.navStack.count == 0 ) {
-    return;
-  }
-  
-  self.suppressDonate = YES;
-  self.popping = YES;
-  
-  @try {
-    
-    NSDictionary *items = nil;
-    if (truePop) {
-      items = [self.navStack lastObject];
-    } else {
-      items = self.currentState;
-    }
-    
-    if (items) {
-      if ([items objectForKey:@"container"]) {
-        [self morph:(BarType)[[items objectForKey:@"type"] intValue]
-          container:[items objectForKey:@"container"]];
-      } else {
-        [self morph:(BarType)[[items objectForKey:@"type"] intValue]
-          container:nil];
-      }
-      
-      self.view.backgroundColor = [items objectForKey:@"bgcolor"];
-      NSArray *svs = [items objectForKey:@"subviews"];
-      for (UIView *v in svs) {
-        [self.view addSubview:v];
-      }
-      
-      if ([items objectForKey:@"backtitle"]) {
-        [self applyBackButtonText:[items objectForKey:@"backtitle"]];
-      }
-      
-      if ([items objectForKey:@"pageCount"]) {
-        self.pager.numberOfPages = [[items objectForKey:@"pageCount"] intValue];
-      }
-      
-      if ([items objectForKey:@"currentPage"]) {
-        self.pager.currentPage = [[items objectForKey:@"currentPage"] intValue];
-        
-      }
-      
-      if ([items objectForKey:@"hasPager"]) {
-        [self applyPagerWithCount:self.pager.numberOfPages currentPage:self.pager.currentPage];
-      }
-      
-      NSNumber *donate = [items objectForKey:@"hasDonate"];
-      if ([items objectForKey:@"hasDonate"]) {
-        if ([donate intValue] == 1) {
-          [self applyDonateButton];
-        }
-      }
-      
-      if (truePop) {
-        [self.navStack removeLastObject];
-      }
-    }
-  } @catch (NSException *e) {
-    NSLog(@"Exception when popping titlebar : %@",[e description]);
-  }
-  
-  self.popping = NO;
-}
-
-- (void)restamp {
-  if (self.barType == BarTypeEditions) {
-    [self applyPagerWithCount:self.pager.numberOfPages currentPage:self.pager.currentPage];
-  }
-}
-
-- (void)pop {
-  [self pop:YES];
-}
-
-- (void)applyClearBackground {
-  [UIView animateWithDuration:0.22 animations:^{
-    self.view.layer.backgroundColor = [UIColor clearColor].CGColor;
-  }];
-}
-
-- (void)applyOnyxBackground {
-  [UIView animateWithDuration:0.22 animations:^{
-    self.view.layer.backgroundColor = [[DesignManager shared] onyxColor].CGColor;
-  }];
-}
-
-- (void)applyBackButtonText:(NSString *)backButtonText {
-  
-  if ( [backButtonText length] < [@"PHOTO & VIDEO" length] ) {
-    NSInteger diff = abs([backButtonText length]-[@"PHOTO & VIDEO" length]);
-    for (unsigned i = 0; i < diff-1; i++) {
-      backButtonText = [backButtonText stringByAppendingString:@"   "];
-    }
-  }
-  
-  backButtonText = [backButtonText lowercaseString];
-  backButtonText = [backButtonText capitalizedString];
-  
-  [self.backButtonText titleizeText:backButtonText
-                               bold:NO
-                      respectHeight:NO];
-
-  self.backButtonSeat.frame = CGRectMake(0.0,
-                                         self.backButtonSeat.frame.origin.y,
-                                         self.backButtonSeat.frame.size.width,
-                                         self.backButtonSeat.frame.size.height);
 }
 
 - (void)applySharingButton {
@@ -562,6 +575,13 @@
   [self.personalInfoButton addTarget:[[Utilities del] viewController]
                               action:@selector(toggleShareDrawer)
                     forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)eraseSharingButton {
+  [UIView animateWithDuration:0.22 animations:^{
+    [self.personalInfoButton setAlpha:0.0];
+    [self.personalInfoButton removeFromSuperview];
+  }];
 }
 
 - (void)applyEditionsLabel {
