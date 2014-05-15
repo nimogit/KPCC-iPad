@@ -74,6 +74,7 @@
 @property (nonatomic,strong) NSMutableDictionary *socialCountHash;
 - (void)socialDataLoaded;
 - (void)toggleShareModal;
+@property BOOL hasSocialData;
 @property BOOL shareModalOpen;
 - (void)closeShareModal;
 - (void)openShareModal;

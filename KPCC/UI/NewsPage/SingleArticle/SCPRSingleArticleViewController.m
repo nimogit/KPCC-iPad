@@ -373,7 +373,7 @@
     self.liveEvent = [[ScheduleManager shared] eventIsLive:self.relatedArticle];
   }
   
-  if (pc.category == ContentCategoryNews) {
+  if (pc.category == ContentCategoryNews || [self fromSnapshot]) {
     [self queryParse];  
   }
   
@@ -1240,14 +1240,15 @@
 }
 
 - (void)socialDataLoaded {
+  
+  _hasSocialData = YES;
 
   if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
+    [self.masterContentScroller addSubview:self.socialSheetView];
     [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
                                               self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height,
                                               self.socialSheetView.frame.size.width,
                                               self.socialSheetView.frame.size.height)];
-    
-    [self.masterContentScroller addSubview:self.socialSheetView];
   }
   
   if (self.socialCountHash) {
@@ -1481,10 +1482,6 @@
   NSString *output = [self.webContentLoader.webView stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"container\").offsetHeight;"];
   CGFloat webHeight = fmaxf([output floatValue],self.originalWebViewHeight.size.height);
   
-  if ( self.fromSnapshot ) {
-    webHeight +=  20.0;
-  }
-  
   CGFloat totalHeight = webHeight;
   if ( [Utilities articleHasAsset:self.relatedArticle] ) {
     if ( [Utilities isLandscape] ) {
@@ -1500,46 +1497,46 @@
   }
   totalHeight += self.textSheetView.frame.size.height;
 
+  // Nudge for Short List and non-iOS7 devices
+  if (![Utilities isIOS7]) {
+    totalHeight += 60.0;
+    webHeight += 60.0;
+  }
+  if (self.fromSnapshot) {
+    totalHeight += 80.0;
+    webHeight +=  80.0;
+  }
+
   self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
                                                    self.webContentLoader.webView.frame.origin.y,
                                                    self.webContentLoader.webView.frame.size.width,
-                                                   webHeight + 140.0);
+                                                   webHeight + 150.0);
   
   self.webContentLoader.webView.scrollView.scrollEnabled = NO;
-  
-  // Nudge masterContentScroller height for Short List and non-iOS7 devices
-  CGFloat masterContentHeightAdjust = 0.0;
-  if (self.fromSnapshot) {
-    totalHeight += 120.0;
-    masterContentHeightAdjust = 70.0;
-    if (![Utilities isIOS7]) {
-      masterContentHeightAdjust += 16.0;
-    }
-  } else {
-    totalHeight += 140.0;
-  }
 
   self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.frame.size.width,
-                                                      totalHeight);
+                                                      totalHeight + 150.0);
   
   self.masterContentScroller.frame = CGRectMake(self.masterContentScroller.frame.origin.x,
                                                 self.masterContentScroller.frame.origin.y,
                                                 self.masterContentScroller.frame.size.width,
-                                                self.masterContentScroller.frame.size.height - masterContentHeightAdjust);
+                                                self.masterContentScroller.frame.size.height);
   
-  // Place the social sheetview below the article's contents and embeds
-  CGFloat socialSheetVertAdjust = 30.0;
-  if (![Utilities isIOS7]) {
-    socialSheetVertAdjust += 26.0;
-    if (self.fromSnapshot) {
-      socialSheetVertAdjust -= 6.0;
+  if (self.hasSocialData) {
+    // Place the social sheetview below the article's contents and embeds
+    CGFloat socialSheetVertAdjust = 30.0;
+    if (![Utilities isIOS7]) {
+      socialSheetVertAdjust += 30.0;
     }
+    if (self.fromSnapshot) {
+      socialSheetVertAdjust += 70.0;
+    }
+    
+    [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
+                                              self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height - socialSheetVertAdjust,
+                                              self.socialSheetView.frame.size.width,
+                                              self.socialSheetView.frame.size.height)];
   }
-
-  [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
-                                            self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height - socialSheetVertAdjust,
-                                            self.socialSheetView.frame.size.width,
-                                            self.socialSheetView.frame.size.height)];
 }
 
 - (void)handleDelayedLoad {
