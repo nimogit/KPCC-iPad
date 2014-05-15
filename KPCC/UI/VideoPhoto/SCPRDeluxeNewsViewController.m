@@ -1144,7 +1144,8 @@
                        self.categoriesBlurView.alpha = 1.0;
                        self.categoriesBlurView.blurRadius = 30;
                      } completion:^(BOOL finished){
-                         _sectionsTableOpen = YES;
+                       _sectionsTableOpen = YES;
+                       [[AnalyticsManager shared] logEvent:@"menu_open_topics" withParameters:@{}];
                      }];
   } else {
     [UIView animateWithDuration:0.3f animations: ^{
@@ -1153,7 +1154,8 @@
      self.categoriesBlurView.alpha = 1.0;
      self.categoriesBlurView.blurRadius = 30;
      } completion:^(BOOL finished) {
-         _sectionsTableOpen = YES;
+       _sectionsTableOpen = YES;
+       [[AnalyticsManager shared] logEvent:@"menu_open_topics" withParameters:@{}];
      }];
   }
 }
@@ -1206,6 +1208,8 @@
   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
     [self refreshTableContents:self.currentNewsCategorySlug];
   });
+  
+  [[AnalyticsManager shared] logEvent:@"menu_select_topic" withParameters:@{ @"topic" : self.currentNewsCategorySlug }];
 }
 
 
@@ -1839,7 +1843,8 @@
       [self fetchArticleContent:self.currentNewsCategorySlug withCallback:nil];
       
     }];
-    [[AnalyticsManager shared] logEvent: @"load_more_news" withParameters:@{}];
+    [[AnalyticsManager shared] logEvent: @"load_more_news"
+                         withParameters:@{ @"active_topic" : !self.currentNewsCategorySlug || [self.currentNewsCategorySlug isEqualToString:@"home"]? @"NO" : @"YES" }];
   }
   
 }
