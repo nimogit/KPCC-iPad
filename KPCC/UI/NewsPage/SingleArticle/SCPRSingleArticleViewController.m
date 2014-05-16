@@ -74,6 +74,30 @@
                                              object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [[[Utilities del] globalTitleBar] applyKpccLogo];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  if ( self.fromSnapshot ) {
+    SCPRViewController *svc = [[Utilities del] viewController];
+    
+    CGFloat offset = [Utilities isIOS7] ? -40.0 : -60.0;
+    [UIView animateWithDuration:0.22 animations:^{
+      [svc.mainPageScroller setContentOffset:CGPointMake(0.0, offset)];
+    }];
+  }
+}
+
+- (void)arm {
+  
+}
+
+- (void)activate {
+  [self arrangeContent];
+  self.backButton.alpha = 1.0;
+}
+
 - (UIView*)bendableView {
   return self.view;
 }
@@ -105,30 +129,6 @@
       }
     }
   }
-}
-
-- (void)arm {
-
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [[[Utilities del] globalTitleBar] applyKpccLogo];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  if ( self.fromSnapshot ) {
-    SCPRViewController *svc = [[Utilities del] viewController];
-    
-    CGFloat offset = [Utilities isIOS7] ? -40.0 : -60.0;
-    [UIView animateWithDuration:0.22 animations:^{
-      [svc.mainPageScroller setContentOffset:CGPointMake(0.0, offset)];
-    }];
-  }
-}
-
-- (void)activate {
-  [self arrangeContent];
-  self.backButton.alpha = 1.0;
 }
 
 - (IBAction)buttonTapped:(id)sender {
@@ -1388,8 +1388,6 @@
   self.socialSheetView.alpha = 1.0;
 }
 
-
-
 - (void)webContentFailed {
 
 }
@@ -1546,6 +1544,9 @@
                        } completion:nil];
     }
   }
+  NSString *imgUrl = [Utilities extractImageURLFromBlob:self.relatedArticle
+                                                quality:AssetQualityFull];
+  [self.basicTemplate.image1 loadImage:imgUrl quietly:YES];
 }
 
 - (void)handleDelayedLoad {
