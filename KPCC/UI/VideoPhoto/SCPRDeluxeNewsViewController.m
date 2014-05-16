@@ -1891,15 +1891,6 @@
   }
 }
 
-- (void)scrollViewDidScrollToTop:(UITableView *)tableView {
-  if (self.contentType == ScreenContentTypeVideoPhotoPage || self.contentType == ScreenContentTypeEventsPage) {
-    return;
-  }
-  
-  
-}
-
-
 #ifdef LOG_DEALLOCATIONS
 - (void)dealloc {
   NSLog(@"DEALLOCATING DELUXE NEWS VIEW CONTROLLER");

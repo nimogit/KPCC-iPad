@@ -227,15 +227,15 @@
   
   if ( message ) {
     UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0.0,0.0,200.0,170.0)];
-    CGRect inset = CGRectInset(messageView.frame, 4.0, 4.0);
-    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(2.0, 2.0, inset.size.width,
+    CGRect inset = CGRectInset(messageView.frame, 8.0, 8.0);
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(4.0, 4.0, inset.size.width,
                                                                      inset.size.height)];
     [messageLabel titleizeText:message bold:NO];
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.numberOfLines = 0;
     messageLabel.backgroundColor = [UIColor clearColor];
     messageLabel.textAlignment = NSTextAlignmentCenter;
-    messageLabel.font = [UIFont systemFontOfSize:13.0];
+    messageLabel.font = [[DesignManager shared] latoRegular:13.0];
     messageView.backgroundColor = [[DesignManager shared] kpccDarkOrangeColor];
     messageView.alpha = 1.0;
 
