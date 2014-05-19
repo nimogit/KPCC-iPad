@@ -1883,7 +1883,7 @@
 
   } else if (tableView.contentOffset.y - 20.0 < CGRectGetMinY(row)) {
     
-    if ([[[Utilities del] globalTitleBar] isDonateButtonShown]) {
+    if ([[[Utilities del] globalTitleBar] isDonateButtonShown] || _sectionsTableOpen) {
       return;
     }
     
