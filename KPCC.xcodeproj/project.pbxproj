@@ -405,8 +405,6 @@
 		256C51BE17288A4100D4054C /* SCPRNewsPageViewController0_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C51B917288A4100D4054C /* SCPRNewsPageViewController0_iPad.xib */; };
 		256C51C117288A4100D4054C /* SCPRNewsPageViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C51BC17288A4100D4054C /* SCPRNewsPageViewController1.xib */; };
 		256C51C217288A4100D4054C /* SCPRNewsPageViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C51BC17288A4100D4054C /* SCPRNewsPageViewController1.xib */; };
-		256C51C617288D6500D4054C /* SCPRGrayStripView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C51C517288D6500D4054C /* SCPRGrayStripView.m */; };
-		256C51C717288D6500D4054C /* SCPRGrayStripView.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C51C517288D6500D4054C /* SCPRGrayStripView.m */; };
 		256C51C91728A86A00D4054C /* SCPRNewsPageSingleTop430_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C51C81728A86A00D4054C /* SCPRNewsPageSingleTop430_iPad.xib */; };
 		256C51CA1728A86A00D4054C /* SCPRNewsPageSingleTop430_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C51C81728A86A00D4054C /* SCPRNewsPageSingleTop430_iPad.xib */; };
 		256C51CC1728B45A00D4054C /* SCPRNewsPageSingleTop320_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C51CB1728B45A00D4054C /* SCPRNewsPageSingleTop320_iPad.xib */; };
@@ -1685,7 +1683,6 @@
 		2825D924173C2E5500D47612 /* complicated2.json in Resources */ = {isa = PBXBuildFile; fileRef = 2825D922173C2E5500D47612 /* complicated2.json */; };
 		2825D926173C2EA400D47612 /* complicated3.json in Resources */ = {isa = PBXBuildFile; fileRef = 2825D925173C2EA400D47612 /* complicated3.json */; };
 		2825D927173C2EA400D47612 /* complicated3.json in Resources */ = {isa = PBXBuildFile; fileRef = 2825D925173C2EA400D47612 /* complicated3.json */; };
-		282E6A4B171C884500B04519 /* SCPRShadowingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B3EAC9171C7EE300989B5B /* SCPRShadowingView.m */; };
 		2832AD37171C969C003E9204 /* SCPRSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 2832AD36171C969C003E9204 /* SCPRSettings.m */; };
 		2832AD40171CC130003E9204 /* UIImageView+ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2832AD3F171CC130003E9204 /* UIImageView+ImageProcessor.m */; };
 		2832AD42171CCB60003E9204 /* fakeimages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2832AD41171CCB60003E9204 /* fakeimages.plist */; };
@@ -1734,7 +1731,6 @@
 		28AFBE9C170F416C00125DB8 /* SCPRViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AFBE9A170F416C00125DB8 /* SCPRViewController_iPad.xib */; };
 		28AFBE9D170F416C00125DB8 /* SCPRViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AFBE9B170F416C00125DB8 /* SCPRViewController.xib */; };
 		28AFBEA4170F4C5D00125DB8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AFBEA3170F4C5D00125DB8 /* AVFoundation.framework */; };
-		28B3EACA171C7EE300989B5B /* SCPRShadowingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B3EAC9171C7EE300989B5B /* SCPRShadowingView.m */; };
 		28C9E757170CF4B300ED18FB /* SCPRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E756170CF4B300ED18FB /* SCPRViewController.m */; };
 		28C9E75D170CF71A00ED18FB /* DesignManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E75C170CF71A00ED18FB /* DesignManager.m */; };
 		28C9E762170CF79F00ED18FB /* ContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E75F170CF79F00ED18FB /* ContentManager.m */; };
@@ -2086,8 +2082,6 @@
 		256C51B517288A3200D4054C /* SCPRNewsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRNewsPageViewController.m; path = UI/NewsPage/NewsPages/SCPRNewsPageViewController.m; sourceTree = "<group>"; };
 		256C51B917288A4100D4054C /* SCPRNewsPageViewController0_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRNewsPageViewController0_iPad.xib; sourceTree = "<group>"; };
 		256C51BC17288A4100D4054C /* SCPRNewsPageViewController1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRNewsPageViewController1.xib; sourceTree = "<group>"; };
-		256C51C417288D6500D4054C /* SCPRGrayStripView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRGrayStripView.h; path = UI/UtilityViews/SCPRGrayStripView.h; sourceTree = "<group>"; };
-		256C51C517288D6500D4054C /* SCPRGrayStripView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRGrayStripView.m; path = UI/UtilityViews/SCPRGrayStripView.m; sourceTree = "<group>"; };
 		256C51C81728A86A00D4054C /* SCPRNewsPageSingleTop430_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRNewsPageSingleTop430_iPad.xib; sourceTree = "<group>"; };
 		256C51CB1728B45A00D4054C /* SCPRNewsPageSingleTop320_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRNewsPageSingleTop320_iPad.xib; sourceTree = "<group>"; };
 		256C51CE1728B4FA00D4054C /* SCPRNewsPageSingleTop340_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRNewsPageSingleTop340_iPad.xib; sourceTree = "<group>"; };
@@ -2863,8 +2857,6 @@
 		28AFBE9A170F416C00125DB8 /* SCPRViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRViewController_iPad.xib; path = UI/SCPRViewController_iPad.xib; sourceTree = "<group>"; };
 		28AFBE9B170F416C00125DB8 /* SCPRViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRViewController.xib; path = UI/SCPRViewController.xib; sourceTree = "<group>"; };
 		28AFBEA3170F4C5D00125DB8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		28B3EAC8171C7EE300989B5B /* SCPRShadowingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRShadowingView.h; path = UI/SCPRShadowingView.h; sourceTree = "<group>"; };
-		28B3EAC9171C7EE300989B5B /* SCPRShadowingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRShadowingView.m; path = UI/SCPRShadowingView.m; sourceTree = "<group>"; };
 		28C9E755170CF4B300ED18FB /* SCPRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRViewController.h; path = UI/SCPRViewController.h; sourceTree = "<group>"; };
 		28C9E756170CF4B300ED18FB /* SCPRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRViewController.m; path = UI/SCPRViewController.m; sourceTree = "<group>"; };
 		28C9E75B170CF71A00ED18FB /* DesignManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DesignManager.h; path = Managers/DesignManager.h; sourceTree = "<group>"; };
@@ -3992,10 +3984,6 @@
 			isa = PBXGroup;
 			children = (
 				2832FF001715F0C9009FF2F0 /* VolumeWidget */,
-				28B3EAC8171C7EE300989B5B /* SCPRShadowingView.h */,
-				28B3EAC9171C7EE300989B5B /* SCPRShadowingView.m */,
-				256C51C417288D6500D4054C /* SCPRGrayStripView.h */,
-				256C51C517288D6500D4054C /* SCPRGrayStripView.m */,
 				2547B8A6173823CC00EF72A3 /* SCPRClipBannerViewController.h */,
 				2547B8A7173823CC00EF72A3 /* SCPRClipBannerViewController.m */,
 				2547B8A8173823CC00EF72A3 /* SCPRClipBannerViewController_iPad.xib */,
@@ -6559,7 +6547,6 @@
 				28A0CF19171E055600776579 /* SCPRTitlebarViewController.m in Sources */,
 				28DF6D2F171DBE49002F0F99 /* UIImageView+ImageProcessor.m in Sources */,
 				2832AD48171CD105003E9204 /* SCPRSettings.m in Sources */,
-				282E6A4B171C884500B04519 /* SCPRShadowingView.m in Sources */,
 				28036A7E1718A344007DBDE2 /* main.m in Sources */,
 				25A70C3A17E289650024E654 /* SCPRCandidateCell.m in Sources */,
 				28036A7F1718A344007DBDE2 /* SCPRAppDelegate.m in Sources */,
@@ -6610,7 +6597,6 @@
 				255D2D7C1725DE6600ED1136 /* UILabel+Adjustments.m in Sources */,
 				25EF07981727502F0048486C /* FileManager.m in Sources */,
 				256C51B717288A3200D4054C /* SCPRNewsPageViewController.m in Sources */,
-				256C51C717288D6500D4054C /* SCPRGrayStripView.m in Sources */,
 				256C51D71728BDF800D4054C /* SCPRHBTView.m in Sources */,
 				2571C0841729BB8A00B43422 /* SCPRGrayLineView.m in Sources */,
 				2586C388172EFD0F0096600B /* SCPRSnapshotCell.m in Sources */,
@@ -6750,7 +6736,6 @@
 				252ADCDA17F0F2CC002F2938 /* SCPRMasterRootViewController.m in Sources */,
 				284B9652171640AD0079D4CA /* NSTimer+Disarm.m in Sources */,
 				25640EF117D10ADF00CBDF68 /* SCPREditionCompositeViewController.m in Sources */,
-				28B3EACA171C7EE300989B5B /* SCPRShadowingView.m in Sources */,
 				2832AD37171C969C003E9204 /* SCPRSettings.m in Sources */,
 				2832AD40171CC130003E9204 /* UIImageView+ImageProcessor.m in Sources */,
 				76A3089018BD5ABA0065D4B1 /* AlarmManager.m in Sources */,
@@ -6769,7 +6754,6 @@
 				25EF07971727502F0048486C /* FileManager.m in Sources */,
 				256C51B617288A3200D4054C /* SCPRNewsPageViewController.m in Sources */,
 				25A70B9317DE41CA0024E654 /* SCPRBreakingNewsViewController.m in Sources */,
-				256C51C617288D6500D4054C /* SCPRGrayStripView.m in Sources */,
 				25640EFA17D1161A00CBDF68 /* SCPRDeluxeDividerView.m in Sources */,
 				256C51D61728BDF800D4054C /* SCPRHBTView.m in Sources */,
 				2571C0831729BB8A00B43422 /* SCPRGrayLineView.m in Sources */,

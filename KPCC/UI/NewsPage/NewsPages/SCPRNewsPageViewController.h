@@ -10,7 +10,6 @@
 #import "global.h"
 #import "UIImageView+ImageProcessor.h"
 #import "SCPRViewController.h"
-#import "SCPRGrayStripView.h"
 #import "SCPRGrayLineView.h"
 #import "SCPRHBTView.h"
 
@@ -67,7 +66,6 @@
 
 
 // Division
-@property (nonatomic,strong) IBOutlet SCPRGrayStripView *newsTitleView;
 @property (nonatomic,strong) IBOutlet SCPRGrayLineView *grayLine;
 @property (nonatomic,strong) IBOutlet UIView *decorativeStripeView;
 

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SCPRGrayStripView.h"
 #import "SCPRViewController.h"
 
 @interface SCPRNewsPageContainerController : UIViewController<Turnable> {
@@ -20,7 +19,6 @@
 @property (nonatomic,strong) id child;
 @property (nonatomic,strong) UINavigationController *designatedNav;
 @property (nonatomic,strong) NSString *topicSlug;
-@property (nonatomic,strong) IBOutlet SCPRGrayStripView *grayStrip;
 @property (nonatomic,strong) IBOutlet UIView *bannerAdView;
 @property (nonatomic,strong) IBOutlet UILabel *pageTitleLabel;
 @property (nonatomic,strong) NSMutableArray *newsPages;
