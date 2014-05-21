@@ -153,10 +153,6 @@
 		2546FE691767CEFA006DF9E3 /* SCPRFlapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2546FE661767CEF9006DF9E3 /* SCPRFlapViewController.m */; };
 		2546FE6A1767CEFA006DF9E3 /* SCPRFlapViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2546FE671767CEF9006DF9E3 /* SCPRFlapViewController_iPad.xib */; };
 		2546FE6B1767CEFA006DF9E3 /* SCPRFlapViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2546FE671767CEF9006DF9E3 /* SCPRFlapViewController_iPad.xib */; };
-		2547B8A9173823CC00EF72A3 /* SCPRClipBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2547B8A7173823CC00EF72A3 /* SCPRClipBannerViewController.m */; };
-		2547B8AA173823CC00EF72A3 /* SCPRClipBannerViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2547B8A8173823CC00EF72A3 /* SCPRClipBannerViewController_iPad.xib */; };
-		2547B8AB173824A000EF72A3 /* SCPRClipBannerViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2547B8A8173823CC00EF72A3 /* SCPRClipBannerViewController_iPad.xib */; };
-		2547B8AC1738273600EF72A3 /* SCPRClipBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2547B8A7173823CC00EF72A3 /* SCPRClipBannerViewController.m */; };
 		2547FC4217B476BD009F35E6 /* tableBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2547FC4017B476BD009F35E6 /* tableBackground.png */; };
 		2547FC4317B476BD009F35E6 /* tableBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2547FC4017B476BD009F35E6 /* tableBackground.png */; };
 		2547FC4417B476BD009F35E6 /* tableBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2547FC4117B476BD009F35E6 /* tableBackground@2x.png */; };
@@ -1918,9 +1914,6 @@
 		2546FE651767CEF8006DF9E3 /* SCPRFlapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRFlapViewController.h; path = UI/NewsPage/SingleArticle/SCPRFlapViewController.h; sourceTree = "<group>"; };
 		2546FE661767CEF9006DF9E3 /* SCPRFlapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRFlapViewController.m; path = UI/NewsPage/SingleArticle/SCPRFlapViewController.m; sourceTree = "<group>"; };
 		2546FE671767CEF9006DF9E3 /* SCPRFlapViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRFlapViewController_iPad.xib; path = UI/NewsPage/SingleArticle/SCPRFlapViewController_iPad.xib; sourceTree = "<group>"; };
-		2547B8A6173823CC00EF72A3 /* SCPRClipBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRClipBannerViewController.h; path = UI/UtilityViews/SCPRClipBannerViewController.h; sourceTree = "<group>"; };
-		2547B8A7173823CC00EF72A3 /* SCPRClipBannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRClipBannerViewController.m; path = UI/UtilityViews/SCPRClipBannerViewController.m; sourceTree = "<group>"; };
-		2547B8A8173823CC00EF72A3 /* SCPRClipBannerViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRClipBannerViewController_iPad.xib; path = UI/UtilityViews/SCPRClipBannerViewController_iPad.xib; sourceTree = "<group>"; };
 		2547FC4017B476BD009F35E6 /* tableBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableBackground.png; sourceTree = "<group>"; };
 		2547FC4117B476BD009F35E6 /* tableBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableBackground@2x.png"; sourceTree = "<group>"; };
 		2547FC4617B5930A009F35E6 /* SCPREditionMineralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPREditionMineralViewController.h; path = UI/NewsPage/Snapshot/SCPREditionMineralViewController.h; sourceTree = "<group>"; };
@@ -3951,9 +3944,6 @@
 			isa = PBXGroup;
 			children = (
 				2832FF001715F0C9009FF2F0 /* VolumeWidget */,
-				2547B8A6173823CC00EF72A3 /* SCPRClipBannerViewController.h */,
-				2547B8A7173823CC00EF72A3 /* SCPRClipBannerViewController.m */,
-				2547B8A8173823CC00EF72A3 /* SCPRClipBannerViewController_iPad.xib */,
 				25D22B3517690AB500EE840E /* Events */,
 				2586C389172EFD4C0096600B /* SCPREditionCrystalViewController.h */,
 				2586C38A172EFD4C0096600B /* SCPREditionCrystalViewController.m */,
@@ -4971,7 +4961,6 @@
 				256245E7178F7C9300328CEE /* queueItemPlay@2x.png in Resources */,
 				25F49E22176BC76600C0FCA7 /* category_groups.json in Resources */,
 				255571771738B12200354D30 /* SCPRSpecialTitlebarViewController_iPad.xib in Resources */,
-				2547B8AB173824A000EF72A3 /* SCPRClipBannerViewController_iPad.xib in Resources */,
 				25A677961828785600565925 /* onboarding-card-step3@2x.jpg in Resources */,
 				253B8D5A172B073D00719F6D /* SCPRNewsPageSingleTop321_iPad.xib in Resources */,
 				25AD02BE1832E494000AE782 /* Icon@2x.png in Resources */,
@@ -5756,7 +5745,6 @@
 				256FFD5A18232C250060F538 /* icon-edit-favorites@2x.png in Resources */,
 				25C8F15E173190C100229891 /* vimeo_container.html in Resources */,
 				25C8F21E173325F200229891 /* SCPRBCVideoContentViewController_iPad.xib in Resources */,
-				2547B8AA173823CC00EF72A3 /* SCPRClipBannerViewController_iPad.xib in Resources */,
 				25EDE7F91738690E004805CA /* SCPRNewsPageSingleTopSq0_iPad.xib in Resources */,
 				25EDE80017386C6C004805CA /* SCPRSingleArticleCollectionViewController_iPad.xib in Resources */,
 				76D71F1218A44B3700487864 /* icon-social-facebook@2x.png in Resources */,
@@ -6487,7 +6475,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2547B8AC1738273600EF72A3 /* SCPRClipBannerViewController.m in Sources */,
 				255D2D771725DDDB00ED1136 /* NSString+MD5Addition.m in Sources */,
 				255D2D781725DDDB00ED1136 /* UIDevice+IdentifierAddition.m in Sources */,
 				28A0CF19171E055600776579 /* SCPRTitlebarViewController.m in Sources */,
@@ -6701,7 +6688,6 @@
 				2586C38C172EFD4C0096600B /* SCPREditionCrystalViewController.m in Sources */,
 				2586C397172F3B260096600B /* SCPRSingleArticleViewController.m in Sources */,
 				25C8F220173325F200229891 /* SCPRBCVideoContentViewController.m in Sources */,
-				2547B8A9173823CC00EF72A3 /* SCPRClipBannerViewController.m in Sources */,
 				25EDE7FE17386C6C004805CA /* SCPRSingleArticleCollectionViewController.m in Sources */,
 				256FFD4D1822E3F30060F538 /* SCPRBlankCell.m in Sources */,
 				25EDE806173889A2004805CA /* SCPRSimpleNewsViewController.m in Sources */,
