@@ -28,8 +28,6 @@
 		25089D9E1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25089D9B1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m */; };
 		25089D9F1799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25089D9C1799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib */; };
 		25089DA01799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25089D9C1799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib */; };
-		25089DA31799F7A000ADD3BC /* SCPRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25089DA21799F7A000ADD3BC /* SCPRActivityIndicatorView.m */; };
-		25089DA41799F7A000ADD3BC /* SCPRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25089DA21799F7A000ADD3BC /* SCPRActivityIndicatorView.m */; };
 		251D4CA817A7320400D4CAA3 /* SCPRUnderConstructionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 251D4CA617A7320400D4CAA3 /* SCPRUnderConstructionViewController.m */; };
 		251D4CA917A7320400D4CAA3 /* SCPRUnderConstructionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 251D4CA617A7320400D4CAA3 /* SCPRUnderConstructionViewController.m */; };
 		251D4CAA17A7320400D4CAA3 /* SCPRUnderConstructionViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 251D4CA717A7320400D4CAA3 /* SCPRUnderConstructionViewController_iPad.xib */; };
@@ -954,8 +952,6 @@
 		25B3CB281806136B0018CFF8 /* queue_close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B3CB251806136B0018CFF8 /* queue_close_button.png */; };
 		25B3CB291806136B0018CFF8 /* queue_close_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B3CB261806136B0018CFF8 /* queue_close_button@2x.png */; };
 		25B3CB2A1806136B0018CFF8 /* queue_close_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B3CB261806136B0018CFF8 /* queue_close_button@2x.png */; };
-		25B57CBC17FDF668002C5BF7 /* SCPRResponsiveSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B57CBB17FDF668002C5BF7 /* SCPRResponsiveSpinner.m */; };
-		25B57CBD17FDF668002C5BF7 /* SCPRResponsiveSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B57CBB17FDF668002C5BF7 /* SCPRResponsiveSpinner.m */; };
 		25B5A9CB180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9CA180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib */; };
 		25B5A9CC180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9CA180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib */; };
 		25B5A9CE180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9CD180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib */; };
@@ -1861,8 +1857,6 @@
 		25089D9A1799B04600ADD3BC /* SCPRDeluxeNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRDeluxeNewsViewController.h; path = UI/VideoPhoto/SCPRDeluxeNewsViewController.h; sourceTree = "<group>"; };
 		25089D9B1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRDeluxeNewsViewController.m; path = UI/VideoPhoto/SCPRDeluxeNewsViewController.m; sourceTree = "<group>"; };
 		25089D9C1799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsViewController_iPad.xib; path = UI/VideoPhoto/SCPRDeluxeNewsViewController_iPad.xib; sourceTree = "<group>"; };
-		25089DA11799F7A000ADD3BC /* SCPRActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRActivityIndicatorView.h; path = UI/UtilityViews/SCPRActivityIndicatorView.h; sourceTree = "<group>"; };
-		25089DA21799F7A000ADD3BC /* SCPRActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRActivityIndicatorView.m; path = UI/UtilityViews/SCPRActivityIndicatorView.m; sourceTree = "<group>"; };
 		251D4CA517A7320400D4CAA3 /* SCPRUnderConstructionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRUnderConstructionViewController.h; path = UI/UtilityViews/SCPRUnderConstructionViewController.h; sourceTree = "<group>"; };
 		251D4CA617A7320400D4CAA3 /* SCPRUnderConstructionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRUnderConstructionViewController.m; path = UI/UtilityViews/SCPRUnderConstructionViewController.m; sourceTree = "<group>"; };
 		251D4CA717A7320400D4CAA3 /* SCPRUnderConstructionViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRUnderConstructionViewController_iPad.xib; path = UI/UtilityViews/SCPRUnderConstructionViewController_iPad.xib; sourceTree = "<group>"; };
@@ -2420,8 +2414,6 @@
 		25AEFA7F175586B2003CD916 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		25B3CB251806136B0018CFF8 /* queue_close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = queue_close_button.png; sourceTree = "<group>"; };
 		25B3CB261806136B0018CFF8 /* queue_close_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "queue_close_button@2x.png"; sourceTree = "<group>"; };
-		25B57CBA17FDF668002C5BF7 /* SCPRResponsiveSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRResponsiveSpinner.h; path = UI/UtilityViews/SCPRResponsiveSpinner.h; sourceTree = "<group>"; };
-		25B57CBB17FDF668002C5BF7 /* SCPRResponsiveSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRResponsiveSpinner.m; path = UI/UtilityViews/SCPRResponsiveSpinner.m; sourceTree = "<group>"; };
 		25B5A9CA180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsCellDouble_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeNewsCellDouble_iPadLandscape.xib; sourceTree = "<group>"; };
 		25B5A9CD180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeDividerView_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeDividerView_iPadLandscape.xib; sourceTree = "<group>"; };
 		25B5A9D0180F240E002FF8EA /* SCPRDeluxeNewsCellSingle43_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsCellSingle43_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeNewsCellSingle43_iPadLandscape.xib; sourceTree = "<group>"; };
@@ -3998,10 +3990,6 @@
 				25D7A8DA177D0445008D9F37 /* SCPRFloatingOptionViewController.h */,
 				25D7A8DB177D0445008D9F37 /* SCPRFloatingOptionViewController.m */,
 				25D7A8DC177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib */,
-				25089DA11799F7A000ADD3BC /* SCPRActivityIndicatorView.h */,
-				25089DA21799F7A000ADD3BC /* SCPRActivityIndicatorView.m */,
-				25B57CBA17FDF668002C5BF7 /* SCPRResponsiveSpinner.h */,
-				25B57CBB17FDF668002C5BF7 /* SCPRResponsiveSpinner.m */,
 				25D22B3517690AB500EE840E /* Events */,
 				2586C389172EFD4C0096600B /* SCPREditionCrystalViewController.h */,
 				2586C38A172EFD4C0096600B /* SCPREditionCrystalViewController.m */,
@@ -6602,7 +6590,6 @@
 				2586C388172EFD0F0096600B /* SCPRSnapshotCell.m in Sources */,
 				2586C38D172EFD4C0096600B /* SCPREditionCrystalViewController.m in Sources */,
 				2586C398172F3B260096600B /* SCPRSingleArticleViewController.m in Sources */,
-				25B57CBD17FDF668002C5BF7 /* SCPRResponsiveSpinner.m in Sources */,
 				25640EF217D10ADF00CBDF68 /* SCPREditionCompositeViewController.m in Sources */,
 				255FD5DD17CFD3A900F03A0B /* NSString+sizeWithFont.m in Sources */,
 				25C8F221173325F200229891 /* SCPRBCVideoContentViewController.m in Sources */,
@@ -6668,7 +6655,6 @@
 				255EE49D1796FE24004D1D5E /* SCPRDrawerSectionHeaderView.m in Sources */,
 				255EE4BE179740D5004D1D5E /* SCPR404ViewController.m in Sources */,
 				25089D9E1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m in Sources */,
-				25089DA41799F7A000ADD3BC /* SCPRActivityIndicatorView.m in Sources */,
 				254435AB179EE7A100394EDF /* SCPREditionAtomViewController.m in Sources */,
 				254435D3179F0B1000394EDF /* SCPREditionMoleculeViewController.m in Sources */,
 				252EA38D181890480093BFDA /* SCPRBadgeLabel.m in Sources */,
@@ -6826,7 +6812,6 @@
 				255EE4BD179740D5004D1D5E /* SCPR404ViewController.m in Sources */,
 				25A70C3917E289650024E654 /* SCPRCandidateCell.m in Sources */,
 				25089D9D1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m in Sources */,
-				25089DA31799F7A000ADD3BC /* SCPRActivityIndicatorView.m in Sources */,
 				254435AA179EE7A100394EDF /* SCPREditionAtomViewController.m in Sources */,
 				254435D2179F0B1000394EDF /* SCPREditionMoleculeViewController.m in Sources */,
 				251D4CA817A7320400D4CAA3 /* SCPRUnderConstructionViewController.m in Sources */,
@@ -6837,7 +6822,6 @@
 				255B583B17B1A400004E9712 /* SCPRCompSingleCell.m in Sources */,
 				255B583F17B1A419004E9712 /* SCPRCompDoubleCell.m in Sources */,
 				255B584317B1A687004E9712 /* SCPRCompositeCellViewController.m in Sources */,
-				25B57CBC17FDF668002C5BF7 /* SCPRResponsiveSpinner.m in Sources */,
 				76709F4E1919354300E0574C /* FXBlurView.m in Sources */,
 				2547FC4917B5930D009F35E6 /* SCPREditionMineralViewController.m in Sources */,
 				25A6774D18285EF600565925 /* SCPRIntroductionViewController.m in Sources */,

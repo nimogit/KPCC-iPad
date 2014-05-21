@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SCPRFlatShadedButton.h"
 #import "global.h"
-#import "SCPRActivityIndicatorView.h"
 
 @protocol ExternalWebContentDelegate <NSObject>
 
