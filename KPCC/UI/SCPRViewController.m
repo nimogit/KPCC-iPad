@@ -12,7 +12,6 @@
 #import "SCPRNewsPageViewController.h"
 #import "SCPRNewsPageContainerController.h"
 #import "SCPRWebNewsContentViewController.h"
-#import "SCPRBCVideoContentViewController.h"
 #import "SCPRProgramPageViewController.h"
 #import "SCPREditionCrystalViewController.h"
 #import "SCPRSingleArticleCollectionViewController.h"

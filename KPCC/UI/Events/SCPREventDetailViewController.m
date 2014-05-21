@@ -31,7 +31,6 @@
 {
     [super viewDidLoad];
   
-  self.videoController.view.backgroundColor = [[DesignManager shared] number1pencilColor];
   self.liveTweetView.backgroundColor = [[DesignManager shared] number1pencilColor];
   self.eventDetailsView.backgroundColor = [[DesignManager shared] number1pencilColor];
   self.tweetButton.enabled = NO;

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SCPRBCVideoContentViewController.h"
 #import "global.h"
 #import "SCPRFlatShadedButton.h"
 #import "SCPRReloadViewController.h"
@@ -21,7 +20,6 @@ typedef enum {
 
 @property (nonatomic,strong) NSDictionary *event;
 
-@property (nonatomic,strong) IBOutlet SCPRBCVideoContentViewController *videoController;
 @property (nonatomic,strong) IBOutlet UIView *eventDetailsView;
 @property (nonatomic,strong) IBOutlet UIView *liveTweetView;
 @property (nonatomic,strong) IBOutlet UITextView *tweetContentTextView;
