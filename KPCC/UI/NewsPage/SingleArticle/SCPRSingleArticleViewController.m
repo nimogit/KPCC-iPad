@@ -1455,7 +1455,6 @@
   
   self.basicTemplate = nil;
   self.webContentLoader.webView = nil;
-  self.armoireController = nil;
   self.extraAssetsController = nil;
   self.parentCollection = nil;
   self.leftFlap = nil;

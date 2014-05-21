@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "global.h"
 #import "SCPRFlatShadedButton.h"
-#import "SCPRArmoireViewController.h"
 #import "SCPRScrollingAssetViewController.h"
 #import "SCPRWebNewsContentViewController.h"
 #import "SCPRFlapViewController.h"
@@ -102,7 +101,6 @@
 @property (nonatomic,strong) IBOutlet UIButton *queueButton;
 @property BOOL okToTrash;
 @property (nonatomic,weak) SCPRNewsPageViewController *parentNewsPage;
-@property (nonatomic,strong) SCPRArmoireViewController *armoireController;
 @property (nonatomic,strong) SCPRScrollingAssetViewController *extraAssetsController;
 @property (nonatomic,strong) IBOutlet SCPRWebNewsContentViewController *webContentLoader;
 @property (nonatomic,strong) SCPRFloatingEmbedViewController *floatingVideoController;
