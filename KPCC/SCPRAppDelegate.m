@@ -13,7 +13,6 @@
 #import "SCPRScrollingAssetViewController.h"
 #import "global.h"
 #import <Parse/Parse.h>
-#import "SCPRFloatingOptionViewController.h"
 #import "SCPRSpinnerViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRCloakViewController.h"
@@ -144,28 +143,6 @@
 
 - (void)showTitleBar {
   self.globalTitleBar.view.alpha = 1.0;
-}
-
-- (void)presentFloatingOptionsMenuFromPoint:(CGPoint)point sourceView:(UIView *)sourceView delegate:(id<OptionsDelegate>)delegate withObject:(id)sourceable {
-  if ( self.floatingOptionsMenu.isPresenting ) {
-    return;
-  }
-  self.floatingOptionsMenu = [[SCPRFloatingOptionViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRFloatingOptionViewController"] bundle:nil];
-  self.floatingOptionsMenu.sourceableData = sourceable;
-  CGPoint floatingOrigin = [self.window convertPoint:point fromView:sourceView];
-  [self.masterRootController.view addSubview:self.floatingOptionsMenu.view];
-  self.floatingOptionsMenu.view.center = CGPointMake(floatingOrigin.x,floatingOrigin.y-self.floatingOptionsMenu.view.frame.size.height/2.0);
-  self.floatingOptionsMenu.delegate = delegate;
-  self.floatingOptionsMenu.isPresenting = YES;
-  
-  [self.floatingOptionsMenu.optionDescriptionLabel titleizeText:[sourceable objectForKey:@"short_title"]
-                                       bold:NO
-                              respectHeight:YES];
-}
-
-- (void)dismissFloatingOptionsMenu {
-  self.floatingOptionsMenu.isPresenting = NO;
-  [self.floatingOptionsMenu animateBack];
 }
 
 - (void)rotateDrawerForInterfaceOrientation:(UIInterfaceOrientation)orientation {

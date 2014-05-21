@@ -96,11 +96,6 @@
   
 }
 
-#pragma mark - OptionsDelegate
-- (void)pressRemoved {
-  [[Utilities del] dismissFloatingOptionsMenu];
-}
-
 #pragma mark - UITableView
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return 1;

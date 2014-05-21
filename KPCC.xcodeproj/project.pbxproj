@@ -1182,10 +1182,6 @@
 		25D7A8D6177CC40E008D9F37 /* SCPRSegmentCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D7A8D4177CC40D008D9F37 /* SCPRSegmentCell_iPad.xib */; };
 		25D7A8D8177CF491008D9F37 /* circleLogoSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D7A8D7177CF491008D9F37 /* circleLogoSmall.png */; };
 		25D7A8D9177CF491008D9F37 /* circleLogoSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D7A8D7177CF491008D9F37 /* circleLogoSmall.png */; };
-		25D7A8DD177D0445008D9F37 /* SCPRFloatingOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D7A8DB177D0445008D9F37 /* SCPRFloatingOptionViewController.m */; };
-		25D7A8DE177D0445008D9F37 /* SCPRFloatingOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D7A8DB177D0445008D9F37 /* SCPRFloatingOptionViewController.m */; };
-		25D7A8DF177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D7A8DC177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib */; };
-		25D7A8E0177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D7A8DC177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib */; };
 		25DF12E417CC247200572E6F /* UIViewController+iOS7Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DF12E317CC247200572E6F /* UIViewController+iOS7Helper.m */; };
 		25DF12E517CC247200572E6F /* UIViewController+iOS7Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DF12E317CC247200572E6F /* UIViewController+iOS7Helper.m */; };
 		25E0B1A217C2AC04009C3C72 /* SCPRDeluxeNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E0B1A117C2AC04009C3C72 /* SCPRDeluxeNewsCell.m */; };
@@ -2532,9 +2528,6 @@
 		25D7A8D1177CC3E9008D9F37 /* SCPRSegmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPRSegmentCell.m; sourceTree = "<group>"; };
 		25D7A8D4177CC40D008D9F37 /* SCPRSegmentCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRSegmentCell_iPad.xib; sourceTree = "<group>"; };
 		25D7A8D7177CF491008D9F37 /* circleLogoSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circleLogoSmall.png; sourceTree = "<group>"; };
-		25D7A8DA177D0445008D9F37 /* SCPRFloatingOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRFloatingOptionViewController.h; path = UI/UtilityViews/SCPRFloatingOptionViewController.h; sourceTree = "<group>"; };
-		25D7A8DB177D0445008D9F37 /* SCPRFloatingOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRFloatingOptionViewController.m; path = UI/UtilityViews/SCPRFloatingOptionViewController.m; sourceTree = "<group>"; };
-		25D7A8DC177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRFloatingOptionViewController_iPad.xib; path = UI/UtilityViews/SCPRFloatingOptionViewController_iPad.xib; sourceTree = "<group>"; };
 		25DF12E217CC247200572E6F /* UIViewController+iOS7Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+iOS7Helper.h"; path = "Workers/UIViewController+iOS7Helper.h"; sourceTree = "<group>"; };
 		25DF12E317CC247200572E6F /* UIViewController+iOS7Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+iOS7Helper.m"; path = "Workers/UIViewController+iOS7Helper.m"; sourceTree = "<group>"; };
 		25E0B1A017C2AC04009C3C72 /* SCPRDeluxeNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRDeluxeNewsCell.h; path = UI/VideoPhoto/SCPRDeluxeNewsCell.h; sourceTree = "<group>"; };
@@ -3961,9 +3954,6 @@
 				2547B8A6173823CC00EF72A3 /* SCPRClipBannerViewController.h */,
 				2547B8A7173823CC00EF72A3 /* SCPRClipBannerViewController.m */,
 				2547B8A8173823CC00EF72A3 /* SCPRClipBannerViewController_iPad.xib */,
-				25D7A8DA177D0445008D9F37 /* SCPRFloatingOptionViewController.h */,
-				25D7A8DB177D0445008D9F37 /* SCPRFloatingOptionViewController.m */,
-				25D7A8DC177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib */,
 				25D22B3517690AB500EE840E /* Events */,
 				2586C389172EFD4C0096600B /* SCPREditionCrystalViewController.h */,
 				2586C38A172EFD4C0096600B /* SCPREditionCrystalViewController.m */,
@@ -5230,7 +5220,6 @@
 				25D7A8D6177CC40E008D9F37 /* SCPRSegmentCell_iPad.xib in Resources */,
 				25D7A8D9177CF491008D9F37 /* circleLogoSmall.png in Resources */,
 				25C9A47417F4B1C100B6BBB6 /* SCPREditionMoleculeViewController_iPadLandscape.xib in Resources */,
-				25D7A8E0177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib in Resources */,
 				2559456C1781EA1C0014B0B5 /* spinner.html in Resources */,
 				257001E218219B7E008B43F6 /* icon-edition-readnow@2x.png in Resources */,
 				2559456F1781EABC0014B0B5 /* spinning-donut.png in Resources */,
@@ -5972,7 +5961,6 @@
 				25D7A8CE177CBC23008D9F37 /* freshair_episodes.json in Resources */,
 				25D7A8D5177CC40E008D9F37 /* SCPRSegmentCell_iPad.xib in Resources */,
 				25D7A8D8177CF491008D9F37 /* circleLogoSmall.png in Resources */,
-				25D7A8DF177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib in Resources */,
 				25A70C1417E144130024E654 /* button-signin-member.png in Resources */,
 				25A677A91828785600565925 /* onboarding-magnifier-step4@2x.png in Resources */,
 				2559456B1781EA1C0014B0B5 /* spinner.html in Resources */,
@@ -6616,7 +6604,6 @@
 				257AB7D2177B68E600D2F4EA /* SCPRProgramCell.m in Sources */,
 				257AB7D7177B6C3100D2F4EA /* SCPRProgramNavigatorViewController.m in Sources */,
 				25D7A8D3177CC3EA008D9F37 /* SCPRSegmentCell.m in Sources */,
-				25D7A8DE177D0445008D9F37 /* SCPRFloatingOptionViewController.m in Sources */,
 				256A0AD91784CFDC00508999 /* SCPRProfileReminderCell.m in Sources */,
 				25A70C0017E13DC40024E654 /* SCPROnboardingCardViewController.m in Sources */,
 				255EE49D1796FE24004D1D5E /* SCPRDrawerSectionHeaderView.m in Sources */,
@@ -6769,7 +6756,6 @@
 				257AB7D6177B6C3100D2F4EA /* SCPRProgramNavigatorViewController.m in Sources */,
 				25D7A8D2177CC3EA008D9F37 /* SCPRSegmentCell.m in Sources */,
 				25A70BAF17E135800024E654 /* SCPROnboardingFlowViewController.m in Sources */,
-				25D7A8DD177D0445008D9F37 /* SCPRFloatingOptionViewController.m in Sources */,
 				256A0AD81784CFDC00508999 /* SCPRProfileReminderCell.m in Sources */,
 				252ADCE117F227B1002F2938 /* SCPRCloakViewController.m in Sources */,
 				255EE49C1796FE24004D1D5E /* SCPRDrawerSectionHeaderView.m in Sources */,

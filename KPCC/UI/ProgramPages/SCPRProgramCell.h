@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "global.h"
-#import "SCPRFloatingOptionViewController.h"
 
 @interface SCPRProgramCell : UITableViewCell<UITableViewDataSource,UITableViewDelegate>
 
