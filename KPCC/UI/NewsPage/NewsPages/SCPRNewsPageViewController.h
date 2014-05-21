@@ -30,8 +30,6 @@
 // Templates
 - (void)templateBigTopSplitBottom:(NSInteger)index style:(NSUInteger)tempStyle;
 
-// Clip
-- (void)clipBannerToTop:(NSString*)withMessage;
 
 @property (nonatomic,strong) IBOutlet UIImageView *image1;
 @property (nonatomic,strong) IBOutlet UIImageView *image2;
