@@ -21,18 +21,16 @@
 
 @implementation SCPRSingleArticleViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+      // Custom initialization
+  }
+  return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)viewDidLoad {
+  [super viewDidLoad];
   
   [self stretch];
   [self.activity startAnimating];
@@ -40,14 +38,13 @@
   self.webContentLoader.webView.alpha = 0.0;
   self.webContentLoader.webView.frame = self.webContentLoader.webView.frame;
 
-  
   self.textSheetView.alpha = 0.0;
   self.cloakView.alpha = 0.0;
   self.queueButton.alpha = 0.0;
   self.socialSheetView.alpha = 0.0;
-  self.basicTemplate.headLine.textColor = [UIColor blackColor]/*[[DesignManager shared] darkoalColor]*/;
-  self.basicTemplate.byLine.textColor = [UIColor blackColor]/*[[DesignManager shared] darkoalColor]*/;
-  self.view.backgroundColor = [UIColor whiteColor];/*[[DesignManager shared] charcoalColor];*/
+  self.basicTemplate.headLine.textColor = [UIColor blackColor];
+  self.basicTemplate.byLine.textColor = [UIColor blackColor];
+  self.view.backgroundColor = [UIColor whiteColor];
   
   if ( !self.relatedArticle ) {
     [[NetworkManager shared] fetchContentForSingleArticle:self.relatedURL
@@ -171,42 +168,6 @@
   }
 }
 
-- (void)killContent {
-
-  NSString *title = [self.relatedArticle objectForKey:@"short_title"] ? [self.relatedArticle objectForKey:@"short_title"] : [self.relatedArticle objectForKey:@"title"];
-  NSString *code = [NSString stringWithFormat:@"%@%d",[Utilities sha1:title],
-                    (NSInteger)[[NSDate date] timeIntervalSince1970]];
-  self.deactivationToken = code;
-  [[ContentManager shared] queueDeactivation:self];
-  
-  @try {
-    [self.masterContentScroller removeObserver:self
-                                    forKeyPath:@"contentOffset"];
-  } @catch (NSException *e) {
-    //NSLog(@"Unnecessary observation removal...");
-  }
-  
-  NSString *blank = [[FileManager shared] copyFromMainBundleToDocuments:@"blank.html"
-                                                               destName:@"blank.html"];
-  NSURL *url = [NSURL fileURLWithPath:blank];
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                         cachePolicy:NSURLCacheStorageAllowed
-                                                     timeoutInterval:10.0];
-
-  [self.webContentLoader.webView stopLoading];
-  self.webContentLoader.cleaningUp = YES;
-  [self.webContentLoader.webView loadRequest:request];
-}
-
-- (void)safeKillContent {
-  @try {
-    [self.masterContentScroller removeObserver:self
-                                    forKeyPath:@"contentOffset"];
-  } @catch (NSException *e) {
-    //NSLog(@"Unnecessary observation removal...");
-  }
-}
-
 - (void)setRelatedArticle:(NSDictionary *)relatedArticle {
   _relatedArticle = relatedArticle;
   
@@ -229,127 +190,15 @@
   self.sheetCloak.alpha = 0.0;
 }
 
-#pragma mark - Rotatable
-- (void)handleRotationPre {
-  [UIView animateWithDuration:0.12 animations:^{
-    self.masterContentScroller.alpha = 0.0;
-  }];
-}
-
-- (void)handleRotationPost {
-
-  [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
-                                       xibForPlatformWithName:@"SCPRSingleArticleViewController"]
-                                owner:self
-                              options:nil];
-  self.contentArranged = NO;
-  [self stretch];
-  
-  if ( self.fromSnapshot ) {
-    SCPRViewController *svc = [[Utilities del] viewController];
-    
-    CGFloat offset = [Utilities isIOS7] ? -40.0 : -60.0;
-    [UIView animateWithDuration:0.22 animations:^{
-      [svc.mainPageScroller setContentOffset:CGPointMake(0.0, offset)];
-    }];
-  }
-  
-  [self arrangeContent];
-  
-  if ( [Utilities isLandscape] ) {
-    @try {
-      
-      [self.masterContentScroller removeObserver:self
-                                      forKeyPath:@"contentOffset"];
-      
-    } @catch (NSException *e) {
-      
+- (void)handleDelayedLoad {
+  if ( !self.initialLoadFinished ) {
+    if ( self.webContentLoader.queuedContentString ) {
+      [self.webContentLoader setupWithArticle:self.relatedArticle
+                                     delegate:self];
     }
   }
-  
-  [UIView animateWithDuration:0.12 animations:^{
-    self.masterContentScroller.alpha = 1.0;
-  }];
 }
 
-#pragma mark - Deactivatable
-- (void)deactivationMethod {
-  NSLog(@" ***** KILLING CONTENT ****** ");
-
-  self.webContentLoader.cleaningUp = YES;
-  [self.webContentLoader.webView stopLoading];
-  self.webContentLoader.delegate = nil;
-  [self.webContentLoader.webView loadHTMLString:@"" baseURL:nil];
-  
-  self.okToDelete = YES;
-}
-
-#pragma mark - Backable
-- (UIScrollView*)titlebarTraversalScroller {
-  return self.masterContentScroller;
-}
-
-- (CGFloat)traversableTitlebarArea {
-  return self.basicTemplate.image1.frame.size.height;
-}
-
-- (void)backTapped {
-
-  if ( [[[Utilities del] viewController] shareDrawerOpen] ) {
-    [[[Utilities del] viewController] toggleShareDrawer];
-  }
-  
-  if ( self.fromSnapshot ) {
-      
-    SCPRTitlebarViewController *tb = [[Utilities del] globalTitleBar];
-      
-    [tb pop];
-    [tb.personalInfoButton removeFromSuperview];
-      
-    
-    SCPRViewController *svc = [[Utilities del] viewController];
-    
-    [UIView animateWithDuration:0.22 animations:^{
-      [svc.mainPageScroller setContentOffset:CGPointMake(0.0, 0.0)];
-    }];
-    
-    [[ContentManager shared] popFromResizeVector];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-      
-  } else {
-    if ( self.videoStarted ) {
-      if ( ![[AudioManager shared] isPlayingAnyAudio] ) {
-        [[AudioManager shared] startStream:nil];
-      }
-    }
-    
-    self.webContentLoader.webView.delegate = nil;
-    SCPRSingleArticleCollectionViewController *savc = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
-      
-    savc.trash = YES;
-    [savc cleanup];
-    [savc.navigationController popViewControllerAnimated:YES];
-    [[DesignManager shared] setInSingleArticle:NO];
-    [[ContentManager shared] popFromResizeVector];
-      
-    [[[Utilities del] globalTitleBar] pop];
-    
-    if ( self.supplementalContainer ) {
-      if ( [self.supplementalContainer respondsToSelector:@selector(contentFinishedDisplaying)] ) {
-        [self.supplementalContainer contentFinishedDisplaying];
-      }
-    }
-  }
-  
-  @try {
-    [self.masterContentScroller removeObserver:self
-                                    forKeyPath:@"contentOffset"];
-  } @catch (NSException *e) {
-
-  }
-  [[ContentManager shared] setUserIsViewingExpandedDetails:NO];
-}
 
 #pragma mark - ContentProcessor
 - (void)handleProcessedContent:(NSArray *)content flags:(NSDictionary *)flags {
@@ -1079,9 +928,8 @@
   } completion:^(BOOL finished) {
     self.captionUp = NO;
   }];
-  
-  
 }
+
 
 #pragma mark - Extra Assets
 
@@ -1199,12 +1047,10 @@
                                          forButton:self.queueButton];
       
       self.playAudioButton.enabled = YES;
-
-
     }
   }
-
 }
+
 
 #pragma mark - Web Content Loader
 - (BOOL)webContentReady {
@@ -1327,7 +1173,6 @@
     return;
   }
   self.shareModalOpen = NO;
-  
   [self.shareModal dismissPopoverAnimated:YES];
 }
 
@@ -1353,8 +1198,9 @@
   [self.shareModal presentPopoverFromRect:cooked
                                      inView:self.view
                    permittedArrowDirections:UIPopoverArrowDirectionDown
-                                   animated:YES];  
-  }
+                                   animated:YES];
+}
+
 
 #pragma mark - UIPopoverController
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
@@ -1438,35 +1284,7 @@
   
 }
 
-- (void)cleanup {
-  self.webContentLoader.webView.delegate = nil;
-  [self.webContentLoader.webView removeFromSuperview];
-  self.webContentLoader.webView = nil;
-  self.webContentLoader = nil;
-  self.webView = nil;
-  
-  if ( self.extraAssetsController ) {
-    [self.extraAssetsController deactivate];
-  }
-  
-  self.basicTemplate.image1.image = nil;
-  self.basicTemplate.image1 = nil;
-  [self.basicTemplate.image1 removeFromSuperview];
-  
-  self.basicTemplate = nil;
-  self.webContentLoader.webView = nil;
-  self.extraAssetsController = nil;
-  self.parentCollection = nil;
-  self.leftFlap = nil;
-  self.rightFlap = nil;
 
-  [self.view removeFromSuperview];
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-  self.okToDelete = YES;
-  [[ContentManager shared] popDeactivation:self.deactivationToken];
-  
-}
 
 - (NSDictionary*)associatedArticleContent {
   return self.relatedArticle;
@@ -1548,14 +1366,6 @@
   [self.basicTemplate.image1 loadImage:imgUrl quietly:YES];
 }
 
-- (void)handleDelayedLoad {
-  if ( !self.initialLoadFinished ) {
-    if ( self.webContentLoader.queuedContentString ) {
-      [self.webContentLoader setupWithArticle:self.relatedArticle
-                                   delegate:self];
-    }
-  }
-}
 
 #pragma mark - UIAlertView
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -1587,10 +1397,199 @@
   
 }
 
+
+#pragma mark - Rotatable
+- (void)handleRotationPre {
+  [UIView animateWithDuration:0.12 animations:^{
+    self.masterContentScroller.alpha = 0.0;
+  }];
+}
+
+- (void)handleRotationPost {
+  
+  [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
+                                       xibForPlatformWithName:@"SCPRSingleArticleViewController"]
+                                owner:self
+                              options:nil];
+  self.contentArranged = NO;
+  [self stretch];
+  
+  if ( self.fromSnapshot ) {
+    SCPRViewController *svc = [[Utilities del] viewController];
+    
+    CGFloat offset = [Utilities isIOS7] ? -40.0 : -60.0;
+    [UIView animateWithDuration:0.22 animations:^{
+      [svc.mainPageScroller setContentOffset:CGPointMake(0.0, offset)];
+    }];
+  }
+  
+  [self arrangeContent];
+  
+  if ( [Utilities isLandscape] ) {
+    @try {
+      
+      [self.masterContentScroller removeObserver:self
+                                      forKeyPath:@"contentOffset"];
+      
+    } @catch (NSException *e) {
+      
+    }
+  }
+  
+  [UIView animateWithDuration:0.12 animations:^{
+    self.masterContentScroller.alpha = 1.0;
+  }];
+}
+
 - (BOOL)shouldAutorotate {
   return YES;
 }
 
+
+#pragma mark - Backable
+- (UIScrollView*)titlebarTraversalScroller {
+  return self.masterContentScroller;
+}
+
+- (CGFloat)traversableTitlebarArea {
+  return self.basicTemplate.image1.frame.size.height;
+}
+
+- (void)backTapped {
+  
+  if ( [[[Utilities del] viewController] shareDrawerOpen] ) {
+    [[[Utilities del] viewController] toggleShareDrawer];
+  }
+  
+  if ( self.fromSnapshot ) {
+    
+    SCPRTitlebarViewController *tb = [[Utilities del] globalTitleBar];
+    
+    [tb pop];
+    [tb.personalInfoButton removeFromSuperview];
+    
+    
+    SCPRViewController *svc = [[Utilities del] viewController];
+    
+    [UIView animateWithDuration:0.22 animations:^{
+      [svc.mainPageScroller setContentOffset:CGPointMake(0.0, 0.0)];
+    }];
+    
+    [[ContentManager shared] popFromResizeVector];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+  } else {
+    if ( self.videoStarted ) {
+      if ( ![[AudioManager shared] isPlayingAnyAudio] ) {
+        [[AudioManager shared] startStream:nil];
+      }
+    }
+    
+    self.webContentLoader.webView.delegate = nil;
+    SCPRSingleArticleCollectionViewController *savc = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
+    
+    savc.trash = YES;
+    [savc cleanup];
+    [savc.navigationController popViewControllerAnimated:YES];
+    [[DesignManager shared] setInSingleArticle:NO];
+    [[ContentManager shared] popFromResizeVector];
+    
+    [[[Utilities del] globalTitleBar] pop];
+    
+    if ( self.supplementalContainer ) {
+      if ( [self.supplementalContainer respondsToSelector:@selector(contentFinishedDisplaying)] ) {
+        [self.supplementalContainer contentFinishedDisplaying];
+      }
+    }
+  }
+  
+  @try {
+    [self.masterContentScroller removeObserver:self
+                                    forKeyPath:@"contentOffset"];
+  } @catch (NSException *e) {
+    
+  }
+  [[ContentManager shared] setUserIsViewingExpandedDetails:NO];
+}
+
+
+#pragma mark - Deactivatable
+- (void)deactivationMethod {
+  NSLog(@" ***** KILLING CONTENT ****** ");
+  
+  self.webContentLoader.cleaningUp = YES;
+  [self.webContentLoader.webView stopLoading];
+  self.webContentLoader.delegate = nil;
+  [self.webContentLoader.webView loadHTMLString:@"" baseURL:nil];
+  
+  self.okToDelete = YES;
+}
+
+- (void)killContent {
+  
+  NSString *title = [self.relatedArticle objectForKey:@"short_title"] ? [self.relatedArticle objectForKey:@"short_title"] : [self.relatedArticle objectForKey:@"title"];
+  NSString *code = [NSString stringWithFormat:@"%@%d",[Utilities sha1:title],
+                    (NSInteger)[[NSDate date] timeIntervalSince1970]];
+  self.deactivationToken = code;
+  [[ContentManager shared] queueDeactivation:self];
+  
+  @try {
+    [self.masterContentScroller removeObserver:self
+                                    forKeyPath:@"contentOffset"];
+  } @catch (NSException *e) {
+    //NSLog(@"Unnecessary observation removal...");
+  }
+  
+  NSString *blank = [[FileManager shared] copyFromMainBundleToDocuments:@"blank.html"
+                                                               destName:@"blank.html"];
+  NSURL *url = [NSURL fileURLWithPath:blank];
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                         cachePolicy:NSURLCacheStorageAllowed
+                                                     timeoutInterval:10.0];
+  
+  [self.webContentLoader.webView stopLoading];
+  self.webContentLoader.cleaningUp = YES;
+  [self.webContentLoader.webView loadRequest:request];
+}
+
+- (void)safeKillContent {
+  @try {
+    [self.masterContentScroller removeObserver:self
+                                    forKeyPath:@"contentOffset"];
+  } @catch (NSException *e) {
+    //NSLog(@"Unnecessary observation removal...");
+  }
+}
+
+- (void)cleanup {
+  self.webContentLoader.webView.delegate = nil;
+  [self.webContentLoader.webView removeFromSuperview];
+  self.webContentLoader.webView = nil;
+  self.webContentLoader = nil;
+  self.webView = nil;
+  
+  if ( self.extraAssetsController ) {
+    [self.extraAssetsController deactivate];
+  }
+  
+  self.basicTemplate.image1.image = nil;
+  self.basicTemplate.image1 = nil;
+  [self.basicTemplate.image1 removeFromSuperview];
+  
+  self.basicTemplate = nil;
+  self.webContentLoader.webView = nil;
+  self.extraAssetsController = nil;
+  self.parentCollection = nil;
+  self.leftFlap = nil;
+  self.rightFlap = nil;
+  
+  [self.view removeFromSuperview];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
+  self.okToDelete = YES;
+  [[ContentManager shared] popDeactivation:self.deactivationToken];
+}
 
 #ifdef LOG_DEALLOCATIONS
 - (void)dealloc {
