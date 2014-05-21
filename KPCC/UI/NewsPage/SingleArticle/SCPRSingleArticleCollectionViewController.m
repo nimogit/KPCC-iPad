@@ -19,23 +19,22 @@
 
 @implementation SCPRSingleArticleCollectionViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+      // Custom initialization
+  }
+  return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)viewDidLoad {
+  [super viewDidLoad];
   
   if ( [Utilities isIOS7] ) {
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
   }
   
+  self.view.backgroundColor = [[DesignManager shared] vinylColor:1.0];
   self.articleScroller.pagingEnabled = YES;
   self.articleScroller.showsHorizontalScrollIndicator = NO;
   self.articleScroller.showsVerticalScrollIndicator = NO;
@@ -46,11 +45,6 @@
   self.visualComponents = [[NSMutableArray alloc] init];
   self.queuedForTrash = [[NSMutableDictionary alloc] init];
   self.webcontentQueue = [[NSOperationQueue alloc] init];
-  //self.articleScroller.decelerationRate = .25;
-  
-  
-  self.view.backgroundColor = [[DesignManager shared] vinylColor:1.0];
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -59,12 +53,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  
-  self.articleScroller.contentSize = CGSizeMake([self.visualComponents count]*self.articleScroller.frame.size.width,
+  self.articleScroller.contentSize = CGSizeMake([self.visualComponents count] * self.articleScroller.frame.size.width,
                                                 self.articleScroller.frame.size.height);
-  
 }
-
 
 - (void)viewDidDisappear:(BOOL)animated {
   if ( self.trash ) {
@@ -163,8 +154,6 @@
     heightToUse = cd.articleScroller.frame.size.height;
     self.articleScroller.frame = cd.articleScroller.frame;
   }
-  
-
   
   if ( index == 0 || index == [articles count]-1 ) {
     if ( [articles count] == 1 ) {
@@ -312,64 +301,18 @@
   
   [[NSNotificationCenter defaultCenter] postNotificationName:@"single_article_finished_loading"
                                                       object:nil];
-  
-#ifdef DEBUG
-
-#endif
 }
 
 - (void)hideStalePage {
-
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:@"new_webcontent_loaded"
-                                                object:nil];
-
+                                                    name:@"new_webcontent_loaded"
+                                                  object:nil];
 }
 
-- (void)cleanup {
-  
-  for ( SCPRSingleArticleViewController *svc in self.visualComponents ) {
-    [svc killContent];
-  }
-  
-  for ( SCPRSingleArticleViewController *svc in [self.wingArticles allValues] ) {
-    [svc killContent];
-  }
-  
-  [self.queuedForTrash removeAllObjects];
-  [self.visualComponents removeAllObjects];
-  [self.wingArticles removeAllObjects];
-
-  [[NSURLCache sharedURLCache] removeAllCachedResponses];
-  
-  [[ContentManager shared] printCacheUsage];
-  
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-  if ( self.parentDeluxeNewsPage ) {
-    SCPRDeluxeNewsViewController *dnc = (SCPRDeluxeNewsViewController*)self.parentDeluxeNewsPage;
-    dnc.pushedCollection = nil;
-  }
-  
-
-  
-}
 
 #pragma mark - Backable
 - (void)backTapped {
-  
 
-#ifdef TRACK_SCROLLING_PROGRESS
-  @try {
-    [self.articleScroller removeObserver:self
-                                 forKeyPath:@"contentOffset"];
-  }
-  @catch (NSException *exception) {
-    
-  }
-#endif
-  
   if ( ![Utilities isIOS7] ) {
     SCPRViewController *mvc = [[Utilities del] viewController];
     [mvc.mainPageScroller setContentOffset:CGPointMake(0.0, 0.0)];
@@ -391,85 +334,19 @@
   } else {
     [self.navigationController popViewControllerAnimated:YES];
   }
-  
-  
+
   [self cleanup];
 }
 
-#pragma mark - Rotatable
-- (void)handleRotationPre {
-  
-  // Make sure lower share modal is closed.
-  if ( self.currentPage ) {
-    SCPRSingleArticleViewController *svc = (SCPRSingleArticleViewController*)self.currentPage;
-    [svc closeShareModal];
-  }
-  
-  if ( [[ContentManager shared] adReadyOffscreen] ) {
-    SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
-    [root undeliverAd];
-    
-    [[AnalyticsManager shared] logEvent:@"ad_was_loaded_but_avoided"
-                         withParameters:@{}];
-  }
-  
-  [UIView animateWithDuration:0.25 animations:^{
-    self.articleScroller.alpha = 0.0;
-  } completion:^(BOOL finished) {
-    
-    
-  }];
-}
-
-- (void)handleRotationPost {
-  
-  SCPRSingleArticleCollectionViewController *dummy = [[SCPRSingleArticleCollectionViewController alloc]
-                                                      initWithNibName:[[DesignManager shared]
-                                                                       xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
-                                                      bundle:nil];
-  dummy.view.frame = dummy.view.frame;
-  self.view.frame = dummy.view.frame;
-  self.articleScroller.frame = dummy.articleScroller.frame;
-  
-  [self setupWithCollection:self.articles
-           beginningAtIndex:self.currentIndex
-               processIndex:YES];
-  
-  
-  [UIView animateWithDuration:0.25 animations:^{
-    self.articleScroller.alpha = 1.0;
-  }];
-  
-}
 
 #pragma mark - UIScrollViewDelegate
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-
-}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   @synchronized(self) {
     self.contentLock = YES;
   }
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-
-  
-
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-
-}
-
-- (void)processAfterScroll {
-
-}
-
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-
-
   CGFloat newIndex = self.articleScroller.contentOffset.x;
   CGFloat oldIndex = self.currentOffset.x;
 
@@ -588,14 +465,85 @@
   @synchronized(self) {
     self.contentLock = NO;
   }
-  
-  //NSLog(@"Unlocking...");
-  
+
   for ( SCPRSingleArticleViewController *savc in self.visualComponents ) {
     if ( savc.index == self.currentIndex ) {
       [savc handleDelayedLoad];
     }
     [savc handleMultipleAssets];
+  }
+}
+
+
+#pragma mark - Rotatable
+- (void)handleRotationPre {
+  
+  // Make sure lower share modal is closed.
+  if ( self.currentPage ) {
+    SCPRSingleArticleViewController *svc = (SCPRSingleArticleViewController*)self.currentPage;
+    [svc closeShareModal];
+  }
+  
+  if ( [[ContentManager shared] adReadyOffscreen] ) {
+    SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
+    [root undeliverAd];
+    
+    [[AnalyticsManager shared] logEvent:@"ad_was_loaded_but_avoided"
+                         withParameters:@{}];
+  }
+  
+  [UIView animateWithDuration:0.25 animations:^{
+    self.articleScroller.alpha = 0.0;
+  } completion:^(BOOL finished) {
+    
+    
+  }];
+}
+
+- (void)handleRotationPost {
+  
+  SCPRSingleArticleCollectionViewController *dummy = [[SCPRSingleArticleCollectionViewController alloc]
+                                                      initWithNibName:[[DesignManager shared]
+                                                                       xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
+                                                      bundle:nil];
+  dummy.view.frame = dummy.view.frame;
+  self.view.frame = dummy.view.frame;
+  self.articleScroller.frame = dummy.articleScroller.frame;
+  
+  [self setupWithCollection:self.articles
+           beginningAtIndex:self.currentIndex
+               processIndex:YES];
+  
+  
+  [UIView animateWithDuration:0.25 animations:^{
+    self.articleScroller.alpha = 1.0;
+  }];
+  
+}
+
+- (void)cleanup {
+  
+  for ( SCPRSingleArticleViewController *svc in self.visualComponents ) {
+    [svc killContent];
+  }
+  
+  for ( SCPRSingleArticleViewController *svc in [self.wingArticles allValues] ) {
+    [svc killContent];
+  }
+  
+  [self.queuedForTrash removeAllObjects];
+  [self.visualComponents removeAllObjects];
+  [self.wingArticles removeAllObjects];
+  
+  [[NSURLCache sharedURLCache] removeAllCachedResponses];
+  
+  [[ContentManager shared] printCacheUsage];
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
+  if ( self.parentDeluxeNewsPage ) {
+    SCPRDeluxeNewsViewController *dnc = (SCPRDeluxeNewsViewController*)self.parentDeluxeNewsPage;
+    dnc.pushedCollection = nil;
   }
 }
 
@@ -607,13 +555,11 @@
 }
 #endif
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
   
+  // Dispose of any resources that can be recreated.
   [self.queuedForTrash removeAllObjects];
-  
-    // Dispose of any resources that can be recreated.
 }
 
 @end
