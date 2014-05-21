@@ -1606,8 +1606,6 @@
 		25FA3DF4175FD42100D25D50 /* circle_with_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FA3DF2175FD42100D25D50 /* circle_with_line@2x.png */; };
 		25FA3DF6175FDCF700D25D50 /* email_payload.html in Resources */ = {isa = PBXBuildFile; fileRef = 25FA3DF5175FDCF700D25D50 /* email_payload.html */; };
 		25FA3DF7175FDCF700D25D50 /* email_payload.html in Resources */ = {isa = PBXBuildFile; fileRef = 25FA3DF5175FDCF700D25D50 /* email_payload.html */; };
-		25FA3DFA175FF31400D25D50 /* SCPRImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FA3DF9175FF31300D25D50 /* SCPRImageView.m */; };
-		25FA3DFB175FF31400D25D50 /* SCPRImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FA3DF9175FF31300D25D50 /* SCPRImageView.m */; };
 		28036A7E1718A344007DBDE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 28683CC6170B9BBD00346B6E /* main.m */; };
 		28036A7F1718A344007DBDE2 /* SCPRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 28683CCA170B9BBD00346B6E /* SCPRAppDelegate.m */; };
 		28036A801718A344007DBDE2 /* SCPRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E756170CF4B300ED18FB /* SCPRViewController.m */; };
@@ -2780,8 +2778,6 @@
 		25FA3DEF175FD24F00D25D50 /* supported_sharetypes_nomail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = supported_sharetypes_nomail.json; path = Assets/flatResources/supported_sharetypes_nomail.json; sourceTree = "<group>"; };
 		25FA3DF2175FD42100D25D50 /* circle_with_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_with_line@2x.png"; sourceTree = "<group>"; };
 		25FA3DF5175FDCF700D25D50 /* email_payload.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = email_payload.html; path = Assets/flatResources/email_payload.html; sourceTree = "<group>"; };
-		25FA3DF8175FF31300D25D50 /* SCPRImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRImageView.h; path = UI/UtilityViews/SCPRImageView.h; sourceTree = "<group>"; };
-		25FA3DF9175FF31300D25D50 /* SCPRImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRImageView.m; path = UI/UtilityViews/SCPRImageView.m; sourceTree = "<group>"; };
 		28036AC91718A344007DBDE2 /* KPCC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPCC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28036ACC1718BDF9007DBDE2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "KPCC/Icon-72.png"; sourceTree = SOURCE_ROOT; };
 		28036ACD1718BDF9007DBDE2 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "KPCC/Icon-72@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -3985,8 +3981,6 @@
 				25D07930174436A300E2B9C2 /* SCPRArmoireViewController_iPad.xib */,
 				25E0C46017469B0F00F3D0DE /* SCPRTrappableTouchView.h */,
 				25E0C46117469B0F00F3D0DE /* SCPRTrappableTouchView.m */,
-				25FA3DF8175FF31300D25D50 /* SCPRImageView.h */,
-				25FA3DF9175FF31300D25D50 /* SCPRImageView.m */,
 				25D7A8DA177D0445008D9F37 /* SCPRFloatingOptionViewController.h */,
 				25D7A8DB177D0445008D9F37 /* SCPRFloatingOptionViewController.m */,
 				25D7A8DC177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib */,
@@ -6623,7 +6617,6 @@
 				25CBBE9B175E6A680093CE5F /* SCPRListableObject.m in Sources */,
 				25FA3DE3175FAE2600D25D50 /* SCPRLinkedInShareViewController.m in Sources */,
 				28DAFC5917D0207F00498A17 /* SCPRDeluxeEditionsCell.m in Sources */,
-				25FA3DFB175FF31400D25D50 /* SCPRImageView.m in Sources */,
 				2546FE691767CEFA006DF9E3 /* SCPRFlapViewController.m in Sources */,
 				25A67756182861B300565925 /* SCPRIntroCardViewController.m in Sources */,
 				76A3087418B696630065D4B1 /* iRate.m in Sources */,
@@ -6781,7 +6774,6 @@
 				25CBBE94175E5ED40093CE5F /* SCPRModalListPickerViewController.m in Sources */,
 				25CBBE9A175E6A680093CE5F /* SCPRListableObject.m in Sources */,
 				25FA3DE2175FAE2600D25D50 /* SCPRLinkedInShareViewController.m in Sources */,
-				25FA3DFA175FF31400D25D50 /* SCPRImageView.m in Sources */,
 				2546FE681767CEFA006DF9E3 /* SCPRFlapViewController.m in Sources */,
 				25D22B331768F09700EE840E /* ArticleStub.m in Sources */,
 				25D22B3917690B5400EE840E /* SCPREventsOverviewViewController.m in Sources */,

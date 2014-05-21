@@ -9,7 +9,6 @@
 #import "SCPRLinkedInShareViewController.h"
 #import "global.h"
 #import "SCPRViewController.h"
-#import "SCPRImageView.h"
 
 
 
@@ -39,12 +38,9 @@
   self.shareCaptionLabel.textColor = [[DesignManager shared] charcoalColor];
   self.inputTextView.textColor = [[DesignManager shared] number3pencilColor];
   self.inputTextView.delegate = self;
-  NSString *imgUrl = [Utilities extractImageURLFromBlob:self.article
-                                                quality:AssetQualitySmall];
   
   NSString *title = [self.article objectForKey:@"short_title"] ? [self.article objectForKey:@"short_title"] : [self.article objectForKey:@"headline"];
 
-  [self.articleImageView loadImage:imgUrl];
   
   [self.headlineLabel snapText:title
                           bold:NO
