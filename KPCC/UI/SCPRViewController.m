@@ -16,7 +16,6 @@
 #import "SCPREditionCrystalViewController.h"
 #import "SCPRSingleArticleCollectionViewController.h"
 #import "SCPRSimpleNewsViewController.h"
-#import "SCPREventsOverviewViewController.h"
 #import "SCPRProfileViewController.h"
 #import "SCPRProgramAZViewController.h"
 #import "SCPRProgramNavigatorViewController.h"
