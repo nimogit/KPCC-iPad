@@ -1370,8 +1370,6 @@
 		25E0B2B317C2F4AC009C3C72 /* SCPRSmallCutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E0B2B017C2F4AC009C3C72 /* SCPRSmallCutViewController.m */; };
 		25E0B2B417C2F4AC009C3C72 /* SCPRSmallCutViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E0B2B117C2F4AC009C3C72 /* SCPRSmallCutViewController_iPad.xib */; };
 		25E0B2B517C2F4AC009C3C72 /* SCPRSmallCutViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E0B2B117C2F4AC009C3C72 /* SCPRSmallCutViewController_iPad.xib */; };
-		25E0C46217469B0F00F3D0DE /* SCPRTrappableTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E0C46117469B0F00F3D0DE /* SCPRTrappableTouchView.m */; };
-		25E0C46317469B0F00F3D0DE /* SCPRTrappableTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E0C46117469B0F00F3D0DE /* SCPRTrappableTouchView.m */; };
 		25E0C4681746FA4B00F3D0DE /* badassets.json in Resources */ = {isa = PBXBuildFile; fileRef = 25E0C4671746FA4B00F3D0DE /* badassets.json */; };
 		25E0C4691746FA4B00F3D0DE /* badassets.json in Resources */ = {isa = PBXBuildFile; fileRef = 25E0C4671746FA4B00F3D0DE /* badassets.json */; };
 		25E34F7E17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E34F7D17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib */; };
@@ -2640,8 +2638,6 @@
 		25E0B2AF17C2F4AC009C3C72 /* SCPRSmallCutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRSmallCutViewController.h; path = UI/ProgramPages/SCPRSmallCutViewController.h; sourceTree = "<group>"; };
 		25E0B2B017C2F4AC009C3C72 /* SCPRSmallCutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRSmallCutViewController.m; path = UI/ProgramPages/SCPRSmallCutViewController.m; sourceTree = "<group>"; };
 		25E0B2B117C2F4AC009C3C72 /* SCPRSmallCutViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRSmallCutViewController_iPad.xib; path = UI/ProgramPages/SCPRSmallCutViewController_iPad.xib; sourceTree = "<group>"; };
-		25E0C46017469B0F00F3D0DE /* SCPRTrappableTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRTrappableTouchView.h; path = UI/UtilityViews/SCPRTrappableTouchView.h; sourceTree = "<group>"; };
-		25E0C46117469B0F00F3D0DE /* SCPRTrappableTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRTrappableTouchView.m; path = UI/UtilityViews/SCPRTrappableTouchView.m; sourceTree = "<group>"; };
 		25E0C4671746FA4B00F3D0DE /* badassets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = badassets.json; path = Assets/flatResources/badassets.json; sourceTree = "<group>"; };
 		25E34F7D17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRCloakViewController_iPadLandscape.xib; path = UI/UtilityViews/SCPRCloakViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25E935491843D3E5004ED1DA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
@@ -3979,8 +3975,6 @@
 				25D0792A1744367600E2B9C2 /* SCPRArmoireViewController.m */,
 				25D0792B1744367600E2B9C2 /* SCPRArmoireViewController.xib */,
 				25D07930174436A300E2B9C2 /* SCPRArmoireViewController_iPad.xib */,
-				25E0C46017469B0F00F3D0DE /* SCPRTrappableTouchView.h */,
-				25E0C46117469B0F00F3D0DE /* SCPRTrappableTouchView.m */,
 				25D7A8DA177D0445008D9F37 /* SCPRFloatingOptionViewController.h */,
 				25D7A8DB177D0445008D9F37 /* SCPRFloatingOptionViewController.m */,
 				25D7A8DC177D0445008D9F37 /* SCPRFloatingOptionViewController_iPad.xib */,
@@ -6602,7 +6596,6 @@
 				25D0792D1744367600E2B9C2 /* SCPRArmoireViewController.m in Sources */,
 				25D0793717443C4D00E2B9C2 /* SCPRScrollingAssetViewController.m in Sources */,
 				25061AD817459F7000F96852 /* SCPRExternalWebContentViewController.m in Sources */,
-				25E0C46317469B0F00F3D0DE /* SCPRTrappableTouchView.m in Sources */,
 				25A70C4A17E378F90024E654 /* SCPROnboardingStep5ViewController.m in Sources */,
 				25DF12E517CC247200572E6F /* UIViewController+iOS7Helper.m in Sources */,
 				25C6A946174AB72B008331FF /* SCPRQueueCellView.m in Sources */,
@@ -6758,7 +6751,6 @@
 				25D0792C1744367600E2B9C2 /* SCPRArmoireViewController.m in Sources */,
 				25D0793617443C4D00E2B9C2 /* SCPRScrollingAssetViewController.m in Sources */,
 				25061AD717459F7000F96852 /* SCPRExternalWebContentViewController.m in Sources */,
-				25E0C46217469B0F00F3D0DE /* SCPRTrappableTouchView.m in Sources */,
 				25C6A945174AB72B008331FF /* SCPRQueueCellView.m in Sources */,
 				25D113AF1811E53E0001C434 /* Scheduler.m in Sources */,
 				25A70C2E17E280D90024E654 /* SCPROnboardingStep3ViewController.m in Sources */,
