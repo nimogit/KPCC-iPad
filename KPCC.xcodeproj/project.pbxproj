@@ -671,8 +671,6 @@
 		259AF5EB18341A16008AFB2A /* SCPRProgramPlateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 259AF5EA18341A16008AFB2A /* SCPRProgramPlateView.xib */; };
 		259AF5ED18343167008AFB2A /* SCPRQueueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 259AF5EC18343167008AFB2A /* SCPRQueueViewController.xib */; };
 		259AF5EF1834342A008AFB2A /* SCPRQueueCellViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 259AF5EE1834342A008AFB2A /* SCPRQueueCellViewController.xib */; };
-		259AF5F1183443F2008AFB2A /* SCPRSingleArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 259AF5F0183443F2008AFB2A /* SCPRSingleArticleViewController.xib */; };
-		259AF5F3183444BB008AFB2A /* SCPRSingleArticleCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 259AF5F2183444BB008AFB2A /* SCPRSingleArticleCollectionViewController.xib */; };
 		259AF5F5183445BF008AFB2A /* basiciphone.css in Resources */ = {isa = PBXBuildFile; fileRef = 259AF5F4183445BF008AFB2A /* basiciphone.css */; };
 		259C4A0B1721ED3800FC3CEC /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C4A081721ED3800FC3CEC /* NSString+MD5Addition.m */; };
 		259C4A0C1721ED3800FC3CEC /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 259C4A0A1721ED3800FC3CEC /* UIDevice+IdentifierAddition.m */; };
@@ -2200,8 +2198,6 @@
 		259AF5EA18341A16008AFB2A /* SCPRProgramPlateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRProgramPlateView.xib; sourceTree = "<group>"; };
 		259AF5EC18343167008AFB2A /* SCPRQueueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRQueueViewController.xib; path = UI/PlayerWidget/QueueWidget/SCPRQueueViewController.xib; sourceTree = "<group>"; };
 		259AF5EE1834342A008AFB2A /* SCPRQueueCellViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRQueueCellViewController.xib; path = UI/PlayerWidget/QueueWidget/SCPRQueueCellViewController.xib; sourceTree = "<group>"; };
-		259AF5F0183443F2008AFB2A /* SCPRSingleArticleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRSingleArticleViewController.xib; path = UI/NewsPage/SingleArticle/SCPRSingleArticleViewController.xib; sourceTree = "<group>"; };
-		259AF5F2183444BB008AFB2A /* SCPRSingleArticleCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRSingleArticleCollectionViewController.xib; path = UI/NewsPage/SingleArticle/SCPRSingleArticleCollectionViewController.xib; sourceTree = "<group>"; };
 		259AF5F4183445BF008AFB2A /* basiciphone.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = basiciphone.css; path = Assets/html/basiciphone.css; sourceTree = "<group>"; };
 		259C4A071721ED3800FC3CEC /* NSString+MD5Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5Addition.h"; path = "ThirdParty/UIDeviceAddition/NSString+MD5Addition.h"; sourceTree = "<group>"; };
 		259C4A081721ED3800FC3CEC /* NSString+MD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5Addition.m"; path = "ThirdParty/UIDeviceAddition/NSString+MD5Addition.m"; sourceTree = "<group>"; };
@@ -3463,12 +3459,10 @@
 			children = (
 				2586C394172F3B260096600B /* SCPRSingleArticleViewController.h */,
 				2586C395172F3B260096600B /* SCPRSingleArticleViewController.m */,
-				259AF5F0183443F2008AFB2A /* SCPRSingleArticleViewController.xib */,
 				25EC8E5817C5520700673DFF /* SCPRSingleArticleViewController_iPad.xib */,
 				256421C218104E94002F1C6A /* SCPRSingleArticleViewController_iPadLandscape.xib */,
 				25EDE7FB17386C6C004805CA /* SCPRSingleArticleCollectionViewController.h */,
 				25EDE7FC17386C6C004805CA /* SCPRSingleArticleCollectionViewController.m */,
-				259AF5F2183444BB008AFB2A /* SCPRSingleArticleCollectionViewController.xib */,
 				25EDE7FD17386C6C004805CA /* SCPRSingleArticleCollectionViewController_iPad.xib */,
 				25C9A44B17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib */,
 				2546FE651767CEF8006DF9E3 /* SCPRFlapViewController.h */,
@@ -6115,7 +6109,6 @@
 				25E0B1F617C2F0C7009C3C72 /* thedinnerpartydownload_splash.jpg in Resources */,
 				25E0B1F817C2F0C7009C3C72 /* thedinnerpartydownload_splash@2x.jpg in Resources */,
 				25E0B1FA17C2F0C7009C3C72 /* filmweek_splash.jpg in Resources */,
-				259AF5F3183444BB008AFB2A /* SCPRSingleArticleCollectionViewController.xib in Resources */,
 				25E0B1FC17C2F0C7009C3C72 /* filmweek_splash@2x.jpg in Resources */,
 				25E0B1FE17C2F0C7009C3C72 /* freshair_splash.jpg in Resources */,
 				25C9A49D17F4CBF400B6BBB6 /* icon-embed@2x.png in Resources */,
@@ -6315,7 +6308,6 @@
 				25EC8E2B17C4356000673DFF /* small_thetavissmileyshow_splash.jpg in Resources */,
 				25EC8E2D17C4356000673DFF /* small_thetavissmileyshow_splash@2x.jpg in Resources */,
 				25EC8E2F17C4356000673DFF /* small_theworld_splash.jpg in Resources */,
-				259AF5F1183443F2008AFB2A /* SCPRSingleArticleViewController.xib in Resources */,
 				25EC8E3117C4356000673DFF /* small_theworld_splash@2x.jpg in Resources */,
 				25EC8E3317C4356000673DFF /* small_thewritersalmanac_splash.jpg in Resources */,
 				25C9A49117F4CBF400B6BBB6 /* icon-audio-listening@2x.png in Resources */,
