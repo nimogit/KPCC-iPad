@@ -258,6 +258,7 @@
   BOOL pushAssetIntoBody = NO;
   if ([ratio isEqualToString:@"23"] || [ratio isEqualToString:@"34"] || [ratio isEqualToString:@"Sq"]) {
     self.basicTemplate.image1.contentMode = UIViewContentModeScaleAspectFit;
+    //self.basicTemplate.image1.clipsToBounds = YES;
     self.view.backgroundColor = [UIColor blackColor];
     pushAssetIntoBody = YES;
   }
@@ -278,6 +279,7 @@
   BOOL noAsset = NO;
   if (![Utilities pureNil:imgUrl] && !pushAssetIntoBody) {
     [self.basicTemplate.image1 loadImage:imgUrl quietly:YES];
+    NSLog(@"## initial image frame load %@", NSStringFromCGRect(self.basicTemplate.image1.frame));
     
     // When in portrait - observe the contentOffset of the masterContentScroller to fade out
     // the main image asset for the article.
@@ -408,16 +410,14 @@
                                           self.textSheetView.frame.size.width,
                                           self.contentDividerLine.frame.origin.y+self.contentDividerLine.frame.size.height-1.0+accountForAudio);
   
-  if ( hasAudio ) {
+  if (hasAudio) {
     
     [self.textSheetView addSubview:self.audioSeatView];
-    
     if ( [Utilities isLandscape] ) {
-      
-      
-      self.audioSeatView.frame = CGRectMake(self.basicTemplate.headLine.frame.origin.x,self.textSheetView.frame.size.height-self.audioSeatView.frame.size.height-10.0,
-                                          self.basicTemplate.image1.frame.size.width,
-                                          self.audioSeatView.frame.size.height);
+      self.audioSeatView.frame = CGRectMake(self.basicTemplate.headLine.frame.origin.x,
+                                            self.textSheetView.frame.size.height - self.audioSeatView.frame.size.height - 10.0,
+                                            self.basicTemplate.image1.frame.size.width,
+                                            self.audioSeatView.frame.size.height);
       
       self.basicTemplate.matteView.frame = CGRectMake(self.basicTemplate.matteView.frame.origin.x,
                                                       self.basicTemplate.matteView.frame.origin.y,
@@ -431,11 +431,13 @@
       [self.landscapeImageSheetView addSubview:self.captionButton];
 
     } else {
-      self.audioSeatView.frame = CGRectMake(0.0,self.textSheetView.frame.size.height-self.audioSeatView.frame.size.height-10.0,
+      self.audioSeatView.frame = CGRectMake(0.0,
+                                            self.textSheetView.frame.size.height - self.audioSeatView.frame.size.height - 10.0,
                                             self.audioSeatView.frame.size.width,
                                             self.audioSeatView.frame.size.height);
     }
     
+
     self.audioDividerLine.vertical = YES;
     self.queueButton.alpha = 1.0;
     
@@ -702,7 +704,7 @@
                                                        self.webContentLoader.webView.frame.size.width,
                                                        heightDiff);
     }
-  }
+  } // if ContentCategoryEvents
 
   CGSize categorySize = [self.categoryLabel.text sizeOfStringWithFont:self.categoryLabel.font
                                                     constrainedToSize:CGSizeMake(self.categoryLabel.frame.size.width,self.categoryLabel.frame.size.height)];
@@ -845,20 +847,36 @@
 
 #pragma mark - Caption stuff
 - (void)armCaption:(NSDictionary*)leadingAsset {
+  
+  if ([leadingAsset objectForKey:@"caption"] == [NSNull null] || [leadingAsset objectForKey:@"owner"] == [NSNull null]) {
+    
+    return;
+  }
 
   self.captionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  self.captionButton.frame = self.playOverlayButton.frame;
+  if ([Utilities isLandscape]) {
+    self.captionButton.frame = self.landscapeImageSheetView.frame;
+  } else {
+    self.captionButton.frame = self.playOverlayButton.frame;
+  }
+  
+  
+  NSLog(@"caption button frame %@", NSStringFromCGRect(self.captionButton.frame));
+  NSLog(@"landscape image sheet frame %@", NSStringFromCGRect(self.landscapeImageSheetView.frame));
+  NSLog(@"landscape image1 frame %@", NSStringFromCGRect(self.basicTemplate.image1.frame));
+  //NSLog(@"basic template subviews: %@", self.basicTemplate.subviews);
+  NSLog(@"image1 SUPERview %@", [self.basicTemplate.image1 superview]);
+  NSLog(@"landscape view subviews: %@", self.landscapeImageSheetView.subviews);
+  
   [self.captionButton addTarget:self
                          action:@selector(showCaption:)
                forControlEvents:UIControlEventTouchUpInside];
   [self.masterContentScroller addSubview:self.captionButton];
 
-  NSString *owner = [leadingAsset objectForKey:@"owner"];
-  [self.captionCreditLabel titleizeText:owner bold:NO respectHeight:YES];
+  // Set, style, and arrange caption labels.
+  [self.captionLabel titleizeText:[leadingAsset objectForKey:@"caption"] bold:NO respectHeight:YES];
+  [self.captionCreditLabel titleizeText:[leadingAsset objectForKey:@"owner"] bold:NO respectHeight:YES];
   self.captionCreditLabel.textColor = [[DesignManager shared] charcoalColor];
-
-  NSString *caption = [leadingAsset objectForKey:@"caption"];
-  [self.captionLabel titleizeText:caption bold:NO respectHeight:YES];
 
   [[DesignManager shared] avoidNeighbor:self.captionLabel
                                withView:self.captionCreditLabel
@@ -868,22 +886,23 @@
   self.captionView.backgroundColor = [[DesignManager shared] frostedWindowColor:0.88];
   self.captionView.frame = CGRectMake(0.0, 0.0, self.captionView.frame.size.width,
                                       self.captionCreditLabel.frame.origin.y + self.captionCreditLabel.frame.size.height + self.captionLabel.frame.origin.y + 2.0);
-  
   self.captionView.alpha = 0.0;
   [self.masterContentScroller addSubview:self.captionView];
   
-  
-  //
+  // Align caption view to bottom edge of main asset image, with a slight vertical nudge.
+  // Different placements for Portrait and Landscape.
   if (![Utilities isLandscape]) {
     [[DesignManager shared] avoidNeighbor:self.textSheetView
                                  withView:self.captionView
                                 direction:NeighborDirectionBelow
                                   padding:20.0];
   } else {
-    [[DesignManager shared] avoidNeighbor:self.webView
-                                 withView:self.captionView
-                                direction:NeighborDirectionBelow
-                                  padding:20.0];
+    [self.captionView removeFromSuperview];
+    [self.landscapeImageSheetView addSubview:self.captionView];
+    self.captionView.frame = CGRectMake(self.captionView.frame.origin.x,
+                                        self.landscapeImageSheetView.frame.size.height - self.captionView.frame.size.height - 20.0,
+                                        self.captionView.frame.size.width,
+                                        self.captionView.frame.size.height);
   }
   
   [[DesignManager shared] alignHorizontalCenterOf:self.captionView
@@ -1368,9 +1387,6 @@
                        } completion:nil];
     }
   }
-  NSString *imgUrl = [Utilities extractImageURLFromBlob:self.relatedArticle
-                                                quality:AssetQualityFull];
-  [self.basicTemplate.image1 loadImage:imgUrl quietly:YES];
 }
 
 
