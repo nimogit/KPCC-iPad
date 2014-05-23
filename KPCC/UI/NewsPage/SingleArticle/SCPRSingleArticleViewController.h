@@ -91,6 +91,7 @@
 @property BOOL liveEvent;
 @property BOOL shortPage;
 @property BOOL twitterSynthesized;
+@property BOOL pushAssetIntoBody;
 
 #pragma mark - Content Display Port
 @property (nonatomic,strong) NSMutableArray *mediaContent;
