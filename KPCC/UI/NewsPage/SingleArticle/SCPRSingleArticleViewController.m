@@ -47,7 +47,6 @@
   self.basicTemplate.backgroundColor = [UIColor whiteColor];
   self.textSheetView.backgroundColor = [UIColor whiteColor];
   self.basicTemplate.templateStyle = NewsPageTemplateSingleArticle;
-  self.backButton.alpha = 0.0;
   self.socialSheetView.alpha = 0.0;
   self.categorySeat.backgroundColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
   
@@ -76,15 +75,6 @@
       [svc.mainPageScroller setContentOffset:CGPointMake(0.0, offset)];
     }];
   }
-}
-
-- (void)activate {
-  [self arrangeContent];
-  self.backButton.alpha = 1.0;
-}
-
-- (UIView*)bendableView {
-  return self.view;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -914,13 +904,6 @@
   [self.floatingVideoController setupWithPVArticle:self.relatedArticle];
 }
 
-- (void)postProcess {
-  if (self.postProcessed) {
-    return;
-  }
-  self.postProcessed = YES;
-}
-
 
 #pragma mark - UI Adjustment for Content Height Change
 - (void)refreshHeight {
@@ -1524,8 +1507,6 @@
   self.webContentLoader.webView = nil;
   self.extraAssetsController = nil;
   self.parentCollection = nil;
-  self.leftFlap = nil;
-  self.rightFlap = nil;
   
   [self.view removeFromSuperview];
   [[NSNotificationCenter defaultCenter] removeObserver:self];

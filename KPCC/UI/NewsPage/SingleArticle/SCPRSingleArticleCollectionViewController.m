@@ -108,7 +108,6 @@
   
   if ( !processIndex ) {
     articleView = [self.wingArticles objectForKey:self.protect];
-    articleView.observableScroller = nil;
   } else {
     articleView = [[SCPRSingleArticleViewController alloc]
                    initWithNibName:[[DesignManager shared]
@@ -170,7 +169,6 @@
 
   
   CGFloat xOrigin = index == 0 ? 0.0 : widthToUse;
-  BOOL limitLeft = index == 0 ? YES : NO;
   
   CGFloat yDelta = [Utilities isIOS7] ? 0.0 : 20.0;
   
@@ -183,7 +181,6 @@
   
   [articleView arrangeContent];
   
-  articleView.ghostIndex = limitLeft ? 0 : 1;
   if ( processIndex ) {
     [self.articleScroller addSubview:articleView.view];
   }
@@ -229,8 +226,6 @@
       leftArticleView.webContentLoader.loadingSkeletonContent = YES;
       [leftArticleView arrangeContent];
       
-      leftArticleView.ghostIndex = 0;
-      
       [self.articleScroller addSubview:leftArticleView.view];
       
       if ( [self.wingArticles objectForKey:@"left"] ) {
@@ -263,8 +258,6 @@
       rightArticleView.parentNewsPage = self.parentContainer;
       rightArticleView.parentCollection = self;
       [rightArticleView arrangeContent];
-      
-      rightArticleView.ghostIndex = limitLeft ? 1 : 2;
       
       [self.articleScroller addSubview:rightArticleView.view];
       
