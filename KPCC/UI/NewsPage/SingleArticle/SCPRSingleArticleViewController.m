@@ -194,21 +194,14 @@
 }
 
 - (void)arrangeContent {
-  
-  TICK;
 
   if (self.contentArranged) {
     return;
   }
   
   SCPRSingleArticleCollectionViewController *pc = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
-  
-  
-  
-  
   if (pc.category == ContentCategoryEvents) {
     self.liveEvent = [[ScheduleManager shared] eventIsLive:self.relatedArticle];
-    [self eventTreatment];
   }
   
   if (pc.category == ContentCategoryNews || [self fromSnapshot]) {
@@ -509,13 +502,14 @@
   // Store 'original' height of webView, prior to placing any article content inside of it.
   // Used later to calculate content size for masterScoller.
   self.originalWebViewHeight = self.webContentLoader.webView.frame;
+
   
   // Send article to the webcontentLoader - place HTML content inside webView body.
   [self.webContentLoader setupWithArticle:self.relatedArticle
                                  delegate:self
                                 pushAsset:self.pushAssetIntoBody
                                completion:^{
-                                 TOCK;
+
                                }];
 }
 
@@ -679,6 +673,8 @@
   }
 }
 
+
+#pragma mark - UI Treatment for slideshow or video assets
 - (void)photoVideoTreatment {
   NSArray *assets = [self.relatedArticle objectForKey:@"assets"];
   NSDictionary *primary = nil;
@@ -799,7 +795,7 @@
 }
 
 
-#pragma mark - Caption stuff
+#pragma mark - UI Treatment for Main Asset Caption
 - (void)armCaption:(NSDictionary*)leadingAsset {
   
   if ([leadingAsset objectForKey:@"caption"] == [NSNull null] || [leadingAsset objectForKey:@"owner"] == [NSNull null]) {
@@ -899,7 +895,6 @@
 
 
 #pragma mark - Extra Assets
-
 - (void)playVideo:(id)sender {
   [self presentVideo];
 }
@@ -920,17 +915,97 @@
 }
 
 - (void)postProcess {
-  
-  if ( self.postProcessed )
+  if (self.postProcessed) {
     return;
-
+  }
   self.postProcessed = YES;
 }
 
+
+#pragma mark - UI Adjustment for Content Height Change
+- (void)refreshHeight {
+  [self snapToContentHeight];
+}
+
+- (void)snapToContentHeight {
+  NSString *output = [self.webContentLoader.webView stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"container\").offsetHeight;"];
+  CGFloat webHeight = fmaxf([output floatValue],self.originalWebViewHeight.size.height);
+  
+  CGFloat totalHeight = webHeight;
+  if ( [Utilities articleHasAsset:self.relatedArticle] ) {
+    
+    if ( !self.shortPage ) {
+      
+      if ( [Utilities isLandscape] ) {
+        totalHeight += self.landscapeImageSheetView.frame.size.height;
+      }
+      
+      else {
+        // Only increase totalHeight if article has an image loaded in the top template.
+        //if ([self.basicTemplate.subviews containsObject:self.basicTemplate.image1] && [self.basicTemplate.image1 frameForImage].size.height > 0) {
+        totalHeight += self.basicTemplate.matteView.frame.size.height;
+        //}
+      }
+    }
+  }
+  totalHeight += self.textSheetView.frame.size.height;
+  
+  // Nudge for Short List and non-iOS7 devices
+  if (![Utilities isIOS7]) {
+    totalHeight += 60.0;
+    webHeight += 60.0;
+  }
+  if (self.fromSnapshot) {
+    totalHeight += 80.0;
+    webHeight +=  80.0;
+  }
+  
+  self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
+                                                   self.webContentLoader.webView.frame.origin.y,
+                                                   self.webContentLoader.webView.frame.size.width,
+                                                   webHeight + 150.0);
+  
+  self.webContentLoader.webView.scrollView.scrollEnabled = NO;
+  
+  self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.frame.size.width,
+                                                      totalHeight + 150.0);
+  
+  self.masterContentScroller.frame = CGRectMake(self.masterContentScroller.frame.origin.x,
+                                                self.masterContentScroller.frame.origin.y,
+                                                self.masterContentScroller.frame.size.width,
+                                                self.masterContentScroller.frame.size.height);
+  
+  if (self.hasSocialData) {
+    // Place the social sheetview below the article's contents and embeds
+    CGFloat socialSheetVertAdjust = 30.0;
+    if (![Utilities isIOS7]) {
+      socialSheetVertAdjust += 30.0;
+    }
+    if (self.fromSnapshot) {
+      socialSheetVertAdjust += 70.0;
+    }
+    
+    [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
+                                              self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height - socialSheetVertAdjust,
+                                              self.socialSheetView.frame.size.width,
+                                              self.socialSheetView.frame.size.height)];
+    
+    if (self.activity.alpha == 0.0 && self.socialSheetView.alpha == 0.0) {
+      [UIView animateWithDuration: 0.0
+                            delay:0.2 options:UIViewAnimationOptionCurveEaseInOut
+                       animations:^{
+                         self.socialSheetView.alpha = 1.0;
+                       } completion:nil];
+    }
+  }
+}
+
+
+# pragma mark - UI Treatment for Queue
 - (void)adjustUIForQueue:(NSNotification*)note {
 
-  if ( [[QueueManager shared] articleIsInQueue:self.relatedArticle] ) {
-    if ( [[QueueManager shared] articleIsPlayingNow:self.relatedArticle] ) {
+  if ([[QueueManager shared] articleIsInQueue:self.relatedArticle]) {
+    if ([[QueueManager shared] articleIsPlayingNow:self.relatedArticle]) {
       
       // PAUSED or PLAYING NOW
       [[DesignManager shared] globalSetImageTo:@"icon-audio-listening.png"
@@ -972,7 +1047,7 @@
 
     }
   } else {
-    if ( [[QueueManager shared] articleIsPlayingNow:self.relatedArticle] ) {
+    if ([[QueueManager shared] articleIsPlayingNow:self.relatedArticle]) {
       
       // PLAYING NOW
       [[DesignManager shared] globalSetImageTo:@"icon-queue-active.png"
@@ -1015,16 +1090,7 @@
 }
 
 
-#pragma mark - Web Content Loader
-- (BOOL)webContentReady {
-  
-  SCPRSingleArticleCollectionViewController *sacvc = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
-  if ( sacvc ) {
-    NSLog(@"Parent Collection not actually nil!");
-  }
-  return !sacvc.contentLock;
-}
-
+#pragma mark - Query to Parse for Article Share Counts
 - (void)queryParse {
   // Make request to PCC social_data_no_constraints function and retrieve social share count for this article.
   if (![self.relatedArticle objectForKey:@"social_data"]) {
@@ -1130,6 +1196,8 @@
   [self refreshHeight];
 }
 
+
+#pragma mark - Share Modal Handling
 - (void)toggleShareModal {
   if ( self.shareModalOpen ) {
     [self closeShareModal];
@@ -1177,6 +1245,16 @@
   self.shareModalOpen = NO;
 }
 
+
+#pragma mark - Web Content Loader
+- (BOOL)webContentReady {
+  SCPRSingleArticleCollectionViewController *sacvc = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
+  if (sacvc) {
+    NSLog(@"Parent Collection not actually nil!");
+  }
+  return !sacvc.contentLock;
+}
+
 - (void)webContentLoaded:(BOOL)firstTime {
   self.okToTrash = YES;
   
@@ -1219,25 +1297,25 @@
   [[[Utilities del] globalTitleBar] morph:BarTypeExternalWeb
                                 container:external];
   
-  if ( [self.relatedArticle objectForKey:@"rsvp_url"] ) {
+  if ([self.relatedArticle objectForKey:@"rsvp_url"]) {
     [[[Utilities del] globalTitleBar] applyBackButtonText:@"Live Events"];
   }
   
-  if ( self.parentCollection ) {
-    SCPRSingleArticleCollectionViewController *collection = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
-    [collection.navigationController pushViewController:external animated:YES];
-    external.backContainer = collection;
+  if (self.parentCollection) {
+    SCPRSingleArticleCollectionViewController *pc = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
+    [pc.navigationController pushViewController:external animated:YES];
+    external.backContainer = pc;
   } else {
     [self.navigationController pushViewController:external animated:YES];
   }
   
   external.view.frame = external.view.frame;
   
-  if ( [Utilities isIOS7] ) {
+  if ([Utilities isIOS7]) {
     external.webContentView.frame = CGRectMake(external.webContentView.frame.origin.x,
-                                               external.webContentView.frame.origin.y+40.0,
+                                               external.webContentView.frame.origin.y + 40.0,
                                                external.webContentView.frame.size.width,
-                                               external.webContentView.frame.size.height-20.0);
+                                               external.webContentView.frame.size.height - 20.0);
   }
   
   [external prime:request];
@@ -1251,121 +1329,16 @@
                         forControlEvents:UIControlEventTouchUpInside];
   
   [[ContentManager shared] setUserIsViewingExpandedDetails:YES];
-  
 }
-
-
 
 - (NSDictionary*)associatedArticleContent {
   return self.relatedArticle;
-}
-
-- (void)refreshHeight {
-  [self snapToContentHeight];
-}
-
-- (void)snapToContentHeight {
-  NSString *output = [self.webContentLoader.webView stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"container\").offsetHeight;"];
-  CGFloat webHeight = fmaxf([output floatValue],self.originalWebViewHeight.size.height);
-  
-  CGFloat totalHeight = webHeight;
-  if ( [Utilities articleHasAsset:self.relatedArticle] ) {
-    
-      if ( !self.shortPage ) {
-        
-        if ( [Utilities isLandscape] ) {
-          totalHeight += self.landscapeImageSheetView.frame.size.height;
-        }
-        
-        else {
-          // Only increase totalHeight if article has an image loaded in the top template.
-          //if ([self.basicTemplate.subviews containsObject:self.basicTemplate.image1] && [self.basicTemplate.image1 frameForImage].size.height > 0) {
-          totalHeight += self.basicTemplate.matteView.frame.size.height;
-          //}
-        }
-      }
-  }
-  totalHeight += self.textSheetView.frame.size.height;
-
-  // Nudge for Short List and non-iOS7 devices
-  if (![Utilities isIOS7]) {
-    totalHeight += 60.0;
-    webHeight += 60.0;
-  }
-  if (self.fromSnapshot) {
-    totalHeight += 80.0;
-    webHeight +=  80.0;
-  }
-
-  self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
-                                                   self.webContentLoader.webView.frame.origin.y,
-                                                   self.webContentLoader.webView.frame.size.width,
-                                                   webHeight + 150.0);
-  
-  self.webContentLoader.webView.scrollView.scrollEnabled = NO;
-
-  self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.frame.size.width,
-                                                      totalHeight + 150.0);
-  
-  self.masterContentScroller.frame = CGRectMake(self.masterContentScroller.frame.origin.x,
-                                                self.masterContentScroller.frame.origin.y,
-                                                self.masterContentScroller.frame.size.width,
-                                                self.masterContentScroller.frame.size.height);
-  
-  if (self.hasSocialData) {
-    // Place the social sheetview below the article's contents and embeds
-    CGFloat socialSheetVertAdjust = 30.0;
-    if (![Utilities isIOS7]) {
-      socialSheetVertAdjust += 30.0;
-    }
-    if (self.fromSnapshot) {
-      socialSheetVertAdjust += 70.0;
-    }
-    
-    [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
-                                              self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height - socialSheetVertAdjust,
-                                              self.socialSheetView.frame.size.width,
-                                              self.socialSheetView.frame.size.height)];
-
-    if (self.activity.alpha == 0.0 && self.socialSheetView.alpha == 0.0) {
-      [UIView animateWithDuration: 0.0
-                            delay:0.2 options:UIViewAnimationOptionCurveEaseInOut
-                       animations:^{
-                         self.socialSheetView.alpha = 1.0;
-                       } completion:nil];
-    }
-  }
 }
 
 
 #pragma mark - UIAlertView
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
   [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (NSString*)smartSplit:(NSString *)fullString givenLabel:(UILabel *)label {
-  
-  CGSize s = [fullString sizeOfStringWithFont:label.font
-                     constrainedToSize:CGSizeMake(label.frame.size.width,
-                                                  MAXFLOAT)];
-  
-  CGFloat ratio = label.frame.size.height / s.height;
-  
-  if ( ratio >= 1.0 ) {
-    return fullString;
-  }
-  
-  NSInteger count = [fullString length];
-  NSInteger splitIndex = ceil(count*ratio);
-  unichar whitespace = 'z';
-  while ( ![[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:[fullString characterAtIndex:splitIndex]] && splitIndex >= 0 && splitIndex != count-1 ) {
-    whitespace = [fullString characterAtIndex:splitIndex];
-    splitIndex--;
-  }
-  
-  NSString *properCut = [fullString substringToIndex:splitIndex];
-  return properCut;
-  
 }
 
 
@@ -1385,7 +1358,7 @@
   self.contentArranged = NO;
   [self stretch];
   
-  if ( self.fromSnapshot ) {
+  if (self.fromSnapshot) {
     SCPRViewController *svc = [[Utilities del] viewController];
     
     CGFloat offset = [Utilities isIOS7] ? -40.0 : -60.0;
@@ -1396,7 +1369,7 @@
   
   [self arrangeContent];
   
-  if ( [Utilities isLandscape] ) {
+  if ([Utilities isLandscape]) {
     @try {
       
       [self.masterContentScroller removeObserver:self
@@ -1428,11 +1401,11 @@
 
 - (void)backTapped {
   
-  if ( [[[Utilities del] viewController] shareDrawerOpen] ) {
+  if ([[[Utilities del] viewController] shareDrawerOpen]) {
     [[[Utilities del] viewController] toggleShareDrawer];
   }
   
-  if ( self.fromSnapshot ) {
+  if (self.fromSnapshot) {
     
     SCPRTitlebarViewController *tb = [[Utilities del] globalTitleBar];
     
@@ -1441,7 +1414,6 @@
     
     
     SCPRViewController *svc = [[Utilities del] viewController];
-    
     [UIView animateWithDuration:0.22 animations:^{
       [svc.mainPageScroller setContentOffset:CGPointMake(0.0, 0.0)];
     }];
