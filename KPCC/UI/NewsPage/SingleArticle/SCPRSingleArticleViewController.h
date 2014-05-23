@@ -122,7 +122,6 @@
 @property BOOL gateOpen;
 @property BOOL pageBeingDestroyed;
 @property BOOL fromSnapshot;
-@property BOOL assetsHandled;
 @property BOOL workerThread;
 @property BOOL contentArranged;
 @property (nonatomic,strong) NSString *styled;
@@ -151,16 +150,12 @@
 - (void)arrangeContent;
 - (NSString*)smartSplit:(NSString*)fullString givenLabel:(UILabel*)label;
 - (void)adjustUIForQueue:(NSNotification*)note;
-- (void)partialWash;
-- (void)unwash;
-- (void)handleMultipleAssets;
 
 - (void)killContent;
 - (void)safeKillContent;
 
 - (void)snapToContentHeight;
 - (void)handleDelayedLoad;
-- (void)arm;
 - (void)postProcess;
 - (void)photoVideoTreatment;
 - (void)presentVideo;

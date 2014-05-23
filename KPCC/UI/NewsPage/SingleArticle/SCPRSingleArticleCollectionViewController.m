@@ -396,7 +396,6 @@
   
   SCPRSingleArticleViewController *currentPage = (SCPRSingleArticleViewController*)self.currentPage;
   [currentPage snapToContentHeight];
-  [currentPage arm];
   
   self.contentTimer = [NSTimer scheduledTimerWithTimeInterval:0.15
                                                         target:self
@@ -470,7 +469,6 @@
     if ( savc.index == self.currentIndex ) {
       [savc handleDelayedLoad];
     }
-    [savc handleMultipleAssets];
   }
 }
 

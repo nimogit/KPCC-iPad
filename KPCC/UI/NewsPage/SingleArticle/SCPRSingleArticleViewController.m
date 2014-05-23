@@ -33,12 +33,11 @@
   [super viewDidLoad];
   
   [self stretch];
-  [self.activity startAnimating];
   
-  self.webContentLoader.webView.alpha = 0.0;
-  self.webContentLoader.webView.frame = self.webContentLoader.webView.frame;
+  [self.activity startAnimating];
 
   self.view.backgroundColor = [UIColor whiteColor];
+  self.webContentLoader.webView.alpha = 0.0;
   self.textSheetView.alpha = 0.0;
   self.cloakView.alpha = 0.0;
   self.queueButton.alpha = 0.0;
@@ -46,6 +45,7 @@
   self.basicTemplate.byLine.textColor = [UIColor blackColor];
   self.basicTemplate.aspectCode = @"SingleArticle";
   self.basicTemplate.backgroundColor = [UIColor whiteColor];
+  self.textSheetView.backgroundColor = [UIColor whiteColor];
   self.basicTemplate.templateStyle = NewsPageTemplateSingleArticle;
   self.backButton.alpha = 0.0;
   self.socialSheetView.alpha = 0.0;
@@ -54,14 +54,7 @@
   if (!self.relatedArticle) {
     [[NetworkManager shared] fetchContentForSingleArticle:self.relatedURL display:self];
   }
-  
-  [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.socialShareButton.titleLabel.font.pointSize]
-                                forButton:self.socialShareButton];
-  
-  [[self.socialShareButton layer] setCornerRadius:3.0f];
-  [[self.socialShareButton layer] setBorderWidth:1.0f];
-  [[self.socialShareButton layer] setBorderColor:[UIColor colorWithRed:9.0/255.0 green:185.0/255.0 blue:243.0/255.0 alpha:1.0].CGColor];
-  
+
   self.shareDrawer = [[Utilities del] viewController].globalShareDrawer;
   
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -75,7 +68,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  if ( self.fromSnapshot ) {
+  if (self.fromSnapshot) {
     SCPRViewController *svc = [[Utilities del] viewController];
     
     CGFloat offset = [Utilities isIOS7] ? -40.0 : -60.0;
@@ -83,10 +76,6 @@
       [svc.mainPageScroller setContentOffset:CGPointMake(0.0, offset)];
     }];
   }
-}
-
-- (void)arm {
-  
 }
 
 - (void)activate {
@@ -103,6 +92,10 @@
   if (object == self.masterContentScroller) {
     
     self.cloakView.alpha = self.masterContentScroller.contentOffset.y / self.basicTemplate.image1.frame.size.height;
+    
+    if (self.captionUp) {
+      [self fadeCaption];
+    }
     
     if (self.webContentLoader.containsTwitterEntries) {
       
@@ -180,23 +173,9 @@
   }
 }
 
-- (void)handleMultipleAssets {
-  self.assetsHandled = YES;
-}
-
-- (void)partialWash {
-  self.matteCloak.alpha = 0.8;
-  self.sheetCloak.alpha = 0.8;
-}
-
-- (void)unwash {
-  self.matteCloak.alpha = 0.0;
-  self.sheetCloak.alpha = 0.0;
-}
-
 - (void)handleDelayedLoad {
-  if ( !self.initialLoadFinished ) {
-    if ( self.webContentLoader.queuedContentString ) {
+  if (!self.initialLoadFinished) {
+    if (self.webContentLoader.queuedContentString) {
       [self.webContentLoader setupWithArticle:self.relatedArticle
                                      delegate:self];
     }
@@ -243,9 +222,7 @@
 #endif
   
   NSAssert(!self.workerThread,@"This is mistakenly a worker thread");
-  
-  NSArray *assets = [self.relatedArticle objectForKey:@"assets"];
-  
+
   self.view.alpha = 1.0;
   [self photoVideoTreatment];
 
@@ -258,17 +235,18 @@
   BOOL pushAssetIntoBody = NO;
   if ([ratio isEqualToString:@"23"] || [ratio isEqualToString:@"34"] || [ratio isEqualToString:@"Sq"]) {
     self.basicTemplate.image1.contentMode = UIViewContentModeScaleAspectFit;
-    //self.basicTemplate.image1.clipsToBounds = YES;
     self.view.backgroundColor = [UIColor blackColor];
     pushAssetIntoBody = YES;
   }
-  
+
+  NSArray *assets = [self.relatedArticle objectForKey:@"assets"];
+
   if ([assets count] > 1) {
     pushAssetIntoBody = NO;
   }
   
 #ifdef FAKE_INLINE_ASSETS
-  pushAssetIntoBody = YES;
+  //pushAssetIntoBody = YES;
 #endif
   
   // -- Developer Note --
@@ -278,8 +256,8 @@
   // smaller image asset in to the actual body of the article.
   BOOL noAsset = NO;
   if (![Utilities pureNil:imgUrl] && !pushAssetIntoBody) {
+
     [self.basicTemplate.image1 loadImage:imgUrl quietly:YES];
-    NSLog(@"## initial image frame load %@", NSStringFromCGRect(self.basicTemplate.image1.frame));
     
     // When in portrait - observe the contentOffset of the masterContentScroller to fade out
     // the main image asset for the article.
@@ -289,7 +267,7 @@
                                     options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial
                                     context:nil];
     }
-  } else {
+  } else { // Configure Article with no asset main asset.
     noAsset = YES;
     self.shortPage = YES;
     
@@ -305,38 +283,20 @@
                                             self.basicTemplate.matteView.frame.origin.y + yOffset,
                                             self.textSheetView.frame.size.width,
                                             self.textSheetView.frame.size.height);
-      CGFloat heightDiff = self.masterContentScroller.frame.size.height - (self.textSheetView.frame.origin.y + self.textSheetView.frame.size.height);
-      self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
-                                                       self.textSheetView.frame.origin.y + self.textSheetView.frame.size.height,
-                                                       self.webContentLoader.webView.frame.size.width,
-                                                       heightDiff);
-    } else { // Configure shortPage in Landscape
-
+    } else {
       self.landscapeImageSheetView.alpha = 0.0;
-      CGFloat heightDiff = self.masterContentScroller.frame.size.height - (self.textSheetView.frame.origin.y + self.textSheetView.frame.size.height);
-      self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
-                                                       self.textSheetView.frame.origin.y+self.textSheetView.frame.size.height,
-                                                       self.webContentLoader.webView.frame.size.width,
-                                                       heightDiff);
-      
-      [[DesignManager shared] avoidNeighbor:self.textSheetView
-                                   withView:self.webContentLoader.webView
-                                  direction:NeighborDirectionAbove
-                                    padding:0.0];
-      
     }
-  }
 
-  CGSize actual = [self.basicTemplate.image1 frameForImage].size;
-  CGFloat actualWidth = self.basicTemplate.image1.image.size.width*actual.width;
-  CGFloat widthToUse = fminf(actualWidth, self.basicTemplate.image1.frame.size.width);
-  CGFloat diff = widthToUse - actualWidth;
-  if ( diff > 0.0 ) {
-    self.basicTemplate.blurb1.center = CGPointMake(self.basicTemplate.blurb1.center.x-diff,
-                                                   self.basicTemplate.blurb1.center.y);
-  }
-  
-  if ( [self.relatedArticle objectForKey:@"title"] ) {
+    CGFloat heightDiff = self.masterContentScroller.frame.size.height - (self.textSheetView.frame.origin.y + self.textSheetView.frame.size.height);
+    self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
+                                                     self.textSheetView.frame.origin.y + self.textSheetView.frame.size.height,
+                                                     self.webContentLoader.webView.frame.size.width,
+                                                     heightDiff);
+  } // end configure noAsset article
+
+
+  // Set article Headline
+  if ([self.relatedArticle objectForKey:@"title"]) {
     [self.basicTemplate.headLine sansifyTitleText:[self.relatedArticle objectForKey:@"title"]
                                            bold:YES
                                   respectHeight:YES];
@@ -346,74 +306,68 @@
                                     respectHeight:YES];
   }
   
-  NSString *bylineStr = [self.relatedArticle objectForKey:@"byline"];
-  bylineStr = [bylineStr uppercaseString];
+
+  // Set article Byline
+  NSString *bylineStr = [[self.relatedArticle objectForKey:@"byline"] uppercaseString];
   NSString *dateStr = [self.relatedArticle objectForKey:@"published_at"];
   NSDate *dateObj = [Utilities dateFromRFCString:dateStr];
   NSString *pretty = [NSDate stringFromDate:dateObj
                                  withFormat:@"MMM d, YYYY, h:mm a"];
-  
+
+  self.basicTemplate.byLine.textColor = [[DesignManager shared] burnedCharcoalColor];
   [self.basicTemplate.byLine titleizeText:[NSString stringWithFormat:@"%@\n%@",bylineStr,pretty]
                                      bold:NO
-   respectHeight:YES];
-  
-  self.basicTemplate.byLine.textColor = [[DesignManager shared] burnedCharcoalColor];
-  
-  
-  [[DesignManager shared] avoidNeighbor:self.basicTemplate.headLine
-                               withView:self.basicTemplate.byLine
-                              direction:NeighborDirectionAbove
-                                padding:3.0];
-  
-  self.textSheetView.backgroundColor = [UIColor whiteColor];
-  
+                            respectHeight:YES];
+
+
+  // Set article Category
   NSDictionary *category = [self.relatedArticle objectForKey:@"category"];
-  if ( category ) {
+  if (category) {
     NSString *title = [category objectForKey:@"title"];
-    if ( ![Utilities pureNil:title] ) {
-      [self.categoryLabel titleizeText:[title uppercaseString]
-                                  bold:YES];
+    if (![Utilities pureNil:title]) {
+      [self.categoryLabel titleizeText:[title uppercaseString] bold:YES];
     } else {
-      [self.categoryLabel titleizeText:@"MISCELLANEOUS"
-                                  bold:YES];
+      [self.categoryLabel titleizeText:@"MISCELLANEOUS" bold:YES];
     }
   } else {
-    [self.categoryLabel titleizeText:@"MISCELLANEOUS"
-                                bold:YES];
+    [self.categoryLabel titleizeText:@"MISCELLANEOUS" bold:YES];
   }
   
+  
+  // Provide vertical spacing between Category, Headling, and Byline
   [[DesignManager shared] avoidNeighbor:self.categorySeat
                                  withView:self.basicTemplate.headLine
                                 direction:NeighborDirectionAbove
                                   padding:20.0];
-    
   [[DesignManager shared] avoidNeighbor:self.basicTemplate.headLine
                                  withView:self.basicTemplate.byLine
                                 direction:NeighborDirectionAbove
                                   padding:12.0];
-    
   [[DesignManager shared] avoidNeighbor:self.basicTemplate.byLine
                                  withView:self.contentDividerLine
                                 direction:NeighborDirectionAbove
                                   padding:30.0];
   
+
+  // Handle article Audio
   NSArray *audio = [self.relatedArticle objectForKey:@"audio"];
   BOOL hasAudio = NO;
   CGFloat accountForAudio = 0.0;
-  if ( [audio count] > 0 ) {
+  if ([audio count] > 0 ) {
     hasAudio = YES;
     accountForAudio = self.audioSeatView.frame.size.height;
   }
   
   self.textSheetView.frame = CGRectMake(self.textSheetView.frame.origin.x,
-                                          self.textSheetView.frame.origin.y,
-                                          self.textSheetView.frame.size.width,
-                                          self.contentDividerLine.frame.origin.y+self.contentDividerLine.frame.size.height-1.0+accountForAudio);
-  
+                                        self.textSheetView.frame.origin.y,
+                                        self.textSheetView.frame.size.width,
+                                        self.contentDividerLine.frame.origin.y + self.contentDividerLine.frame.size.height - 1.0 + accountForAudio);
+
+  // Update UI for audioSeatView
   if (hasAudio) {
-    
     [self.textSheetView addSubview:self.audioSeatView];
-    if ( [Utilities isLandscape] ) {
+
+    if ([Utilities isLandscape]) {
       self.audioSeatView.frame = CGRectMake(self.basicTemplate.headLine.frame.origin.x,
                                             self.textSheetView.frame.size.height - self.audioSeatView.frame.size.height - 10.0,
                                             self.basicTemplate.image1.frame.size.width,
@@ -436,7 +390,6 @@
                                             self.audioSeatView.frame.size.width,
                                             self.audioSeatView.frame.size.height);
     }
-    
 
     self.audioDividerLine.vertical = YES;
     self.queueButton.alpha = 1.0;
@@ -457,8 +410,9 @@
     } else {
       [self.audioDurationLabel setHidden:YES];
     }
-  }
-  
+  } // if hasAudio
+
+
   if ( ![Utilities isLandscape] || ( pushAssetIntoBody && [Utilities isLandscape] )) {
     self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
                                                      self.textSheetView.frame.origin.y+self.textSheetView.frame.size.height,
@@ -766,8 +720,8 @@
                      forControlEvents:UIControlEventTouchUpInside];
     prime = YES;
     
-    self.extraAssetsSeat.center = CGPointMake(self.basicTemplate.image1.frame.size.width/2.0,
-                                              self.basicTemplate.image1.frame.size.height/2.0);
+    self.extraAssetsSeat.center = CGPointMake(self.basicTemplate.image1.frame.size.width / 2.0,
+                                              self.basicTemplate.image1.frame.size.height / 2.0);
     
   } else {
 
@@ -849,7 +803,6 @@
 - (void)armCaption:(NSDictionary*)leadingAsset {
   
   if ([leadingAsset objectForKey:@"caption"] == [NSNull null] || [leadingAsset objectForKey:@"owner"] == [NSNull null]) {
-    
     return;
   }
 
@@ -859,15 +812,7 @@
   } else {
     self.captionButton.frame = self.playOverlayButton.frame;
   }
-  
-  
-  NSLog(@"caption button frame %@", NSStringFromCGRect(self.captionButton.frame));
-  NSLog(@"landscape image sheet frame %@", NSStringFromCGRect(self.landscapeImageSheetView.frame));
-  NSLog(@"landscape image1 frame %@", NSStringFromCGRect(self.basicTemplate.image1.frame));
-  //NSLog(@"basic template subviews: %@", self.basicTemplate.subviews);
-  NSLog(@"image1 SUPERview %@", [self.basicTemplate.image1 superview]);
-  NSLog(@"landscape view subviews: %@", self.landscapeImageSheetView.subviews);
-  
+
   [self.captionButton addTarget:self
                          action:@selector(showCaption:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -911,7 +856,7 @@
 
 - (void)showCaption:(id)sender {
   
-  if ( self.captionUp ) {
+  if (self.captionUp) {
     [self fadeCaption];
     return;
   }
@@ -923,7 +868,7 @@
     self.captionFadeTapper = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                      action:@selector(fadeCaption)];
     [self.view addGestureRecognizer:self.captionFadeTapper];
-    self.captionFadeTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+    self.captionFadeTimer = [NSTimer scheduledTimerWithTimeInterval:4.0
                                                              target:self
                                                            selector:@selector(fadeCaption)
                                                            userInfo:nil
@@ -933,14 +878,14 @@
 
 - (void)fadeCaption {
   
-  if ( self.captionFadeTimer ) {
-    if ( [self.captionFadeTimer isValid] ) {
+  if (self.captionFadeTimer) {
+    if ([self.captionFadeTimer isValid]) {
       [self.captionFadeTimer invalidate];
     }
     self.captionFadeTimer = nil;
   }
   
-  if ( self.captionFadeTapper ) {
+  if (self.captionFadeTapper) {
     [self.view removeGestureRecognizer:self.captionFadeTapper];
     self.captionFadeTapper = nil;
   }
@@ -964,16 +909,13 @@
 }
 
 - (void)presentVideo {
-  SCPRAppDelegate *del = [Utilities del];
   self.floatingVideoController = [[SCPRFloatingEmbedViewController alloc]
                                   initWithNibName:[[DesignManager shared]
                                                    xibForPlatformWithName:@"SCPRFloatingEmbedViewController"]
                                   bundle:nil];
-  
-  
+
   self.floatingVideoController.fadeAudio = YES;
-  [del cloakUIWithCustomView:self.floatingVideoController
-                 dismissible:YES];
+  [[Utilities del] cloakUIWithCustomView:self.floatingVideoController dismissible:YES];
   [self.floatingVideoController setupWithPVArticle:self.relatedArticle];
 }
 
@@ -982,7 +924,6 @@
   if ( self.postProcessed )
     return;
 
-  [self handleMultipleAssets];
   self.postProcessed = YES;
 }
 
@@ -1110,6 +1051,13 @@
 - (void)socialDataLoaded {
   
   _hasSocialData = YES;
+  
+  [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.socialShareButton.titleLabel.font.pointSize]
+                                forButton:self.socialShareButton];
+  
+  [[self.socialShareButton layer] setCornerRadius:3.0f];
+  [[self.socialShareButton layer] setBorderWidth:1.0f];
+  [[self.socialShareButton layer] setBorderColor:[UIColor colorWithRed:9.0/255.0 green:185.0/255.0 blue:243.0/255.0 alpha:1.0].CGColor];
 
   if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
     [self.masterContentScroller addSubview:self.socialSheetView];
