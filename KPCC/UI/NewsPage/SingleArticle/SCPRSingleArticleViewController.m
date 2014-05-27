@@ -915,19 +915,14 @@
   CGFloat webHeight = fmaxf([output floatValue],self.originalWebViewHeight.size.height);
   
   CGFloat totalHeight = webHeight;
-  if ( [Utilities articleHasAsset:self.relatedArticle] ) {
-    
-    if ( !self.shortPage ) {
-      
-      if ( [Utilities isLandscape] ) {
+  
+  // Only increase height if we have a large, main image asset (not in the article body).
+  if ([Utilities articleHasAsset:self.relatedArticle]) {
+    if (!self.shortPage) {
+      if ([Utilities isLandscape]) {
         totalHeight += self.landscapeImageSheetView.frame.size.height;
-      }
-      
-      else {
-        // Only increase totalHeight if article has an image loaded in the top template.
-        //if ([self.basicTemplate.subviews containsObject:self.basicTemplate.image1] && [self.basicTemplate.image1 frameForImage].size.height > 0) {
+      } else {
         totalHeight += self.basicTemplate.matteView.frame.size.height;
-        //}
       }
     }
   }
@@ -939,8 +934,8 @@
     webHeight += 60.0;
   }
   if (self.fromSnapshot) {
-    totalHeight += 80.0;
-    webHeight +=  80.0;
+    totalHeight += 60.0;
+    webHeight +=  60.0;
   }
   
   self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
@@ -962,7 +957,7 @@
     // Place the social sheetview below the article's contents and embeds
     CGFloat socialSheetVertAdjust = 30.0;
     if (![Utilities isIOS7]) {
-      socialSheetVertAdjust += 30.0;
+      socialSheetVertAdjust += 50.0;
     }
     if (self.fromSnapshot) {
       socialSheetVertAdjust += 70.0;
