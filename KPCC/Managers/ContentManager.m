@@ -1143,7 +1143,12 @@ static ContentManager *singleton = nil;
       // Flatpage
       return NO;
     }
-    
+
+    // Types to not serve native
+    if ([guts rangeOfString:@"/events/"].location != NSNotFound || [guts rangeOfString:@"/elections/"].location != NSNotFound ) {
+      return NO;
+    }
+
     return YES;
   }
   
