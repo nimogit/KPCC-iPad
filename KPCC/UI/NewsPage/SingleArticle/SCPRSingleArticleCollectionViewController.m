@@ -168,9 +168,10 @@
   articleView.view.frame = rFrame;
   articleView.parentCollection = self;
   articleView.webContentLoader.loadingSkeletonContent = NO;
+  articleView.parentNewsPage = self.parentContainer;
   
   [articleView arrangeContent];
-  
+
   if (processIndex) {
     [self.articleScroller addSubview:articleView.view];
   }
@@ -180,7 +181,6 @@
     [self.articleScroller bringSubviewToFront:svc.view];
   }
 
-  
   if (!self.visualComponents) {
     NSMutableArray *newVisual = [[NSMutableArray alloc] init];
     self.visualComponents = newVisual;
@@ -194,85 +194,82 @@
     self.protect = @"";
   }
   
-  articleView.parentNewsPage = self.parentContainer;
+  NSInteger pages = 1;
   
-  //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    NSInteger pages = 1;
-    if (index != 0 && [articles count] > 1) {
-      
-      NSDictionary *leftArticle = [articles objectAtIndex:index-1];
-      
-      SCPRSingleArticleViewController *leftArticleView = [[SCPRSingleArticleViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleViewController"] bundle:nil];
-   
-      leftArticleView.index = index-1;
-      leftArticleView.relatedArticle = leftArticle;
-      leftArticleView.view.frame = CGRectMake(0.0,
-                                              yDelta,
-                                              widthToUse,
-                                              heightToUse);
-
-      leftArticleView.parentNewsPage = self.parentContainer;
-      leftArticleView.parentCollection = self;
-      leftArticleView.webContentLoader.loadingSkeletonContent = YES;
-      [leftArticleView arrangeContent];
-      [self.articleScroller addSubview:leftArticleView.view];
-      
-      if ([self.wingArticles objectForKey:@"left"]) {
-        SCPRSingleArticleViewController *oldLeft = [self.wingArticles objectForKey:@"left"];
-        [oldLeft killContent];
-      }
-      
-      [self.wingArticles setObject:leftArticleView
-                            forKey:@"left"];
-      pages++;
-      
-      self.waitingForLoad++;
-      [self.visualComponents addObject:leftArticleView];
-      
+  // Set up left side article
+  if (index != 0 && [articles count] > 1) {
+    
+    NSDictionary *leftArticle = [articles objectAtIndex:index-1];
+    
+    SCPRSingleArticleViewController *leftArticleView = [[SCPRSingleArticleViewController alloc] initWithNibName:
+                                                        [[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleViewController"] bundle:nil];
+    
+    leftArticleView.index = index-1;
+    leftArticleView.relatedArticle = leftArticle;
+    leftArticleView.view.frame = CGRectMake(0.0,
+                                            yDelta,
+                                            widthToUse,
+                                            heightToUse);
+    
+    leftArticleView.parentNewsPage = self.parentContainer;
+    leftArticleView.parentCollection = self;
+    leftArticleView.webContentLoader.loadingSkeletonContent = YES;
+    [leftArticleView arrangeContent];
+    [self.articleScroller addSubview:leftArticleView.view];
+    
+    if ([self.wingArticles objectForKey:@"left"]) {
+      SCPRSingleArticleViewController *oldLeft = [self.wingArticles objectForKey:@"left"];
+      [oldLeft killContent];
     }
-    if (index != [articles count]-1 && [articles count] > 1) {
-      
-      NSDictionary *rightArticle = [articles objectAtIndex:index+1];
-      
-      SCPRSingleArticleViewController *rightArticleView = [[SCPRSingleArticleViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleViewController"]
-                                                                                                            bundle:nil];
-
-      rightArticleView.index = index+1;
-      rightArticleView.relatedArticle = rightArticle;
-      rightArticleView.view.frame = CGRectMake(xOrigin + widthToUse,
-                                               yDelta,
-                                               widthToUse,
-                                               heightToUse);
+    
+    [self.wingArticles setObject:leftArticleView
+                          forKey:@"left"];
+    pages++;
+    
+    self.waitingForLoad++;
+    [self.visualComponents addObject:leftArticleView];
+  } // left article setup
   
-      rightArticleView.parentNewsPage = self.parentContainer;
-      rightArticleView.parentCollection = self;
-      rightArticleView.webContentLoader.loadingSkeletonContent = YES;
-      [rightArticleView arrangeContent];
-      [self.articleScroller addSubview:rightArticleView.view];
-      
-      if ([self.wingArticles objectForKey:@"right"]) {
-        SCPRSingleArticleViewController *oldRight = [self.wingArticles objectForKey:@"right"];
-        [oldRight killContent];
-        //[oldRight.view removeFromSuperview];
-        
-      }
-      
-      [self.wingArticles setObject:rightArticleView
-                            forKey:@"right"];
-      pages++;
-      self.waitingForLoad++;
-      [self.visualComponents addObject:rightArticleView];
+  // Set up right side article
+  if (index != [articles count]-1 && [articles count] > 1) {
+    
+    NSDictionary *rightArticle = [articles objectAtIndex:index+1];
+    
+    SCPRSingleArticleViewController *rightArticleView = [[SCPRSingleArticleViewController alloc] initWithNibName:
+                                                         [[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleViewController"] bundle:nil];
+    
+    rightArticleView.index = index+1;
+    rightArticleView.relatedArticle = rightArticle;
+    rightArticleView.view.frame = CGRectMake(xOrigin + widthToUse,
+                                             yDelta,
+                                             widthToUse,
+                                             heightToUse);
+    
+    rightArticleView.parentNewsPage = self.parentContainer;
+    rightArticleView.parentCollection = self;
+    rightArticleView.webContentLoader.loadingSkeletonContent = YES;
+    [rightArticleView arrangeContent];
+    [self.articleScroller addSubview:rightArticleView.view];
+    
+    if ([self.wingArticles objectForKey:@"right"]) {
+      SCPRSingleArticleViewController *oldRight = [self.wingArticles objectForKey:@"right"];
+      [oldRight killContent];
     }
+    
+    [self.wingArticles setObject:rightArticleView
+                          forKey:@"right"];
+    pages++;
+    self.waitingForLoad++;
+    [self.visualComponents addObject:rightArticleView];
+  } // right article setup
   
 
-  
-  self.articleScroller.contentOffset = CGPointMake(xOrigin,
-                                                     0.0);
+  self.articleScroller.contentOffset = CGPointMake(xOrigin, 0.0);
   self.articleScroller.delegate = self;
   self.currentOffset = self.articleScroller.contentOffset;
 
-  if ( self.articleScroller ) {
-    self.articleScroller.contentSize = CGSizeMake([self.visualComponents count]*self.articleScroller.frame.size.width,
+  if (self.articleScroller) {
+    self.articleScroller.contentSize = CGSizeMake([self.visualComponents count] * self.articleScroller.frame.size.width,
                                                   self.articleScroller.frame.size.height);
   }
   
@@ -291,14 +288,6 @@
                                                   object:nil];
 }
 
-
-- (void)fetchSocialDataForArticle:(NSDictionary*)article {
-  if (article) {
-    if (![article objectForKey:@"social_data"]) {
-      NSLog(@"here");
-    }
-  }
-}
 
 #pragma mark - Backable
 - (void)backTapped {
