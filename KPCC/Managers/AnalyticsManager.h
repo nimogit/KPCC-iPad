@@ -57,6 +57,7 @@ typedef enum {
 - (void)failureFetchingImage:(NSString*)link;
 - (void)failureFetchingContent:(NSString*)link;
 - (void)logEvent:(NSString*)event withParameters:(NSDictionary*)parameters;
+- (void)logOut:(NSNotification*)note;
 - (void)openTimedSessionForContentType:(NSInteger)contentType;
 - (void)terminateTimedSessionForContentType:(NSInteger)contentType;
 - (void)app404;
