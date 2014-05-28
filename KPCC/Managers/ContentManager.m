@@ -1120,22 +1120,26 @@ static ContentManager *singleton = nil;
   }
   
   return [self isKPCCURL:url];
-  
 }
 
 - (BOOL)isKPCCURL:(NSString *)url {
-  if ( !url ) {
+  if (!url) {
     return NO;
   }
   
-  if ( [url rangeOfString:@"scpr.org"].location != NSNotFound ) {
-    if ( [url rangeOfString:@"projects.scpr.org"].location != NSNotFound ) {
+  if ([url rangeOfString:@"scpr.org"].location != NSNotFound) {
+    if ([url rangeOfString:@"projects.scpr.org"].location != NSNotFound) {
       return NO;
     }
+    
+    if ([url rangeOfString:@"www.scpr.org"].location == NSNotFound) {
+      return NO;
+    }
+
     NSRange r = [url rangeOfString:@"scpr.org"];
     NSString *guts = [url substringFromIndex:r.location];
     NSArray *comps = [guts componentsSeparatedByString:@"/"];
-    if ( [comps count] <= 3 ) {
+    if ([comps count] <= 3) {
       // Flatpage
       return NO;
     }
@@ -1143,10 +1147,14 @@ static ContentManager *singleton = nil;
     return YES;
   }
   
-  if ( [url rangeOfString:@"kpcc.org"].location != NSNotFound ) {
+  if ([url rangeOfString:@"kpcc.org"].location != NSNotFound) {
+    if ([url rangeOfString:@"www.kpcc.org"].location == NSNotFound) {
+      return NO;
+    }
+
     return YES;
   }
-  
+
   return NO;
 }
 

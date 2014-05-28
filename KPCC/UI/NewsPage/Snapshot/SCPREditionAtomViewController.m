@@ -225,10 +225,9 @@
 
 - (IBAction)buttonTapped:(id)sender {
   
-  if ( sender == self.expandButton || sender == self.altTriggerButton ) {
-    
-    
-    if ( ![self isKPCCArticle] ) {
+  if (sender == self.expandButton || sender == self.altTriggerButton) {
+
+    if (![self isKPCCArticle]) {
       NSString *url = [self.relatedArticle objectForKey:@"url"];
       NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
@@ -241,23 +240,19 @@
       external.view.frame = external.view.frame;
       external.supplementalContainer = self;
       
-      if ( [Utilities isIOS7] ) {
+      if ([Utilities isIOS7]) {
         CGFloat adjuster = [Utilities isLandscape] ? 20.0 : 20.0;
         external.webContentView.frame = CGRectMake(external.webContentView.frame.origin.x,
-                                                   external.webContentView.frame.origin.y+40.0,
+                                                   external.webContentView.frame.origin.y + 40.0,
                                                    external.webContentView.frame.size.width,
-                                                   external.webContentView.frame.size.height-adjuster);
+                                                   external.webContentView.frame.size.height - adjuster);
       }
       
-      
-      [[[Utilities del] globalTitleBar] morph:BarTypeExternalWeb
-                                  container:external];
-    
-      
+      [[[Utilities del] globalTitleBar] morph:BarTypeExternalWeb container:external];
       [molecule.navigationController pushViewController:external animated:YES];
       [external prime:request];
       
-      if ( self.externalContent ) {
+      if (self.externalContent) {
         SCPRExternalWebContentViewController *prev = (SCPRExternalWebContentViewController*)self.externalContent;
         [prev.bensOffbrandButton removeTarget:prev
                                        action:@selector(buttonTapped:)
@@ -266,22 +261,17 @@
       }
       
       self.externalContent = external;
-    
-      
       external.bensOffbrandButton = [[[Utilities del] globalTitleBar] parserOrFullButton];
-    
       [external.bensOffbrandButton addTarget:external
                                     action:@selector(buttonTapped:)
                           forControlEvents:UIControlEventTouchUpInside];
     } else {
-      
       [[NetworkManager shared] fetchContentForSingleArticle:[self.relatedArticle objectForKey:@"url"]
                                                     display:self];
       NSMutableDictionary *params = [[[AnalyticsManager shared] paramsForArticle:self.relatedArticle] mutableCopy];      
       [[AnalyticsManager shared] logEvent:@"tap_abstract"
                            withParameters:params];
     }
-    
   
     [[ContentManager shared] setUserIsViewingExpandedDetails:YES];
     
@@ -291,10 +281,9 @@
                forKey:@"date"];
     [params setObject:@"Editions" forKey:@"accessed_from"];
     [params setObject: ([[AudioManager shared] isPlayingAnyAudio]) ? @"YES" : @"NO" forKey:@"audio_on"];
-
-    [[AnalyticsManager shared] logEvent:@"story_read"
-                         withParameters:params];
+    [[AnalyticsManager shared] logEvent:@"story_read" withParameters:params];
   }
+
   if ( sender == self.captionButton ) {
     if ( self.suppressCaption ) {
       return;
@@ -380,30 +369,19 @@
     sac.fromSnapshot = YES;
     sac.relatedArticle = self.nativeArticle;
     sac.wantsFullScreenLayout = YES;
-    
-
     sac.parentEditionAtom = self;
     self.internalContent = sac;
     
     UIViewController *molecule = (UIViewController*)self.parentMolecule;
-    [molecule.navigationController pushViewController:sac
-                                         animated:YES];
-    
-    
+    [molecule.navigationController pushViewController:sac animated:YES];
     [sac arrangeContent];
-    
 
     [[ContentManager shared] pushToResizeVector:sac];
     [[ContentManager shared] setFocusedContentObject:self.nativeArticle];
   
-    [[[Utilities del] globalTitleBar] morph:BarTypeModal
-                                  container:sac];
+    [[[Utilities del] globalTitleBar] morph:BarTypeModal container:sac];
     
-    [[[Utilities del] globalTitleBar]
-     applyBackButtonText:@"Summary"];
-    
-    
-    
+    [[[Utilities del] globalTitleBar] applyBackButtonText:@"Summary"];
   }
 }
 
