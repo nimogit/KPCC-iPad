@@ -113,6 +113,10 @@ static AnalyticsManager *singleton = nil;
 }
 
 #pragma mark - Analytics Listening
+- (void)logOut:(NSNotification*)note {
+  
+}
+
 - (void)openTimedSessionForContentType:(NSInteger)contentType {
   if ( contentType == self.screenContent ) {
     return;

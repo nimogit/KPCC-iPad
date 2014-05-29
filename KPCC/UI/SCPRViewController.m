@@ -9,16 +9,13 @@
 #import "SCPRViewController.h"
 #import "global.h"
 #import "domain.h"
-#import "SCPRShadowingView.h"
 #import "SCPRNewsPageViewController.h"
 #import "SCPRNewsPageContainerController.h"
 #import "SCPRWebNewsContentViewController.h"
-#import "SCPRBCVideoContentViewController.h"
 #import "SCPRProgramPageViewController.h"
 #import "SCPREditionCrystalViewController.h"
 #import "SCPRSingleArticleCollectionViewController.h"
 #import "SCPRSimpleNewsViewController.h"
-#import "SCPREventsOverviewViewController.h"
 #import "SCPRProfileViewController.h"
 #import "SCPRProgramAZViewController.h"
 #import "SCPRProgramNavigatorViewController.h"
@@ -271,29 +268,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     NSString *url = [pDict objectForKey:@"contentUrl"];
     [[[Utilities del] masterRootController] puntToSafariWithURL:url];
   }
-}
-
-#pragma mark - Helpers
-- (SCPRNewsPageContainerController*)containerFor:(id<ContentContainer>)page hideStrip:(BOOL)hideStrip {
-  SCPRNewsPageContainerController *container = [[SCPRNewsPageContainerController alloc]
-                                                initWithNibName:[[DesignManager shared]
-                                                                 xibForPlatformWithName:@"SCPRNewsPageContainerController"]
-                                                bundle:nil];
-  
-  container.child = page;
-  UIViewController *uvc = (UIViewController*)page;
-  [container loadView];
-
-  CGFloat adjust = hideStrip ? 0.0 : container.grayStrip.frame.size.height;
-  uvc.view.frame = CGRectMake(uvc.view.frame.origin.x,
-                              uvc.view.frame.origin.y+adjust,
-                              uvc.view.frame.size.width,
-                              uvc.view.frame.size.height);
-
-  container.contentScroller.contentSize = CGSizeMake(page.view.frame.size.width,
-                                                     page.view.frame.size.height+60.0);
-  [container.contentScroller addSubview:page.view];
-  return container;
 }
 
 - (BOOL)shouldAutomaticallyForwardAppearanceMethods {

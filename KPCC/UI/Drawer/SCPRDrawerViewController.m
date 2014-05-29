@@ -21,13 +21,12 @@
 
 @implementation SCPRDrawerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+      // Custom initialization
+  }
+  return self;
 }
 
 #pragma mark - External Web Content Delegate
@@ -39,7 +38,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return [self.schema count];
 }
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
@@ -111,58 +109,14 @@
   cell.menuTitle = heading;
   cell.parentMenuController = self;
 
-  
   [cell placeObservers];
-  
-  
-  return cell;
 
+  return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-
   // Atomic top-level page
   [[[Utilities del] viewController] handleDrawerCommand:[NSString stringWithFormat:@"%d|%d",indexPath.section,indexPath.row]];
-  
-  /*[self.expandedCells removeAllObjects];
-    
-  [self.internalTable beginUpdates];
-  [self.internalTable endUpdates];*/
-    
- 
-  
-  
-  /*
-  NSString *c = [NSString stringWithFormat:@"%d",indexPath.row];
-  SCPRDrawerCell *cell = [self.allCells objectForKey:c];
-  if ( ![self.expandedCells objectForKey:c] ) {
-    NSArray *keys = [self.expandedCells allKeys];
-    if ( keys && [keys count] > 0 ) {
-      NSString *selected = [keys objectAtIndex:0];
-      SCPRDrawerCell *schell = [self.allCells objectForKey:selected];
-      schell.shadowView.alpha = 0.0;
-    }
-    
-    [[DesignManager shared] applyBaseShadowTo:cell.shadowView];
-    cell.shadowView.alpha = 1.0;
-    [self.expandedCells removeAllObjects];
-    [self.expandedCells setObject:@1 forKey:c];
-  } else {
-    cell.shadowView.alpha = 0.0;
-    [self.expandedCells removeAllObjects];
-  }
-  
- 
-  
-  [self.internalTable beginUpdates];
-  [self.internalTable endUpdates];
-  
-  CGSize s = CGSizeMake(self.internalTable.frame.size.width,
-                        [self calculateTableHeight]);
-  self.internalTable.contentSize = s;
-  //NSLog(@"Table height : %1.1f",self.internalTable.frame.size.height);*/
-
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

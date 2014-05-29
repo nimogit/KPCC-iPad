@@ -186,17 +186,7 @@
     }
     [self.shareCells addObject:twtr];
   }
- 
 
-  /*self.view.frame = CGRectMake(self.view.frame.origin.x,
-                               self.view.frame.origin.y,
-                               self.view.frame.size.width,
-                               dummySize.height*[self.shareCells count]);
-  
-  self.shareMethodTable.frame = CGRectMake(self.shareMethodTable.frame.origin.x,
-                                           self.shareMethodTable.frame.origin.y,
-                                           self.shareMethodTable.frame.size.width,
-                                           dummySize.height*[self.shareCells count]);*/
   self.shareMethodTable.dataSource = self;
   self.shareMethodTable.delegate = self;
   [self.shareMethodTable reloadData];

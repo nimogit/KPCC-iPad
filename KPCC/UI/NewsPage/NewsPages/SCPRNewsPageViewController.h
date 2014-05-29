@@ -10,7 +10,6 @@
 #import "global.h"
 #import "UIImageView+ImageProcessor.h"
 #import "SCPRViewController.h"
-#import "SCPRGrayStripView.h"
 #import "SCPRGrayLineView.h"
 #import "SCPRHBTView.h"
 
@@ -31,8 +30,6 @@
 // Templates
 - (void)templateBigTopSplitBottom:(NSInteger)index style:(NSUInteger)tempStyle;
 
-// Clip
-- (void)clipBannerToTop:(NSString*)withMessage;
 
 @property (nonatomic,strong) IBOutlet UIImageView *image1;
 @property (nonatomic,strong) IBOutlet UIImageView *image2;
@@ -67,7 +64,6 @@
 
 
 // Division
-@property (nonatomic,strong) IBOutlet SCPRGrayStripView *newsTitleView;
 @property (nonatomic,strong) IBOutlet SCPRGrayLineView *grayLine;
 @property (nonatomic,strong) IBOutlet UIView *decorativeStripeView;
 

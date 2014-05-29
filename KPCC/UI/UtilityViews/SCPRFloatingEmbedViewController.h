@@ -10,7 +10,6 @@
 #import "SCPRAppDelegate.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "global.h"
-#import "SCPRBCVideoContentViewController.h"
 
 @interface SCPRFloatingEmbedViewController : UIViewController<Cloakable,UIWebViewDelegate,Deactivatable>
 
@@ -22,7 +21,6 @@
 @property (nonatomic,strong) NSString *dataService;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic,strong) NSString *deactivationToken;
-@property (nonatomic,strong) SCPRBCVideoContentViewController *bcVideo;
 
 @property BOOL audioWasPlaying;
 @property BOOL fadeAudio;

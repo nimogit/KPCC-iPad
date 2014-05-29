@@ -313,7 +313,7 @@
 #ifdef DEBUG
               // -- Developer Note --
               // In debug, always embiggen 1 article for testing purposes
-              NSDictionary *realArticle = [[self.rawArticleHash objectForKey:@"general"] objectAtIndex:5];
+              /*NSDictionary *realArticle = [[self.rawArticleHash objectForKey:@"general"] objectAtIndex:5];
               BOOL okToAdd = YES;
               for (NSDictionary *article in articles) {
                 if ([Utilities article:article isSameAs:realArticle]) {
@@ -323,7 +323,7 @@
               }
               if (okToAdd) {
                 [articles addObject:realArticle];
-              }
+              }*/
 #endif
               dispatch_async(dispatch_get_main_queue(), ^{
                 [UIView animateWithDuration:0.22 animations:^{

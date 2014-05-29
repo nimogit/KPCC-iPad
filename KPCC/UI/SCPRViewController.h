@@ -37,8 +37,6 @@ typedef enum {
 } SnapshotEdition;
 
 
-@class SCPRShadowingView;
-
 
 
 #pragma mark - Content protocols
@@ -98,9 +96,6 @@ typedef enum {
   NSMutableArray *_mediaContent;
   NSInteger _numberOfStoriesPerPage;
   
-  // For drop shadow on player
-  SCPRShadowingView *_shadowView;
-  
   BOOL _automating;
   
 }
@@ -115,7 +110,6 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UILabel *stationMapLabel;
 @property (nonatomic,strong) IBOutlet UIButton *returnToLiveButton;
 @property (nonatomic,strong) IBOutlet UIView *returnToLiveSeat;
-@property (nonatomic,strong) SCPRShadowingView *shadowView;
 @property (nonatomic,strong) IBOutlet UIScrollView *mainPageScroller;
 @property (nonatomic,strong) NSMutableArray *contentVector;
 @property (nonatomic,strong) IBOutlet UIView *decorativeStripe;

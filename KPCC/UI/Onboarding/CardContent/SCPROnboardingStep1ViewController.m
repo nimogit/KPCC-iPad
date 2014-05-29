@@ -15,22 +15,16 @@
 
 @implementation SCPROnboardingStep1ViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+      // Custom initialization
+  }
+  return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-  
-  
-  
-    // Do any additional setup after loading the view from its nib.
+- (void)viewDidLoad {
+  [super viewDidLoad];
 }
 
 #pragma mark - Cardable
@@ -51,9 +45,6 @@
                                    bold:NO
                           respectHeight:YES];
   self.alreadyMemberLabel.textColor = [[DesignManager shared] deepOnyxColor];
-  
-
-  
 }
 
 - (void)backTapped {
@@ -65,20 +56,15 @@
 }
 
 - (IBAction)buttonTapped:(id)sender {
-  if ( sender == self.memberButton ) {
+  if (sender == self.memberButton) {
     [[AnalyticsManager shared] logEvent:@"single_sign_in"
                          withParameters:@{ @"signOnType" : @"membership" }];
     
     SCPROnboardingFlowViewController *flow = (SCPROnboardingFlowViewController*)self.master;
     [flow pushCard:FlowStepMemberInfoInput];
-    
-    /*[[[UIAlertView alloc] initWithTitle:@"Coming Soon"
-                                message:@"We're working to bring this to a future build very soon!"
-                               delegate:nil
-                      cancelButtonTitle:@"OK"
-                      otherButtonTitles:nil] show];*/
   }
-  if ( sender == self.twitterButton ) {
+
+  if (sender == self.twitterButton) {
     [[AnalyticsManager shared] logEvent:@"single_sign_in"
                          withParameters:@{ @"signOnType" : @"twitter" }];
     
@@ -89,15 +75,19 @@
     [[SocialManager shared] handleTwitterInteraction:self
                                     displayedInFrame:f2u];
   }
-  if ( sender == self.linkedinButton ) {
+  
+  // -- Developer Note --
+  // May 2014: Deprecated signin via LinkedIn
+  if (sender == self.linkedinButton) {
     [[AnalyticsManager shared] logEvent:@"single_sign_in"
                          withParameters:@{ @"signOnType" : @"linkedin" }];
     
     SCPROnboardingFlowViewController *flow = (SCPROnboardingFlowViewController*)self.master;
     [flow pushCard:FlowStepMemberValidateLinkedIn];
-    
   }
-  if ( sender == self.facebookButton ) {
+  
+
+  if (sender == self.facebookButton) {
     [[AnalyticsManager shared] logEvent:@"single_sign_in"
                          withParameters:@{ @"signOnType" : @"facebook" }];
     
@@ -128,10 +118,9 @@
 
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 @end

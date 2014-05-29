@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPROnboardingStep1ViewController">
@@ -11,7 +11,6 @@
                 <outlet property="avatarImage" destination="Vv8-ZL-XG0" id="k4B-Tl-aNA"/>
                 <outlet property="blurbLabel" destination="fa4-6i-vlg" id="ORH-Eh-LRi"/>
                 <outlet property="facebookButton" destination="oGN-1u-xdE" id="BN7-AD-OKz"/>
-                <outlet property="linkedinButton" destination="Mya-Uu-tb8" id="7Em-g9-eJt"/>
                 <outlet property="memberButton" destination="RxY-0s-eXH" id="A4N-n0-qWf"/>
                 <outlet property="orLabel" destination="cs5-Jk-THf" id="T8G-aX-S1T"/>
                 <outlet property="signInLabel" destination="3bm-j7-lvw" id="Kmb-ng-ExB"/>
@@ -81,17 +80,6 @@
                         <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="1ll-5D-JBP"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Mya-Uu-tb8">
-                    <rect key="frame" x="36" y="342" width="246" height="41"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <state key="normal" image="button-signin-linkedin.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="F7D-2O-Gza"/>
-                    </connections>
-                </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cs5-Jk-THf">
                     <rect key="frame" x="-48" y="185" width="416" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -108,7 +96,6 @@
     <resources>
         <image name="avatar-default.png" width="124" height="124"/>
         <image name="button-signin-facebook.png" width="245" height="41"/>
-        <image name="button-signin-linkedin.png" width="245" height="41"/>
         <image name="button-signin-member.png" width="246" height="41"/>
         <image name="button-signin-twitter.png" width="245" height="41"/>
     </resources>

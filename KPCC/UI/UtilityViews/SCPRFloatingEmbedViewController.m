@@ -122,18 +122,6 @@
                                                  width:self.videoAssetWebView.frame.size.width
                                                 height:self.videoAssetWebView.frame.size.height];
   }
-  /*if ( [type rangeOfString:@"BrightcoveVideo"].location == 0 ) {
-    CGRect f = self.videoAssetWebView.frame;
-    self.bcVideo = [[SCPRBCVideoContentViewController alloc] initWithNibName:[[DesignManager shared]
-                                                                              xibForPlatformWithName:@"SCPRBCVideoContentViewController"]
-                                                                      bundle:nil];
-    self.bcVideo.view.frame = f;
-    [self.view addSubview:self.bcVideo.view];
-    
-    self.bcVideo.view.center = CGPointMake(self.view.frame.size.width/2.0,self.view.frame.size.height/2.0);
-    [self.bcVideo loadVideoWithID:ID];
-    [self.videoAssetWebView removeFromSuperview];
-  }*/
   
   [self.videoAssetWebView loadHTMLString:embed
                                  baseURL:[NSURL URLWithString:@"http://"]];

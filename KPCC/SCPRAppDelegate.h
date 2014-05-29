@@ -18,7 +18,6 @@ typedef void (^VoidBlock)(void);
 @class SCPRPlayerWidgetViewController;
 @class SCPRTitlebarViewController;
 @class SCPRShareDrawerViewController;
-@class SCPRFloatingOptionViewController;
 @class SCPRSpinnerViewController;
 @class SCPRMasterRootViewController;
 @class SCPRCloakViewController;
@@ -75,8 +74,6 @@ typedef enum {
 - (void)uncloakUI;
 - (void)hideTitleBar;
 - (void)showTitleBar;
-- (void)presentFloatingOptionsMenuFromPoint:(CGPoint)point sourceView:(UIView*)sourceView delegate:(id<OptionsDelegate>)delegate withObject:(id)sourceable;
-- (void)dismissFloatingOptionsMenu;
 - (void)dropOnWindow:(UIView*)view fromView:(UIView*)originalView animateToFrame:(CGRect)animateToFrame completion:(VoidBlock)completion;
 - (void)incrementNewItemCount;
 
@@ -106,7 +103,6 @@ typedef enum {
 @property (strong, nonatomic) NSString *unfreezeKey;
 @property (strong, nonatomic) SCPRScrollingAssetViewController *slideshowModal;
 @property (nonatomic, strong) id<Cloakable> customCloak;
-@property (nonatomic, strong) SCPRFloatingOptionViewController *floatingOptionsMenu;
 @property (nonatomic, strong) UIImageView *bigShadow;
 @property (nonatomic, strong) SCPRSpinnerViewController *globalSpinner;
 

@@ -12,44 +12,37 @@
   "url": "http://www.scpr.org/local"
   },
   {
-  "id": 2,
-  "slug": "california",
-  "title": "California",
-  "public_url": "http://www.scpr.org/california",
-  "url": "http://www.scpr.org/california"
-  },
-  {
   "id": 3,
   "slug": "world",
-  "title": "U.S. / World",
+  "title": "US & World",
   "public_url": "http://www.scpr.org/world",
   "url": "http://www.scpr.org/world"
   },
   {
   "id": 4,
   "slug": "environment",
-  "title": "Environment / Science",
+  "title": "Environment & Science",
   "public_url": "http://www.scpr.org/environment",
   "url": "http://www.scpr.org/environment"
   },
   {
   "id": 5,
   "slug": "politics",
-  "title": "Politics & Government",
+  "title": "Politics",
   "public_url": "http://www.scpr.org/politics",
   "url": "http://www.scpr.org/politics"
   },
   {
   "id": 6,
-  "slug": "money",
-  "title": "Business",
-  "public_url": "http://www.scpr.org/money",
-  "url": "http://www.scpr.org/money"
+  "slug": "business",
+  "title": "Business & Economy",
+  "public_url": "http://www.scpr.org/business",
+  "url": "http://www.scpr.org/business"
   },
   {
   "id": 7,
   "slug": "crime",
-  "title": "Crime",
+  "title": "Crime & Justice",
   "public_url": "http://www.scpr.org/crime",
   "url": "http://www.scpr.org/crime"
   },
@@ -68,45 +61,17 @@
   "url": "http://www.scpr.org/health"
   },
   {
-  "id": 10,
-  "slug": "culture",
-  "title": "Culture",
-  "public_url": "http://www.scpr.org/culture",
-  "url": "http://www.scpr.org/culture"
-  },
-  {
-  "id": 11,
-  "slug": "books",
-  "title": "Books",
-  "public_url": "http://www.scpr.org/books",
-  "url": "http://www.scpr.org/books"
-  },
-  {
-  "id": 12,
-  "slug": "film",
-  "title": "Film / Television",
-  "public_url": "http://www.scpr.org/film",
-  "url": "http://www.scpr.org/film"
-  },
-  {
-  "id": 13,
-  "slug": "music",
-  "title": "Music",
-  "public_url": "http://www.scpr.org/music",
-  "url": "http://www.scpr.org/music"
-  },
-  {
-  "id": 14,
-  "slug": "food",
-  "title": "Food",
-  "public_url": "http://www.scpr.org/food",
-  "url": "http://www.scpr.org/food"
-  },
-  {
   "id": 15,
   "slug": "arts",
-  "title": "Arts",
+  "title": "Arts & Entertainment",
   "public_url": "http://www.scpr.org/arts",
   "url": "http://www.scpr.org/arts"
+  },
+  {
+  "id": 16,
+  "slug": "immigration",
+  "title": "Immigration & Emerging Communities",
+  "public_url": "http://www.scpr.org/immigration",
+  "url": "http://www.scpr.org/immigration"
   }
-  ]
+]

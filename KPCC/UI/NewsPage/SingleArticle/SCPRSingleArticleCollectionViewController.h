@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SCPRTrappableTouchView.h"
 #import "global.h"
 
 typedef enum {

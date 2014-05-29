@@ -9,7 +9,6 @@
 #import "SCPRNewsPageViewController.h"
 #import "SCPRNewsPageContainerController.h"
 #import "SCPRSingleArticleViewController.h"
-#import "SCPRClipBannerViewController.h"
 #import "SCPRSingleArticleCollectionViewController.h"
 #import "SCPRViewController.h"
 #import "SCPRAppDelegate.h"
@@ -472,21 +471,6 @@
 - (NSUInteger)supportedInterfaceOrientations
 {
   return UIInterfaceOrientationMaskAllButUpsideDown;
-}
-
-- (void)clipBannerToTop:(NSString *)withMessage {
-  
-  SCPRClipBannerViewController *clip = [[SCPRClipBannerViewController alloc]
-                                        initWithNibName:[[DesignManager shared]
-                                                         xibForPlatformWithName:@"SCPRClipBannerViewController"]
-                                        bundle:nil];
-  clip.view.frame = CGRectMake(self.topPart.frame.origin.x-21.0,
-                               self.topPart.frame.origin.y+(0.97*self.topPart.frame.size.height),
-                               clip.view.frame.size.width,
-                               clip.view.frame.size.height);
-  clip.view.tag = kClipBannerTag;
-  [self.view addSubview:clip.view];
-  
 }
 
 - (void)dealloc {
