@@ -483,10 +483,18 @@
 
 - (void)handleCategoryForComposite {
   if ( self.contentType == ScreenContentTypeCompositePage ) {
-    NSDictionary *category = [self.pvArticle objectForKey:@"category"];
+    
     NSString *title = @"MISCELLANEOUS";
+
+    NSDictionary *category = [self.pvArticle objectForKey:@"category"];
     if ( ![Utilities pureNil:category] ) {
       title = [(NSString*)[category objectForKey:@"title"] uppercaseString];
+
+      // If we have a really long category title (ie. "Immigration and Emerging Communities"),
+      // use the shorter "slug" name and uppercase it.
+      if (title.length > 25) {
+        title = [(NSString*)[category objectForKey:@"slug"] uppercaseString];
+      }
     }
     
     [self.slideshowLabel titleizeText:title
