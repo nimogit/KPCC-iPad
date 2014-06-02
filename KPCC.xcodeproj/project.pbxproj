@@ -6790,9 +6790,9 @@
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "C3535C4B-4E4E-453A-A8E9-271BB543A3C1";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = "1.0.5 RC3";
+				UNIQUE_BUNDLE_VERSION = "1.0.5 RC4";
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = "1.0.5 RC3";
+				VERSION = "1.0.5 RC4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Production;
@@ -6918,7 +6918,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = "NFR build 2";
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = "1.0.5 RC3";
+				VERSION = "1.0.5 RC4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = NFR;
@@ -6973,7 +6973,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = SANDBOX;
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = "1.0.5 RC3";
+				VERSION = "1.0.5 RC4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -7026,9 +7026,9 @@
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "C3535C4B-4E4E-453A-A8E9-271BB543A3C1";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = "1.0.5 RC3";
+				UNIQUE_BUNDLE_VERSION = "1.0.5 RC4";
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = "1.0.5 RC3";
+				VERSION = "1.0.5 RC4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
