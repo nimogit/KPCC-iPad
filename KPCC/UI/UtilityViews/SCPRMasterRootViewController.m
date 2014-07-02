@@ -323,8 +323,7 @@
     return;
   }
   
-  //[self cloak:YES];
-  if ( silenceVector ) {
+  if (silenceVector) {
     self.adSilenceVector = silenceVector;
   }
 
@@ -339,26 +338,27 @@
   
 
   GADRequest *request = [GADRequest request];
-  
-#if TARGET_IPHONE_SIMULATOR
-  request.testDevices = [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
-#else
-  
-#endif
-  //request.testing = YES;
+
+  #if TARGET_IPHONE_SIMULATOR
+    request.testDevices = [NSArray arrayWithObjects:GAD_SIMULATOR_ID, nil];
+  #endif
+
   
   [self.interstitial loadRequest:request];
 #else
   
+  
+  // Non-native ghetto ads.
   self.adPresentationView = scroller;
   
-#ifdef TRACK_SCROLLING_PROGRESS
-  [self.adPresentationView addObserver:self
-                            forKeyPath:@"contentOffset"
-                               options:NSKeyValueObservingOptionNew
-                               context:nil];
-#endif
-  
+  #ifdef TRACK_SCROLLING_PROGRESS
+    [self.adPresentationView addObserver:self
+                              forKeyPath:@"contentOffset"
+                                 options:NSKeyValueObservingOptionNew
+                                 context:nil];
+  #endif
+
+
   self.dfpAdViewController = [[SCPRDFPViewController alloc]
                               initWithNibName:[[DesignManager shared]
                                                xibForPlatformWithName:@"SCPRDFPViewController"]
@@ -378,7 +378,7 @@
                                                    self.dfpAdViewController.view.frame.size.height+yOrigin);
   [self.adPresentationView addSubview:self.dfpAdViewController.view];
 
-  if ( [Utilities isIOS7] ) {
+  if ([Utilities isIOS7]) {
     [(UIScrollView*)self.adPresentationView setClipsToBounds:NO];
   } else {
     [(UIScrollView*)self.adPresentationView setClipsToBounds:NO];
@@ -392,8 +392,9 @@
   self.dfpAdViewController.delegate = self;
   [self.dfpAdViewController loadDFPAd];
   
-#endif
-#endif
+#endif // if native_ads
+  
+#endif // if enable_ads
 }
 
 /***********************************************************************************/
@@ -424,6 +425,7 @@
 //
 - (void)preserveAd {
   
+#ifndef NATIVE_ADS
   if ( [[ContentManager shared] adReadyOffscreen] ) {
     CGPoint offset = [(UIScrollView*)self.adPresentationView contentOffset];
     
@@ -437,7 +439,8 @@
                                                      self.dfpAdViewController.view.frame.size.height);
     [self.adPresentationView bringSubviewToFront:self.dfpAdViewController.view];
   }
-  
+#endif
+
 }
 
 - (void)undeliverAd {
@@ -461,9 +464,6 @@
   [[ContentManager shared] setAdReadyOffscreen:NO];
   
   [self disarmDismissal];
-  
-
-  
 }
 
 - (void)killAdOffscreen:(AdKilledCompletion)completion {
@@ -594,6 +594,7 @@
 
 - (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error {
   NSLog(@"DFP Error : %@",[error userInfo]);
+  [[ContentManager shared] setAdFailure:YES];
 }
 
 - (void)puntToSafariWithURL:(NSString *)url {

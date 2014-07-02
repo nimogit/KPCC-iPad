@@ -1463,20 +1463,23 @@ static ContentManager *singleton = nil;
       penultimate:(BOOL)penultimate
     silenceVector:(NSMutableArray *)silenceVector {
   
-  if ( [[AnalyticsManager shared].numberOfSwipesPerAd intValue] <= 0 ) {
+  if ([[AnalyticsManager shared].numberOfSwipesPerAd intValue] <= 0) {
     return;
   }
-  if ( [[AnalyticsManager shared].numberOfAdsPerSession intValue] <= 0 ) {
+  if ([[AnalyticsManager shared].numberOfAdsPerSession intValue] <= 0) {
     return;
   }
   
   self.swipeCount++;
   
   SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
-  if ( self.swipeCount == [[AnalyticsManager shared].numberOfSwipesPerAd intValue]-1 ) {
-    if ( self.adCount < [[AnalyticsManager shared].numberOfAdsPerSession intValue] ) {
+  
+  // If we haven't reached/exceeded our number of swipes between ads:
+  // prepare one offscreen.
+  if (self.swipeCount == [[AnalyticsManager shared].numberOfSwipesPerAd intValue] - 1) {
+    if (self.adCount < [[AnalyticsManager shared].numberOfAdsPerSession intValue]) {
       
-      if ( penultimate ) {
+      if (penultimate) {
         self.swipeCount--;
         return;
       }
@@ -1484,13 +1487,16 @@ static ContentManager *singleton = nil;
       
       [self setObserveForSwipe:direction];
       [[ContentManager shared] setAdReadyOffscreen:YES];
-      [[[Utilities del] masterRootController] deliverAd:direction intoView:hopefullyAScroller
-       silence:silenceVector];
+      [[[Utilities del] masterRootController] deliverAd:direction
+                                               intoView:hopefullyAScroller
+                                                silence:silenceVector];
     }
   }
-  if ( self.swipeCount >= [[AnalyticsManager shared].numberOfSwipesPerAd intValue] ) {
-    if ( [self adReadyOffscreen] ) {
-      if ( direction != [self observeForSwipe] ) {
+  
+  // If we've met our swipe count, display the prepared offscreen ad.
+  if (self.swipeCount >= [[AnalyticsManager shared].numberOfSwipesPerAd intValue]) {
+    if ([self adReadyOffscreen]) {
+      if (direction != [self observeForSwipe]) {
         
         self.observeForSwipe = direction;
         [[[Utilities del] masterRootController] undeliverAd];
@@ -1501,21 +1507,21 @@ static ContentManager *singleton = nil;
         [self setObserveForSwipe:direction];
         [[ContentManager shared] setAdReadyOffscreen:YES];
         
-        [[[Utilities del] masterRootController] deliverAd:direction intoView:hopefullyAScroller
+        [[[Utilities del] masterRootController] deliverAd:direction
+                                                 intoView:hopefullyAScroller
                                                   silence:silenceVector];
-        
       } else {
         
         self.adReadyOffscreen = NO;
         self.swipeCount = 0;
         self.adIsDisplayingOnScreen = YES;
         
-        [(UIScrollView*)hopefullyAScroller setScrollEnabled:NO];
+        //[(UIScrollView*)hopefullyAScroller setScrollEnabled:NO];
         [root.adPresentationView bringSubviewToFront:root.dfpAdViewController.view];
         [root armDismissal];
         
         // A view may need to tell the ad to hide a few on-screen views when it displays
-        if ( silenceVector ) {
+        if (silenceVector) {
           [UIView animateWithDuration:0.33 animations:^{
             for ( UIView *v in silenceVector ) {
               v.alpha = 0.0;
@@ -1523,26 +1529,25 @@ static ContentManager *singleton = nil;
           }];
         }
         
-        if ( self.adFailure ) {
-          
+        if (self.adFailure) {
           [[AnalyticsManager shared] logEvent:@"ad_delivery_failed"
                                withParameters:@{}];
           
           [[[Utilities del] masterRootController] adDidFail];
           
-          if ( self.adFailureTimer ) {
-            if ( [self.adFailureTimer isValid] ) {
+          if (self.adFailureTimer) {
+            if ([self.adFailureTimer isValid]) {
               [self.adFailureTimer invalidate];
             }
           }
-          
+
           self.adFailureTimer = [NSTimer scheduledTimerWithTimeInterval:1.45
                                                                  target:self
                                                                selector:@selector(killAdOnscreen:)
                                                                userInfo:nil
                                                               repeats:NO];
         } else {
-          
+
           [[AnalyticsManager shared] logEvent:@"ad_delivery_succeeded"
                                withParameters:@{}];
           
@@ -1551,9 +1556,9 @@ static ContentManager *singleton = nil;
         [self setAdCount:[self adCount]+1];
         [self setAdFailure:NO];
         
-      }
-    }
-  }
+      } // if (direction != [self observeForSwipe])
+    } // if ad ready offscreen
+  } // if reaching swipe count
 }
 
 - (void)killAdOnscreen:(NSTimer*)timer {
