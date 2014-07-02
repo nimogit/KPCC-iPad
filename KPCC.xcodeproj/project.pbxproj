@@ -6770,6 +6770,7 @@
 					AGGRESSIVE_DEALLOCATION,
 					ENABLE_ADS,
 					TURN_OFF_UNTESTED_FEATURES,
+					NATIVE_ADS,
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -6832,7 +6833,7 @@
 		25E21ACE183ADA660057E91D /* NFR */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ben Hochberg (UG5AKGT4FN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Meeker (R8B7L4868Q)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ben Hochberg (UG5AKGT4FN)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6951,6 +6952,7 @@
 					ENABLE_ADS,
 					FAKE_AD_DELIVERY_FAILURE,
 					FORCE_MAIN_THREAD_SETTINGS,
+					NATIVE_ADS,
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -7006,6 +7008,7 @@
 					ENABLE_ADS,
 					TURN_OFF_UNTESTED_FEATURES,
 					TURN_OFF_LOGGING,
+					NATIVE_ADS,
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
