@@ -331,6 +331,10 @@
 
   [[ContentManager shared] setAdCount:[[ContentManager shared] adCount]+1];
   
+  // Set previous DFPInterstitial object and its delegate to nil.
+  self.interstitial.delegate = nil;
+  self.interstitial = nil;
+  
   self.interstitial = [[GADInterstitial alloc] init];
   self.interstitial.adUnitID = [NSString stringWithFormat:@"/%@/%@",[[AnalyticsManager shared] adVendorID],
                                 [[AnalyticsManager shared] adUnitID]];
