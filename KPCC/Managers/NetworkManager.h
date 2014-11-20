@@ -13,7 +13,11 @@
 #define kImageCacheMaxSize 8192
 #define kImageCacheMaxSizeDisk 16384
 #define kMinimumArticleQuantity 15
+#ifndef DEBUG
 #define kServerBase @"http://www.scpr.org/api/v2"
+#else
+#define kServerBase @"http://205.144.162.154/api/v2"
+#endif
 #define kAudioVisionServerBase @"http://audiovision.scpr.org/api/v1"
 #define kEditionsTotal 12
 #define kFailoverThreshold 4

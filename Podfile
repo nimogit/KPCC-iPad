@@ -8,5 +8,7 @@ end
 target "KPCC iPad" do
 pod 'AFNetworking', '~> 2.0'
 pod 'MBProgressHUD', '~> 0.8'
+pod 'Parse'
+pod 'Facebook-iOS-SDK'
 end
 

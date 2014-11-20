@@ -111,7 +111,7 @@
   
   NSString *pa = [self.edition objectForKey:@"published_at"];
   NSDate *published = [Utilities dateFromRFCString:pa];
-  NSString *slKey = @"title";
+  NSString *slKey = @"edition_type";
   
   
   NSString *shortListSpecificTitle = @"";
