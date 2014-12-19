@@ -43,9 +43,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 {
   [super viewDidLoad];
   
-  self.playerWidget = [[SCPRPlayerWidgetViewController alloc]
-                       initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRPlayerWidgetViewController"]
-                       bundle:nil];
   
   self.playerWidget.parentContainer = self;
   self.contentVector = [[NSMutableArray alloc] init];
@@ -62,13 +59,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   }
 
   self.mainPageScroller.scrollEnabled = NO;
+  
   self.globalShareDrawer = [[SCPRShareDrawerViewController alloc]
                             initWithNibName:[[DesignManager shared]
                                              xibForPlatformWithName:@"SCPRShareDrawerViewController"]
                             bundle:nil];
   [self.globalShareDrawer buildCells];
-
-  [self.view addSubview:self.playerWidget.view];
   [self.playerWidget prime];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -549,7 +545,9 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                               self.mainPageScroller.frame.size.height);
 
   [[ContentManager shared] pushToResizeVector:ppvc];
-  [self.mainPageScroller addSubview:nav.view];
+  [self.view addSubview:nav.view];
+  
+  
   [self.contentVector addObject:ppvc];
   self.pushedContent = nav;
 }
@@ -1090,8 +1088,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     return;
   }
 
-  self.titleBarController = [[SCPRTitlebarViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRTitlebarViewController"]
-                                                                         bundle:nil];
+  /*self.titleBarController = [[SCPRTitlebarViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRTitlebarViewController"]
+                                                                         bundle:nil];*/
   if ( [Utilities isIOS7] ) {
     self.titleBarController.view.frame = CGRectMake(self.titleBarController.view.frame.origin.x,
                                                     self.titleBarController.view.frame.origin.y+20.0,
@@ -1117,7 +1115,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   }
 
   self.globalGradient.alpha = 0.0;
-  [self.view addSubview:self.titleBarController.view];
   [self.view bringSubviewToFront:self.titleBarController.view];
 }
 

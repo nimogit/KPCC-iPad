@@ -693,15 +693,15 @@
   [self.view bringSubviewToFront:self.cloakView];
   
   if ( [vector count] > 0 ) {
-    [UIView animateWithDuration:0.12 animations:^{
+    /*[UIView animateWithDuration:0.12 animations:^{
       self.cloakView.alpha = 0.53;
       self.spinner.alpha = 1.0;
       [self.spinner startAnimating];
-    } completion:^(BOOL finished) {
+    } completion:^(BOOL finished) {*/
       for ( id<Rotatable> r in vector ) {
         [r handleRotationPre];
       }
-    }];
+   // }];
   }
 
 }

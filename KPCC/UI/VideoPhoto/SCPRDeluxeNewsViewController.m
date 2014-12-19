@@ -1335,7 +1335,7 @@
       }
     }
     
-    self.photoVideoTable.alpha = 0.0;
+    //self.photoVideoTable.alpha = 0.0;
   }];
 }
 

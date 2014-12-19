@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPRTitlebarViewController">
@@ -30,9 +30,11 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4">
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4">
                     <rect key="frame" x="5" y="2" width="86" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="86" id="uqc-Ed-HpA"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <inset key="imageEdgeInsets" minX="-40" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" image="stripes.png">
@@ -46,10 +48,12 @@
                         <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="26"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="31">
+                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="31">
                     <rect key="frame" x="669" y="4" width="96" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="UfJ-Qq-Nua"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="Share" image="icon-share-active.png">
@@ -63,10 +67,12 @@
                         <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="33"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="r7Z-ui-DBH">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r7Z-ui-DBH">
                     <rect key="frame" x="653" y="4" width="107" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="107" id="mxA-2H-JSU"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="SECTIONS" image="sections_icon.png">
@@ -80,10 +86,12 @@
                         <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="6VB-nb-lcd"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Kmz-qk-34W">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kmz-qk-34W">
                     <rect key="frame" x="653" y="4" width="107" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="107" id="tcr-jF-PEn"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="CLOSE" image="sections_close_icon.png">
@@ -97,17 +105,22 @@
                         <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="PW5-DW-fbA"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ALL PROGRAMS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="45">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ALL PROGRAMS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45">
                     <rect key="frame" x="214" y="9" width="341" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="1" green="0.65782098200000005" blue="0.23028984420000001" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="341" id="MmS-gq-RVn"/>
+                        <constraint firstAttribute="height" constant="20" id="dtx-Nd-KVp"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xMx-Z6-xwZ">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMx-Z6-xwZ">
                     <rect key="frame" x="647" y="3" width="118" height="33"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="118" id="hE5-ID-xeR"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="7" maxY="0.0"/>
                     <state key="normal" title="DONATE" image="icon-donate.png">
@@ -115,91 +128,56 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-            </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-        </view>
-        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="39">
-            <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
-            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-            <state key="normal" image="website_icon.png">
-                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-            </state>
-            <state key="highlighted">
-                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            </state>
-            <connections>
-                <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="40"/>
-            </connections>
-        </button>
-        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="10" id="35">
-            <rect key="frame" x="0.0" y="0.0" width="194" height="36"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-        </pageControl>
-        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="42">
-            <rect key="frame" x="0.0" y="0.0" width="168" height="40"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-            <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
-            <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
-            <inset key="imageEdgeInsets" minX="7" minY="0.0" maxX="0.0" maxY="0.0"/>
-            <state key="normal" title="EDIT FAVORITES" image="queue_pencil_button.png">
-                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-            </state>
-            <state key="highlighted">
-                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            </state>
-            <connections>
-                <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="43"/>
-            </connections>
-        </button>
-        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="editionsLogo.png" id="47">
-            <rect key="frame" x="0.0" y="0.0" width="124" height="18"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-        </imageView>
-        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kpcc-logo.png" id="rH2-nn-Gj7">
-            <rect key="frame" x="0.0" y="0.0" width="116" height="17"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
-        </imageView>
-        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="P7y-Mm-sOv">
-            <rect key="frame" x="0.0" y="0.0" width="106" height="40"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-            <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="14"/>
-            <inset key="titleEdgeInsets" minX="35" minY="0.0" maxX="0.0" maxY="0.0"/>
-            <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
-            <state key="normal" title="SIGN OUT">
-                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-            </state>
-            <state key="highlighted">
-                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            </state>
-            <connections>
-                <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="b0s-BT-H3w"/>
-            </connections>
-        </button>
-        <view contentMode="scaleToFill" id="5jV-ZX-VeI">
-            <rect key="frame" x="0.0" y="0.0" width="203" height="40"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo &amp; Video" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bcy-ZP-MQF">
-                    <rect key="frame" x="56" y="0.0" width="147" height="40"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="34">
-                    <rect key="frame" x="0.0" y="0.0" width="184" height="40"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
-                    <inset key="imageEdgeInsets" minX="-112" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" image="circleArrowBack.png">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="editionsLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="47">
+                    <rect key="frame" x="322" y="11" width="124" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="124" id="Eb9-Z8-T9C"/>
+                        <constraint firstAttribute="height" constant="18" id="tia-Qs-fbb"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kpcc-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="rH2-nn-Gj7">
+                    <rect key="frame" x="326" y="11" width="116" height="17"/>
+                    <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="116" id="Gcs-J0-n9u"/>
+                        <constraint firstAttribute="height" constant="17" id="kPy-9z-Fhi"/>
+                    </constraints>
+                </imageView>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="10" translatesAutoresizingMaskIntoConstraints="NO" id="35">
+                    <rect key="frame" x="609" y="3" width="151" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="280" id="pld-V4-Lyx"/>
+                        <constraint firstAttribute="height" constant="36" id="xhN-gM-BA8"/>
+                    </constraints>
+                </pageControl>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42">
+                    <rect key="frame" x="600" y="1" width="168" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="168" id="Q92-8n-Kke"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
+                    <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="7" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="EDIT FAVORITES" image="queue_pencil_button.png">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="43"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P7y-Mm-sOv">
+                    <rect key="frame" x="645" y="1" width="106" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="106" id="RSh-hS-lYb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="14"/>
+                    <inset key="titleEdgeInsets" minX="35" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="SIGN OUT">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -207,11 +185,100 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="38"/>
+                        <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="b0s-BT-H3w"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5jV-ZX-VeI">
+                    <rect key="frame" x="-8" y="1" width="203" height="40"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Photo &amp; Video" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcy-ZP-MQF">
+                            <rect key="frame" x="56" y="0.0" width="147" height="40"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="34">
+                            <rect key="frame" x="0.0" y="0.0" width="184" height="40"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
+                            <inset key="imageEdgeInsets" minX="-112" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" image="circleArrowBack.png">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="38"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="203" id="RaO-36-GcN"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="39">
+                    <rect key="frame" x="611" y="2" width="36" height="36"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="829-wZ-y6o"/>
+                        <constraint firstAttribute="height" constant="36" id="atg-f4-Mff"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" image="website_icon.png">
+                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="buttonTapped:" destination="-1" eventType="touchUpInside" id="40"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="xMx-Z6-xwZ" secondAttribute="bottom" constant="4" id="08n-7D-66g"/>
+                <constraint firstAttribute="trailing" secondItem="42" secondAttribute="trailing" id="0a0-Dt-ndj"/>
+                <constraint firstItem="39" firstAttribute="top" secondItem="2" secondAttribute="top" constant="2" id="24Z-dg-n1E"/>
+                <constraint firstItem="r7Z-ui-DBH" firstAttribute="top" secondItem="2" secondAttribute="top" constant="4" id="3lm-xu-BFS"/>
+                <constraint firstAttribute="centerY" secondItem="45" secondAttribute="centerY" constant="1" id="3tB-1R-Z4n"/>
+                <constraint firstItem="31" firstAttribute="leading" secondItem="39" secondAttribute="trailing" constant="22" id="4SB-Uu-KOZ"/>
+                <constraint firstAttribute="centerY" secondItem="rH2-nn-Gj7" secondAttribute="centerY" constant="0.5" id="4bI-V0-SAL"/>
+                <constraint firstItem="Kmz-qk-34W" firstAttribute="top" secondItem="2" secondAttribute="top" constant="4" id="9eK-yE-c0X"/>
+                <constraint firstItem="42" firstAttribute="top" secondItem="2" secondAttribute="top" constant="1" id="Ckm-kZ-ErK"/>
+                <constraint firstAttribute="bottom" secondItem="39" secondAttribute="bottom" constant="2" id="DGf-jJ-p64"/>
+                <constraint firstAttribute="trailing" secondItem="P7y-Mm-sOv" secondAttribute="trailing" constant="17" id="DQu-w1-qPp"/>
+                <constraint firstItem="4" firstAttribute="top" secondItem="2" secondAttribute="top" constant="2" id="HpN-WB-Jls"/>
+                <constraint firstAttribute="bottom" secondItem="P7y-Mm-sOv" secondAttribute="bottom" constant="-1" id="IHj-PU-TV3"/>
+                <constraint firstAttribute="trailing" secondItem="r7Z-ui-DBH" secondAttribute="trailing" constant="8" id="K7F-eY-V65"/>
+                <constraint firstAttribute="centerX" secondItem="47" secondAttribute="centerX" id="N63-53-zkf"/>
+                <constraint firstAttribute="trailing" secondItem="xMx-Z6-xwZ" secondAttribute="trailing" constant="3" id="NR2-1W-6NH"/>
+                <constraint firstItem="4" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="5" id="NXi-lT-Ybb"/>
+                <constraint firstItem="P7y-Mm-sOv" firstAttribute="top" secondItem="2" secondAttribute="top" constant="1" id="NkO-hC-rU1"/>
+                <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" constant="2" id="Qdm-cT-GnB"/>
+                <constraint firstAttribute="centerY" secondItem="35" secondAttribute="centerY" constant="-1" id="Sbe-V2-LnT"/>
+                <constraint firstAttribute="bottom" secondItem="5jV-ZX-VeI" secondAttribute="bottom" constant="-1" id="Z1C-bU-DBP"/>
+                <constraint firstItem="5jV-ZX-VeI" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="-8" id="bsK-8h-K0S"/>
+                <constraint firstItem="xMx-Z6-xwZ" firstAttribute="top" secondItem="2" secondAttribute="top" constant="3" id="cnj-mJ-OvF"/>
+                <constraint firstAttribute="centerX" secondItem="45" secondAttribute="centerX" constant="-0.5" id="f8u-OC-eyx"/>
+                <constraint firstAttribute="centerY" secondItem="31" secondAttribute="centerY" id="fjQ-Et-opl"/>
+                <constraint firstAttribute="bottom" secondItem="r7Z-ui-DBH" secondAttribute="bottom" constant="4" id="m5v-mY-o8F"/>
+                <constraint firstItem="5jV-ZX-VeI" firstAttribute="top" secondItem="2" secondAttribute="top" constant="1" id="qwj-HB-Jfb"/>
+                <constraint firstItem="31" firstAttribute="top" secondItem="2" secondAttribute="top" constant="4" id="sBp-f2-ojj"/>
+                <constraint firstAttribute="centerY" secondItem="47" secondAttribute="centerY" id="tmg-Cc-dqX"/>
+                <constraint firstAttribute="trailing" secondItem="Kmz-qk-34W" secondAttribute="trailing" constant="8" id="win-17-TKK"/>
+                <constraint firstAttribute="trailing" secondItem="35" secondAttribute="trailing" constant="8" id="wnq-2g-5Sg"/>
+                <constraint firstAttribute="bottom" secondItem="42" secondAttribute="bottom" constant="-1" id="xam-nb-LcQ"/>
+                <constraint firstAttribute="trailing" secondItem="31" secondAttribute="trailing" constant="3" id="y7R-U5-8mS"/>
+                <constraint firstAttribute="centerX" secondItem="rH2-nn-Gj7" secondAttribute="centerX" id="z2Z-WX-YKf"/>
+                <constraint firstAttribute="bottom" secondItem="Kmz-qk-34W" secondAttribute="bottom" constant="4" id="zVJ-Qr-e91"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
     <resources>
@@ -226,4 +293,9 @@
         <image name="stripes.png" width="21" height="15"/>
         <image name="website_icon.png" width="23" height="23"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
 </document>

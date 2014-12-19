@@ -86,6 +86,7 @@ typedef enum {
 - (void)eraseDonateButton;
 - (void)eraseCategoriesButton;
 - (void)eraseCloseCategoriesButton;
+- (void)erasePager;
 
 - (void)pushStyle:(BOOL)truePush;
 - (void)pushStyle;

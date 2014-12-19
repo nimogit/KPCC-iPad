@@ -54,7 +54,8 @@
 }
 
 - (void)orient {
-  
+
+  /*
   self.bringUpQueueButton.frame = CGRectMake(self.view.frame.size.width-self.bringUpQueueButton.frame.size.width,
                                       self.bringUpQueueButton.frame.origin.y,
                                       self.bringUpQueueButton.frame.size.width,
@@ -81,7 +82,7 @@
   }
   
   [[DesignManager shared] alignVerticalCenterOf:self.timeElapsedLabel
-                                       withView:self.progressSlider];
+                                       withView:self.progressSlider];*/
   
 }
 

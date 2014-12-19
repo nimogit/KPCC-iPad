@@ -19,10 +19,6 @@
 #import "SCPRSmallCutViewController.h"
 #import "SCPRBreakingNewsViewController.h"
 
-
-
-
-
 typedef enum {
   NewsPageTemplateBigTopSplitBtm,
   NewsPageTemplateSplitTopSplitBtm,
@@ -35,9 +31,6 @@ typedef enum {
   SnapshotEditionAfternoon = 2,
   SnapshotEditionEvening = 3
 } SnapshotEdition;
-
-
-
 
 #pragma mark - Content protocols
 
@@ -60,11 +53,8 @@ typedef enum {
 
 
 
-#ifdef IPAD_VERSION
 @interface SCPRViewController : UIViewController<UIScrollViewDelegate,ContentProcessor,VersionCheckable,UIPopoverControllerDelegate> {
-#else
-@interface SCPRViewController : UIViewController<UIScrollViewDelegate,ContentProcessor,VersionCheckable> {
-#endif
+  
   SCPRPlayerWidgetViewController *_playerWidget;
   BOOL _playerDisplaying;
   
@@ -100,7 +90,7 @@ typedef enum {
   
 }
 
-@property (nonatomic,strong) SCPRPlayerWidgetViewController *playerWidget;
+@property (nonatomic,strong) IBOutlet SCPRPlayerWidgetViewController *playerWidget;
 @property (nonatomic,strong) IBOutlet UIButton *showOrHidePlayerButton;
 @property (nonatomic,strong) IBOutlet UIButton *playLocalButton;
 @property (nonatomic,strong) IBOutlet UIButton *addTakeTwoButton;
@@ -113,7 +103,7 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UIScrollView *mainPageScroller;
 @property (nonatomic,strong) NSMutableArray *contentVector;
 @property (nonatomic,strong) IBOutlet UIView *decorativeStripe;
-@property (nonatomic,strong) SCPRTitlebarViewController *titleBarController;
+@property (nonatomic,strong) IBOutlet SCPRTitlebarViewController *titleBarController;
 @property (nonatomic,strong) UISwipeGestureRecognizer *drawerSwiper;
 #ifdef IPHONE_VERSION
   @property (nonatomic,strong) UITapGestureRecognizer *shareDrawerTapDismiss;
