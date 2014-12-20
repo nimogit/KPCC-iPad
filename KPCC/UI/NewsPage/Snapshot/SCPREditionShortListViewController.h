@@ -28,6 +28,8 @@
 @property (nonatomic,strong) IBOutlet UIView *additionalSeat;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *spinner;
 
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *headlineLabelAnchor;
+
 @property (nonatomic,weak) id pushedContent;
 @property (nonatomic,weak) id parentMineral;
 @property BOOL fromNews;
@@ -38,6 +40,7 @@
 
 - (void)setupWithEdition:(NSDictionary*)edition;
 - (void)prime;
+- (void)refresh;
 - (NSString*)buildList:(NSDictionary*)edition;
 
 - (void)shrink;

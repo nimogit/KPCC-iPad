@@ -44,24 +44,7 @@
   [super viewDidLoad];
   
   [[Utilities del] globalTitleBar].delegate = self;
-  
-  // Stretch bottom-most view for iOS7.
-  [self stretch];
-  
-  if ([Utilities isIOS7]) {
-    if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
-      self.photoVideoTable.frame = CGRectMake(self.photoVideoTable.frame.origin.x,
-                                              self.photoVideoTable.frame.origin.y,
-                                              self.photoVideoTable.frame.size.width,
-                                              self.photoVideoTable.frame.size.height - 20.0);
-    }
-  } else {
-    self.photoVideoTable.frame = CGRectMake(self.photoVideoTable.frame.origin.x,
-                                            self.photoVideoTable.frame.origin.y + 20.0,
-                                            self.photoVideoTable.frame.size.width,
-                                            self.photoVideoTable.frame.size.height - 36.0);
-  }
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(processEditions)
                                                name:@"update_news_feed_ui"
@@ -1074,11 +1057,14 @@
     editionPD = @"DUMMY";
   }
   NSDictionary *meta = [self.editionCellHash objectForKey:[Utilities sha1:editionPD]];
+  SCPRDeluxeEditionsCell *cell = nil;
   if ( meta ) {
-    return [meta objectForKey:@"editionCell"];
+    cell = [meta objectForKey:@"editionCell"];
+    [cell prime:self];
+    return cell;
   }
   
-  SCPRDeluxeEditionsCell *cell = nil;
+  
   NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
                                                           xibForPlatformWithName:@"SCPRDeluxeEditionsCell"]
                                                    owner:nil
@@ -1340,7 +1326,12 @@
 }
 
 - (void)handleRotationPost {
-  if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeEventsPage) {
+  
+  [self buildCells];
+  [self loadDummies];
+  [self.photoVideoTable reloadData];
+  
+  /*if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeEventsPage) {
     
     CGFloat width = [Utilities isLandscape] ? 1024.0 : 768.0;
     CGFloat height = [Utilities isLandscape] ? 673.0 : 926.0;
@@ -1397,6 +1388,7 @@
 
   [[[Utilities del] masterRootController] uncloak];
   self.reorienting = NO;
+   */
 }
 
 - (void)prepTableTransition {
@@ -1752,7 +1744,7 @@
       }
 
       if ([type isEqualToString:@"regular"]) {
-        return self.dummyDouble.frame.size.height-squish;
+        return self.dummyDouble.frame.size.height;
       }
 
       if ([type isEqualToString:@"embiggened"]) {

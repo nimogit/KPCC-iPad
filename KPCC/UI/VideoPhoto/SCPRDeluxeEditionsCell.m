@@ -48,6 +48,7 @@
   }
   
   if ( self.primed ) {
+    [self.shortListController refresh];
     return;
   }
   
@@ -62,52 +63,21 @@
                                 owner:self.shortListController
                               options:nil];
   
+  [self.contentView addSubview:self.shortListController.view];
+  NSArray *typical = [[DesignManager shared] typicalConstraints:self.shortListController.view];
+  [self.contentView addConstraints:typical];
+  
   self.shortListController.view.frame = self.shortListController.view.frame;
   self.shortListController.fromNews = YES;
+  
   [self.shortListController setupWithEdition:self.mainEdition];
+  
   self.clipsToBounds = YES;
   
-  [self.shortListController shrink];
-  [self.shortListController pushTitleUp];
-  //self.shortListController.timestampLabel.alpha = 0.0;
-  
-  [[DesignManager shared] avoidNeighbor:self.shortListController.shortListTitleLabel
-                               withView:self.shortListController.timestampLabel
-                              direction:NeighborDirectionAbove
-                                padding:3.0];
   
   [self.shortListController.drillDownButton addTarget:self
                                                action:@selector(handleEditionDrill)
                                      forControlEvents:UIControlEventTouchUpInside];
-  
-  if ( ![Utilities isIOS7] ) {
-    
-    if ( [Utilities isLandscape] ) {
-      CGRect r = CGRectMake(0.0, 0.0, self.frame.size.width,
-                            self.frame.size.height);
-      CGRect big = CGRectMake(0.0, 0.0, self.frame.size.width,
-                              768.0);
-      self.shortListController.cruxView.frame = r;
-      [self.shortListController.leadAssetImage removeFromSuperview];
-      self.contentView.frame = r;
-      [self.shortListController.view addSubview:self.shortListController.leadAssetImage];
-      [self.shortListController.view sendSubviewToBack:self.shortListController.leadAssetImage];
-      self.shortListController.leadAssetImage.frame = big;
-      
-      NSString *asset = [Utilities extractImageURLFromBlob:self.mainEdition
-                                                   quality:AssetQualityFull
-                                              forceQuality:YES];
-      [self.shortListController.leadAssetImage loadImage:asset];
-      [self.contentView addSubview:self.shortListController.view];
-    } else {
-      [self addSubview:self.shortListController.view];
-    }
-    
-  } else {
-    [self addSubview:self.shortListController.view];
-  }
-  
-  
   
   
 }

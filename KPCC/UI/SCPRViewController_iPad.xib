@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPRViewController">
             <connections>
+                <outlet property="displayPortView" destination="Hq7-ng-vI5" id="wBg-FV-W8m"/>
                 <outlet property="globalGradient" destination="Sa5-OM-zRj" id="iI9-oE-eFe"/>
                 <outlet property="globalShareDrawer" destination="32" id="Abg-Vy-xcj"/>
                 <outlet property="playerWidget" destination="Xuk-Kx-rCV" id="dgY-f0-uRJ"/>
@@ -19,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsz-fy-bc6">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsz-fy-bc6" userLabel="TitleBar">
                     <rect key="frame" x="0.0" y="20" width="768" height="40"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWL-VC-fUg">
@@ -271,8 +272,8 @@
                         <constraint firstItem="CWL-VC-fUg" firstAttribute="leading" secondItem="gsz-fy-bc6" secondAttribute="leading" constant="5" id="w6L-iZ-dwc"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H2j-Pp-5UH">
-                    <rect key="frame" x="0.0" y="963" width="768" height="60"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H2j-Pp-5UH" userLabel="PlayerControls">
+                    <rect key="frame" x="0.0" y="964" width="768" height="60"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="geo-fO-trp">
                             <rect key="frame" x="0.0" y="0.0" width="768" height="60"/>
@@ -454,21 +455,30 @@
                         <constraint firstAttribute="height" constant="61" id="Q6r-BZ-ViH"/>
                     </constraints>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hq7-ng-vI5" userLabel="DisplayPortView">
+                    <rect key="frame" x="0.0" y="60" width="768" height="904"/>
+                    <color key="backgroundColor" red="0.58351732336956519" green="0.58351732336956519" blue="0.58351732336956519" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="H2j-Pp-5UH" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="Gce-uH-A5O"/>
                 <constraint firstAttribute="trailing" secondItem="Sa5-OM-zRj" secondAttribute="trailing" id="OMa-2H-HcD"/>
                 <constraint firstItem="gsz-fy-bc6" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" id="VjI-Oz-CL9"/>
-                <constraint firstAttribute="bottom" secondItem="H2j-Pp-5UH" secondAttribute="bottom" constant="1" id="a3p-Z2-lbH"/>
+                <constraint firstAttribute="bottom" secondItem="H2j-Pp-5UH" secondAttribute="bottom" id="a3p-Z2-lbH"/>
                 <constraint firstItem="Sa5-OM-zRj" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="dIc-mC-dpv"/>
                 <constraint firstAttribute="trailing" secondItem="H2j-Pp-5UH" secondAttribute="trailing" id="ehw-Rj-wMe"/>
                 <constraint firstItem="Sa5-OM-zRj" firstAttribute="top" secondItem="2" secondAttribute="top" id="kXW-nY-X0b"/>
+                <constraint firstItem="Hq7-ng-vI5" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="nfv-y6-yEh"/>
+                <constraint firstAttribute="trailing" secondItem="Hq7-ng-vI5" secondAttribute="trailing" id="sf8-0R-aec"/>
+                <constraint firstItem="H2j-Pp-5UH" firstAttribute="top" secondItem="Hq7-ng-vI5" secondAttribute="bottom" id="uGz-Rh-5UO"/>
                 <constraint firstItem="gsz-fy-bc6" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="vnD-be-i0P"/>
                 <constraint firstAttribute="trailing" secondItem="gsz-fy-bc6" secondAttribute="trailing" id="ws2-Mb-CNO"/>
+                <constraint firstItem="Hq7-ng-vI5" firstAttribute="top" secondItem="gsz-fy-bc6" secondAttribute="bottom" id="xwB-y2-ubU"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <point key="canvasLocation" x="521" y="-1755"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="546" y="-1836"/>
         </view>
         <viewController id="32" customClass="SCPRShareDrawerViewController">
             <extendedEdge key="edgesForExtendedLayout"/>
@@ -550,7 +560,7 @@
         <image name="kpcc-logo.png" width="116" height="17"/>
         <image name="left_scrubber.png" width="252" height="3"/>
         <image name="playButton.png" width="19" height="22"/>
-        <image name="queue_pencil_button.png" width="21" height="15"/>
+        <image name="queue_pencil_button.png" width="768" height="512"/>
         <image name="right_scrubber.png" width="252" height="3"/>
         <image name="sections_close_icon.png" width="19" height="19"/>
         <image name="sections_icon.png" width="14" height="15"/>

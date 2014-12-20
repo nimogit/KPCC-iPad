@@ -180,7 +180,10 @@ typedef enum {
 - (void)turn:(id<Turnable>)turnable withValues:(NSDictionary*)changes;
 - (void)nudge:(UIView*)view direction:(NeighborDirection)direction amount:(CGFloat)amount;
 
+- (NSArray*)typicalConstraints:(UIView*)view;
+
 @property BOOL inSingleArticle;
 @property BOOL hasBeenInFullscreen;
+@property CGSize predictedWindowSize;
 
 @end

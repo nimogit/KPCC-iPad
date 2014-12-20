@@ -576,24 +576,26 @@
     NSArray *assets = [self.pvArticle objectForKey:@"assets"];
     
     NSString *noun = [assets count] == 1 ? @"PHOTO" : @"PHOTOS";
-    NSString *slideshow = [NSString stringWithFormat:@"%d %@",[assets count],noun];
-    [self.categoryLabel titleizeText:slideshow
-                                bold:NO];
+    NSString *slideshow = [NSString stringWithFormat:@"SLIDESHOW: %d %@",[assets count],noun];
     
-    CGSize width = CGSizeZero;
+    NSMutableAttributedString *ms = [[NSMutableAttributedString alloc] initWithString:slideshow
+                                                                           attributes:@{}];
+    NSMutableDictionary *attributes = [NSMutableDictionary new];
+    attributes[NSFontAttributeName] = [UIFont fontWithName:@"Lato-Bold"
+                                                      size:self.slideshowLabel.font.pointSize];
     
-    width = [self.slideshowLabel.text sizeOfStringWithFont:self.slideshowLabel.font
-                                         constrainedToSize:CGSizeMake(MAXFLOAT,self.slideshowLabel.frame.size.height)];
+    NSInteger len = [@"SLIDESHOW:" length];
+    [ms setAttributes:attributes
+                range:NSMakeRange(0, len)];
     
-    CGFloat finalWidth = [Utilities isIOS7] ? ceilf(width.width) : width.width;
+    NSMutableDictionary *regular = [NSMutableDictionary new];
+    attributes[NSFontAttributeName] = [UIFont fontWithName:@"Lato-Regular"
+                                                      size:self.slideshowLabel.font.pointSize];
     
-    self.categoryLabel.frame = CGRectMake(self.categoryLabel.frame.origin.x,
-                                          self.categoryLabel.frame.origin.y,
-                                          finalWidth,
-                                          self.categoryLabel.frame.size.height);
+    [ms setAttributes:regular
+                range:NSMakeRange(len, [ms.string length]-len)];
     
-    [self.slideshowLabel titleizeText:self.slideshowLabel.text
-                                 bold:YES];
+    self.slideshowLabel.attributedText = ms;
     
   } else {
     
@@ -614,7 +616,6 @@
                                            finalWidth,
                                            self.slideshowLabel.frame.size.height);
     
-    self.categoryLabel.alpha = 0.0;
     
     
   }

@@ -48,17 +48,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   self.contentVector = [[NSMutableArray alloc] init];
   self.playerWidget.view.alpha = 0.0;
   
-  if ( [Utilities isIOS7] ) {
-    self.mainPageScroller.center = CGPointMake(self.mainPageScroller.center.x,
-                                               self.mainPageScroller.center.y+20.0);
-  } else {
-    self.mainPageScroller.frame = CGRectMake(self.mainPageScroller.frame.origin.x,
-                                             self.mainPageScroller.frame.origin.y,
-                                             self.mainPageScroller.frame.size.width,
-                                             self.mainPageScroller.frame.size.height+20.0);
-  }
-
-  self.mainPageScroller.scrollEnabled = NO;
   
   self.globalShareDrawer = [[SCPRShareDrawerViewController alloc]
                             initWithNibName:[[DesignManager shared]
@@ -88,6 +77,81 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   [self placeShareDrawer];
   [self.playerWidget quietMinimize];
   [[ContentManager shared] filterPrograms:nil];
+}
+
+- (void)globalInit {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(revive)
+                                               name:@"wake_up_ui"
+                                             object:nil];
+  
+  if ( [[Utilities del] appCloaked] ) {
+    return;
+  }
+  
+
+  self.view.backgroundColor = [UIColor blackColor];
+  [[[Utilities del] globalTitleBar] morph:BarTypeDrawer container:nil];
+  
+  [[DesignManager shared] treatButton:self.playLocalButton
+                            withStyle:ButtonStyleKPCCBlue];
+  [[DesignManager shared] treatButton:self.showOrHidePlayerButton
+                            withStyle:ButtonStyleKPCCBlue];
+  
+  self.mainPageScroller.pagingEnabled = YES;
+  self.showOrHidePlayerButton.alpha = 0.0;
+  
+  if ( [Utilities isIOS7] ) {
+    UIImageView *iv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"top_gradient_7.png"]];
+    self.globalGradient.image = [UIImage imageNamed:@"top_gradient_7.png"];
+    self.globalGradient.frame = CGRectMake(0.0,0.0,self.globalGradient.frame.size.width,
+                                           iv.frame.size.height);
+  }
+  
+  self.globalGradient.alpha = 0.0;
+  [self.view bringSubviewToFront:self.titleBarController.view];
+  
+}
+
+- (void)snapToDisplayPortWithView:(id)view {
+  UIView *v2u = nil;
+  if ( [view isKindOfClass:[UIView class]] ) {
+    v2u = view;
+  }
+  if ( [view isKindOfClass:[UIViewController class]] ) {
+    v2u = [(UIViewController*)view view];
+  }
+  
+  [self.displayPortView addSubview:v2u];
+  [v2u setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"view" : v2u }];
+  
+  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[view]-(0)-|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"view" : v2u }];
+  
+  NSMutableArray *total = [NSMutableArray new];
+  [total addObjectsFromArray:hConstraints];
+  [total addObjectsFromArray:vConstraints];
+  [self.displayPortView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.displayPortView addConstraints:total];
+  [self.displayPortView setNeedsUpdateConstraints];
+  [self.displayPortView layoutIfNeeded];
+  
+}
+
+- (void)viewDidLayoutSubviews {
+
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  int x = 1;
+  x++;
 }
 
 - (void)respin {
@@ -515,7 +579,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                               mineral.view.bounds.size.height);
 
   [self.contentVector addObject:mineral];
-  [self.mainPageScroller addSubview:nav.view];
+  [self snapToDisplayPortWithView:nav.view];
   nav.navigationBarHidden = YES;
   
   self.pushedContent = nav;
@@ -545,7 +609,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                               self.mainPageScroller.frame.size.height);
 
   [[ContentManager shared] pushToResizeVector:ppvc];
-  [self.view addSubview:nav.view];
+  [self snapToDisplayPortWithView:nav.view];
   
   
   [self.contentVector addObject:ppvc];
@@ -556,12 +620,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 
   if ( [show isEqualToString:@""] ) {
     [self buildCompleteProgramList];
-
-    self.completeProgramPages.view.frame = CGRectMake(0.0,
-                                                      0.0,
-                                                      self.completeProgramPages.view.frame.size.width,
-                                                      self.completeProgramPages.view.frame.size.height);
-    [self.mainPageScroller addSubview:self.completeProgramPages.view];
+    [self snapToDisplayPortWithView:self.completeProgramPages.view];
     [self.completeProgramPages focusShowWithIndex:0];
     [self finishTransition];
     return;
@@ -584,7 +643,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                             0.0,
                                             self.programPages.view.frame.size.width,
                                             self.programPages.view.frame.size.height);
-  [self.mainPageScroller addSubview:self.programPages.view];
+  [self snapToDisplayPortWithView:self.programPages.view];
   [self.programPages focusShowWithIndex:index];
   [self finishTransition];
 }
@@ -605,28 +664,13 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   vpvc.contentType = ScreenContentTypeCompositePage;
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vpvc];
   self.pushedContent = nav;
-  [self.mainPageScroller addSubview:nav.view];
-  [[ContentManager shared] pushToResizeVector:vpvc];
   
-  CGFloat widthToUse = vpvc.view.bounds.size.width;
-  CGFloat heightToUse = vpvc.view.bounds.size.height;
-  CGFloat adjust = 0.0;
-  CGFloat yAdjust = 0.0;
-  if ( [Utilities isIOS7] ) {
-    adjust = 20.0;
-    yAdjust = 0.0;
-  } else {
-    adjust = -20.0;
-    yAdjust = -20.0;
-  }
-  nav.view.frame = CGRectMake(0.0,
-                              yAdjust,
-                              widthToUse,
-                              heightToUse-adjust);
+  [self snapToDisplayPortWithView:nav.view];
+  //[[ContentManager shared] pushToResizeVector:vpvc];
+
 
   vpvc.navigationController.navigationBarHidden = YES;
-  self.mainPageScroller.contentSize = CGSizeMake(vpvc.view.frame.size.width,
-                                                 vpvc.view.frame.size.height);
+
   
   [self.contentVector addObject:vpvc];
   [[ContentManager shared] setCurrentNewsPage:1];
@@ -645,29 +689,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   
   vpvc.view.frame = vpvc.view.frame;
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vpvc];
-  
-  CGFloat widthToUse = vpvc.view.bounds.size.width;
-  CGFloat heightToUse = vpvc.view.bounds.size.height;
-  CGFloat adjust = 0.0;
-  CGFloat yAdjust = 0.0;
-  if ( [Utilities isIOS7] ) {
-    adjust = 20.0;
-    yAdjust = 0.0;
-  } else {
-    adjust = -20.0;
-    yAdjust = -20.0;
-  }
-  nav.view.frame = CGRectMake(0.0,
-                              yAdjust,
-                              widthToUse,
-                              heightToUse-adjust);
   vpvc.navigationController.navigationBarHidden = YES;
-  self.mainPageScroller.contentSize = CGSizeMake(vpvc.view.frame.size.width,
-                                                 vpvc.view.frame.size.height);
-  
+
+
   self.pushedContent = nav;
-  [self.mainPageScroller addSubview:nav.view];
-  vpvc.navigationController.navigationBarHidden = YES;
+  [self snapToDisplayPortWithView:nav.view];
+
   [[ContentManager shared] pushToResizeVector:vpvc];
   [self.contentVector addObject:vpvc];
 }
@@ -679,13 +706,11 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                         bundle:nil];
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:profile];
   self.pushedContent = nav;
-  [self.mainPageScroller addSubview:nav.view];
-  nav.view.frame = CGRectMake(0.0,
-                              0.0,
-                              profile.view.frame.size.width,
-                              profile.view.frame.size.height);
+  [self snapToDisplayPortWithView:nav.view];
+
   profile.navigationController.navigationBarHidden = YES;
   [[ContentManager shared] pushToResizeVector:profile];
+  
   [self.contentVector addObject:profile];
   self.mediaContent = contentObjects;
   [profile sourceWithListenedSegments:contentObjects];
@@ -703,28 +728,16 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   vpvc.view.frame = vpvc.view.frame;
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vpvc];
 
-  CGFloat widthToUse = vpvc.view.bounds.size.width;
-  CGFloat heightToUse = vpvc.view.bounds.size.height;
-  CGFloat adjust = 0.0;
-  CGFloat yAdjust = 0.0;
-  if ( [Utilities isIOS7] ) {
-    adjust = 20.0;
-    yAdjust = 0.0;
-  } else {
-    adjust = -20.0;
-    yAdjust = -20.0;
-  }
-  nav.view.frame = CGRectMake(0.0,
-                              yAdjust,
-                              widthToUse,
-                              heightToUse-adjust);
+
   vpvc.navigationController.navigationBarHidden = YES;
-  self.mainPageScroller.contentSize = CGSizeMake(vpvc.view.frame.size.width,
-                                                 vpvc.view.frame.size.height);
+
+  
   self.pushedContent = nav;
-  [self.mainPageScroller addSubview:nav.view];
+  [self snapToDisplayPortWithView:nav.view];
+  
   vpvc.navigationController.navigationBarHidden = YES;
-  [[ContentManager shared] pushToResizeVector:vpvc];
+  
+  //[[ContentManager shared] pushToResizeVector:vpvc];
   [self.contentVector addObject:vpvc];
 }
 
@@ -752,11 +765,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:fbvc];
   self.pushedContent = nav;
-  [self.mainPageScroller addSubview:nav.view];
-  nav.view.frame = CGRectMake(0.0,
-                              0.0,
-                              fbvc.view.frame.size.width,
-                              fbvc.view.frame.size.height);
+  [self snapToDisplayPortWithView:nav.view];
 
   fbvc.navigationController.navigationBarHidden = YES;
   [self.contentVector addObject:fbvc];
@@ -770,14 +779,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:flow];
   self.pushedContent = nav;
-  [self.mainPageScroller addSubview:nav.view];
-  nav.view.frame = CGRectMake(0.0,
-                              0.0,
-                              self.mainPageScroller.frame.size.width,
-                              self.mainPageScroller.frame.size.height);
+  [self snapToDisplayPortWithView:nav.view];
+
 
   flow.navigationController.navigationBarHidden = YES;
   [[ContentManager shared] pushToResizeVector:flow];
+  
   [self.contentVector addObject:flow];
 }
 
@@ -1078,45 +1085,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   return cookedHash;
 }
 
-- (void)globalInit {
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(revive)
-                                               name:@"wake_up_ui"
-                                             object:nil];
-  
-  if ( [[Utilities del] appCloaked] ) {
-    return;
-  }
 
-  /*self.titleBarController = [[SCPRTitlebarViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRTitlebarViewController"]
-                                                                         bundle:nil];*/
-  if ( [Utilities isIOS7] ) {
-    self.titleBarController.view.frame = CGRectMake(self.titleBarController.view.frame.origin.x,
-                                                    self.titleBarController.view.frame.origin.y+20.0,
-                                                    self.titleBarController.view.frame.size.width,
-                                                    self.titleBarController.view.frame.size.height);
-  }
-  self.view.backgroundColor = [UIColor blackColor];
-  [[[Utilities del] globalTitleBar] morph:BarTypeDrawer container:nil];
-  
-  [[DesignManager shared] treatButton:self.playLocalButton
-                            withStyle:ButtonStyleKPCCBlue];
-  [[DesignManager shared] treatButton:self.showOrHidePlayerButton
-                            withStyle:ButtonStyleKPCCBlue];
-  
-  self.mainPageScroller.pagingEnabled = YES;  
-  self.showOrHidePlayerButton.alpha = 0.0;
-  
-  if ( [Utilities isIOS7] ) {
-    UIImageView *iv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"top_gradient_7.png"]];
-    self.globalGradient.image = [UIImage imageNamed:@"top_gradient_7.png"];
-    self.globalGradient.frame = CGRectMake(0.0,0.0,self.globalGradient.frame.size.width,
-                                         iv.frame.size.height);
-  }
-
-  self.globalGradient.alpha = 0.0;
-  [self.view bringSubviewToFront:self.titleBarController.view];
-}
 
 #pragma mark - UI / Controls
 - (IBAction)switchToggled:(id)sender {
@@ -1132,20 +1101,15 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 
 - (void)wipePreviousContent {
   [self.topicSelector removeFromSuperview];
-  [[ContentManager shared] popFromResizeVector];
 
-  [self.mainPageScroller setContentOffset:CGPointMake(0.0, 0.0)];
   
   @synchronized(self) {
 
-    for ( UIView *v in [self.mainPageScroller subviews] ) {
+    for ( UIView *v in [self.displayPortView subviews] ) {
       if ( v && (id) v != [NSNull null] ) {
         [v removeFromSuperview];
       }
     }
-
-    self.mainPageScroller.contentSize = CGSizeMake(self.mainPageScroller.frame.size.width,
-                                                 self.mainPageScroller.frame.size.height);
   
     for ( id prev in self.contentVector ) {
       [[NSNotificationCenter defaultCenter] removeObserver:prev];

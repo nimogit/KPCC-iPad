@@ -287,6 +287,26 @@ static DesignManager *singleton = nil;
   }
 }
 
+- (NSArray*)typicalConstraints:(UIView *)view {
+  
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"view" : view }];
+  
+  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[view]-(0)-|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"view" : view }];
+  
+  NSMutableArray *total = [NSMutableArray new];
+  [total addObjectsFromArray:hConstraints];
+  [total addObjectsFromArray:vConstraints];
+  
+  return [NSArray arrayWithArray:total];
+}
+
 #pragma mark - Fonts
 - (UIFont*)bodyFontBold:(CGFloat)size {
   return [UIFont fontWithName:@"PTSerif-Bold"
@@ -526,7 +546,11 @@ static DesignManager *singleton = nil;
 - (NSString*)xibForPlatformWithName:(NSString *)root {
   NSString *orientation = @"";
   if ( [Utilities isLandscape] ) {
-    orientation = @"Landscape";
+    if ( [root rangeOfString:@"SCPRDeluxeNewsCellDouble"].location != NSNotFound ) {
+      orientation = @"Landscape";
+    } else {
+      orientation = @"";
+    }
   }
   if ( [Utilities isIpad] ) {
     NSString *s = [NSString stringWithFormat:@"%@_iPad%@",root,orientation];

@@ -105,6 +105,9 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UIView *decorativeStripe;
 @property (nonatomic,strong) IBOutlet SCPRTitlebarViewController *titleBarController;
 @property (nonatomic,strong) UISwipeGestureRecognizer *drawerSwiper;
+
+@property (nonatomic,strong) IBOutlet UIView *displayPortView;
+
 #ifdef IPHONE_VERSION
   @property (nonatomic,strong) UITapGestureRecognizer *shareDrawerTapDismiss;
 #endif
@@ -206,6 +209,9 @@ typedef enum {
 - (void)openShareDrawer:(id)targetContent;
 - (void)closeShareDrawer;
 - (void)toggleShareDrawer;
+
+- (void)snapToDisplayPortWithView:(id)view;
+
 @property CGRect originalShareDrawerFrame;
 
 @end

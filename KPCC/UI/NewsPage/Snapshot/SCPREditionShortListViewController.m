@@ -42,8 +42,6 @@
   
   self.spinner.alpha = 0.0;
   
-
-  
   if ( !self.numberOfStoriesSeat ) {
     self.view.frame = self.view.frame;
   }
@@ -103,17 +101,10 @@
                                            bold:YES
                                   respectHeight:YES];
   
-  [[DesignManager shared] avoidNeighbor:self.shortListTitleLabel
-                               withView:self.timestampLabel
-                              direction:NeighborDirectionAbove
-                                padding:3.0];
-  
   
   NSString *pa = [self.edition objectForKey:@"published_at"];
   NSDate *published = [Utilities dateFromRFCString:pa];
   NSString *slKey = @"edition_type";
-  
-  
   NSString *shortListSpecificTitle = @"";
 
   
@@ -125,131 +116,11 @@
   }
   
   NSString *timeString = [Utilities specialMonthDayFormatFromDate:published];
-  
   NSString *finishedTimeString = [NSString stringWithFormat:@"%@ • %@",shortListSpecificTitle,timeString];
-  if ( self.fromNews ) {
-    finishedTimeString = shortListSpecificTitle;
-  }
+
   
   [self.timestampLabel titleizeText:[finishedTimeString uppercaseString]
                                bold:NO];
-  
-  self.timestampLabel.textAlignment = [Utilities isLandscape] ? NSTextAlignmentLeft : NSTextAlignmentCenter;
-  
-  CGFloat squeeze = [Utilities isIpad] ? 1.0 : 0.25;
-  if ( ![Utilities isLandscape] ) {
-    [[DesignManager shared] alignHorizontalCenterOf:self.timestampLabel
-                                           withView:self.leadAssetImage];
-    [[DesignManager shared] alignHorizontalCenterOf:self.shortListTitleLabel
-                                           withView:self.leadAssetImage];
-    
-    CGFloat push = self.fromNews ? 139.0 : 209.0;
-    push = [Utilities isIpad] ? push : push*squeeze;
-    
-    [[DesignManager shared] avoidNeighbor:self.timestampLabel
-                                 withView:self.leadStorySeatView
-                                direction:NeighborDirectionAbove
-                                  padding:push];
-      
-  } else {
-    
-    CGFloat push = self.fromNews ? 2.0 : 10.0;
-    UIView *toUse = self.fromNews ? self.timestampLabel : self.timestampLabel;
-    [[DesignManager shared] avoidNeighbor:toUse
-                                 withView:self.leadStorySeatView
-                                direction:NeighborDirectionAbove
-                                  padding:push];
-    
-    [[DesignManager shared] avoidNeighbor:self.leadStorySeatView
-                                 withView:self.additionalSeat
-                                direction:NeighborDirectionAbove
-                                  padding:0.0];
-    
-    [[DesignManager shared] alignLeftOf:self.timestampLabel
-                               withView:self.numberOfStoriesSeat];
-    [[DesignManager shared] alignLeftOf:self.shortListTitleLabel
-                               withView:self.numberOfStoriesSeat];
-  }
-  
-  
-  CGFloat s1 = [Utilities isIpad] ? 16.0 : 4.0;
-  [[DesignManager shared] avoidNeighbor:self.numberOfStoriesSeat
-                               withView:self.leadStoryHeadlineLabel
-                              direction:NeighborDirectionAbove
-                                padding:s1];
-  
-  CGFloat s2 = [Utilities isIpad] ? 12.0: 5.0;
-  [[DesignManager shared] avoidNeighbor:self.leadStoryHeadlineLabel
-                               withView:self.dividerLine
-                              direction:NeighborDirectionAbove
-                                padding:s2];
-  
-  CGFloat adPush = [Utilities isLandscape] ? 10.0 : 5.0;
-  adPush = [Utilities isIpad] ? adPush : adPush*squeeze;
-  [[DesignManager shared] avoidNeighbor:self.leadStorySeatView
-                               withView:self.additionalSeat
-                              direction:NeighborDirectionAbove
-                                padding:adPush];
-  
-#ifdef DEBUG
-  //self.additionalSeat.backgroundColor = [UIColor magentaColor];
-  //self.leadStorySeatView.backgroundColor = [UIColor purpleColor];
-#endif
-  
-  if ( !self.fromNews ) {
-    
-    CGFloat workableSpace = self.view.frame.size.height-(self.leadStorySeatView.frame.origin.y+self.leadStorySeatView.frame.size.height);
-    self.additionalSeat.frame = CGRectMake(self.additionalSeat.frame.origin.x,
-                                           self.additionalSeat.frame.origin.y,
-                                           self.additionalSeat.frame.size.width,
-                                           workableSpace);
-    
-    CGFloat pull = [Utilities isIOS7] ? 50.0 : 60.0;
-    
-    self.readMoreSeat.frame = CGRectMake(self.readMoreSeat.frame.origin.x,
-                                         self.additionalSeat.frame.size.height-pull-self.readMoreSeat.frame.size.height,
-                                         self.readMoreSeat.frame.size.width,
-                                         self.readMoreSeat.frame.size.height);
-    
-    CGFloat revisedWorkableSpace = self.readMoreSeat.frame.origin.y-(self.plusLabel.frame.origin.y+self.plusLabel.frame.size.height+20.0);
-    
-    self.moreStoriesListLabel.frame = CGRectMake(self.moreStoriesListLabel.frame.origin.x,
-                                                 self.moreStoriesListLabel.frame.origin.y,
-                                                 self.moreStoriesListLabel.frame.size.width,
-                                                 revisedWorkableSpace);
-    
-    
-    
-  } else {
-    
-    CGFloat pushDown = [Utilities isLandscape] ? 10.0 : 40.0;
-    pushDown = [Utilities isIpad] ? pushDown : pushDown*squeeze;
-    
-    if ( ![Utilities isIOS7] ) {
-      pushDown = 20.0;
-    }
-    
-    [[DesignManager shared] avoidNeighbor:self.moreStoriesListLabel
-                                 withView:self.readMoreSeat
-                                direction:NeighborDirectionAbove
-                                  padding:pushDown];
-  }
-  
-  self.leadStorySeatView.frame = CGRectMake(self.leadStorySeatView.frame.origin.x,
-                                            self.leadStorySeatView.frame.origin.y,
-                                            self.leadStorySeatView.frame.size.width,
-                                            self.dividerLine.frame.origin.y+self.dividerLine.frame.size.height+10.0);
-  
-
-  
-  [[DesignManager shared] alignLeftOf:self.readMoreSeat
-                             withView:self.plusLabel];
-  
-  [[DesignManager shared] avoidNeighbor:self.leadStorySeatView
-                               withView:self.additionalSeat
-                              direction:NeighborDirectionAbove
-                                padding:12.0];
-  
   
   if ( !self.fromNews ) {
     [self.drillDownButton addTarget:self
@@ -259,40 +130,23 @@
     [self.readMoreButton addTarget:self
                             action:@selector(proxyPush)
                   forControlEvents:UIControlEventTouchUpInside];
+  } else {
+    finishedTimeString = shortListSpecificTitle;
   }
+  
+  [self refresh];
   
   NSString *combo = [self buildList:self.edition];
   [self.moreStoriesListLabel titleizeText:combo
                                      bold:NO
                             respectHeight:YES];
   
-  if ( ![Utilities isIOS7] ) {
-    self.moreStoriesListLabel.frame = CGRectInset(self.moreStoriesListLabel.frame,
-                                                  0.0, -3.0);
-  }
-  
-  CGFloat avoidPlur = [Utilities isIOS7] ? 2.0 : 6.0;
-  [[DesignManager shared] avoidNeighbor:self.plusLabel
-                               withView:self.moreStoriesListLabel
-                              direction:NeighborDirectionAbove
-                                padding:avoidPlur];
-  
-  [self shrinkStoriesBox];
-  
-  if ( ![Utilities isIOS7] ) {
-    if ( self.fromNews ) {
-      self.leadAssetImage.frame = CGRectMake(0.0, 0.0, self.leadAssetImage.frame.size.width, self.cruxView.frame.size.height);
-    }
-  }
-  
-  [[DesignManager shared] alignVerticalCenterOf:self.spinner
-                                       withView:self.readMoreSeat];
-  
-  [[DesignManager shared] avoidNeighbor:self.readMoreSeat
-                               withView:self.spinner
-                              direction:NeighborDirectionToLeft
-                                padding:10.0];
-  
+}
+
+- (void)refresh {
+  self.headlineLabelAnchor.constant = 30.0;
+  self.timestampLabel.textAlignment = [Utilities isLandscape] ? NSTextAlignmentLeft : NSTextAlignmentCenter;
+  self.shortListTitleLabel.textAlignment = [Utilities isLandscape] ? NSTextAlignmentLeft : NSTextAlignmentCenter;
 }
 
 - (void)shrinkStoriesBox {

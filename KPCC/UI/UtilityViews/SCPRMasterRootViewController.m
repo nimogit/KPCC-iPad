@@ -14,6 +14,7 @@
 #import "SCPRViewController.h"
 #import "SCPRIntroductionViewController.h"
 #import "SCPRSingleArticleViewController.h"
+#import "SCPRViewController.h"
 
 @interface SCPRMasterRootViewController ()
 
@@ -683,7 +684,7 @@
 //
 //
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  NSLog(@"Going to rotate %d in rotation queue",[[ContentManager shared].resizeVector count]);
+  /*NSLog(@"Going to rotate %d in rotation queue",[[ContentManager shared].resizeVector count]);
   NSMutableArray *vector = [[ContentManager shared] resizeVector];
   
   if ( [[[Utilities del] viewController] shareDrawerOpen] ) {
@@ -693,20 +694,26 @@
   [self.view bringSubviewToFront:self.cloakView];
   
   if ( [vector count] > 0 ) {
-    /*[UIView animateWithDuration:0.12 animations:^{
+    [UIView animateWithDuration:0.12 animations:^{
       self.cloakView.alpha = 0.53;
       self.spinner.alpha = 1.0;
       [self.spinner startAnimating];
-    } completion:^(BOOL finished) {*/
+    } completion:^(BOOL finished) {
       for ( id<Rotatable> r in vector ) {
         [r handleRotationPre];
       }
    // }];
-  }
+  }*/
 
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  
+  [[DesignManager shared] setPredictedWindowSize:size];
+  
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  
   SCPRPlayerWidgetViewController *player = [[Utilities del] globalPlayer];
   [player orient];
   [player.queueViewController prime];
@@ -716,52 +723,30 @@
                                          tb.view.bounds.size.height/2.0);
   
   
+  [self.view setNeedsUpdateConstraints];
+  [self.view updateConstraintsIfNeeded];
+  [self.view layoutIfNeeded];
+  
+  SCPRViewController *scprView = [[Utilities del] viewController];
+  [[scprView view] setNeedsUpdateConstraints];
+  [[scprView view] updateConstraintsIfNeeded];
+  [[scprView view] setNeedsLayout];
+  [[scprView view] layoutIfNeeded];
+
+  
   NSMutableArray *vector = [[ContentManager shared] resizeVector];
   for ( id<Rotatable> r in vector ) {
     [r handleRotationPost];
   }
   
-  [UIView animateWithDuration:0.12 animations:^{
-    self.cloakView.alpha = 0.0;
-    [self.spinner stopAnimating];
-    self.spinner.alpha = 0.0;
-  }];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+
 }
 
 - (void)viewWillLayoutSubviews {
-  
-  if ( self.frozenOrientation == 0 ) {
-    return;
-  }
-  
-  CGFloat yDelta = [Utilities isIOS7] ? 0.0 : 20.0;
-  
-  BOOL needsRefresh = NO;
-  if ( self.interfaceOrientation != self.frozenOrientation ) {
-    
-    if ( UIInterfaceOrientationIsLandscape(self.interfaceOrientation) ) {
-      if ( UIInterfaceOrientationIsLandscape(self.frozenOrientation) ) {
-        return;
-      }
-      
-      needsRefresh = YES;
-      self.view.frame = CGRectMake(0.0, yDelta, 1024.0, 768.0-yDelta);
-    } else {
-      if ( UIInterfaceOrientationIsPortrait(self.frozenOrientation)) {
-        return;
-      }
-      
-      needsRefresh = YES;
-      self.view.frame = CGRectMake(0.0, yDelta, 768.0, 1024.0-yDelta);
-    }
-  }
-  
-  if ( needsRefresh ) {
-    //[self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.25];
-    [self didRotateFromInterfaceOrientation:self.frozenOrientation];
-  }
-  
-  self.frozenOrientation = 0;
+
 }
 
 - (void)handleRotationPre {
@@ -772,27 +757,8 @@
   
 }
 
-- (BOOL)shouldAutomaticallyForwardRotationMethods {
-  return YES;
-}
 
-- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
-  return YES;
-}
 
-- (BOOL)shouldAutorotate {
-#ifdef SUPPORT_LANDSCAPE
-  if ([[DesignManager shared] hasBeenInFullscreen]) {
-    return NO;
-  }
-  if ( [[Utilities del] serverDown] ) {
-    return NO;
-  }
-  
-  return YES;
-#else
-  return NO;
-#endif
-}
+
 
 @end

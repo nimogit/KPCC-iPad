@@ -59,19 +59,8 @@
   self.globalSpinner = [[SCPRSpinnerViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRAltSpinnerViewController"] bundle:nil];
   self.viewController = [[SCPRViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRViewController"] bundle:nil];
 
-  self.masterRootController.view.frame = CGRectMake(0.0,
-                                                    0.0,
-                                                    self.window.bounds.size.width,
-                                                    self.window.bounds.size.height);
-  
-  CGFloat mainAdjustment = [Utilities isIOS7] ? 0.0 : -20.0;
-  self.viewController.view.frame = self.viewController.view.frame;
-  self.viewController.view.frame = CGRectMake(0.0,
-                                              mainAdjustment,
-                                              self.masterRootController.view.frame.size.width,
-                                              self.masterRootController.view.frame.size.height - mainAdjustment);
   [self.masterRootController.view addSubview:self.viewController.view];
-
+  
   UINavigationController *unc = [[UINavigationController alloc] initWithRootViewController:self.masterRootController];
   unc.navigationBarHidden = YES;
   
@@ -91,10 +80,17 @@
   self.globalDrawer.view.alpha = 0.0;
   [self.masterRootController.view addSubview:self.globalDrawer.view];
   [self.masterRootController.view sendSubviewToBack:self.globalDrawer.view];
-  [self.masterRootController.view bringSubviewToFront:self.globalTitleBar.view];
   self.masterRootController.globalGradient = self.viewController.globalGradient;
   
   [self.window makeKeyAndVisible];
+  
+  [[DesignManager shared] setPredictedWindowSize:self.window.frame.size];
+  
+  NSArray *vcTypical = [[DesignManager shared] typicalConstraints:self.viewController.view];
+  [self.masterRootController.view addConstraints:vcTypical];
+  
+  NSArray *typical = [[DesignManager shared] typicalConstraints:self.masterRootController.view];
+  [self.window addConstraints:typical];
   
   UILocalNotification *ln = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
   if ( ln ) {

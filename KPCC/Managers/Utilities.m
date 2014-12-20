@@ -44,7 +44,8 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 }
 
 + (BOOL)isLandscape {
-  return UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+  return ([[DesignManager shared] predictedWindowSize].width > [[DesignManager shared] predictedWindowSize].height);
+  
   //return UIDeviceOrientationIsLandscape([[Utilities del] masterRootController].interfaceOrientation);
 }
 
