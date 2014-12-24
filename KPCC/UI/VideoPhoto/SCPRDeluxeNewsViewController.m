@@ -1327,8 +1327,12 @@
 
 - (void)handleRotationPost {
   
-  [self buildCells];
+  [self.masterCellHash removeAllObjects];
+  [self.editionCellHash removeAllObjects];
+  
   [self loadDummies];
+  [self buildCells];
+
   [self.photoVideoTable reloadData];
   
   /*if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeEventsPage) {
@@ -1740,7 +1744,8 @@
       CGFloat squish = indexPath.row == 0 ? 23.0 : 0.0;
 
       if ([type isEqualToString:@"editions"]) {
-        return self.dummyEditions.frame.size.height;
+        CGFloat mod = [Utilities isLandscape] ? 100.0 : 0.0;
+        return self.dummyEditions.frame.size.height + mod;
       }
 
       if ([type isEqualToString:@"regular"]) {
@@ -1763,7 +1768,8 @@
         }
       }
     } else {
-      return self.dummyEditions.frame.size.height;
+      CGFloat mod = [Utilities isLandscape] ? 120.0 : 0.0;
+      return self.dummyEditions.frame.size.height + mod;
     }
 
   } else if (self.contentType == ScreenContentTypeEventsPage) {

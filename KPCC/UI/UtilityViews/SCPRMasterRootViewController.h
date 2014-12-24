@@ -42,6 +42,7 @@ typedef void (^AdKilledCompletion)(void);
 @property UIInterfaceOrientation frozenOrientation;
 
 - (void)bringUpQueue;
+- (void)hideQueue;
 - (void)invalidateStatusBar;
 - (void)showIntro;
 - (void)hideIntro;

@@ -41,6 +41,13 @@
   self.sleepTimerLabelUpdateTimer = [NSTimer scheduledTimerWithTimeInterval: 1.0 target:self selector:@selector(updateSleepTimeLeft) userInfo:nil repeats: YES];
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [self.view setNeedsLayout];
+  [self.view setNeedsUpdateConstraints];
+  [self.view layoutIfNeeded];
+  [self.view updateConstraintsIfNeeded];
+}
+
 -(void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   
@@ -58,6 +65,8 @@
                                            selector:@selector(primeQueueForState)
                                                name:@"notify_listeners_of_queue_change"
                                              object:nil];
+  
+  [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
   
   [[QueueManager shared] setDelegate:self];
   
@@ -627,13 +636,10 @@
     [playa.view setAlpha:1.0];
   }];
   
-  [self dismissViewControllerAnimated:YES completion:^{
+
     
-    SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
-    [root invalidateStatusBar];
-    root.frozenOrientation = 0;
-    
-  }];
+  SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
+  [root hideQueue];
 }
 
 - (IBAction)switchToLiveTapped:(id)sender {

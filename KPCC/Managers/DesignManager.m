@@ -546,11 +546,7 @@ static DesignManager *singleton = nil;
 - (NSString*)xibForPlatformWithName:(NSString *)root {
   NSString *orientation = @"";
   if ( [Utilities isLandscape] ) {
-    if ( [root rangeOfString:@"SCPRDeluxeNewsCellDouble"].location != NSNotFound ) {
       orientation = @"Landscape";
-    } else {
-      orientation = @"";
-    }
   }
   if ( [Utilities isIpad] ) {
     NSString *s = [NSString stringWithFormat:@"%@_iPad%@",root,orientation];

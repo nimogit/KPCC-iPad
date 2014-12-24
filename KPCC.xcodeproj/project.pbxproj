@@ -88,8 +88,6 @@
 		252ADCE217F227B1002F2938 /* SCPRCloakViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 252ADCDF17F227B0002F2938 /* SCPRCloakViewController.m */; };
 		252ADCE317F227B1002F2938 /* SCPRCloakViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252ADCE017F227B1002F2938 /* SCPRCloakViewController_iPad.xib */; };
 		252ADCE417F227B1002F2938 /* SCPRCloakViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252ADCE017F227B1002F2938 /* SCPRCloakViewController_iPad.xib */; };
-		252ADCE617F23CAF002F2938 /* SCPREditionMineralViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252ADCE517F23CAF002F2938 /* SCPREditionMineralViewController_iPadLandscape.xib */; };
-		252ADCE717F23CAF002F2938 /* SCPREditionMineralViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252ADCE517F23CAF002F2938 /* SCPREditionMineralViewController_iPadLandscape.xib */; };
 		252ADCEA17F2583F002F2938 /* slideshow-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 252ADCE817F2583F002F2938 /* slideshow-icon.png */; };
 		252ADCEB17F2583F002F2938 /* slideshow-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 252ADCE817F2583F002F2938 /* slideshow-icon.png */; };
 		252ADCEC17F2583F002F2938 /* slideshow-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252ADCE917F2583F002F2938 /* slideshow-icon@2x.png */; };
@@ -453,8 +451,6 @@
 		257001E018219B7E008B43F6 /* icon-edition-readnow.png in Resources */ = {isa = PBXBuildFile; fileRef = 257001DD18219B7E008B43F6 /* icon-edition-readnow.png */; };
 		257001E118219B7E008B43F6 /* icon-edition-readnow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 257001DE18219B7E008B43F6 /* icon-edition-readnow@2x.png */; };
 		257001E218219B7E008B43F6 /* icon-edition-readnow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 257001DE18219B7E008B43F6 /* icon-edition-readnow@2x.png */; };
-		257001E71821AF2E008B43F6 /* SCPREditionShortListViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 257001E61821AF2E008B43F6 /* SCPREditionShortListViewController_iPadLandscape.xib */; };
-		257001E81821AF2E008B43F6 /* SCPREditionShortListViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 257001E61821AF2E008B43F6 /* SCPREditionShortListViewController_iPadLandscape.xib */; };
 		257001EC1821CEBF008B43F6 /* SCPRDFPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257001EA1821CEBF008B43F6 /* SCPRDFPViewController.m */; };
 		257001ED1821CEBF008B43F6 /* SCPRDFPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 257001EA1821CEBF008B43F6 /* SCPRDFPViewController.m */; };
 		257001EE1821CEBF008B43F6 /* SCPRDFPViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 257001EB1821CEBF008B43F6 /* SCPRDFPViewController_iPad.xib */; };
@@ -887,8 +883,6 @@
 		25AB3B4D17B2BAF5004A1550 /* rectangularSelectedMask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AB3B4917B2BAF5004A1550 /* rectangularSelectedMask@2x.png */; };
 		25AC7D2C17BB00B8008B1599 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AC7D2B17BB00B8008B1599 /* XMLDictionary.m */; };
 		25AC7D2D17BB00B8008B1599 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AC7D2B17BB00B8008B1599 /* XMLDictionary.m */; };
-		25AD02961831B10C000AE782 /* SCPRMasterRootViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AD02951831B10C000AE782 /* SCPRMasterRootViewController_iPadLandscape.xib */; };
-		25AD02971831B10C000AE782 /* SCPRMasterRootViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AD02951831B10C000AE782 /* SCPRMasterRootViewController_iPadLandscape.xib */; };
 		25AD029A1831BB62000AE782 /* kpcc-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AD02981831BB62000AE782 /* kpcc-logo.png */; };
 		25AD029B1831BB62000AE782 /* kpcc-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AD02981831BB62000AE782 /* kpcc-logo.png */; };
 		25AD029C1831BB62000AE782 /* kpcc-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AD02991831BB62000AE782 /* kpcc-logo@2x.png */; };
@@ -939,8 +933,6 @@
 		25B3CB2A1806136B0018CFF8 /* queue_close_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B3CB261806136B0018CFF8 /* queue_close_button@2x.png */; };
 		25B5A9CB180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9CA180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib */; };
 		25B5A9CC180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9CA180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib */; };
-		25B5A9CE180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9CD180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib */; };
-		25B5A9CF180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9CD180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib */; };
 		25B5A9D1180F240E002FF8EA /* SCPRDeluxeNewsCellSingle43_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9D0180F240E002FF8EA /* SCPRDeluxeNewsCellSingle43_iPadLandscape.xib */; };
 		25B5A9D2180F240E002FF8EA /* SCPRDeluxeNewsCellSingle43_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9D0180F240E002FF8EA /* SCPRDeluxeNewsCellSingle43_iPadLandscape.xib */; };
 		25B5A9D4180F2E89002FF8EA /* SCPRDeluxeEditionsCell_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B5A9D3180F2E89002FF8EA /* SCPRDeluxeEditionsCell_iPadLandscape.xib */; };
@@ -996,14 +988,8 @@
 		25C9A44217F358F100B6BBB6 /* top_gradient_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A43F17F358F100B6BBB6 /* top_gradient_7.png */; };
 		25C9A44317F358F100B6BBB6 /* top_gradient_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44017F358F100B6BBB6 /* top_gradient_7@2x.png */; };
 		25C9A44417F358F100B6BBB6 /* top_gradient_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44017F358F100B6BBB6 /* top_gradient_7@2x.png */; };
-		25C9A44617F382D200B6BBB6 /* SCPRViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44517F382D200B6BBB6 /* SCPRViewController_iPadLandscape.xib */; };
-		25C9A44717F382D200B6BBB6 /* SCPRViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44517F382D200B6BBB6 /* SCPRViewController_iPadLandscape.xib */; };
-		25C9A44917F3831200B6BBB6 /* SCPRDeluxeNewsViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44817F3831200B6BBB6 /* SCPRDeluxeNewsViewController_iPadLandscape.xib */; };
-		25C9A44A17F3831200B6BBB6 /* SCPRDeluxeNewsViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44817F3831200B6BBB6 /* SCPRDeluxeNewsViewController_iPadLandscape.xib */; };
 		25C9A44C17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44B17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib */; };
 		25C9A44D17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44B17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib */; };
-		25C9A45217F391A300B6BBB6 /* SCPRProgramNavigatorViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45117F391A300B6BBB6 /* SCPRProgramNavigatorViewController_iPadLandscape.xib */; };
-		25C9A45317F391A300B6BBB6 /* SCPRProgramNavigatorViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45117F391A300B6BBB6 /* SCPRProgramNavigatorViewController_iPadLandscape.xib */; };
 		25C9A45817F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45717F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib */; };
 		25C9A45917F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45717F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib */; };
 		25C9A45B17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45A17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib */; };
@@ -1016,8 +1002,6 @@
 		25C9A46B17F3B6C300B6BBB6 /* SCPREditionCrystalViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A46917F3B6C300B6BBB6 /* SCPREditionCrystalViewController_iPadLandscape.xib */; };
 		25C9A46D17F3BDA500B6BBB6 /* SCPRUnderConstructionViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A46C17F3BDA500B6BBB6 /* SCPRUnderConstructionViewController_iPadLandscape.xib */; };
 		25C9A46E17F3BDA500B6BBB6 /* SCPRUnderConstructionViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A46C17F3BDA500B6BBB6 /* SCPRUnderConstructionViewController_iPadLandscape.xib */; };
-		25C9A47317F4B1C100B6BBB6 /* SCPREditionMoleculeViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A47217F4B1C100B6BBB6 /* SCPREditionMoleculeViewController_iPadLandscape.xib */; };
-		25C9A47417F4B1C100B6BBB6 /* SCPREditionMoleculeViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A47217F4B1C100B6BBB6 /* SCPREditionMoleculeViewController_iPadLandscape.xib */; };
 		25C9A48F17F4CBF400B6BBB6 /* icon-audio-listening.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A47517F4CBF400B6BBB6 /* icon-audio-listening.png */; };
 		25C9A49017F4CBF400B6BBB6 /* icon-audio-listening.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A47517F4CBF400B6BBB6 /* icon-audio-listening.png */; };
 		25C9A49117F4CBF400B6BBB6 /* icon-audio-listening@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A47617F4CBF400B6BBB6 /* icon-audio-listening@2x.png */; };
@@ -1331,8 +1315,6 @@
 		25E0B2B517C2F4AC009C3C72 /* SCPRSmallCutViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E0B2B117C2F4AC009C3C72 /* SCPRSmallCutViewController_iPad.xib */; };
 		25E0C4681746FA4B00F3D0DE /* badassets.json in Resources */ = {isa = PBXBuildFile; fileRef = 25E0C4671746FA4B00F3D0DE /* badassets.json */; };
 		25E0C4691746FA4B00F3D0DE /* badassets.json in Resources */ = {isa = PBXBuildFile; fileRef = 25E0C4671746FA4B00F3D0DE /* badassets.json */; };
-		25E34F7E17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E34F7D17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib */; };
-		25E34F7F17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E34F7D17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib */; };
 		25E9354B1843D3E5004ED1DA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E935491843D3E5004ED1DA /* README.md */; };
 		25E9354D1843D3E5004ED1DA /* RefactoringProposals.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E9354A1843D3E5004ED1DA /* RefactoringProposals.md */; };
 		25E9354E1843D3E5004ED1DA /* RefactoringProposals.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E9354A1843D3E5004ED1DA /* RefactoringProposals.md */; };
@@ -1850,7 +1832,6 @@
 		252ADCDE17F227B0002F2938 /* SCPRCloakViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRCloakViewController.h; path = UI/UtilityViews/SCPRCloakViewController.h; sourceTree = "<group>"; };
 		252ADCDF17F227B0002F2938 /* SCPRCloakViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRCloakViewController.m; path = UI/UtilityViews/SCPRCloakViewController.m; sourceTree = "<group>"; };
 		252ADCE017F227B1002F2938 /* SCPRCloakViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRCloakViewController_iPad.xib; path = UI/UtilityViews/SCPRCloakViewController_iPad.xib; sourceTree = "<group>"; };
-		252ADCE517F23CAF002F2938 /* SCPREditionMineralViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPREditionMineralViewController_iPadLandscape.xib; path = UI/NewsPage/Snapshot/SCPREditionMineralViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		252ADCE817F2583F002F2938 /* slideshow-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slideshow-icon.png"; sourceTree = "<group>"; };
 		252ADCE917F2583F002F2938 /* slideshow-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slideshow-icon@2x.png"; sourceTree = "<group>"; };
 		252ADCEE17F25A0A002F2938 /* playButtonSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playButtonSmall.png; sourceTree = "<group>"; };
@@ -2060,7 +2041,6 @@
 		257001D818219B66008B43F6 /* icon-donate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-donate@2x.png"; sourceTree = "<group>"; };
 		257001DD18219B7E008B43F6 /* icon-edition-readnow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-edition-readnow.png"; sourceTree = "<group>"; };
 		257001DE18219B7E008B43F6 /* icon-edition-readnow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-edition-readnow@2x.png"; sourceTree = "<group>"; };
-		257001E61821AF2E008B43F6 /* SCPREditionShortListViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPREditionShortListViewController_iPadLandscape.xib; path = UI/NewsPage/Snapshot/SCPREditionShortListViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		257001E91821CEBE008B43F6 /* SCPRDFPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRDFPViewController.h; path = UI/SCPRDFPViewController.h; sourceTree = "<group>"; };
 		257001EA1821CEBF008B43F6 /* SCPRDFPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRDFPViewController.m; path = UI/SCPRDFPViewController.m; sourceTree = "<group>"; };
 		257001EB1821CEBF008B43F6 /* SCPRDFPViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDFPViewController_iPad.xib; path = UI/SCPRDFPViewController_iPad.xib; sourceTree = "<group>"; };
@@ -2333,7 +2313,6 @@
 		25AB3B4917B2BAF5004A1550 /* rectangularSelectedMask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rectangularSelectedMask@2x.png"; sourceTree = "<group>"; };
 		25AC7D2A17BB00B8008B1599 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		25AC7D2B17BB00B8008B1599 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
-		25AD02951831B10C000AE782 /* SCPRMasterRootViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRMasterRootViewController_iPadLandscape.xib; path = UI/UtilityViews/SCPRMasterRootViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25AD02981831BB62000AE782 /* kpcc-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kpcc-logo.png"; sourceTree = "<group>"; };
 		25AD02991831BB62000AE782 /* kpcc-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kpcc-logo@2x.png"; sourceTree = "<group>"; };
 		25AD029E1832B1B5000AE782 /* Default-iPad-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-iPad-Portrait.png"; path = "KPCC/Default-iPad-Portrait.png"; sourceTree = SOURCE_ROOT; };
@@ -2361,7 +2340,6 @@
 		25B3CB251806136B0018CFF8 /* queue_close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = queue_close_button.png; sourceTree = "<group>"; };
 		25B3CB261806136B0018CFF8 /* queue_close_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "queue_close_button@2x.png"; sourceTree = "<group>"; };
 		25B5A9CA180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsCellDouble_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeNewsCellDouble_iPadLandscape.xib; sourceTree = "<group>"; };
-		25B5A9CD180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeDividerView_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeDividerView_iPadLandscape.xib; sourceTree = "<group>"; };
 		25B5A9D0180F240E002FF8EA /* SCPRDeluxeNewsCellSingle43_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsCellSingle43_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeNewsCellSingle43_iPadLandscape.xib; sourceTree = "<group>"; };
 		25B5A9D3180F2E89002FF8EA /* SCPRDeluxeEditionsCell_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeEditionsCell_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeEditionsCell_iPadLandscape.xib; sourceTree = "<group>"; };
 		25BA54B817AADFF600328233 /* desk_template.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = desk_template.json; path = Assets/flatResources/desk_template.json; sourceTree = "<group>"; };
@@ -2391,17 +2369,13 @@
 		25C8F20D1732FCD400229891 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		25C9A43F17F358F100B6BBB6 /* top_gradient_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top_gradient_7.png; sourceTree = "<group>"; };
 		25C9A44017F358F100B6BBB6 /* top_gradient_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top_gradient_7@2x.png"; sourceTree = "<group>"; };
-		25C9A44517F382D200B6BBB6 /* SCPRViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRViewController_iPadLandscape.xib; path = UI/SCPRViewController_iPadLandscape.xib; sourceTree = "<group>"; };
-		25C9A44817F3831200B6BBB6 /* SCPRDeluxeNewsViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsViewController_iPadLandscape.xib; path = UI/VideoPhoto/SCPRDeluxeNewsViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A44B17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRSingleArticleCollectionViewController_iPadLandscape.xib; path = UI/NewsPage/SingleArticle/SCPRSingleArticleCollectionViewController_iPadLandscape.xib; sourceTree = "<group>"; };
-		25C9A45117F391A300B6BBB6 /* SCPRProgramNavigatorViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRProgramNavigatorViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A45717F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRProgramPageViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A45A17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRSegmentCell_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A45D17F398D900B6BBB6 /* SCPRProgramCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRProgramCell_iPad.xib; sourceTree = "<group>"; };
 		25C9A46617F3AA8300B6BBB6 /* SCPREditionAtomViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPREditionAtomViewController_iPadLandscape.xib; path = UI/NewsPage/Snapshot/SCPREditionAtomViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A46917F3B6C300B6BBB6 /* SCPREditionCrystalViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPREditionCrystalViewController_iPadLandscape.xib; path = UI/NewsPage/Snapshot/SCPREditionCrystalViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A46C17F3BDA500B6BBB6 /* SCPRUnderConstructionViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRUnderConstructionViewController_iPadLandscape.xib; path = UI/UtilityViews/SCPRUnderConstructionViewController_iPadLandscape.xib; sourceTree = "<group>"; };
-		25C9A47217F4B1C100B6BBB6 /* SCPREditionMoleculeViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPREditionMoleculeViewController_iPadLandscape.xib; path = UI/NewsPage/Snapshot/SCPREditionMoleculeViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A47517F4CBF400B6BBB6 /* icon-audio-listening.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-audio-listening.png"; sourceTree = "<group>"; };
 		25C9A47617F4CBF400B6BBB6 /* icon-audio-listening@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-audio-listening@2x.png"; sourceTree = "<group>"; };
 		25C9A47717F4CBF400B6BBB6 /* icon-audio-play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-audio-play.png"; sourceTree = "<group>"; };
@@ -2570,7 +2544,6 @@
 		25E0B2B017C2F4AC009C3C72 /* SCPRSmallCutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRSmallCutViewController.m; path = UI/ProgramPages/SCPRSmallCutViewController.m; sourceTree = "<group>"; };
 		25E0B2B117C2F4AC009C3C72 /* SCPRSmallCutViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRSmallCutViewController_iPad.xib; path = UI/ProgramPages/SCPRSmallCutViewController_iPad.xib; sourceTree = "<group>"; };
 		25E0C4671746FA4B00F3D0DE /* badassets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = badassets.json; path = Assets/flatResources/badassets.json; sourceTree = "<group>"; };
-		25E34F7D17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRCloakViewController_iPadLandscape.xib; path = UI/UtilityViews/SCPRCloakViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25E935491843D3E5004ED1DA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		25E9354A1843D3E5004ED1DA /* RefactoringProposals.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RefactoringProposals.md; sourceTree = SOURCE_ROOT; };
 		25E9354F184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDFPViewController_iPadLandscape.xib; path = UI/SCPRDFPViewController_iPadLandscape.xib; sourceTree = "<group>"; };
@@ -2988,7 +2961,6 @@
 				25089D9B1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m */,
 				259AF5A418340478008AFB2A /* SCPRDeluxeNewsViewController.xib */,
 				25089D9C1799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib */,
-				25C9A44817F3831200B6BBB6 /* SCPRDeluxeNewsViewController_iPadLandscape.xib */,
 				25E0B1A717C2B09D009C3C72 /* SCPRDeluxeNewsFacadeViewController.h */,
 				25E0B1A817C2B09D009C3C72 /* SCPRDeluxeNewsFacadeViewController.m */,
 				25E0B1A017C2AC04009C3C72 /* SCPRDeluxeNewsCell.h */,
@@ -3110,7 +3082,6 @@
 				257AB7D4177B6C3100D2F4EA /* SCPRProgramNavigatorViewController.m */,
 				259AF5E0183416A9008AFB2A /* SCPRProgramNavigatorViewController.xib */,
 				257AB7D5177B6C3100D2F4EA /* SCPRProgramNavigatorViewController_iPad.xib */,
-				25C9A45117F391A300B6BBB6 /* SCPRProgramNavigatorViewController_iPadLandscape.xib */,
 				25D7A8D0177CC3E9008D9F37 /* SCPRSegmentCell.h */,
 				25D7A8D1177CC3E9008D9F37 /* SCPRSegmentCell.m */,
 				259AF5E2183416A9008AFB2A /* SCPRSegmentCell.xib */,
@@ -3435,12 +3406,10 @@
 				254435D0179F0B1000394EDF /* SCPREditionMoleculeViewController.m */,
 				2585354818354E2200853085 /* SCPREditionMoleculeViewController.xib */,
 				254435D1179F0B1000394EDF /* SCPREditionMoleculeViewController_iPad.xib */,
-				25C9A47217F4B1C100B6BBB6 /* SCPREditionMoleculeViewController_iPadLandscape.xib */,
 				2547FC4617B5930A009F35E6 /* SCPREditionMineralViewController.h */,
 				2547FC4717B5930B009F35E6 /* SCPREditionMineralViewController.m */,
 				2585354718354E2200853085 /* SCPREditionMineralViewController.xib */,
 				2547FC4817B5930C009F35E6 /* SCPREditionMineralViewController_iPad.xib */,
-				252ADCE517F23CAF002F2938 /* SCPREditionMineralViewController_iPadLandscape.xib */,
 				2586C385172EFD0F0096600B /* SCPRSnapshotCell.h */,
 				2586C386172EFD0F0096600B /* SCPRSnapshotCell.m */,
 				2586C390172EFD840096600B /* SCPRSnapshotCell_iPad.xib */,
@@ -3450,7 +3419,6 @@
 				257001D0182196B1008B43F6 /* SCPREditionShortListViewController.m */,
 				259AF5AC183409B4008AFB2A /* SCPREditionShortListViewController.xib */,
 				257001D1182196B1008B43F6 /* SCPREditionShortListViewController_iPad.xib */,
-				257001E61821AF2E008B43F6 /* SCPREditionShortListViewController_iPadLandscape.xib */,
 			);
 			name = Editions;
 			sourceTree = "<group>";
@@ -3724,7 +3692,6 @@
 				25B5A9D3180F2E89002FF8EA /* SCPRDeluxeEditionsCell_iPadLandscape.xib */,
 				259AF5CC183411CF008AFB2A /* SCPRDeluxeDividerView.xib */,
 				25640EF517D110AE00CBDF68 /* SCPRDeluxeDividerView_iPad.xib */,
-				25B5A9CD180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib */,
 				259AF5A6183406CD008AFB2A /* SCPRDeluxeNewsCellDouble.xib */,
 				25E0B1A417C2AC1B009C3C72 /* SCPRDeluxeNewsCellDouble_iPad.xib */,
 				25B5A9CA180F1905002FF8EA /* SCPRDeluxeNewsCellDouble_iPadLandscape.xib */,
@@ -3916,7 +3883,6 @@
 				252ADCDF17F227B0002F2938 /* SCPRCloakViewController.m */,
 				258535521835664A00853085 /* SCPRCloakViewController.xib */,
 				252ADCE017F227B1002F2938 /* SCPRCloakViewController_iPad.xib */,
-				25E34F7D17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib */,
 				25EC8E5B17C5529400673DFF /* SCPRFloatingEmbedViewController.h */,
 				25EC8E5C17C5529400673DFF /* SCPRFloatingEmbedViewController.m */,
 				2585354F1835654B00853085 /* SCPRFloatingEmbedViewController.xib */,
@@ -4343,12 +4309,10 @@
 				28C9E756170CF4B300ED18FB /* SCPRViewController.m */,
 				28AFBE9B170F416C00125DB8 /* SCPRViewController.xib */,
 				28AFBE9A170F416C00125DB8 /* SCPRViewController_iPad.xib */,
-				25C9A44517F382D200B6BBB6 /* SCPRViewController_iPadLandscape.xib */,
 				252ADCD717F0F2CC002F2938 /* SCPRMasterRootViewController.h */,
 				252ADCD817F0F2CC002F2938 /* SCPRMasterRootViewController.m */,
 				259AF5AA18340953008AFB2A /* SCPRMasterRootViewController.xib */,
 				252ADCD917F0F2CC002F2938 /* SCPRMasterRootViewController_iPad.xib */,
-				25AD02951831B10C000AE782 /* SCPRMasterRootViewController_iPadLandscape.xib */,
 				2527F8621759287500A85319 /* Workers */,
 				28C9E753170CF45200ED18FB /* Managers */,
 				28C9E754170CF4A800ED18FB /* UI */,
@@ -4995,7 +4959,6 @@
 				25A70BF317E13C220024E654 /* button-signin-linkedin@2x.png in Resources */,
 				2825D921173C2E0700D47612 /* complicated1.json in Resources */,
 				2825D924173C2E5500D47612 /* complicated2.json in Resources */,
-				25C9A45317F391A300B6BBB6 /* SCPRProgramNavigatorViewController_iPadLandscape.xib in Resources */,
 				25C9A45C17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib in Resources */,
 				2825D927173C2EA400D47612 /* complicated3.json in Resources */,
 				25AEAB2517416CC700C92949 /* PTSans-Bold.ttf in Resources */,
@@ -5133,7 +5096,6 @@
 				258125B1181B2779008351EA /* flatPlayOverlay@2x.png in Resources */,
 				25D7A8D6177CC40E008D9F37 /* SCPRSegmentCell_iPad.xib in Resources */,
 				25D7A8D9177CF491008D9F37 /* circleLogoSmall.png in Resources */,
-				25C9A47417F4B1C100B6BBB6 /* SCPREditionMoleculeViewController_iPadLandscape.xib in Resources */,
 				2559456C1781EA1C0014B0B5 /* spinner.html in Resources */,
 				257001E218219B7E008B43F6 /* icon-edition-readnow@2x.png in Resources */,
 				2559456F1781EABC0014B0B5 /* spinning-donut.png in Resources */,
@@ -5156,7 +5118,6 @@
 				255945941781F8950014B0B5 /* playbarFull.png in Resources */,
 				25C9A49A17F4CBF400B6BBB6 /* icon-blockquote-twitter@2x.png in Resources */,
 				255945961781F8950014B0B5 /* playbarFull@2x.png in Resources */,
-				257001E81821AF2E008B43F6 /* SCPREditionShortListViewController_iPadLandscape.xib in Resources */,
 				25A70BB217E135800024E654 /* SCPROnboardingFlowViewController_iPad.xib in Resources */,
 				2559459A1781FAB40014B0B5 /* playButton.png in Resources */,
 				2559459C1781FAB40014B0B5 /* playButton@2x.png in Resources */,
@@ -5226,7 +5187,6 @@
 				257EA02B179DC54B000FD572 /* skip_back.png in Resources */,
 				257EA02D179DC54B000FD572 /* skip_back@2x.png in Resources */,
 				25A70C3D17E2899D0024E654 /* SCPRCandidateCell_iPad.xib in Resources */,
-				25E34F7F17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib in Resources */,
 				257EA02F179DC54B000FD572 /* skip_fwd.png in Resources */,
 				257EA031179DC54B000FD572 /* skip_fwd@2x.png in Resources */,
 				257EA035179E0C21000FD572 /* circular_fade.png in Resources */,
@@ -5258,7 +5218,6 @@
 				2577165617A1B4FC003BDC2F /* top_gradient@2x.png in Resources */,
 				25A70C4817E378F90024E654 /* SCPROnboardingStep5ViewController_iPad.xib in Resources */,
 				76658B6318E2141C00026176 /* README.md in Resources */,
-				25C9A44A17F3831200B6BBB6 /* SCPRDeluxeNewsViewController_iPadLandscape.xib in Resources */,
 				2577165917A1B533003BDC2F /* top_gradient.png in Resources */,
 				25C9A44217F358F100B6BBB6 /* top_gradient_7.png in Resources */,
 				251EF54C17A2E035002893AF /* programCellGradient.png in Resources */,
@@ -5279,7 +5238,6 @@
 				25BA54DD17AB0DBD00328233 /* Avatar@2x.png in Resources */,
 				25BA54DF17AB0DBD00328233 /* facebook-icon-small.png in Resources */,
 				25BA54E117AB0DBD00328233 /* facebook-icon-small@2x.png in Resources */,
-				252ADCE717F23CAF002F2938 /* SCPREditionMineralViewController_iPadLandscape.xib in Resources */,
 				25BA54E317AB0DBD00328233 /* facebook-icon-large.png in Resources */,
 				25BA54E517AB0DBD00328233 /* facebook-icon-large@2x.png in Resources */,
 				25BA54E717AB0DBD00328233 /* linkedin-icon-large.png in Resources */,
@@ -5366,7 +5324,6 @@
 				25E0B1EF17C2F0C7009C3C72 /* businessupdatewithmarklacter_splash.jpg in Resources */,
 				763B61FE1909A26B0021C530 /* sections_close_icon.png in Resources */,
 				25E0B1F117C2F0C7009C3C72 /* businessupdatewithmarklacter_splash@2x.jpg in Resources */,
-				25B5A9CF180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib in Resources */,
 				25E0B1F317C2F0C7009C3C72 /* cartalk_splash.jpg in Resources */,
 				25E0B1F517C2F0C7009C3C72 /* cartalk_splash@2x.jpg in Resources */,
 				25E0B1F717C2F0C7009C3C72 /* thedinnerpartydownload_splash.jpg in Resources */,
@@ -5478,7 +5435,6 @@
 				25B5A9D5180F2E89002FF8EA /* SCPRDeluxeEditionsCell_iPadLandscape.xib in Resources */,
 				259028D71829B52800334DB3 /* icon-embed-twitter@2x.png in Resources */,
 				2585153E17CEAD340094F030 /* underConstruction@2x.jpg in Resources */,
-				25AD02971831B10C000AE782 /* SCPRMasterRootViewController_iPadLandscape.xib in Resources */,
 				25EC8DC017C4356000673DFF /* small_bbcnewshour_splash.jpg in Resources */,
 				25EC8DC217C4356000673DFF /* small_bbcnewshour_splash@2x.jpg in Resources */,
 				25EC8DC417C4356000673DFF /* small_bbcworldservice_splash.jpg in Resources */,
@@ -5556,7 +5512,6 @@
 				25A70C1717E144130024E654 /* button-signin-member@2x.png in Resources */,
 				25A70BE717E13C220024E654 /* button-membership-submit@2x.png in Resources */,
 				256029831816F1100099C9F7 /* SCPRDeluxeNewsCellNoAsset_iPadLandscape.xib in Resources */,
-				25C9A44717F382D200B6BBB6 /* SCPRViewController_iPadLandscape.xib in Resources */,
 				25EC8E2417C4356000673DFF /* small_thesplendidtable_splash.jpg in Resources */,
 				25EC8E2617C4356000673DFF /* small_thesplendidtable_splash@2x.jpg in Resources */,
 				2569379018593D6E00D7FFEE /* small_thedinnerpartydownload_splash@2x.jpg in Resources */,
@@ -5692,7 +5647,6 @@
 				25A70BDA17E13C220024E654 /* avatar-leadership-circle@2x.png in Resources */,
 				259AF5A7183406CD008AFB2A /* SCPRDeluxeNewsCellDouble.xib in Resources */,
 				25C9A4AD17F4CBF400B6BBB6 /* icon-share-email@2x.png in Resources */,
-				257001E71821AF2E008B43F6 /* SCPREditionShortListViewController_iPadLandscape.xib in Resources */,
 				257001DF18219B7E008B43F6 /* icon-edition-readnow.png in Resources */,
 				2585355F1835A38E00853085 /* SCPRProfileReminderCell.xib in Resources */,
 				25C9A4A117F4CBF400B6BBB6 /* icon-queue-active@2x.png in Resources */,
@@ -5817,7 +5771,6 @@
 				2549BDA3177A5C1600EE57D0 /* black_gradient_fade@2x.png in Resources */,
 				257AB7D8177B6C3100D2F4EA /* SCPRProgramNavigatorViewController_iPad.xib in Resources */,
 				257AB7DB177B86A400D2F4EA /* SCPRProgramCell_iPadLandscape.xib in Resources */,
-				25C9A47317F4B1C100B6BBB6 /* SCPREditionMoleculeViewController_iPadLandscape.xib in Resources */,
 				257AB7E2177B898600D2F4EA /* in_queue_button@2x.png in Resources */,
 				257AB7E4177B898600D2F4EA /* now_playing_button@2x.png in Resources */,
 				257AB7E6177B898600D2F4EA /* play_now_button@2x.png in Resources */,
@@ -5857,7 +5810,6 @@
 				25D7A898177CB5C0008D9F37 /* anonymous-mask.png in Resources */,
 				252ADCF217F25A0A002F2938 /* playButtonSmall@2x.png in Resources */,
 				25D7A89A177CB5C0008D9F37 /* back_arrow.png in Resources */,
-				252ADCE617F23CAF002F2938 /* SCPREditionMineralViewController_iPadLandscape.xib in Resources */,
 				25D7A89C177CB5C0008D9F37 /* black_gradient_fade.png in Resources */,
 				25D7A8A4177CB5C0008D9F37 /* circle_with_line.png in Resources */,
 				25D7A8B0177CB5C0008D9F37 /* linkedin_share_logo.png in Resources */,
@@ -5961,7 +5913,6 @@
 				255EE4C8179888C3004D1D5E /* external_template.html in Resources */,
 				255EE4CB1798A3EE004D1D5E /* strippable.json in Resources */,
 				25089D9F1799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib in Resources */,
-				25E34F7E17F63F7C00E75B26 /* SCPRCloakViewController_iPadLandscape.xib in Resources */,
 				257EA02A179DC54B000FD572 /* skip_back.png in Resources */,
 				257EA02C179DC54B000FD572 /* skip_back@2x.png in Resources */,
 				25A6774F18285EF600565925 /* SCPRIntroductionViewController_iPad.xib in Resources */,
@@ -6012,7 +5963,6 @@
 				25BA54B917AADFF600328233 /* desk_template.json in Resources */,
 				25BA54DA17AB0DBD00328233 /* Avatar.png in Resources */,
 				25BA54DC17AB0DBD00328233 /* Avatar@2x.png in Resources */,
-				25C9A44917F3831200B6BBB6 /* SCPRDeluxeNewsViewController_iPadLandscape.xib in Resources */,
 				25BA54DE17AB0DBD00328233 /* facebook-icon-small.png in Resources */,
 				25BA54E017AB0DBD00328233 /* facebook-icon-small@2x.png in Resources */,
 				25A70C0117E13DC40024E654 /* SCPROnboardingCardViewController_iPad.xib in Resources */,
@@ -6030,7 +5980,6 @@
 				25A70BE417E13C220024E654 /* button-membership-submit.png in Resources */,
 				25A70BEA17E13C220024E654 /* button-membership-verify@2x.png in Resources */,
 				25C9A4BD17F4CBF400B6BBB6 /* icon-slideshow@2x.png in Resources */,
-				25C9A44617F382D200B6BBB6 /* SCPRViewController_iPadLandscape.xib in Resources */,
 				259028D41829B52800334DB3 /* icon-embed-twitter.png in Resources */,
 				25BA54F617AB0DBD00328233 /* member-icon.png in Resources */,
 				25BA54F817AB0DBD00328233 /* member-icon@2x.png in Resources */,
@@ -6053,7 +6002,6 @@
 				25A70C2C17E280D90024E654 /* SCPROnboardingStep3ViewController_iPad.xib in Resources */,
 				25BA551417AB0DBD00328233 /* twitter-icon-small@2x.png in Resources */,
 				25C9A48F17F4CBF400B6BBB6 /* icon-audio-listening.png in Resources */,
-				25C9A45217F391A300B6BBB6 /* SCPRProgramNavigatorViewController_iPadLandscape.xib in Resources */,
 				25B3CB271806136B0018CFF8 /* queue_close_button.png in Resources */,
 				259AF5BF18340DD3008AFB2A /* SCPROnboardingStep3ViewController.xib in Resources */,
 				25A677911828785600565925 /* onboarding-card-step2@2x.jpg in Resources */,
@@ -6269,7 +6217,6 @@
 				25EC8DEB17C4356000673DFF /* small_morningedition_splash.jpg in Resources */,
 				25EC8DED17C4356000673DFF /* small_morningedition_splash@2x.jpg in Resources */,
 				259028D61829B52800334DB3 /* icon-embed-twitter@2x.png in Resources */,
-				25B5A9CE180F2346002FF8EA /* SCPRDeluxeDividerView_iPadLandscape.xib in Resources */,
 				25EC8DEF17C4356000673DFF /* small_offramp_splash.jpg in Resources */,
 				25EC8DF117C4356000673DFF /* small_offramp_splash@2x.jpg in Resources */,
 				25A70BF217E13C220024E654 /* button-signin-linkedin@2x.png in Resources */,
@@ -6310,7 +6257,6 @@
 				25EC8E1F17C4356000673DFF /* small_themothradiohour_splash.jpg in Resources */,
 				25EC8E2117C4356000673DFF /* small_themothradiohour_splash@2x.jpg in Resources */,
 				25EC8E2317C4356000673DFF /* small_thesplendidtable_splash.jpg in Resources */,
-				25AD02961831B10C000AE782 /* SCPRMasterRootViewController_iPadLandscape.xib in Resources */,
 				2585355B1835A26100853085 /* SCPRModalListPickerViewController.xib in Resources */,
 				25EC8E2517C4356000673DFF /* small_thesplendidtable_splash@2x.jpg in Resources */,
 				25C9A49F17F4CBF400B6BBB6 /* icon-queue-active.png in Resources */,

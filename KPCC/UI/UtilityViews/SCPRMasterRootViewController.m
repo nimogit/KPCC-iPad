@@ -649,9 +649,29 @@
                               bundle:nil];
   self.queueViewController.parentRoot = self;
   
-  [self presentViewController:self.queueViewController
-                     animated:YES
-                   completion:nil];
+  [self addChildViewController:self.queueViewController];
+  
+  self.queueViewController.view.frame = CGRectMake(0.0,self.view.frame.size.height,
+                                                   self.queueViewController.view.frame.size.width,
+                                                   self.queueViewController.view.frame.size.height);
+  [self.view addSubview:self.queueViewController.view];
+  
+  [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    self.queueViewController.view.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width,
+                                                     self.view.frame.size.height);
+  } completion:^(BOOL finished) {
+    
+  }];
+}
+
+- (void)hideQueue {
+  [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    self.queueViewController.view.frame = CGRectMake(0.0, self.view.frame.size.height, self.view.frame.size.width,
+                                                     self.view.frame.size.height);
+  } completion:^(BOOL finished) {
+    [self.queueViewController.view removeFromSuperview];
+    self.queueViewController = nil;
+  }];
 }
 
 - (void)invalidateStatusBar {

@@ -666,7 +666,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   self.pushedContent = nav;
   
   [self snapToDisplayPortWithView:nav.view];
-  //[[ContentManager shared] pushToResizeVector:vpvc];
+  [[ContentManager shared] pushToResizeVector:vpvc];
 
 
   vpvc.navigationController.navigationBarHidden = YES;
