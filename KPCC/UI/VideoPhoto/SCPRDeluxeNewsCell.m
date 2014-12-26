@@ -31,11 +31,10 @@
   NSMutableDictionary *replacable = [[NSMutableDictionary alloc] init];
 #endif
   for ( unsigned i = 0; i < [self.posts count]; i++ ) {
-    //dispatch_sync(dispatch_get_main_queue(), ^{
+  
       NSString *fKey = [NSString stringWithFormat:@"facade%d",i];
       NSDictionary *dict = [self.posts objectAtIndex:i];
       SCPRDeluxeNewsFacadeViewController *facade = (SCPRDeluxeNewsFacadeViewController*)[self valueForKey:fKey];
-      CGRect standInFrame = facade.view.frame;
       
 #ifdef FAKE_NO_ASSET
     
@@ -54,34 +53,88 @@
       
       if ( [Utilities pureNil:[dict objectForKey:@"assets"]] ) {
         if ( !facade.embiggened ) {
+          
+          CGRect cFrame = facade.view.frame;
+          NSDictionary *values = @{ @"frame" : [NSValue valueWithCGRect:cFrame],
+                                    @"left" : @(self.leftSpacing.constant),
+                                    @"top" : @(self.topSpacing.constant),
+                                    @"between" : @(self.betweenConstraint.constant),
+                                    @"width" : @(self.widthConstraint.constant),
+                                    @"index" : @(i) };
+                                    
+          
           [facade.view removeFromSuperview];
           
+
           // Only display cells with no asset if it's not embiggened
           NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
                                                                   xibForPlatformWithName:@"SCPRDeluxeNewsCellNoAsset"]
                                                            owner:facade
                                                          options:nil];
           UIView *v = [objects objectAtIndex:0];
-          v.frame = standInFrame;
-          [self addSubview:facade.view];
+          v.frame = cFrame;
+          [self swapFacades:v container:facade values:values];
           
           [facade arm];
           facade.cardView.layer.borderColor = [[DesignManager shared] silverliningColor].CGColor;
           facade.cardView.layer.borderWidth = 1.0;
-          //facade.cardView.layer.cornerRadius = 3.0;
+
           
         }
       }
       
       [facade mergeWithPVArticle:dict];
       facade.parentPVController = parent;
-    //});
+
   }
   
   
   self.primed = YES;
   self.backgroundColor = [[DesignManager shared] silverCurtainsColor];
   //self.backgroundColor = [UIColor orangeColor];
+  
+}
+
+- (void)swapFacades:(UIView *)newFacade container:(SCPRDeluxeNewsFacadeViewController *)container values:(NSDictionary *)values {
+  [self.containerSlateView addSubview:newFacade];
+  [self.containerSlateView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [newFacade setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  NSString *hLayoutString = @"";
+  NSString *vLayoutString = @"";
+  NSDictionary *views = nil;
+  NSInteger index = [values[@"index"] intValue];
+  if ( index == 0 ) {
+    
+    hLayoutString = [NSString stringWithFormat:@"H:|-(%@)-[facade0(%@)]-(%@)-[facade1(%@)]",values[@"left"],values[@"width"],
+                     values[@"between"],values[@"width"]];
+    vLayoutString = [NSString stringWithFormat:@"V:|-(%@)-[facade0(%ld)]-(0)-|",values[@"top"],(long)newFacade.frame.size.height];
+    views = @{ @"facade0" : newFacade, @"facade1" : self.facade1.view };
+    
+  } else {
+    
+    hLayoutString = [NSString stringWithFormat:@"H:|-(%@)-[facade0(%@)]-(%@)-[facade1(%@)]",values[@"left"],values[@"width"],values[@"between"],values[@"width"]];
+    vLayoutString = [NSString stringWithFormat:@"V:|-(%@)-[facade1(%ld)]-(0)-|",values[@"top"],(long)newFacade.frame.size.height];
+    views = @{ @"facade0" : self.facade0.view, @"facade1" : newFacade };
+    
+  }
+  
+  NSLog(@"hConstraints : %@",hLayoutString);
+  NSLog(@"vConstraints : %@",vLayoutString);
+  
+  NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:hLayoutString
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:views];
+  
+  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:vLayoutString
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:views];
+  
+  [self.containerSlateView addConstraints:hConstraints];
+  [self.containerSlateView addConstraints:vConstraints];
+  
   
 }
 

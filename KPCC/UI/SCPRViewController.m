@@ -737,7 +737,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   
   vpvc.navigationController.navigationBarHidden = YES;
   
-  //[[ContentManager shared] pushToResizeVector:vpvc];
+  [[ContentManager shared] pushToResizeVector:vpvc];
   [self.contentVector addObject:vpvc];
 }
 

@@ -144,9 +144,7 @@
 
 - (void)mergeWithPVArticle:(NSDictionary *)pvArticle {
   
-  //self.headlineLabel.backgroundColor = [UIColor redColor];
-  //self.blurbLabel.backgroundColor = [UIColor blueColor];
-  
+  BOOL special = NO;
   self.pvArticle = pvArticle;
   self.blurbLabel.textColor = [[DesignManager shared] darkoalColor];
   BOOL snapForNoAsset = NO;
@@ -188,19 +186,6 @@
   
   [self.tapperButton setAccessibilityLabel:self.headlineLabel.text];
   
-  CGFloat textPadding = [Utilities isLandscape] ? 12.0 : 8.0;
-  
-  if ( !self.verticalOrSquareAsset ) {
-    [[DesignManager shared] avoidNeighbor:self.categorySeatView
-                                 withView:self.headlineLabel
-                                direction:NeighborDirectionAbove
-                                  padding:textPadding];
-  } else {
-    [[DesignManager shared] avoidNeighbor:self.timestampLabel
-                                 withView:self.headlineLabel
-                                direction:NeighborDirectionAbove
-                                  padding:textPadding];
-  }
   
   if ( !snapForNoAsset && !self.verticalOrSquareAsset ) {
     
@@ -208,71 +193,20 @@
     [self.blurbLabel italicizeText:cleanTeaser
                             bold:NO
                    respectHeight:YES];
-    
-    CGFloat adjustedSpace = self.view.frame.size.height - (self.headlineLabel.frame.origin.y+self.headlineLabel.frame.size.height) - 4.0;
-    
-    CGSize blurbSize = [self.blurbLabel.text sizeOfStringWithFont:self.blurbLabel.font
-                                                constrainedToSize:CGSizeMake(self.blurbLabel.frame.size.width,
-                                                                             adjustedSpace)];
-    
-    CGFloat totalHeight = self.splashImage.frame.origin.y+self.splashImage.frame.size.height+self.categorySeatView.frame.size.height+2.0+self.headlineLabel.frame.size.height+2.0+blurbSize.height;
-    
-    CGFloat snappedHeight = totalHeight+3.0 >= self.cardView.frame.size.height ? ceilf(blurbSize.height)-self.blurbLabel.font.pointSize : ceilf(blurbSize.height);
-    
-    //NSLog(@"Height compare: %1.1f calculates vs. %1.1f static",totalHeight+3.0,self.cardView.frame.size.height);
-    self.blurbLabel.frame = CGRectMake(self.blurbLabel.frame.origin.x,
-                                       self.blurbLabel.frame.origin.y,
-                                       self.blurbLabel.frame.size.width,
-                                       snappedHeight);
-    
-    if ( [Utilities isLandscape] ) {
-      [[DesignManager shared] avoidNeighbor:self.categorySeatView
-                                   withView:self.headlineLabel
-                                  direction:NeighborDirectionAbove
-                                    padding:10.0];
-      
-      [[DesignManager shared] avoidNeighbor:self.headlineLabel
-                                   withView:self.blurbLabel
-                                  direction:NeighborDirectionAbove
-                                    padding:10.0];
-    }
+
+
     
   } else {
     
     NSString *filtered = [Utilities unwebbifyString:[pvArticle objectForKey:@"body"]
                                   respectLinebreaks:YES];
     
-    NSInteger limit = 500;
-    
-    BOOL special = NO;
-    if ( self.verticalOrSquareAsset && self.embiggened && [Utilities isLandscape] ) {
-      special = YES;
-      limit = 400;
-    }
-    
-    /*[self.blurbLabel decentCharLimitForMe]*/;
-    
-    if ( [filtered length] > limit ) {
-      
-      NSInteger end = limit;
-      while ( end > limit - (int)ceilf(limit/2) ) {
-        if ( [filtered characterAtIndex:end] == ' ' ) {
-          break;
-        }
-        end--;
-      }
-      
-      filtered = [filtered substringToIndex:end];
-      filtered = [filtered stringByAppendingString:@" •••"];
 
-      
-    }
     
     if ( !special ) {
-      /*[self.blurbLabel titleizeText:filtered
-                               bold:NO
-                      respectHeight:YES];*/
+
       if ( snapForNoAsset ) {
+        
         [self.blurbLabel standardizeText:filtered
                                   bold:NO
                          respectHeight:NO
@@ -296,40 +230,6 @@
     [self.view bringSubviewToFront:self.tapperButton];
     
   }
-  
-  CGSize sizeGuess = [self.blurbLabel.text sizeOfStringWithFont:self.blurbLabel.font
-                                                   constrainedToSize:CGSizeMake(self.blurbLabel.frame.size.width,
-                                                                                MAXFLOAT)];
-  BOOL isTruncating = abs(sizeGuess.height-self.blurbLabel.frame.size.height) > 1.0;
-  
-  CGFloat padding = [Utilities isIOS7] ? 8.0 : 3.0;
-  if ( self.embiggened ) {
-    padding = [Utilities isIOS7] ? 4.0 : 4.0;
-  }
-  
-  if ( isTruncating ) {
-    NSInteger nlines = [self.blurbLabel approximateNumberOfLines];
-    //NSLog(@"Approximate number of lines for truncated text %@ : %d",self.blurbLabel.text,nlines);
-    if ( nlines <= 1 ) {
-      padding = [Utilities isIOS7] ? 0.0 : 0.0;
-    }
-    
-    if ( self.verticalOrSquareAsset ) {
-      self.blurbLabel.frame = CGRectMake(self.blurbLabel.frame.origin.x,
-                                         self.blurbLabel.frame.origin.y,
-                                         self.blurbLabel.frame.size.width,
-                                         self.blurbLabel.frame.size.height-self.blurbLabel.font.pointSize-4.0);
-      
-      if ( [self.headlineLabel approximateNumberOfLines] > 1 ) {
-        padding = -2.0;
-      }
-    }
-  }
-  
-  [[DesignManager shared] avoidNeighbor:self.headlineLabel
-                               withView:self.blurbLabel
-                              direction:NeighborDirectionAbove
-                                padding:padding];
   
   NSString *dateString = [pvArticle objectForKey:@"published_at"];
   NSString *formatted = [Utilities prettyStringFromRFCDateString:dateString];
@@ -392,77 +292,30 @@
   }
   
   if ( snapForNoAsset && !self.verticalOrSquareAsset ) {
-    
     self.noAsset = YES;
-    [[DesignManager shared] avoidNeighbor:self.categorySeatView
-                                 withView:self.headlineLabel
-                                direction:NeighborDirectionAbove
-                                  padding:4.0];
-    [[DesignManager shared] avoidNeighbor:self.headlineLabel
-                                 withView:self.grayLineDivider
-                                direction:NeighborDirectionAbove
-                                  padding:4.0];
-    [[DesignManager shared] avoidNeighbor:self.grayLineDivider
-                                 withView:self.blurbLabel
-                                direction:NeighborDirectionAbove
-                                  padding:5.0];
   }
   
-  // Resize the timestamp label to fit its content, allowing the social count view to have proper padding constraints.
-  CGRect beforeFrame = self.timestampLabel.frame;
-  [self.timestampLabel sizeToFit];
-  CGRect afterFrame = self.timestampLabel.frame;
-  self.timestampLabel.frame = CGRectMake(beforeFrame.origin.x + beforeFrame.size.width - afterFrame.size.width,
-                                         self.timestampLabel.frame.origin.y,
-                                         self.timestampLabel.frame.size.width,
-                                         beforeFrame.size.height);
+
+
 
   // Set and position labels for social count data.
   if ([pvArticle objectForKey:@"social_data"]) {
     [self.socialCountView setHidden:NO];
     
-    [[DesignManager shared] avoidNeighbor:self.categorySeatView
-                                   withView:self.socialCountView
-                                  direction:NeighborDirectionToLeft
-                                    padding:2.0];
 
     [self.facebookCountLabel setFont:([[DesignManager shared] latoRegular: 13.0])];
     [self.facebookCountLabel setText:[Utilities prettyStringFromSocialCount:[[[pvArticle objectForKey:@"social_data"] objectForKey:@"facebook_count"] integerValue]]];
 
-    // Resize Facebook count frame to fit.
-    CGRect origFacebookFrame = self.facebookCountLabel.frame;
-    [self.facebookCountLabel sizeToFit];
-    self.facebookCountLabel.frame = CGRectMake(self.facebookCountLabel.frame.origin.x,
-                                               origFacebookFrame.origin.y,
-                                               self.facebookCountLabel.frame.size.width,
-                                               origFacebookFrame.size.height);
-    
-    // Space the vertical line divider 6px to right of Facebook count label.
-    [[DesignManager shared] avoidNeighbor:self.facebookCountLabel
-                                 withView:self.socialLineDivider
-                                direction:NeighborDirectionToLeft
-                                  padding:6.0];
 
+    
     // Space the twitter Logo 6px to right of vertical line divider.
-    self.twitterLogoImage.frame = CGRectMake(self.socialLineDivider.frame.origin.x + 6,
-                                             self.twitterLogoImage.frame.origin.y,
-                                             self.twitterLogoImage.frame.size.width,
-                                             self.twitterLogoImage.frame.size.height);
 
     [self.twitterCountLabel setFont:([[DesignManager shared] latoRegular: 13.0])];
     [self.twitterCountLabel setText:[Utilities prettyStringFromSocialCount:[[[pvArticle objectForKey:@"social_data"] objectForKey:@"twitter_count"] integerValue]]];
-    self.twitterCountLabel.frame = CGRectMake(self.twitterLogoImage.frame.origin.x + 20,
-                                              self.twitterCountLabel.frame.origin.y,
-                                              self.twitterCountLabel.frame.size.width,
-                                              self.twitterCountLabel.frame.size.height);
+
     
     // Resize Twitter count frame to fit its contents.
-    CGRect origTwitterFrame = self.twitterCountLabel.frame;
-    [self.twitterCountLabel sizeToFit];
-    self.twitterCountLabel.frame = CGRectMake(self.twitterCountLabel.frame.origin.x,
-                                              origTwitterFrame.origin.y,
-                                              self.twitterCountLabel.frame.size.width,
-                                              origTwitterFrame.size.height);
+
     
     // Hide the Twitter share count if it conflicts with the timestamp label.
     if (self.socialCountView.frame.origin.x + self.socialCountView.frame.size.width >= self.timestampLabel.frame.origin.x) {
@@ -479,6 +332,11 @@
       [self.facebookCountLabel setText:[NSString stringWithFormat:@""]];
       [self.twitterCountLabel setText:[NSString stringWithFormat:@""]];
   }
+  
+  [self.view setNeedsUpdateConstraints];
+  [self.view setNeedsLayout];
+  [self.view layoutIfNeeded];
+  [self.view updateConstraintsIfNeeded];
 }
 
 - (void)handleCategoryForComposite {
@@ -499,20 +357,6 @@
     
     [self.slideshowLabel titleizeText:title
                                  bold:YES];
-    
-    CGSize width = CGSizeZero;
-    
-    
-    width = [self.slideshowLabel.text sizeOfStringWithFont:self.slideshowLabel.font
-                                         constrainedToSize:CGSizeMake(MAXFLOAT,self.slideshowLabel.frame.size.height)];
-    
-    
-    CGFloat finalWidth = [Utilities isIOS7] ? ceilf(width.width) : width.width;
-    
-    self.slideshowLabel.frame = CGRectMake(self.slideshowLabel.frame.origin.x,
-                                           self.slideshowLabel.frame.origin.y,
-                                           finalWidth+2.0,
-                                           self.slideshowLabel.frame.size.height);
     
     self.categoryLabel.alpha = 0.0;
     self.playOverlayImage.alpha = [[ContentManager shared] storyHasVideoAsset:self.pvArticle] ? 1.0 : 0.0;
@@ -543,20 +387,6 @@
       self.playOverlayImage.alpha = alpha;
       
     }
-    
-    CGSize width = CGSizeZero;
-    
-    
-    width = [self.slideshowLabel.text sizeOfStringWithFont:self.slideshowLabel.font
-                                         constrainedToSize:CGSizeMake(MAXFLOAT,self.slideshowLabel.frame.size.height)];
-    
-    
-    CGFloat finalWidth = [Utilities isIOS7] ? ceilf(width.width) : width.width;
-    
-    self.slideshowLabel.frame = CGRectMake(self.slideshowLabel.frame.origin.x,
-                                           self.slideshowLabel.frame.origin.y,
-                                           finalWidth+2.0,
-                                           self.slideshowLabel.frame.size.height);
     
   }
   

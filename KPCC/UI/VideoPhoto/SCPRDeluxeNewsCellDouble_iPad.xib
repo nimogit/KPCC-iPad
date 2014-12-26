@@ -355,8 +355,13 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="betweenConstraint" destination="Xrg-tD-qqv" id="1HA-BV-cbL"/>
+                <outlet property="containerSlateView" destination="1" id="txs-wk-Mtu"/>
                 <outlet property="facade0" destination="12" id="PoD-2G-foO"/>
                 <outlet property="facade1" destination="36" id="PBv-et-gQf"/>
+                <outlet property="leftSpacing" destination="Xek-8o-IdS" id="qN9-97-q6I"/>
+                <outlet property="topSpacing" destination="KUN-Fk-u6f" id="J1i-8b-Hvo"/>
+                <outlet property="widthConstraint" destination="M9e-6o-Oc8" id="xWH-pR-T6R"/>
             </connections>
             <point key="canvasLocation" x="579" y="129.5"/>
         </tableViewCell>
