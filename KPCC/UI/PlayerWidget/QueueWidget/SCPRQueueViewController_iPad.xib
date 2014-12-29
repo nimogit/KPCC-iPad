@@ -56,7 +56,7 @@
                             <rect key="frame" x="0.0" y="171" width="768" height="72"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0l-Wk-kp6">
-                                    <rect key="frame" x="367" y="36" width="124" height="28"/>
+                                    <rect key="frame" x="614" y="36" width="124" height="28"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="28" id="0dt-fl-vXk"/>
                                         <constraint firstAttribute="width" constant="124" id="EAl-Tc-Za4"/>
@@ -145,11 +145,11 @@
                             <constraints>
                                 <constraint firstItem="dfr-wx-4Su" firstAttribute="leading" secondItem="JqY-NC-NfK" secondAttribute="leading" constant="20" id="8V1-fi-ek2"/>
                                 <constraint firstAttribute="bottom" secondItem="vpl-Oc-CVQ" secondAttribute="bottom" constant="4" id="8mX-yh-vBn"/>
+                                <constraint firstAttribute="trailing" secondItem="i0l-Wk-kp6" secondAttribute="trailing" constant="30" id="NK1-Yg-kND"/>
                                 <constraint firstItem="ScQ-50-jUw" firstAttribute="leading" secondItem="vpl-Oc-CVQ" secondAttribute="trailing" constant="8" id="NWg-0W-xkD"/>
                                 <constraint firstItem="72h-q4-hpr" firstAttribute="leading" secondItem="JqY-NC-NfK" secondAttribute="leading" constant="20" id="PeR-Ki-zRY"/>
                                 <constraint firstItem="gGQ-jn-Wsh" firstAttribute="leading" secondItem="JqY-NC-NfK" secondAttribute="leading" id="R61-Km-Jeg"/>
                                 <constraint firstAttribute="bottom" secondItem="gGQ-jn-Wsh" secondAttribute="bottom" constant="2" id="WN7-lV-X4C"/>
-                                <constraint firstItem="vpl-Oc-CVQ" firstAttribute="leading" secondItem="i0l-Wk-kp6" secondAttribute="trailing" constant="34" id="bDW-sD-7fe"/>
                                 <constraint firstAttribute="height" constant="72" id="dYX-b5-WYe"/>
                                 <constraint firstAttribute="trailing" secondItem="gGQ-jn-Wsh" secondAttribute="trailing" id="kei-Dy-BfV"/>
                                 <constraint firstAttribute="bottom" secondItem="ScQ-50-jUw" secondAttribute="bottom" constant="4" id="krk-gd-Q0S"/>

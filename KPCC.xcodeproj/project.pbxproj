@@ -988,8 +988,6 @@
 		25C9A44217F358F100B6BBB6 /* top_gradient_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A43F17F358F100B6BBB6 /* top_gradient_7.png */; };
 		25C9A44317F358F100B6BBB6 /* top_gradient_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44017F358F100B6BBB6 /* top_gradient_7@2x.png */; };
 		25C9A44417F358F100B6BBB6 /* top_gradient_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44017F358F100B6BBB6 /* top_gradient_7@2x.png */; };
-		25C9A44C17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44B17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib */; };
-		25C9A44D17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A44B17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib */; };
 		25C9A45817F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45717F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib */; };
 		25C9A45917F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45717F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib */; };
 		25C9A45B17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45A17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib */; };
@@ -2369,7 +2367,6 @@
 		25C8F20D1732FCD400229891 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		25C9A43F17F358F100B6BBB6 /* top_gradient_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top_gradient_7.png; sourceTree = "<group>"; };
 		25C9A44017F358F100B6BBB6 /* top_gradient_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top_gradient_7@2x.png"; sourceTree = "<group>"; };
-		25C9A44B17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRSingleArticleCollectionViewController_iPadLandscape.xib; path = UI/NewsPage/SingleArticle/SCPRSingleArticleCollectionViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A45717F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRProgramPageViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A45A17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRSegmentCell_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A45D17F398D900B6BBB6 /* SCPRProgramCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRProgramCell_iPad.xib; sourceTree = "<group>"; };
@@ -3433,7 +3430,6 @@
 				25EDE7FB17386C6C004805CA /* SCPRSingleArticleCollectionViewController.h */,
 				25EDE7FC17386C6C004805CA /* SCPRSingleArticleCollectionViewController.m */,
 				25EDE7FD17386C6C004805CA /* SCPRSingleArticleCollectionViewController_iPad.xib */,
-				25C9A44B17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib */,
 				2546FE651767CEF8006DF9E3 /* SCPRFlapViewController.h */,
 				2546FE661767CEF9006DF9E3 /* SCPRFlapViewController.m */,
 				2546FE671767CEF9006DF9E3 /* SCPRFlapViewController_iPad.xib */,
@@ -5159,7 +5155,6 @@
 				25D113BC1811E96F0001C434 /* green_checkmark_circle@2x.png in Resources */,
 				25C9A4B417F4CBF400B6BBB6 /* icon-share-linkedin.png in Resources */,
 				25B3CB2A1806136B0018CFF8 /* queue_close_button@2x.png in Resources */,
-				25C9A44D17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib in Resources */,
 				255EE4A917970395004D1D5E /* add_to_favorites_plus.png in Resources */,
 				25C9A4B017F4CBF400B6BBB6 /* icon-share-facebook.png in Resources */,
 				25D1C61F18088225001FD92C /* icon-save-queue@2x.png in Resources */,
@@ -6181,7 +6176,6 @@
 				76A3089A18BFECE70065D4B1 /* icon-timer-white.png in Resources */,
 				259AF5D7183412E9008AFB2A /* SCPRDeluxeNewsCellSingle34.xib in Resources */,
 				25EC8DC517C4356000673DFF /* small_bbcworldservice_splash@2x.jpg in Resources */,
-				25C9A44C17F383C000B6BBB6 /* SCPRSingleArticleCollectionViewController_iPadLandscape.xib in Resources */,
 				2585355E1835A38E00853085 /* SCPRProfileListenedCell.xib in Resources */,
 				25EC8DC717C4356000673DFF /* small_bullseye_splash.jpg in Resources */,
 				25EC8DC917C4356000673DFF /* small_bullseye_splash@2x.jpg in Resources */,
