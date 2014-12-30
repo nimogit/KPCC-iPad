@@ -37,6 +37,7 @@
   [self.activity startAnimating];
 
   self.view.backgroundColor = [UIColor whiteColor];
+  
   self.webContentLoader.webView.alpha = 0.0;
   self.textSheetView.alpha = 0.0;
   self.cloakView.alpha = 1.0;
@@ -259,6 +260,7 @@
                                     options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial
                                     context:nil];
     }
+    
   } else { // Configure Article with no asset main asset.
     self.shortPage = YES;
     
@@ -363,7 +365,8 @@
   
 
   // Handling articles with more than one image asset and asset-in-body.
-  [self.extraAssetsSeat removeFromSuperview];
+  // [self.extraAssetsSeat removeFromSuperview];
+  /*
   if ([assets count] > 1 && self.pushAssetIntoBody) {
     if (![Utilities isLandscape]) {
       [self.textSheetView addSubview:self.extraAssetsSeat];
@@ -374,9 +377,11 @@
       [[DesignManager shared] alignRightOf:self.extraAssetsSeat
                                   withView:self.contentDividerLine];
       
+      
       [self.playOverlayButton removeFromSuperview];
       [self.textSheetView addSubview:self.playOverlayButton];
       self.playOverlayButton.frame = self.extraAssetsSeat.frame;
+      
     }
   } else {
     if (![Utilities isLandscape]) {
@@ -388,7 +393,7 @@
       [self.landscapeImageSheetView addSubview:self.extraAssetsSeat];
       [self.landscapeImageSheetView bringSubviewToFront:self.playOverlayButton];
     }
-  }
+  }*/
 
 
   // On Portrait article with large image asset, send image to lowest seat in main view.
@@ -672,19 +677,8 @@
                                  action:@selector(presentSlideshow:)
                        forControlEvents:UIControlEventTouchUpInside];
       prime = YES;
+
       
-      CGFloat push = [Utilities isIpad] ? 170.0 : 60.0;
-      self.extraAssetsSeat.center = CGPointMake(self.basicTemplate.image1.frame.size.width/2.0,
-                                                self.basicTemplate.image1.frame.size.height/2.0+push);
-      
-      if ( [Utilities isLandscape] ) {
-        [self.playOverlayButton removeFromSuperview];
-        self.playOverlayButton.frame = CGRectMake(0.0,
-                                                  0.0,
-                                                  self.landscapeImageSheetView.frame.size.width,
-                                                  self.landscapeImageSheetView.frame.size.height);
-        [self.landscapeImageSheetView addSubview:self.playOverlayButton];
-      }
     } else { // Set caption for article with only one asset.
       if (primary) {
         [self armCaption:primary];
@@ -695,41 +689,6 @@
   } // end-if for hasNative assets
   
 
-  if (prime) {
-    
-    if ([Utilities isLandscape]) {
-      [self.extraAssetsSeat removeFromSuperview];
-      [self.landscapeImageSheetView addSubview:self.extraAssetsSeat];
-    }
-
-    CGSize tl = [self.extraAssetsLabel.text sizeOfStringWithFont:self.extraAssetsLabel.font
-                 constrainedToSize:CGSizeMake(self.extraAssetsLabel.frame.size.width,
-                                              self.extraAssetsLabel.frame.size.height)];
-
-    CGFloat candidate = 3.0;
-    if ( (int)(tl.width + 3.0) % 2 != 0 ) {
-      candidate = 4.0;
-    }
-    
-    self.extraAssetsLabel.frame = CGRectMake(self.extraAssetsLabel.frame.origin.x,
-                                             self.extraAssetsLabel.frame.origin.y,
-                                             ceilf(tl.width + candidate),
-                                             self.extraAssetsLabel.frame.size.height);
-    
-    self.extraAssetsSeat.frame = CGRectMake(self.extraAssetsSeat.frame.origin.x,
-                                            self.extraAssetsSeat.frame.origin.y,
-                                            self.extraAssetsLabel.frame.origin.x + self.extraAssetsLabel.frame.size.width+self.extraAssetsImage.frame.origin.x,
-                                            self.extraAssetsSeat.frame.size.height);
-    
-    if ( ![Utilities isLandscape] ) {
-      [[DesignManager shared] alignHorizontalCenterOf:self.extraAssetsSeat
-                                             withView:self.basicTemplate.image1];
-    } else {
-      self.extraAssetsSeat.center = CGPointMake(self.landscapeImageSheetView.frame.size.width / 2.0,
-                                                self.extraAssetsSeat.center.y);
-      [self.landscapeImageSheetView bringSubviewToFront:self.playOverlayButton];
-    }
-  } // if prime
 }
 
 
@@ -1041,10 +1000,55 @@
 
   if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
     [self.masterContentScroller addSubview:self.socialSheetView];
-    [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
-                                              self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height,
-                                              self.socialSheetView.frame.size.width,
-                                              self.socialSheetView.frame.size.height)];
+    NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[social]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:@{ @"social" : self.socialSheetView }];
+    
+    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:self.socialSheetView
+                                                             attribute:NSLayoutAttributeHeight
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil
+                                                             attribute:NSLayoutAttributeNotAnAttribute
+                                                            multiplier:1.0
+                                                              constant:self.socialSheetView.frame.size.height];
+    
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.socialSheetView
+                                                                        attribute:NSLayoutAttributeWidth
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:nil
+                                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                                       multiplier:1.0
+                                                                         constant:self.webContentLoader.webView.frame.size.width];
+    
+    NSLayoutConstraint *verticalAnchor1 = [NSLayoutConstraint constraintWithItem:self.socialSheetView
+                                                                      attribute:NSLayoutAttributeBottomMargin
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.masterContentScroller
+                                                                      attribute:NSLayoutAttributeBottomMargin
+                                                                     multiplier:1.0
+                                                                       constant:0.0];
+    
+    NSLayoutConstraint *verticalAnchor2 = [NSLayoutConstraint constraintWithItem:self.socialSheetView
+                                                                       attribute:NSLayoutAttributeTopMargin
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.webContentLoader.webView
+                                                                       attribute:NSLayoutAttributeBottomMargin
+                                                                      multiplier:1.0
+                                                                        constant:0.0];
+    
+    [self.socialSheetView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.webContentLoader.webView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+
+    
+    [self.masterContentScroller removeConstraint:self.webViewBottomAnchor];
+    [self.socialSheetView addConstraint:heightConstraint];
+    [self.socialSheetView addConstraint:widthConstraint];
+    [self.masterContentScroller addConstraints:constraints];
+    [self.masterContentScroller addConstraint:verticalAnchor1];
+    [self.masterContentScroller addConstraint:verticalAnchor2];
+
   }
   
   if (self.socialCountHash) {
@@ -1073,39 +1077,6 @@
     [self.twitterLogoImage setImage:[UIImage imageNamed:@"icon-social-twitter-disabled"]];
   }
   
-  // Resize Facebook count frame to fit its contents.
-  CGRect origFacebookFrame = self.facebookCountLabel.frame;
-  [self.facebookCountLabel sizeToFit];
-  self.facebookCountLabel.frame = CGRectMake(self.facebookCountLabel.frame.origin.x,
-                                             origFacebookFrame.origin.y,
-                                             self.facebookCountLabel.frame.size.width,
-                                             origFacebookFrame.size.height);
-  
-  // Space the vertical line divider 6px to right of Facebook count label.
-  [[DesignManager shared] avoidNeighbor:self.facebookCountLabel
-                               withView:self.socialLineDivider
-                              direction:NeighborDirectionToLeft
-                                padding:6.0];
-  
-  // Space the twitter Logo 8px to right of vertical line divider.
-  self.twitterLogoImage.frame = CGRectMake(self.socialLineDivider.frame.origin.x + 8,
-                                           self.twitterLogoImage.frame.origin.y,
-                                           self.twitterLogoImage.frame.size.width,
-                                           self.twitterLogoImage.frame.size.height);
-  
-  // Position the twitter count label 20px to right of twitter logo.
-  self.twitterCountLabel.frame = CGRectMake(self.twitterLogoImage.frame.origin.x + 20,
-                                            self.twitterCountLabel.frame.origin.y,
-                                            self.twitterCountLabel.frame.size.width,
-                                            self.twitterCountLabel.frame.size.height);
-  
-  // Resize Twitter count frame to fit its contents.
-  CGRect origTwitterFrame = self.twitterCountLabel.frame;
-  [self.twitterCountLabel sizeToFit];
-  self.twitterCountLabel.frame = CGRectMake(self.twitterCountLabel.frame.origin.x,
-                                             origTwitterFrame.origin.y,
-                                             self.twitterCountLabel.frame.size.width,
-                                             origTwitterFrame.size.height);
 
   [self refreshHeight];
 }

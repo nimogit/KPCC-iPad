@@ -36,7 +36,7 @@
   }
   
 
-  self.view.backgroundColor = [[DesignManager shared] vinylColor:1.0];
+  self.view.backgroundColor = [UIColor whiteColor];
   self.contentLock = NO;
   self.fetchLock = NO;
   self.wingArticles = [[NSMutableDictionary alloc] init];
@@ -64,7 +64,7 @@
 
   [self.articlePageViewController.view printDimensionsWithIdentifier:@"Article Page Container"];
 
-  
+  [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
   [self.view printDimensionsWithIdentifier:@"Single Article Collection"];
   
   /*
@@ -81,6 +81,7 @@
                                                                    xibForPlatformWithName:@"SCPRSingleArticleViewController"]
                                                   bundle:nil];
   articleView.view.frame = articleView.view.frame;
+  
   [articleView setParentCollection:self];
   [articleView setIndex:index];
   [articleView setRelatedArticle:relatedArticle];
@@ -89,6 +90,9 @@
   articleView.parentNewsPage = self.parentContainer;
   
   [articleView arrangeContent];
+  
+  [articleView.view setNeedsLayout];
+  [articleView.view layoutIfNeeded];
   
   return articleView;
 }
@@ -399,6 +403,7 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
   
   self.currentIndex = self.pendingIndex;
+  [[ContentManager shared] setFocusedContentObject:self.articles[self.currentIndex]];
   
 }
 
@@ -559,8 +564,13 @@
   }];
 }
 
+- (NSUInteger)pageViewControllerSupportedInterfaceOrientations:(UIPageViewController *)pageViewController {
+  return UIInterfaceOrientationLandscapeLeft|UIInterfaceOrientationLandscapeRight|UIInterfaceOrientationPortrait;
+}
+
 - (void)handleRotationPost {
   
+  /*
   SCPRSingleArticleCollectionViewController *dummy = [[SCPRSingleArticleCollectionViewController alloc]
                                                       initWithNibName:[[DesignManager shared]
                                                                        xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
@@ -577,6 +587,10 @@
   [UIView animateWithDuration:0.25 animations:^{
     self.articleScroller.alpha = 1.0;
   }];
+  */
+  
+  [self.view setNeedsLayout];
+  [self.view setNeedsUpdateConstraints];
   
 }
 
