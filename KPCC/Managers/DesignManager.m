@@ -307,6 +307,33 @@ static DesignManager *singleton = nil;
   return [NSArray arrayWithArray:total];
 }
 
+- (void)snapView:(id)view toContainer:(id)container {
+  UIView *v2u = nil;
+  UIView *c2u = nil;
+  if ( [view isKindOfClass:[UIView class]] ) {
+    v2u = view;
+  }
+  if ( [view isKindOfClass:[UIViewController class]] ) {
+    v2u = [(UIViewController*)view view];
+  }
+  if ( [container isKindOfClass:[UIView class]] ) {
+    c2u = container;
+  }
+  if ( [container isKindOfClass:[UIViewController class]] ) {
+    c2u = [(UIViewController*)container view];
+  }
+  
+  [c2u addSubview:v2u];
+  [v2u setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  NSArray *anchors = [self typicalConstraints:v2u];
+  
+  [c2u setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [c2u addConstraints:anchors];
+  [c2u setNeedsUpdateConstraints];
+  [c2u layoutIfNeeded];
+}
+
 #pragma mark - Fonts
 - (UIFont*)bodyFontBold:(CGFloat)size {
   return [UIFont fontWithName:@"PTSerif-Bold"
@@ -1038,6 +1065,19 @@ static DesignManager *singleton = nil;
                          green:34.0/255.0
                           blue:32.0/255.0
                          alpha:1.0];
+}
+
+- (UIColor*)prettyRandomColor {
+  
+  CGFloat red = (arc4random() % 128 + ( arc4random() % 128 ))*1.0;
+  CGFloat green = (arc4random() % 128 + ( arc4random() % 128 ))*1.0;
+  CGFloat blue = (arc4random() % 128 + ( arc4random() % 128 ))*1.0;
+  
+  return [UIColor colorWithRed:red/255.0
+                         green:green/255.0
+                          blue:blue/255.0
+                         alpha:1.0];
+  
 }
 
 #pragma mark - Color functions

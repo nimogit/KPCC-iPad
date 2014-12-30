@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPRSingleArticleCollectionViewController">
             <connections>
-                <outlet property="articleScroller" destination="4" id="11"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
         </placeholder>
@@ -15,21 +14,13 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="2">
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                </scrollView>
-            </subviews>
             <color key="backgroundColor" red="0.95199983020000001" green="0.51680567129999999" blue="0.067544065360000002" alpha="1" colorSpace="calibratedRGB"/>
-            <constraints>
-                <constraint firstItem="4" firstAttribute="top" secondItem="2" secondAttribute="top" id="Tue-pa-RCs"/>
-                <constraint firstItem="4" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="UzN-Se-l3V"/>
-                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="oKM-pC-pmO"/>
-                <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" id="tLJ-Wr-Nfs"/>
-            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="416" y="424"/>
         </view>
+        <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="g3w-kw-1L7">
+            <point key="canvasLocation" x="1772" y="699"/>
+        </pageViewController>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

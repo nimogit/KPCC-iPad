@@ -24,6 +24,8 @@
 		2506A0ED1739BE8100E38246 /* SCPRQueueCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2506A0EA1739BE8000E38246 /* SCPRQueueCellViewController.m */; };
 		2506A0EE1739BE8100E38246 /* SCPRQueueCellViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2506A0EB1739BE8100E38246 /* SCPRQueueCellViewController_iPad.xib */; };
 		2506A0EF1739BE8100E38246 /* SCPRQueueCellViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2506A0EB1739BE8100E38246 /* SCPRQueueCellViewController_iPad.xib */; };
+		250865891A51E55900531900 /* UIView+PrintDimensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 250865881A51E55900531900 /* UIView+PrintDimensions.m */; };
+		2508658A1A51E5EA00531900 /* UIView+PrintDimensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 250865881A51E55900531900 /* UIView+PrintDimensions.m */; };
 		25089D9D1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25089D9B1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m */; };
 		25089D9E1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25089D9B1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m */; };
 		25089D9F1799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25089D9C1799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib */; };
@@ -1790,6 +1792,8 @@
 		2506A0E91739BE8000E38246 /* SCPRQueueCellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRQueueCellViewController.h; path = UI/PlayerWidget/QueueWidget/SCPRQueueCellViewController.h; sourceTree = "<group>"; };
 		2506A0EA1739BE8000E38246 /* SCPRQueueCellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRQueueCellViewController.m; path = UI/PlayerWidget/QueueWidget/SCPRQueueCellViewController.m; sourceTree = "<group>"; };
 		2506A0EB1739BE8100E38246 /* SCPRQueueCellViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRQueueCellViewController_iPad.xib; path = UI/PlayerWidget/QueueWidget/SCPRQueueCellViewController_iPad.xib; sourceTree = "<group>"; };
+		250865871A51E55900531900 /* UIView+PrintDimensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+PrintDimensions.h"; path = "Helpers/UIView+PrintDimensions.h"; sourceTree = "<group>"; };
+		250865881A51E55900531900 /* UIView+PrintDimensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+PrintDimensions.m"; path = "Helpers/UIView+PrintDimensions.m"; sourceTree = "<group>"; };
 		25089D9A1799B04600ADD3BC /* SCPRDeluxeNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRDeluxeNewsViewController.h; path = UI/VideoPhoto/SCPRDeluxeNewsViewController.h; sourceTree = "<group>"; };
 		25089D9B1799B04600ADD3BC /* SCPRDeluxeNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRDeluxeNewsViewController.m; path = UI/VideoPhoto/SCPRDeluxeNewsViewController.m; sourceTree = "<group>"; };
 		25089D9C1799B04600ADD3BC /* SCPRDeluxeNewsViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeNewsViewController_iPad.xib; path = UI/VideoPhoto/SCPRDeluxeNewsViewController_iPad.xib; sourceTree = "<group>"; };
@@ -4588,6 +4592,8 @@
 		28C9E76C170D061100ED18FB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				250865871A51E55900531900 /* UIView+PrintDimensions.h */,
+				250865881A51E55900531900 /* UIView+PrintDimensions.m */,
 				25DF12E217CC247200572E6F /* UIViewController+iOS7Helper.h */,
 				25DF12E317CC247200572E6F /* UIViewController+iOS7Helper.m */,
 				259EB08417B0208C0009EE4C /* UIImage+StackBlur.h */,
@@ -6396,6 +6402,7 @@
 				25640EF217D10ADF00CBDF68 /* SCPREditionCompositeViewController.m in Sources */,
 				255FD5DD17CFD3A900F03A0B /* NSString+sizeWithFont.m in Sources */,
 				25EDE7FF17386C6C004805CA /* SCPRSingleArticleCollectionViewController.m in Sources */,
+				2508658A1A51E5EA00531900 /* UIView+PrintDimensions.m in Sources */,
 				25EDE807173889A2004805CA /* SCPRSimpleNewsViewController.m in Sources */,
 				25EDE80D17388BE0004805CA /* SCPRTileViewController.m in Sources */,
 				2506A0E01739B20900E38246 /* QueueManager.m in Sources */,
@@ -6540,6 +6547,7 @@
 				2586C38C172EFD4C0096600B /* SCPREditionCrystalViewController.m in Sources */,
 				2586C397172F3B260096600B /* SCPRSingleArticleViewController.m in Sources */,
 				25EDE7FE17386C6C004805CA /* SCPRSingleArticleCollectionViewController.m in Sources */,
+				250865891A51E55900531900 /* UIView+PrintDimensions.m in Sources */,
 				256FFD4D1822E3F30060F538 /* SCPRBlankCell.m in Sources */,
 				25EDE806173889A2004805CA /* SCPRSimpleNewsViewController.m in Sources */,
 				25A70C2117E241600024E654 /* SCPROnboardingTextField.m in Sources */,

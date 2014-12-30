@@ -126,6 +126,11 @@
 @property (nonatomic,weak) id parentEditionAtom;
 
 
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *webContentHeightAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *articleDetailsAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *grayLineBottomAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *playerControlsByLineAnchor;
+
 - (IBAction)buttonTapped:(id)sender;
 - (void)arrangeContent;
 - (void)adjustUIForQueue:(NSNotification*)note;
@@ -138,5 +143,6 @@
 - (void)photoVideoTreatment;
 - (void)presentVideo;
 - (void)armCaption:(NSDictionary*)leadingAsset;
+- (void)shortenForNoAudio;
 
 @end

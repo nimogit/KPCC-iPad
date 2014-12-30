@@ -161,7 +161,7 @@ static FileManager *singleton = nil;
   
   NSString *leftPadding = [Utilities isLandscape] ? @"110px" : @"90px";
   NSString *rightPadding = [Utilities isLandscape] ? @"106px" : @"86px";
-  NSString *topPadding = @"46px";
+  NSString *topPadding = @"1px";
   
   if ( ![Utilities isIpad] ) {
     leftPadding = @"18px";
@@ -204,7 +204,7 @@ static FileManager *singleton = nil;
   
   NSString *lp = [Utilities isIpad] ? @"90px" : @"18px";
   NSString *rp = [Utilities isIpad] ? @"86px" : @"16px";
-  NSString *tp = [Utilities isIpad] ? @"46px" : @"20px";
+  NSString *tp = [Utilities isIpad] ? @"1px" : @"20px";
   
   css = [css stringByReplacingOccurrencesOfString:kLeftPaddingMacro withString:lp];
   css = [css stringByReplacingOccurrencesOfString:kRightPaddingMacro withString:rp];
@@ -607,7 +607,7 @@ static FileManager *singleton = nil;
   NSString *rightPadding = [Utilities isLandscape] ? @"100px" : @"86px";
   NSString *lp = [Utilities isIpad] ? leftPadding : @"18px";
   NSString *rp = [Utilities isIpad] ? rightPadding : @"16px";
-  NSString *tp = [Utilities isIpad] ? @"46px" : @"20px";
+  NSString *tp = [Utilities isIpad] ? @"4px" : @"20px";
   
   NSArray *embeds = @[];
 
