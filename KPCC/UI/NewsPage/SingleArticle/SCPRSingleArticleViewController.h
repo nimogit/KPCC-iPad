@@ -131,6 +131,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *grayLineBottomAnchor;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *playerControlsByLineAnchor;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *webViewBottomAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *webViewTopAnchor;
 
 
 - (IBAction)buttonTapped:(id)sender;

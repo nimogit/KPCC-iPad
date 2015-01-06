@@ -47,6 +47,7 @@
   self.basicTemplate.aspectCode = @"SingleArticle";
   self.basicTemplate.backgroundColor = [UIColor whiteColor];
   self.textSheetView.backgroundColor = [UIColor whiteColor];
+  
   self.basicTemplate.templateStyle = NewsPageTemplateSingleArticle;
   self.socialSheetView.alpha = 0.0;
   self.categorySeat.backgroundColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
@@ -232,6 +233,7 @@
     self.pushAssetIntoBody = YES;
   }
 
+  self.pushAssetIntoBody = YES;
   NSArray *assets = [self.relatedArticle objectForKey:@"assets"];
 
   if ([assets count] > 1) {
@@ -262,8 +264,8 @@
     }
     
   } else { // Configure Article with no asset main asset.
-    self.shortPage = YES;
     
+    self.shortPage = YES;
     self.captionButton.alpha = 0.0;
     self.basicTemplate.backgroundColor = [UIColor whiteColor];
 
@@ -274,7 +276,21 @@
       self.articleDetailsAnchor.constant = 0.0;
       
     } else {
-      self.landscapeImageSheetView.alpha = 0.0;
+      
+      [self.landscapeImageSheetView removeFromSuperview];
+      if ( self.articleDetailsAnchor ) {
+        [self.masterContentScroller removeConstraint:self.articleDetailsAnchor];
+      }
+      
+      self.articleDetailsAnchor = [NSLayoutConstraint constraintWithItem:self.webContentLoader.webView
+                                                               attribute:NSLayoutAttributeTopMargin
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.textSheetView
+                                                               attribute:NSLayoutAttributeBottomMargin
+                                                              multiplier:1.0
+                                                                constant:0.0];
+      [self.masterContentScroller addConstraint:self.articleDetailsAnchor];
+      
     }
 
 
@@ -319,34 +335,31 @@
     [self.categoryLabel titleizeText:@"MISCELLANEOUS" bold:YES];
   }
   
-  
-  
-
   // Handle article Audio
   NSArray *audio = [self.relatedArticle objectForKey:@"audio"];
   BOOL hasAudio = NO;
-  CGFloat accountForAudio = 0.0;
-  if ([audio count] > 0 ) {
+  if ( [audio count] > 0 ) {
     hasAudio = YES;
-    accountForAudio = self.audioSeatView.frame.size.height;
   }
   
 
   // Update UI for audioSeatView
   if (hasAudio) {
     
-    
     self.audioDividerLine.vertical = YES;
     self.queueButton.alpha = 1.0;
     
-    [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.queueButton.titleLabel.font.pointSize]
+    [[DesignManager shared] globalSetFontTo:[[DesignManager shared]
+                                             latoRegular:self.queueButton.titleLabel.font.pointSize]
                                   forButton:self.queueButton];
     
     self.contentDividerLine.alpha = 0.0;
     self.audioSeatInternalView.layer.borderColor = [[DesignManager shared] periwinkleColor].CGColor;
     self.audioSeatInternalView.layer.borderWidth = 1.0;
     
-    [self.playThisAudioLabel titleizeText:self.playThisAudioLabel.text bold:NO];
+    [self.playThisAudioLabel titleizeText:self.playThisAudioLabel.text
+                                     bold:NO];
+    
     NSDictionary *piece = [audio objectAtIndex:0];
     if ([piece objectForKey:@"duration"] != [NSNull null]) {
       [self.audioDurationLabel italicizeText:[Utilities formalStringFromSeconds:[[piece objectForKey:@"duration"] intValue]]
@@ -355,11 +368,13 @@
     } else {
       [self.audioDurationLabel setHidden:YES];
     }
+    
   } else {
     [self shortenForNoAudio];
   }
   
   [self adjustUIForQueue:nil];
+  
   self.contentArranged = YES;
   self.textSheetView.alpha = 1.0;
   
@@ -415,9 +430,6 @@
     [self eventTreatment];
   }
 
-
-
-  
   // Store 'original' height of webView, prior to placing any article content inside of it.
   // Used later to calculate content size for masterScoller.
   self.originalWebViewHeight = self.webContentLoader.webView.frame;
@@ -433,8 +445,10 @@
 }
 
 - (void)shortenForNoAudio {
+  
   [self.textSheetView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.audioSeatView removeFromSuperview];
+  
   if ( self.grayLineBottomAnchor ) {
     [self.textSheetView removeConstraint:self.grayLineBottomAnchor];
     self.grayLineBottomAnchor = nil;
@@ -452,6 +466,7 @@
                                                            attribute:NSLayoutAttributeBottomMargin
                                                           multiplier:1.0
                                                             constant:28.0];
+  
   [self.textSheetView addConstraint:self.grayLineBottomAnchor];
   
 }

@@ -579,9 +579,11 @@ static DesignManager *singleton = nil;
     NSString *s = [NSString stringWithFormat:@"%@_iPad%@",root,orientation];
     NSString *path = [[NSBundle mainBundle] pathForResource:s ofType:@"nib"];
     if ( ![Utilities pureNil:path] ) {
+      NSLog(@"NIB Name : %@",s);
       return s;
     } else {
       s = [NSString stringWithFormat:@"%@_iPad",root];
+      NSLog(@"NIB Name : %@",s);
       return s;
     }
   }

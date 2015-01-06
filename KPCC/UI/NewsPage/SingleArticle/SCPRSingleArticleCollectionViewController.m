@@ -589,6 +589,10 @@
   }];
   */
   
+  [self setupWithCollection:self.articles
+           beginningAtIndex:self.currentIndex
+               processIndex:YES];
+  
   [self.view setNeedsLayout];
   [self.view setNeedsUpdateConstraints];
   

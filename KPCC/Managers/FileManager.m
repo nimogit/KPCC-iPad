@@ -160,7 +160,7 @@ static FileManager *singleton = nil;
                                                error:&cssError];
   
   NSString *leftPadding = [Utilities isLandscape] ? @"110px" : @"90px";
-  NSString *rightPadding = [Utilities isLandscape] ? @"106px" : @"86px";
+  NSString *rightPadding = [Utilities isLandscape] ? @"86px" : @"86px";
   NSString *topPadding = @"1px";
   
   if ( ![Utilities isIpad] ) {
