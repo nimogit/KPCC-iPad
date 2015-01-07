@@ -307,6 +307,28 @@ static DesignManager *singleton = nil;
   return [NSArray arrayWithArray:total];
 }
 
+- (NSArray*)sizeContraintsForView:(UIView *)view {
+  
+  NSLayoutConstraint *hConstraint = [NSLayoutConstraint constraintWithItem:view
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0
+                                                                  constant:view.frame.size.height];
+  
+  NSLayoutConstraint *wConstraint = [NSLayoutConstraint constraintWithItem:view
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0
+                                                                  constant:view.frame.size.width];
+  
+  return @[ hConstraint, wConstraint ];
+  
+}
+
 - (void)snapView:(id)view toContainer:(id)container {
   UIView *v2u = nil;
   UIView *c2u = nil;
@@ -331,7 +353,89 @@ static DesignManager *singleton = nil;
   [c2u setTranslatesAutoresizingMaskIntoConstraints:NO];
   [c2u addConstraints:anchors];
   [c2u setNeedsUpdateConstraints];
-  [c2u layoutIfNeeded];
+  [c2u setNeedsLayout];
+  
+}
+
+- (void)snapCenteredView:(id)view toContainer:(id)container {
+  UIView *v2u = nil;
+  UIView *c2u = nil;
+  if ( [view isKindOfClass:[UIView class]] ) {
+    v2u = view;
+  }
+  if ( [view isKindOfClass:[UIViewController class]] ) {
+    v2u = [(UIViewController*)view view];
+  }
+  if ( [container isKindOfClass:[UIView class]] ) {
+    c2u = container;
+  }
+  if ( [container isKindOfClass:[UIViewController class]] ) {
+    c2u = [(UIViewController*)container view];
+  }
+  
+
+  
+  [c2u addSubview:v2u];
+  [v2u setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+  
+  NSLayoutConstraint *hCenter = [NSLayoutConstraint constraintWithItem:v2u
+                                                             attribute:NSLayoutAttributeCenterX
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:c2u
+                                                             attribute:NSLayoutAttributeCenterX
+                                                            multiplier:1.0
+                                                              constant:0.0];
+  
+  NSLayoutConstraint *vCenter = [NSLayoutConstraint constraintWithItem:v2u
+                                                             attribute:NSLayoutAttributeCenterY
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:c2u
+                                                             attribute:NSLayoutAttributeCenterY
+                                                            multiplier:1.0
+                                                              constant:0.0];
+  
+  NSLayoutConstraint *aspectRatio = [NSLayoutConstraint constraintWithItem:v2u
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:v2u
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                multiplier:v2u.frame.size.height/v2u.frame.size.width
+                                                                  constant:0.0f];
+  
+
+  
+  long spacer = (long)(c2u.frame.size.width-v2u.frame.size.width)/2.0;
+  NSString *format = [NSString stringWithFormat:@"H:|-(%ld)-[view]-(%ld)-|",spacer,spacer];
+  NSArray *horizontal = [NSLayoutConstraint constraintsWithVisualFormat:format
+                                                                options:0
+                                                                metrics:nil
+                                                                  views:@{ @"view" : v2u }];
+
+  NSMutableArray *total = [horizontal mutableCopy];
+  [total addObject:hCenter];
+  [total addObject:vCenter];
+  
+  [c2u setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [v2u addConstraint:aspectRatio];
+  [c2u addConstraints:total];
+
+  [c2u setNeedsUpdateConstraints];
+  [v2u setNeedsUpdateConstraints];
+  [c2u updateConstraintsIfNeeded];
+  [v2u updateConstraintsIfNeeded];
+  
+  v2u.clipsToBounds = YES;
+  
+  [c2u printDimensionsWithIdentifier:@"Cloak Container"];
+  [v2u printDimensionsWithIdentifier:@"Scrolling Assets"];
+  
+}
+
+- (void)unelasticizeView:(UIView *)view {
+  for ( UIView *sv in [view subviews] ) {
+    [sv setTranslatesAutoresizingMaskIntoConstraints:NO];
+  }
 }
 
 #pragma mark - Fonts
@@ -579,11 +683,10 @@ static DesignManager *singleton = nil;
     NSString *s = [NSString stringWithFormat:@"%@_iPad%@",root,orientation];
     NSString *path = [[NSBundle mainBundle] pathForResource:s ofType:@"nib"];
     if ( ![Utilities pureNil:path] ) {
-      NSLog(@"NIB Name : %@",s);
       return s;
     } else {
       s = [NSString stringWithFormat:@"%@_iPad",root];
-      NSLog(@"NIB Name : %@",s);
+
       return s;
     }
   }

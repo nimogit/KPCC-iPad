@@ -37,7 +37,8 @@
   [self.activity startAnimating];
 
   self.view.backgroundColor = [UIColor whiteColor];
-  
+  self.masterContentScroller.backgroundColor = [UIColor whiteColor];
+
   self.webContentLoader.webView.alpha = 0.0;
   self.textSheetView.alpha = 0.0;
   self.cloakView.alpha = 1.0;
@@ -233,7 +234,7 @@
     self.pushAssetIntoBody = YES;
   }
 
-  self.pushAssetIntoBody = YES;
+
   NSArray *assets = [self.relatedArticle objectForKey:@"assets"];
 
   if ([assets count] > 1) {
@@ -377,38 +378,6 @@
   
   self.contentArranged = YES;
   self.textSheetView.alpha = 1.0;
-  
-
-  // Handling articles with more than one image asset and asset-in-body.
-  // [self.extraAssetsSeat removeFromSuperview];
-  /*
-  if ([assets count] > 1 && self.pushAssetIntoBody) {
-    if (![Utilities isLandscape]) {
-      [self.textSheetView addSubview:self.extraAssetsSeat];
-      [[DesignManager shared] avoidNeighbor:self.contentDividerLine
-                                   withView:self.extraAssetsSeat
-                                  direction:NeighborDirectionBelow padding:10.0];
-      
-      [[DesignManager shared] alignRightOf:self.extraAssetsSeat
-                                  withView:self.contentDividerLine];
-      
-      
-      [self.playOverlayButton removeFromSuperview];
-      [self.textSheetView addSubview:self.playOverlayButton];
-      self.playOverlayButton.frame = self.extraAssetsSeat.frame;
-      
-    }
-  } else {
-    if (![Utilities isLandscape]) {
-      [self.view addSubview:self.extraAssetsSeat];
-      [self.view sendSubviewToBack:self.extraAssetsSeat];
-      [[DesignManager shared] alignHorizontalCenterOf:self.extraAssetsSeat
-                                           withView:self.masterContentScroller];
-    } else {
-      [self.landscapeImageSheetView addSubview:self.extraAssetsSeat];
-      [self.landscapeImageSheetView bringSubviewToFront:self.playOverlayButton];
-    }
-  }*/
 
 
   // On Portrait article with large image asset, send image to lowest seat in main view.
@@ -417,6 +386,7 @@
       [self.basicTemplate.image1 removeFromSuperview];
       [self.view addSubview:self.basicTemplate.image1];
       [self.view sendSubviewToBack:self.basicTemplate.image1];
+      self.masterContentScroller.backgroundColor = [UIColor clearColor];
     }
     [[DesignManager shared] alignHorizontalCenterOf:self.basicTemplate.image1
                                            withView:self.masterContentScroller];

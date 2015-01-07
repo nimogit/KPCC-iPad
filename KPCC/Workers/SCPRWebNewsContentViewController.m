@@ -412,7 +412,6 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
     
   }
   
-  
   if ( firstTime ) {
     [self.delegate webContentLoaded:firstTime];
   }

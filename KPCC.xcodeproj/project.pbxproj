@@ -569,8 +569,6 @@
 		2585355E1835A38E00853085 /* SCPRProfileListenedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2585355C1835A38E00853085 /* SCPRProfileListenedCell.xib */; };
 		2585355F1835A38E00853085 /* SCPRProfileReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2585355D1835A38E00853085 /* SCPRProfileReminderCell.xib */; };
 		258535611835A74F00853085 /* SCPRFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 258535601835A74F00853085 /* SCPRFeedbackViewController.xib */; };
-		2585F844182B054C00701124 /* SCPRScrollingAssetViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2585F843182B054C00701124 /* SCPRScrollingAssetViewController_iPadLandscape.xib */; };
-		2585F845182B054C00701124 /* SCPRScrollingAssetViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2585F843182B054C00701124 /* SCPRScrollingAssetViewController_iPadLandscape.xib */; };
 		2586092B178F6C1200D6DD8E /* add5.png in Resources */ = {isa = PBXBuildFile; fileRef = 25860929178F6C1200D6DD8E /* add5.png */; };
 		2586092C178F6C1200D6DD8E /* add5.png in Resources */ = {isa = PBXBuildFile; fileRef = 25860929178F6C1200D6DD8E /* add5.png */; };
 		2586092D178F6C1200D6DD8E /* add5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2586092A178F6C1200D6DD8E /* add5@2x.png */; };
@@ -2112,7 +2110,6 @@
 		2585355C1835A38E00853085 /* SCPRProfileListenedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRProfileListenedCell.xib; path = UI/Profile/SCPRProfileListenedCell.xib; sourceTree = "<group>"; };
 		2585355D1835A38E00853085 /* SCPRProfileReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRProfileReminderCell.xib; path = UI/Profile/SCPRProfileReminderCell.xib; sourceTree = "<group>"; };
 		258535601835A74F00853085 /* SCPRFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRFeedbackViewController.xib; path = UI/Feedback/SCPRFeedbackViewController.xib; sourceTree = "<group>"; };
-		2585F843182B054C00701124 /* SCPRScrollingAssetViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRScrollingAssetViewController_iPadLandscape.xib; path = UI/UtilityViews/SCPRScrollingAssetViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25860929178F6C1200D6DD8E /* add5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add5.png; sourceTree = "<group>"; };
 		2586092A178F6C1200D6DD8E /* add5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add5@2x.png"; sourceTree = "<group>"; };
 		2586092F178F6C1E00D6DD8E /* emptyImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyImage.png; sourceTree = "<group>"; };
@@ -3891,7 +3888,6 @@
 				25D0793417443C4C00E2B9C2 /* SCPRScrollingAssetViewController.m */,
 				2585355418356FAE00853085 /* SCPRScrollingAssetViewController.xib */,
 				25D0793517443C4C00E2B9C2 /* SCPRScrollingAssetViewController_iPad.xib */,
-				2585F843182B054C00701124 /* SCPRScrollingAssetViewController_iPadLandscape.xib */,
 				25061AD417459F6F00F96852 /* SCPRExternalWebContentViewController.h */,
 				25061AD517459F6F00F96852 /* SCPRExternalWebContentViewController.m */,
 				2585354E1835654B00853085 /* SCPRExternalWebContentViewController.xib */,
@@ -4994,7 +4990,6 @@
 				25A824A9175816B00061C889 /* anonymous-mask@2x.png in Resources */,
 				25A824AC17581DA30061C889 /* shareIcon@2x.png in Resources */,
 				25AD02AE1832B3CE000AE782 /* kpccforipad-icon-76-76.png in Resources */,
-				2585F845182B054C00701124 /* SCPRScrollingAssetViewController_iPadLandscape.xib in Resources */,
 				2527F85E1759180900A85319 /* SCPRSnapshotSquashedCell_iPad.xib in Resources */,
 				2527F86117591EC500A85319 /* youtube_container.html in Resources */,
 				2527F86917593DF500A85319 /* basic.css in Resources */,
@@ -5576,7 +5571,6 @@
 				28036AD01718BDF9007DBDE2 /* Icon-72.png in Resources */,
 				2585355718359C6100853085 /* SCPRProfileViewController.xib in Resources */,
 				256FFD6118232CC60060F538 /* icon-add-favorites.png in Resources */,
-				2585F844182B054C00701124 /* SCPRScrollingAssetViewController_iPadLandscape.xib in Resources */,
 				25988C4E17FB647500819CFA /* embedsupport.json in Resources */,
 				28036AD11718BDF9007DBDE2 /* Icon-72@2x.png in Resources */,
 				255B013717D7ABA80026EA34 /* SCPRDeluxeNewsCellNoAsset_iPad.xib in Resources */,

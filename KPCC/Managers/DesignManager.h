@@ -181,8 +181,11 @@ typedef enum {
 - (void)turn:(id<Turnable>)turnable withValues:(NSDictionary*)changes;
 - (void)nudge:(UIView*)view direction:(NeighborDirection)direction amount:(CGFloat)amount;
 - (void)snapView:(id)view toContainer:(id)container;
+- (void)snapCenteredView:(id)view toContainer:(id)container;
 
 - (NSArray*)typicalConstraints:(UIView*)view;
+- (NSArray*)sizeContraintsForView:(UIView*)view;
+- (void)unelasticizeView:(UIView*)view;
 
 @property BOOL inSingleArticle;
 @property BOOL hasBeenInFullscreen;

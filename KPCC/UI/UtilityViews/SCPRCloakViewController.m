@@ -66,24 +66,8 @@
     }
     if ( [self.cloakContent isKindOfClass:[SCPRScrollingAssetViewController class]] ) {
       SCPRScrollingAssetViewController *savc = (SCPRScrollingAssetViewController*)self.cloakContent;
-      SCPRScrollingAssetViewController *newAssetController = [[SCPRScrollingAssetViewController alloc]
-                                                              initWithNibName:[[DesignManager shared]
-                                                                               xibForPlatformWithName:@"SCPRScrollingAssetViewController"]
-                                                              bundle:nil];
-      newAssetController.view.frame = newAssetController.view.frame;
-      [newAssetController sourceWithArticle:savc.article];
-      [self.view addSubview:newAssetController.view];
-      
-      newAssetController.view.center = CGPointMake(self.view.frame.size.width/2.0,
-                                                   self.view.frame.size.height/2.0);
-      
-      [savc deactivate];
-      
-      self.cloakContent = newAssetController;
-      [[Utilities del] setSlideshowModal:self.cloakContent];
-      
+      [savc setNeedsSetup:YES];
     }
-    
   }
 }
 

@@ -1,5 +1,9 @@
 <style TYPE="text/css">
-     
+
+html {
+    max-width: ||_MAXBODYWIDTH_||;
+}
+
       body{
         font-family: "PTSerif-Regular";
         font-size: 19px;
@@ -7,6 +11,9 @@
         font-style: normal;
         font-weight: 400;
         background-color: rgba(255,255,255,1);
+        #background-color: rgba(144,200,188,1);
+        max-width: ||_MAXBODYWIDTH_||;
+        
       }
       
       iframe {

@@ -44,7 +44,6 @@
   self.visualComponents = [[NSMutableArray alloc] init];
   self.queuedForTrash = [[NSMutableDictionary alloc] init];
   self.webcontentQueue = [[NSOperationQueue alloc] init];
-  
   /*
   self.articlePageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                                    navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
