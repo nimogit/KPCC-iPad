@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -18,6 +18,7 @@
                 <outlet property="moreStoriesListLabel" destination="IDF-WN-sRn" id="taa-YO-Ggs"/>
                 <outlet property="numberOfStoriesLabel" destination="Vep-AS-9P9" id="jeb-6E-76D"/>
                 <outlet property="numberOfStoriesSeat" destination="m1y-km-2uh" id="uUg-Cd-Lkg"/>
+                <outlet property="pantsViewAnchor" destination="jRT-gg-lgg" id="CD4-2u-ehm"/>
                 <outlet property="plusLabel" destination="Y49-fT-Ql4" id="xq7-ev-cw7"/>
                 <outlet property="readMoreButton" destination="hea-Wc-e3H" id="spI-Uv-73L"/>
                 <outlet property="readMoreSeat" destination="yeX-BL-00n" id="YWQ-p3-xIB"/>
@@ -166,7 +167,7 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THE SHORT LIST" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrr-dM-aMH">
-                                    <rect key="frame" x="23" y="60" width="723" height="23"/>
+                                    <rect key="frame" x="21" y="60" width="725" height="23"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="23" id="heB-lX-M0k"/>
                                     </constraints>
@@ -175,7 +176,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MONDAY, 11AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XtD-WO-0mj">
-                                    <rect key="frame" x="23" y="82" width="723" height="21"/>
+                                    <rect key="frame" x="21" y="82" width="725" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="a6P-Hl-r2f"/>
                                     </constraints>
@@ -183,31 +184,31 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJM-gW-8zk">
+                                    <rect key="frame" x="12" y="25" width="744" height="945"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="dKi-nc-VOY" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" id="2Du-AL-VEQ"/>
                                 <constraint firstAttribute="trailing" secondItem="yrr-dM-aMH" secondAttribute="trailing" constant="22" id="7Rb-iq-eaK"/>
                                 <constraint firstItem="XtD-WO-0mj" firstAttribute="top" secondItem="yrr-dM-aMH" secondAttribute="bottom" constant="-1" id="Atb-yX-yZX"/>
-                                <constraint firstItem="yrr-dM-aMH" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" constant="23" id="FIh-yp-E5r"/>
+                                <constraint firstItem="yrr-dM-aMH" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" constant="21" id="FIh-yp-E5r"/>
                                 <constraint firstItem="RIm-NE-P0A" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" id="LyH-7B-GTS"/>
                                 <constraint firstItem="yrr-dM-aMH" firstAttribute="top" secondItem="QGU-HH-7cO" secondAttribute="top" constant="60" id="SfL-Jj-ZuR"/>
-                                <constraint firstItem="XtD-WO-0mj" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" constant="23" id="Svj-aV-e2Z"/>
+                                <constraint firstItem="XtD-WO-0mj" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" constant="21" id="Svj-aV-e2Z"/>
                                 <constraint firstAttribute="bottom" secondItem="dKi-nc-VOY" secondAttribute="bottom" constant="242" id="WKg-tp-vGh"/>
-                                <constraint firstItem="RIm-NE-P0A" firstAttribute="top" secondItem="XtD-WO-0mj" secondAttribute="bottom" constant="150" id="i3R-ma-T00"/>
+                                <constraint firstItem="RIm-NE-P0A" firstAttribute="top" secondItem="QGU-HH-7cO" secondAttribute="top" constant="253" id="jRT-gg-lgg"/>
                                 <constraint firstAttribute="trailing" secondItem="RIm-NE-P0A" secondAttribute="trailing" id="jT6-W4-mid"/>
                                 <constraint firstAttribute="trailing" secondItem="XtD-WO-0mj" secondAttribute="trailing" constant="22" id="mxs-70-2eE"/>
                                 <constraint firstItem="dKi-nc-VOY" firstAttribute="top" secondItem="RIm-NE-P0A" secondAttribute="bottom" constant="8" id="ycM-TJ-PxU"/>
                                 <constraint firstAttribute="trailing" secondItem="dKi-nc-VOY" secondAttribute="trailing" id="yof-gd-l1T"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJM-gW-8zk">
-                            <rect key="frame" x="12" y="30" width="744" height="945"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.47000000000000003" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -240,6 +241,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
 </document>

@@ -994,8 +994,6 @@
 		25C9A45C17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45A17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib */; };
 		25C9A45E17F398D900B6BBB6 /* SCPRProgramCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45D17F398D900B6BBB6 /* SCPRProgramCell_iPad.xib */; };
 		25C9A45F17F398D900B6BBB6 /* SCPRProgramCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A45D17F398D900B6BBB6 /* SCPRProgramCell_iPad.xib */; };
-		25C9A46717F3AA8300B6BBB6 /* SCPREditionAtomViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A46617F3AA8300B6BBB6 /* SCPREditionAtomViewController_iPadLandscape.xib */; };
-		25C9A46817F3AA8300B6BBB6 /* SCPREditionAtomViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A46617F3AA8300B6BBB6 /* SCPREditionAtomViewController_iPadLandscape.xib */; };
 		25C9A46A17F3B6C300B6BBB6 /* SCPREditionCrystalViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A46917F3B6C300B6BBB6 /* SCPREditionCrystalViewController_iPadLandscape.xib */; };
 		25C9A46B17F3B6C300B6BBB6 /* SCPREditionCrystalViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A46917F3B6C300B6BBB6 /* SCPREditionCrystalViewController_iPadLandscape.xib */; };
 		25C9A46D17F3BDA500B6BBB6 /* SCPRUnderConstructionViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A46C17F3BDA500B6BBB6 /* SCPRUnderConstructionViewController_iPadLandscape.xib */; };
@@ -1590,8 +1588,6 @@
 		28036AAD1718A344007DBDE2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28683CBC170B9BBD00346B6E /* Foundation.framework */; };
 		28036AAE1718A344007DBDE2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28683CBE170B9BBD00346B6E /* CoreGraphics.framework */; };
 		28036AB31718A344007DBDE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28683CC3170B9BBD00346B6E /* InfoPlist.strings */; };
-		28036AB91718A344007DBDE2 /* SCPRPlayerWidgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E7C9170E2BE300ED18FB /* SCPRPlayerWidgetViewController.xib */; };
-		28036ABA1718A344007DBDE2 /* SCPRPlayerWidgetViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E7CC170E2C1500ED18FB /* SCPRPlayerWidgetViewController_iPad.xib */; };
 		28036ABB1718A344007DBDE2 /* SCPRViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AFBE9A170F416C00125DB8 /* SCPRViewController_iPad.xib */; };
 		28036ABC1718A344007DBDE2 /* SCPRViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AFBE9B170F416C00125DB8 /* SCPRViewController.xib */; };
 		28036ABE1718A344007DBDE2 /* SCPRVolumeWidgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2832FF031715F114009FF2F0 /* SCPRVolumeWidgetViewController.xib */; };
@@ -1693,8 +1689,6 @@
 		28C9E7C2170DFCAD00ED18FB /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E7C1170DFCAD00ED18FB /* AudioManager.m */; };
 		28C9E7C4170DFE9A00ED18FB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C9E7C3170DFE9A00ED18FB /* CFNetwork.framework */; };
 		28C9E7CA170E2BE300ED18FB /* SCPRPlayerWidgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E7C8170E2BE300ED18FB /* SCPRPlayerWidgetViewController.m */; };
-		28C9E7CB170E2BE300ED18FB /* SCPRPlayerWidgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E7C9170E2BE300ED18FB /* SCPRPlayerWidgetViewController.xib */; };
-		28C9E7CD170E2C1500ED18FB /* SCPRPlayerWidgetViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C9E7CC170E2C1500ED18FB /* SCPRPlayerWidgetViewController_iPad.xib */; };
 		28DAFC5817D0207F00498A17 /* SCPRDeluxeEditionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAFC5717D0207F00498A17 /* SCPRDeluxeEditionsCell.m */; };
 		28DAFC5917D0207F00498A17 /* SCPRDeluxeEditionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAFC5717D0207F00498A17 /* SCPRDeluxeEditionsCell.m */; };
 		28DAFC5B17D0219100498A17 /* SCPRDeluxeEditionsCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DAFC5A17D0219100498A17 /* SCPRDeluxeEditionsCell_iPad.xib */; };
@@ -2371,7 +2365,6 @@
 		25C9A45717F394F500B6BBB6 /* SCPRProgramPageViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRProgramPageViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A45A17F3984100B6BBB6 /* SCPRSegmentCell_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRSegmentCell_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A45D17F398D900B6BBB6 /* SCPRProgramCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPRProgramCell_iPad.xib; sourceTree = "<group>"; };
-		25C9A46617F3AA8300B6BBB6 /* SCPREditionAtomViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPREditionAtomViewController_iPadLandscape.xib; path = UI/NewsPage/Snapshot/SCPREditionAtomViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A46917F3B6C300B6BBB6 /* SCPREditionCrystalViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPREditionCrystalViewController_iPadLandscape.xib; path = UI/NewsPage/Snapshot/SCPREditionCrystalViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A46C17F3BDA500B6BBB6 /* SCPRUnderConstructionViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRUnderConstructionViewController_iPadLandscape.xib; path = UI/UtilityViews/SCPRUnderConstructionViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25C9A47517F4CBF400B6BBB6 /* icon-audio-listening.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-audio-listening.png"; sourceTree = "<group>"; };
@@ -2799,8 +2792,6 @@
 		28C9E7C3170DFE9A00ED18FB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		28C9E7C7170E2BE300ED18FB /* SCPRPlayerWidgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRPlayerWidgetViewController.h; path = UI/PlayerWidget/SCPRPlayerWidgetViewController.h; sourceTree = "<group>"; };
 		28C9E7C8170E2BE300ED18FB /* SCPRPlayerWidgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRPlayerWidgetViewController.m; path = UI/PlayerWidget/SCPRPlayerWidgetViewController.m; sourceTree = "<group>"; };
-		28C9E7C9170E2BE300ED18FB /* SCPRPlayerWidgetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRPlayerWidgetViewController.xib; path = UI/PlayerWidget/SCPRPlayerWidgetViewController.xib; sourceTree = "<group>"; };
-		28C9E7CC170E2C1500ED18FB /* SCPRPlayerWidgetViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRPlayerWidgetViewController_iPad.xib; path = UI/PlayerWidget/SCPRPlayerWidgetViewController_iPad.xib; sourceTree = "<group>"; };
 		28DAFC5617D0207F00498A17 /* SCPRDeluxeEditionsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRDeluxeEditionsCell.h; path = UI/VideoPhoto/SCPRDeluxeEditionsCell.h; sourceTree = "<group>"; };
 		28DAFC5717D0207F00498A17 /* SCPRDeluxeEditionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRDeluxeEditionsCell.m; path = UI/VideoPhoto/SCPRDeluxeEditionsCell.m; sourceTree = "<group>"; };
 		28DAFC5A17D0219100498A17 /* SCPRDeluxeEditionsCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDeluxeEditionsCell_iPad.xib; path = UI/VideoPhoto/SCPRDeluxeEditionsCell_iPad.xib; sourceTree = "<group>"; };
@@ -3399,7 +3390,6 @@
 				254435A8179EE7A100394EDF /* SCPREditionAtomViewController.m */,
 				2585354618354E2200853085 /* SCPREditionAtomViewController.xib */,
 				254435A9179EE7A100394EDF /* SCPREditionAtomViewController_iPad.xib */,
-				25C9A46617F3AA8300B6BBB6 /* SCPREditionAtomViewController_iPadLandscape.xib */,
 				254435CF179F0B1000394EDF /* SCPREditionMoleculeViewController.h */,
 				254435D0179F0B1000394EDF /* SCPREditionMoleculeViewController.m */,
 				2585354818354E2200853085 /* SCPREditionMoleculeViewController.xib */,
@@ -4691,8 +4681,6 @@
 				284B964817163BBC0079D4CA /* SliderInfoBubble */,
 				28C9E7C7170E2BE300ED18FB /* SCPRPlayerWidgetViewController.h */,
 				28C9E7C8170E2BE300ED18FB /* SCPRPlayerWidgetViewController.m */,
-				28C9E7C9170E2BE300ED18FB /* SCPRPlayerWidgetViewController.xib */,
-				28C9E7CC170E2C1500ED18FB /* SCPRPlayerWidgetViewController_iPad.xib */,
 			);
 			name = PlayerWidget;
 			sourceTree = "<group>";
@@ -4872,8 +4860,6 @@
 				28A0CF1A171E05D900776579 /* person@2x.png in Resources */,
 				28A0CF1B171E05D900776579 /* stripes@2x.png in Resources */,
 				28036AB31718A344007DBDE2 /* InfoPlist.strings in Resources */,
-				28036AB91718A344007DBDE2 /* SCPRPlayerWidgetViewController.xib in Resources */,
-				28036ABA1718A344007DBDE2 /* SCPRPlayerWidgetViewController_iPad.xib in Resources */,
 				28036ABB1718A344007DBDE2 /* SCPRViewController_iPad.xib in Resources */,
 				25A70BDB17E13C220024E654 /* avatar-leadership-circle@2x.png in Resources */,
 				28036ABC1718A344007DBDE2 /* SCPRViewController.xib in Resources */,
@@ -5109,7 +5095,6 @@
 				2559458C1781F6A50014B0B5 /* stripes.png in Resources */,
 				2559458E1781F6A50014B0B5 /* thumb_handle.png in Resources */,
 				256421CC18106196002F1C6A /* blue_fave_heart@2x.png in Resources */,
-				25C9A46817F3AA8300B6BBB6 /* SCPREditionAtomViewController_iPadLandscape.xib in Resources */,
 				2585153C17CEAD340094F030 /* underConstruction.jpg in Resources */,
 				255945901781F6A50014B0B5 /* thumb_handle@2x.png in Resources */,
 				255945941781F8950014B0B5 /* playbarFull.png in Resources */,
@@ -5554,8 +5539,6 @@
 				25A70BF417E13C220024E654 /* button-signin-twitter.png in Resources */,
 				258BB7EE182C2F4800F19A63 /* small_taketwoevenings_splash@2x.jpg in Resources */,
 				2567DE6A18203B76008EA2FA /* icon-abstract-view-externalarticle@2x.png in Resources */,
-				28C9E7CB170E2BE300ED18FB /* SCPRPlayerWidgetViewController.xib in Resources */,
-				28C9E7CD170E2C1500ED18FB /* SCPRPlayerWidgetViewController_iPad.xib in Resources */,
 				28AFBE9C170F416C00125DB8 /* SCPRViewController_iPad.xib in Resources */,
 				28AFBE9D170F416C00125DB8 /* SCPRViewController.xib in Resources */,
 				2832FF051715F114009FF2F0 /* SCPRVolumeWidgetViewController.xib in Resources */,
@@ -6244,7 +6227,6 @@
 				25640EF617D110AE00CBDF68 /* SCPRDeluxeDividerView_iPad.xib in Resources */,
 				25D1C61418088225001FD92C /* icon-cancel-queue.png in Resources */,
 				25EC8E1917C4356000673DFF /* small_thelohdownonscience_splash@2x.jpg in Resources */,
-				25C9A46717F3AA8300B6BBB6 /* SCPREditionAtomViewController_iPadLandscape.xib in Resources */,
 				259AF5A518340478008AFB2A /* SCPRDeluxeNewsViewController.xib in Resources */,
 				25EC8E1B17C4356000673DFF /* small_thelohlife_splash.jpg in Resources */,
 				25EC8E1D17C4356000673DFF /* small_thelohlife_splash@2x.jpg in Resources */,

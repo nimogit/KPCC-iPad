@@ -44,7 +44,7 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xzj-aG-kg7" userLabel="LowerLeftCaption">
                     <rect key="frame" x="41" y="737" width="530" height="63"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="530" id="hyW-bG-RQE"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="530" id="hyW-bG-RQE"/>
                     </constraints>
                     <string key="text">Wolf iPhone banjo, pickled put a bird on it cray pop-up. Next level shabby chic tote bag Blue Bottle chambray plaid. Cornhole American Apparel letterpress raw denim, Odd Future whatever selvage small batch mumblecore authentic cliche chillwave Vice Carles. Blog fingerstache Etsy Vice cold-pressed small batch</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -62,10 +62,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1 of 999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xd7-1E-kZs" userLabel="UpperRightCaption">
-                    <rect key="frame" x="619" y="228" width="108" height="62"/>
+                    <rect key="frame" x="619" y="268" width="108" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="108" id="HQE-tB-prp"/>
-                        <constraint firstAttribute="height" constant="62" id="ePO-CT-VWe"/>
+                        <constraint firstAttribute="height" constant="22" id="ePO-CT-VWe"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -75,6 +75,7 @@
             <color key="backgroundColor" red="1" green="0.65782098200000005" blue="0.23028984420000001" alpha="0.47999999999999998" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Xzj-aG-kg7" firstAttribute="leading" secondItem="4" secondAttribute="leading" id="1na-NL-HR0"/>
+                <constraint firstItem="18" firstAttribute="leading" secondItem="Xzj-aG-kg7" secondAttribute="trailing" constant="19" id="5Kd-dX-Acw"/>
                 <constraint firstItem="Xzj-aG-kg7" firstAttribute="top" secondItem="4" secondAttribute="bottom" constant="12" id="6in-j1-6Yf"/>
                 <constraint firstItem="4" firstAttribute="top" secondItem="4Ri-8t-dKf" secondAttribute="bottom" constant="8" id="Ag1-RE-gxO"/>
                 <constraint firstItem="4Ri-8t-dKf" firstAttribute="top" relation="greaterThanOrEqual" secondItem="2" secondAttribute="top" constant="20" id="Avg-Wo-8na"/>

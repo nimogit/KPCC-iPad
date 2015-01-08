@@ -95,8 +95,6 @@ static CGFloat expanseLimit = 100.0;
   self.actualSizeLookupHash = [[NSMutableDictionary alloc] init];
   [self.scroller setTranslatesAutoresizingMaskIntoConstraints:NO];
   
-  NSLog(@" //// Removing %ld views ////", (long)self.scroller.subviews.count);
-  
   for ( UIView *v in self.scroller.subviews ) {
     [v removeFromSuperview];
   }

@@ -853,6 +853,7 @@
 
     [self.navigationController pushViewController:emvc
                                          animated:YES];
+    
   } else {
     if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage) {
       SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
