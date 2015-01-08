@@ -48,6 +48,10 @@
                         action:@selector(buttonTapped:)
               forControlEvents:UIControlEventTouchUpInside];
   
+  [self.backButton addTarget:self
+                      action:@selector(buttonTapped:)
+            forControlEvents:UIControlEventTouchUpInside];
+  
   self.navStack = [[NSMutableArray alloc] init];
   self.originalLeftButtonFrame = self.drawerButton.frame;
   [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.editButton.titleLabel.font.pointSize]
@@ -418,10 +422,6 @@
                                bold:NO
                       respectHeight:NO];
 
-  self.backButtonSeat.frame = CGRectMake(0.0,
-                                         self.backButtonSeat.frame.origin.y,
-                                         self.backButtonSeat.frame.size.width,
-                                         self.backButtonSeat.frame.size.height);
 }
 
 - (void)eraseDonateButton {
@@ -435,14 +435,7 @@
   [self eraseSharingButton];
   [self eraseCategoriesButton];
   [self erasePager];
-  /*[self.view addSubview:self.donateButton];
-  
-  self.donateButton.frame = CGRectMake(self.view.frame.size.width - self.donateButton.frame.size.width - 2.0,
-                                       0.0,
-                                       self.donateButton.frame.size.width,
-                                       self.donateButton.frame.size.height);
-  self.donateButton.center = CGPointMake(self.donateButton.center.x,
-                                         self.view.frame.size.height / 2.0);*/
+
   [UIView animateWithDuration:0.22 animations:^{
     [self.donateButton setAlpha:1.0];
   }];
@@ -451,14 +444,7 @@
 - (void)applySignoutButton {
   [self eraseDonateButton];
   [self erasePager];
-  /*[self.view addSubview:self.signoutButton];
-  
-  self.signoutButton.frame = CGRectMake(self.view.frame.size.width - self.signoutButton.frame.size.width - 10.0,
-                                        0.0,
-                                        self.signoutButton.frame.size.width,
-                                        self.signoutButton.frame.size.height);
-  self.signoutButton.center = CGPointMake(self.signoutButton.center.x,
-                                          self.view.frame.size.height / 2.0);*/
+
   [UIView animateWithDuration:0.22 animations:^{
     [self.signoutButton setAlpha:1.0];
   }];
@@ -496,14 +482,7 @@
   [self eraseDonateButton];
   [self eraseCloseCategoriesButton];
   [self erasePager];
-  /*[self.view addSubview:self.categoriesButton];
-  
-  self.categoriesButton.frame = CGRectMake(self.view.frame.size.width - self.categoriesButton.frame.size.width - 10.0,
-                                           0.0,
-                                           self.categoriesButton.frame.size.width,
-                                           self.categoriesButton.frame.size.height);
-  self.categoriesButton.center = CGPointMake(self.categoriesButton.center.x,
-                                             self.view.frame.size.height / 2.0);*/
+
   [UIView animateWithDuration:0.22 animations:^{
     [self.categoriesButton setAlpha:1.0];
   }];
@@ -520,16 +499,7 @@
   [self eraseCategoriesButton];
   [self eraseDonateButton];
   [self erasePager];
-  /*[self.view addSubview:self.closeCategoriesButton];
-  
-  
-  self.closeCategoriesButton.frame = CGRectMake(self.view.frame.size.width - self.closeCategoriesButton.frame.size.width - 10.0,
-                                                0.0,
-                                                self.closeCategoriesButton.frame.size.width,
-                                                self.closeCategoriesButton.frame.size.height);
-  self.closeCategoriesButton.center = CGPointMake(self.closeCategoriesButton.center.x,
-                                                  self.view.frame.size.height / 2.0);
-  */
+
   [UIView animateWithDuration:0.22 animations:^{
     [self.closeCategoriesButton setAlpha:1.0];
   }];

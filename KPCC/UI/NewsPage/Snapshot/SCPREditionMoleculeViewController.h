@@ -21,15 +21,21 @@
 @property (nonatomic,strong) id parentEditionContentViewController;
 @property NSInteger currentIndex;
 @property NSInteger moleculeIndex;
+
 @property BOOL fromNewsPage;
+@property BOOL needsContentSnap;
+
 @property (nonatomic,strong) NSDictionary *editionShell;
 @property (nonatomic,strong) IBOutlet UILabel *editionInfoLabel;
 @property (nonatomic,strong) IBOutlet UIView *infoSeatView;
+@property (nonatomic,strong) NSMutableDictionary *metricChain;
 
 - (void)setupWithEditions:(NSMutableArray*)editions andIndex:(NSInteger)index;
 - (void)setupWithEdition:(NSDictionary*)edition andIndex:(NSInteger)index;
 - (void)pushToAtomDetails:(NSInteger)index;
 - (void)pushToCurrentAtomDetails;
 - (void)sendAnalysis;
+
+- (void)snapContentSize;
 
 @end

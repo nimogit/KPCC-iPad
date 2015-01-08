@@ -114,7 +114,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)snapToDisplayPortWithView:(id)view {
-  UIView *v2u = nil;
+  /*UIView *v2u = nil;
   if ( [view isKindOfClass:[UIView class]] ) {
     v2u = view;
   }
@@ -141,7 +141,10 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   [self.displayPortView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.displayPortView addConstraints:total];
   [self.displayPortView setNeedsUpdateConstraints];
-  [self.displayPortView layoutIfNeeded];
+  [self.displayPortView layoutIfNeeded];*/
+  
+  [[DesignManager shared] snapView:view
+                       toContainer:self.displayPortView];
   
 }
 

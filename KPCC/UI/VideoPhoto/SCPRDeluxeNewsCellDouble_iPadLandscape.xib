@@ -402,6 +402,7 @@
                 <outlet property="facebookCountLabel" destination="Gh8-dP-8i7" id="phq-rl-Yo7"/>
                 <outlet property="facebookLogoImage" destination="9IY-RL-SjU" id="8B7-hl-4Up"/>
                 <outlet property="headlineLabel" destination="Mno-rr-pnh" id="x8Z-tg-til"/>
+                <outlet property="playOverlayImage" destination="vUF-L2-yjA" id="96S-21-WxV"/>
                 <outlet property="slideshowLabel" destination="mE7-uE-wpb" id="4Wa-cl-ZJ7"/>
                 <outlet property="socialCountView" destination="Qk9-GR-0p2" id="7iD-dE-Dck"/>
                 <outlet property="socialLineDivider" destination="GZr-wK-wrH" id="S90-p6-Pnk"/>

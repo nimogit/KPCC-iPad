@@ -853,11 +853,12 @@
 
     [self.navigationController pushViewController:emvc
                                          animated:YES];
+    
   } else {
     if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage) {
-      SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc]
-                                                             initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
-                                                             bundle:nil];
+      SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                                                              navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                                                            options:@{ UIPageViewControllerOptionSpineLocationKey : @( UIPageViewControllerSpineLocationMin)}];
     
       NSArray *collectionType = nil;
       if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {

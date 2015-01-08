@@ -12,6 +12,7 @@
 #import "SCPRNewsPageViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRDeluxeNewsViewController.h"
+#import "UIView+PrintDimensions.h"
 
 @interface SCPRSingleArticleCollectionViewController ()
 
@@ -34,10 +35,8 @@
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
   }
   
-  self.view.backgroundColor = [[DesignManager shared] vinylColor:1.0];
-  self.articleScroller.pagingEnabled = YES;
-  self.articleScroller.showsHorizontalScrollIndicator = NO;
-  self.articleScroller.showsVerticalScrollIndicator = NO;
+
+  self.view.backgroundColor = [UIColor whiteColor];
   self.contentLock = NO;
   self.fetchLock = NO;
   self.wingArticles = [[NSMutableDictionary alloc] init];
@@ -45,6 +44,56 @@
   self.visualComponents = [[NSMutableArray alloc] init];
   self.queuedForTrash = [[NSMutableDictionary alloc] init];
   self.webcontentQueue = [[NSOperationQueue alloc] init];
+  /*
+  self.articlePageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                                   navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                                 options:@{ UIPageViewControllerOptionSpineLocationKey : @( UIPageViewControllerSpineLocationMin)}];
+  
+  self.articlePageViewController.view.frame = CGRectMake(0.0,0.0,self.view.frame.size.width,
+                                                         self.view.frame.size.height);*/
+  self.articlePageViewController = self;
+  
+  
+  self.articlePageViewController.delegate = self;
+  self.articlePageViewController.dataSource = self;
+  
+  /*[[DesignManager shared] snapView:self.articlePageViewController.view
+                       toContainer:self.view];*/
+  
+
+  [self.articlePageViewController.view printDimensionsWithIdentifier:@"Article Page Container"];
+
+  [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+  [self.view printDimensionsWithIdentifier:@"Single Article Collection"];
+  
+  /*
+  UIView *dummy = [[UIView alloc] initWithFrame:CGRectMake(120.0,140.0,120.0,120.0)];
+  dummy.backgroundColor = [[DesignManager shared] prettyRandomColor];
+  [self.view addSubview:dummy];*/
+  
+}
+
+- (SCPRSingleArticleViewController*)prepareArticleViewWithIndex:(NSInteger)index {
+  NSDictionary *relatedArticle = [self.articles objectAtIndex:index];
+  SCPRSingleArticleViewController *articleView = [[SCPRSingleArticleViewController alloc]
+                                                  initWithNibName:[[DesignManager shared]
+                                                                   xibForPlatformWithName:@"SCPRSingleArticleViewController"]
+                                                  bundle:nil];
+  articleView.view.frame = articleView.view.frame;
+  
+  [articleView setParentCollection:self];
+  [articleView setIndex:index];
+  [articleView setRelatedArticle:relatedArticle];
+
+  articleView.webContentLoader.loadingSkeletonContent = NO;
+  articleView.parentNewsPage = self.parentContainer;
+  
+  [articleView arrangeContent];
+  
+  [articleView.view setNeedsLayout];
+  [articleView.view layoutIfNeeded];
+  
+  return articleView;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -53,8 +102,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  self.articleScroller.contentSize = CGSizeMake([self.visualComponents count] * self.articleScroller.frame.size.width,
-                                                self.articleScroller.frame.size.height);
+  /*self.articleScroller.contentSize = CGSizeMake([self.visualComponents count] * self.articleScroller.frame.size.width,
+                                                self.articleScroller.frame.size.height);*/
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -63,27 +112,40 @@
   }
 }
 
+- (void)prepareArticleView:(SCPRSingleArticleViewController *)savc {
+  
+}
+
 - (void)setupWithCollection:(NSArray *)articles beginningAtIndex:(NSInteger)index processIndex:(BOOL)processIndex {
   
   if (index >= [articles count]) {
     return;
   }
   
-  if (self.currentPage) {
-    SCPRSingleArticleViewController *svc = (SCPRSingleArticleViewController*)self.currentPage;
-    [svc killContent];
-  }
-  
-  if (index != [articles count] - 1) {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(hideStalePage)
-                                               name:@"new_webcontent_loaded"
-                                             object:nil];
-  }
-  
   self.articles = [NSMutableArray arrayWithArray:articles];
   self.currentIndex = index;
   
+  SCPRSingleArticleViewController *articleView = [self prepareArticleViewWithIndex:index];
+  self.visualComponents = [NSMutableArray new];
+  [self.visualComponents addObject:articleView];
+  
+  __block SCPRSingleArticleCollectionViewController *weakself_ = self;
+  
+  [self.articlePageViewController setViewControllers:@[articleView]
+                                           direction:UIPageViewControllerNavigationDirectionForward
+                                            animated:NO
+                                          completion:^(BOOL finished) {
+                                            
+                                            
+                                            [articleView.view printDimensionsWithIdentifier:@"Single Article View"];
+                                            weakself_.view.alpha = 1.0;
+                                            articleView.view.alpha = 1.0;
+                                            
+                                          }];
+  
+  
+  
+  /*
   for (NSString *key in [self.wingArticles allKeys]) {
     if ([key isEqualToString:self.protect]) {
       SCPRSingleArticleViewController *svc = [self.wingArticles objectForKey:key];
@@ -277,7 +339,8 @@
   SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
   [root preserveAd];
 #endif
-  
+  */
+
   [[NSNotificationCenter defaultCenter] postNotificationName:@"single_article_finished_loading"
                                                       object:nil];
 }
@@ -291,11 +354,6 @@
 
 #pragma mark - Backable
 - (void)backTapped {
-
-  if (![Utilities isIOS7]) {
-    SCPRViewController *mvc = [[Utilities del] viewController];
-    [mvc.mainPageScroller setContentOffset:CGPointMake(0.0, 0.0)];
-  }
   
   [[ContentManager shared] popFromResizeVector];
   [[DesignManager shared] setInSingleArticle:NO];
@@ -312,6 +370,40 @@
   }
 
   [self cleanup];
+}
+
+#pragma mark - UIPageViewController
+- (UIViewController*)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+  
+  NSInteger nextIndex = self.currentIndex + 1;
+  if ( self.currentIndex + 1 >= [self.articles count] ) {
+    nextIndex = 0;
+  }
+
+  return [self prepareArticleViewWithIndex:nextIndex];
+}
+
+- (UIViewController*)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+  NSInteger previousIndex = self.currentIndex - 1;
+  if ( self.currentIndex - 1 < 0 ) {
+    previousIndex = [self.articles count]-1;
+  }
+  
+  return [self prepareArticleViewWithIndex:previousIndex];
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
+  if ( [pendingViewControllers count] > 0 ) {
+    SCPRSingleArticleViewController *svc = (SCPRSingleArticleViewController*)[pendingViewControllers firstObject];
+    self.pendingIndex = svc.index;
+  }
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
+  
+  self.currentIndex = self.pendingIndex;
+  [[ContentManager shared] setFocusedContentObject:self.articles[self.currentIndex]];
+  
 }
 
 
@@ -471,8 +563,13 @@
   }];
 }
 
+- (NSUInteger)pageViewControllerSupportedInterfaceOrientations:(UIPageViewController *)pageViewController {
+  return UIInterfaceOrientationLandscapeLeft|UIInterfaceOrientationLandscapeRight|UIInterfaceOrientationPortrait;
+}
+
 - (void)handleRotationPost {
   
+  /*
   SCPRSingleArticleCollectionViewController *dummy = [[SCPRSingleArticleCollectionViewController alloc]
                                                       initWithNibName:[[DesignManager shared]
                                                                        xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
@@ -489,11 +586,19 @@
   [UIView animateWithDuration:0.25 animations:^{
     self.articleScroller.alpha = 1.0;
   }];
+  */
+  
+  [self setupWithCollection:self.articles
+           beginningAtIndex:self.currentIndex
+               processIndex:YES];
+  
+  [self.view setNeedsLayout];
+  [self.view setNeedsUpdateConstraints];
   
 }
 
 - (void)cleanup {
-  
+  /*
   for (SCPRSingleArticleViewController *svc in self.visualComponents) {
     [svc killContent];
   }
@@ -515,7 +620,11 @@
   if (self.parentDeluxeNewsPage) {
     SCPRDeluxeNewsViewController *dnc = (SCPRDeluxeNewsViewController*)self.parentDeluxeNewsPage;
     dnc.pushedCollection = nil;
-  }
+  }*/
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
+  
 }
 
 #ifdef LOG_DEALLOCATIONS

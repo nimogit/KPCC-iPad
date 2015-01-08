@@ -51,6 +51,7 @@
   if ( [Utilities isIOS7] ) {
     self.automaticallyAdjustsScrollViewInsets = NO;
   } else {
+    
   }
   
   BOOL needsRefresh = NO;
@@ -171,6 +172,7 @@
   }
  */
 }
+
 - (void)viewDidAppear:(BOOL)animated {
  /*
   SCPRTitlebarViewController *tb = [[Utilities del] globalTitleBar];
@@ -278,14 +280,14 @@
 }
 
 - (void)handleRotationPost {
-  
+  /*
   [self setupWithEditions:self.editions];
   self.editionsScroller.contentOffset = CGPointMake(self.editionsScroller.frame.size.width*self.currentIndex,
                                                     0.0);
   
   [UIView animateWithDuration:0.25 animations:^{
     self.editionsScroller.alpha = 1.0;
-  }];
+  }];*/
 }
 
 - (BOOL)shouldAutorotate {

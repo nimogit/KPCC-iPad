@@ -37,15 +37,18 @@
   [self.activity startAnimating];
 
   self.view.backgroundColor = [UIColor whiteColor];
+  self.masterContentScroller.backgroundColor = [UIColor whiteColor];
+
   self.webContentLoader.webView.alpha = 0.0;
   self.textSheetView.alpha = 0.0;
-  self.cloakView.alpha = 0.0;
+  self.cloakView.alpha = 1.0;
   self.queueButton.alpha = 0.0;
   self.basicTemplate.headLine.textColor = [UIColor blackColor];
   self.basicTemplate.byLine.textColor = [UIColor blackColor];
   self.basicTemplate.aspectCode = @"SingleArticle";
   self.basicTemplate.backgroundColor = [UIColor whiteColor];
   self.textSheetView.backgroundColor = [UIColor whiteColor];
+  
   self.basicTemplate.templateStyle = NewsPageTemplateSingleArticle;
   self.socialSheetView.alpha = 0.0;
   self.categorySeat.backgroundColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
@@ -198,6 +201,7 @@
     [self queryParse];  
   }
 
+  
 #ifdef DEBUG
   // -- Developer Note --
   // This is a way to override the contents of the article so you can look at specific use-cases of story content which is helpful for debugging.
@@ -230,6 +234,7 @@
     self.pushAssetIntoBody = YES;
   }
 
+
   NSArray *assets = [self.relatedArticle objectForKey:@"assets"];
 
   if ([assets count] > 1) {
@@ -258,9 +263,10 @@
                                     options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial
                                     context:nil];
     }
-  } else { // Configure Article with no asset main asset.
-    self.shortPage = YES;
     
+  } else { // Configure Article with no asset main asset.
+    
+    self.shortPage = YES;
     self.captionButton.alpha = 0.0;
     self.basicTemplate.backgroundColor = [UIColor whiteColor];
 
@@ -268,20 +274,27 @@
       [self.basicTemplate.image1 removeFromSuperview];
       self.basicTemplate.matteView.alpha = 0.0;
       
-      CGFloat yOffset = [Utilities isIOS7] ? 0.0 : 20.0;
-      self.textSheetView.frame = CGRectMake(self.basicTemplate.matteView.frame.origin.x,
-                                            self.basicTemplate.matteView.frame.origin.y + yOffset,
-                                            self.textSheetView.frame.size.width,
-                                            self.textSheetView.frame.size.height);
+      self.articleDetailsAnchor.constant = 0.0;
+      
     } else {
-      self.landscapeImageSheetView.alpha = 0.0;
+      
+      [self.landscapeImageSheetView removeFromSuperview];
+      if ( self.articleDetailsAnchor ) {
+        [self.masterContentScroller removeConstraint:self.articleDetailsAnchor];
+      }
+      
+      self.articleDetailsAnchor = [NSLayoutConstraint constraintWithItem:self.webContentLoader.webView
+                                                               attribute:NSLayoutAttributeTopMargin
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.textSheetView
+                                                               attribute:NSLayoutAttributeBottomMargin
+                                                              multiplier:1.0
+                                                                constant:0.0];
+      [self.masterContentScroller addConstraint:self.articleDetailsAnchor];
+      
     }
 
-    CGFloat heightDiff = self.masterContentScroller.frame.size.height - (self.textSheetView.frame.origin.y + self.textSheetView.frame.size.height);
-    self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
-                                                     self.textSheetView.frame.origin.y + self.textSheetView.frame.size.height,
-                                                     self.webContentLoader.webView.frame.size.width,
-                                                     heightDiff);
+
   } // end configure noAsset article
 
 
@@ -323,75 +336,31 @@
     [self.categoryLabel titleizeText:@"MISCELLANEOUS" bold:YES];
   }
   
-  
-  // Provide vertical spacing between Category, Headling, and Byline
-  [[DesignManager shared] avoidNeighbor:self.categorySeat
-                                 withView:self.basicTemplate.headLine
-                                direction:NeighborDirectionAbove
-                                  padding:20.0];
-  [[DesignManager shared] avoidNeighbor:self.basicTemplate.headLine
-                                 withView:self.basicTemplate.byLine
-                                direction:NeighborDirectionAbove
-                                  padding:12.0];
-  [[DesignManager shared] avoidNeighbor:self.basicTemplate.byLine
-                                 withView:self.contentDividerLine
-                                direction:NeighborDirectionAbove
-                                  padding:30.0];
-  
-
   // Handle article Audio
   NSArray *audio = [self.relatedArticle objectForKey:@"audio"];
   BOOL hasAudio = NO;
-  CGFloat accountForAudio = 0.0;
-  if ([audio count] > 0 ) {
+  if ( [audio count] > 0 ) {
     hasAudio = YES;
-    accountForAudio = self.audioSeatView.frame.size.height;
   }
   
-  self.textSheetView.frame = CGRectMake(self.textSheetView.frame.origin.x,
-                                        self.textSheetView.frame.origin.y,
-                                        self.textSheetView.frame.size.width,
-                                        self.contentDividerLine.frame.origin.y + self.contentDividerLine.frame.size.height - 1.0 + accountForAudio);
 
   // Update UI for audioSeatView
   if (hasAudio) {
-    [self.textSheetView addSubview:self.audioSeatView];
-
-    if ([Utilities isLandscape]) {
-      self.audioSeatView.frame = CGRectMake(self.basicTemplate.headLine.frame.origin.x,
-                                            self.textSheetView.frame.size.height - self.audioSeatView.frame.size.height - 10.0,
-                                            self.basicTemplate.image1.frame.size.width,
-                                            self.audioSeatView.frame.size.height);
-      
-      self.basicTemplate.matteView.frame = CGRectMake(self.basicTemplate.matteView.frame.origin.x,
-                                                      self.basicTemplate.matteView.frame.origin.y,
-                                                      self.basicTemplate.matteView.frame.size.width,
-                                                      self.textSheetView.frame.size.height);
-      
-      [self.captionButton removeFromSuperview];
-      self.captionButton.frame = CGRectMake(0.0, 0.0,
-                                            self.landscapeImageSheetView.frame.size.width,
-                                            self.landscapeImageSheetView.frame.size.height);
-      [self.landscapeImageSheetView addSubview:self.captionButton];
-
-    } else {
-      self.audioSeatView.frame = CGRectMake(0.0,
-                                            self.textSheetView.frame.size.height - self.audioSeatView.frame.size.height - 10.0,
-                                            self.audioSeatView.frame.size.width,
-                                            self.audioSeatView.frame.size.height);
-    }
-
+    
     self.audioDividerLine.vertical = YES;
     self.queueButton.alpha = 1.0;
     
-    [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.queueButton.titleLabel.font.pointSize]
+    [[DesignManager shared] globalSetFontTo:[[DesignManager shared]
+                                             latoRegular:self.queueButton.titleLabel.font.pointSize]
                                   forButton:self.queueButton];
     
     self.contentDividerLine.alpha = 0.0;
     self.audioSeatInternalView.layer.borderColor = [[DesignManager shared] periwinkleColor].CGColor;
     self.audioSeatInternalView.layer.borderWidth = 1.0;
     
-    [self.playThisAudioLabel titleizeText:self.playThisAudioLabel.text bold:NO];
+    [self.playThisAudioLabel titleizeText:self.playThisAudioLabel.text
+                                     bold:NO];
+    
     NSDictionary *piece = [audio objectAtIndex:0];
     if ([piece objectForKey:@"duration"] != [NSNull null]) {
       [self.audioDurationLabel italicizeText:[Utilities formalStringFromSeconds:[[piece objectForKey:@"duration"] intValue]]
@@ -400,64 +369,15 @@
     } else {
       [self.audioDurationLabel setHidden:YES];
     }
-  } // if hasAudio
-
-
-  // Vertical spacing for asset in body, landscape, or shortPage.
-  if (![Utilities isLandscape] || (self.pushAssetIntoBody && [Utilities isLandscape])) {
-    self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
-                                                     self.textSheetView.frame.origin.y + self.textSheetView.frame.size.height,
-                                                     self.webContentLoader.webView.frame.size.width,
-                                                     self.webContentLoader.webView.frame.size.height);
+    
   } else {
-    if (!self.shortPage) {
-      [[DesignManager shared] avoidNeighbor:self.textSheetView
-                                   withView:self.landscapeImageSheetView
-                                  direction:NeighborDirectionAbove
-                                    padding:0.0];
-      
-      [[DesignManager shared] avoidNeighbor:self.landscapeImageSheetView
-                                   withView:self.webContentLoader.webView
-                                  direction:NeighborDirectionAbove
-                                    padding:0.0];
-    }
+    [self shortenForNoAudio];
   }
-  
-  [[DesignManager shared] alignHorizontalCenterOf:self.textSheetView
-                                         withView:self.webContentLoader.webView];
   
   [self adjustUIForQueue:nil];
+  
   self.contentArranged = YES;
   self.textSheetView.alpha = 1.0;
-  
-
-  // Handling articles with more than one image asset and asset-in-body.
-  [self.extraAssetsSeat removeFromSuperview];
-  if ([assets count] > 1 && self.pushAssetIntoBody) {
-    if (![Utilities isLandscape]) {
-      [self.textSheetView addSubview:self.extraAssetsSeat];
-      [[DesignManager shared] avoidNeighbor:self.contentDividerLine
-                                   withView:self.extraAssetsSeat
-                                  direction:NeighborDirectionBelow padding:10.0];
-      
-      [[DesignManager shared] alignRightOf:self.extraAssetsSeat
-                                  withView:self.contentDividerLine];
-      
-      [self.playOverlayButton removeFromSuperview];
-      [self.textSheetView addSubview:self.playOverlayButton];
-      self.playOverlayButton.frame = self.extraAssetsSeat.frame;
-    }
-  } else {
-    if (![Utilities isLandscape]) {
-      [self.view addSubview:self.extraAssetsSeat];
-      [self.view sendSubviewToBack:self.extraAssetsSeat];
-      [[DesignManager shared] alignHorizontalCenterOf:self.extraAssetsSeat
-                                           withView:self.masterContentScroller];
-    } else {
-      [self.landscapeImageSheetView addSubview:self.extraAssetsSeat];
-      [self.landscapeImageSheetView bringSubviewToFront:self.playOverlayButton];
-    }
-  }
 
 
   // On Portrait article with large image asset, send image to lowest seat in main view.
@@ -466,6 +386,7 @@
       [self.basicTemplate.image1 removeFromSuperview];
       [self.view addSubview:self.basicTemplate.image1];
       [self.view sendSubviewToBack:self.basicTemplate.image1];
+      self.masterContentScroller.backgroundColor = [UIColor clearColor];
     }
     [[DesignManager shared] alignHorizontalCenterOf:self.basicTemplate.image1
                                            withView:self.masterContentScroller];
@@ -479,16 +400,6 @@
     [self eventTreatment];
   }
 
-
-  // Resize width of Category seat to snap to size of text inside it.
-  CGSize categorySize = [self.categoryLabel.text sizeOfStringWithFont:self.categoryLabel.font
-                                                    constrainedToSize:CGSizeMake(self.categoryLabel.frame.size.width, self.categoryLabel.frame.size.height)];
-
-  self.categorySeat.frame = CGRectMake(self.categorySeat.frame.origin.x,
-                                       self.shortPage ? 10.0 : self.categorySeat.frame.origin.y,
-                                       self.categoryLabel.frame.origin.x + categorySize.width + self.categoryLabel.frame.origin.x,
-                                       self.categorySeat.frame.size.height);
-  
   // Store 'original' height of webView, prior to placing any article content inside of it.
   // Used later to calculate content size for masterScoller.
   self.originalWebViewHeight = self.webContentLoader.webView.frame;
@@ -501,6 +412,33 @@
                                completion:^{
 
                                }];
+}
+
+- (void)shortenForNoAudio {
+  
+  [self.textSheetView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.audioSeatView removeFromSuperview];
+  
+  if ( self.grayLineBottomAnchor ) {
+    [self.textSheetView removeConstraint:self.grayLineBottomAnchor];
+    self.grayLineBottomAnchor = nil;
+  }
+
+  if ( self.playerControlsByLineAnchor ) {
+    [self.textSheetView removeConstraint:self.playerControlsByLineAnchor];
+    self.playerControlsByLineAnchor = nil;
+  }
+  
+  self.grayLineBottomAnchor = [NSLayoutConstraint constraintWithItem:self.contentDividerLine
+                                                           attribute:NSLayoutAttributeTopMargin
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.basicTemplate.byLine
+                                                           attribute:NSLayoutAttributeBottomMargin
+                                                          multiplier:1.0
+                                                            constant:28.0];
+  
+  [self.textSheetView addConstraint:self.grayLineBottomAnchor];
+  
 }
 
 #pragma mark - UI Treatment for ContentCategoryEvents
@@ -724,19 +662,8 @@
                                  action:@selector(presentSlideshow:)
                        forControlEvents:UIControlEventTouchUpInside];
       prime = YES;
+
       
-      CGFloat push = [Utilities isIpad] ? 170.0 : 60.0;
-      self.extraAssetsSeat.center = CGPointMake(self.basicTemplate.image1.frame.size.width/2.0,
-                                                self.basicTemplate.image1.frame.size.height/2.0+push);
-      
-      if ( [Utilities isLandscape] ) {
-        [self.playOverlayButton removeFromSuperview];
-        self.playOverlayButton.frame = CGRectMake(0.0,
-                                                  0.0,
-                                                  self.landscapeImageSheetView.frame.size.width,
-                                                  self.landscapeImageSheetView.frame.size.height);
-        [self.landscapeImageSheetView addSubview:self.playOverlayButton];
-      }
     } else { // Set caption for article with only one asset.
       if (primary) {
         [self armCaption:primary];
@@ -747,41 +674,6 @@
   } // end-if for hasNative assets
   
 
-  if (prime) {
-    
-    if ([Utilities isLandscape]) {
-      [self.extraAssetsSeat removeFromSuperview];
-      [self.landscapeImageSheetView addSubview:self.extraAssetsSeat];
-    }
-
-    CGSize tl = [self.extraAssetsLabel.text sizeOfStringWithFont:self.extraAssetsLabel.font
-                 constrainedToSize:CGSizeMake(self.extraAssetsLabel.frame.size.width,
-                                              self.extraAssetsLabel.frame.size.height)];
-
-    CGFloat candidate = 3.0;
-    if ( (int)(tl.width + 3.0) % 2 != 0 ) {
-      candidate = 4.0;
-    }
-    
-    self.extraAssetsLabel.frame = CGRectMake(self.extraAssetsLabel.frame.origin.x,
-                                             self.extraAssetsLabel.frame.origin.y,
-                                             ceilf(tl.width + candidate),
-                                             self.extraAssetsLabel.frame.size.height);
-    
-    self.extraAssetsSeat.frame = CGRectMake(self.extraAssetsSeat.frame.origin.x,
-                                            self.extraAssetsSeat.frame.origin.y,
-                                            self.extraAssetsLabel.frame.origin.x + self.extraAssetsLabel.frame.size.width+self.extraAssetsImage.frame.origin.x,
-                                            self.extraAssetsSeat.frame.size.height);
-    
-    if ( ![Utilities isLandscape] ) {
-      [[DesignManager shared] alignHorizontalCenterOf:self.extraAssetsSeat
-                                             withView:self.basicTemplate.image1];
-    } else {
-      self.extraAssetsSeat.center = CGPointMake(self.landscapeImageSheetView.frame.size.width / 2.0,
-                                                self.extraAssetsSeat.center.y);
-      [self.landscapeImageSheetView bringSubviewToFront:self.playOverlayButton];
-    }
-  } // if prime
 }
 
 
@@ -938,20 +830,8 @@
     webHeight +=  60.0;
   }
   
-  self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
-                                                   self.webContentLoader.webView.frame.origin.y,
-                                                   self.webContentLoader.webView.frame.size.width,
-                                                   webHeight + 150.0);
+  self.webContentHeightAnchor.constant = webHeight;
   
-  self.webContentLoader.webView.scrollView.scrollEnabled = NO;
-  
-  self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.frame.size.width,
-                                                      totalHeight + 150.0);
-  
-  self.masterContentScroller.frame = CGRectMake(self.masterContentScroller.frame.origin.x,
-                                                self.masterContentScroller.frame.origin.y,
-                                                self.masterContentScroller.frame.size.width,
-                                                self.masterContentScroller.frame.size.height);
   
   if (self.hasSocialData) {
     // Place the social sheetview below the article's contents and embeds
@@ -1105,10 +985,55 @@
 
   if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
     [self.masterContentScroller addSubview:self.socialSheetView];
-    [self.socialSheetView setFrame:CGRectMake(self.socialSheetView.frame.origin.x,
-                                              self.masterContentScroller.contentSize.height - self.socialSheetView.frame.size.height,
-                                              self.socialSheetView.frame.size.width,
-                                              self.socialSheetView.frame.size.height)];
+    NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[social]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:@{ @"social" : self.socialSheetView }];
+    
+    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:self.socialSheetView
+                                                             attribute:NSLayoutAttributeHeight
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil
+                                                             attribute:NSLayoutAttributeNotAnAttribute
+                                                            multiplier:1.0
+                                                              constant:self.socialSheetView.frame.size.height];
+    
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.socialSheetView
+                                                                        attribute:NSLayoutAttributeWidth
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:nil
+                                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                                       multiplier:1.0
+                                                                         constant:self.webContentLoader.webView.frame.size.width];
+    
+    NSLayoutConstraint *verticalAnchor1 = [NSLayoutConstraint constraintWithItem:self.socialSheetView
+                                                                      attribute:NSLayoutAttributeBottomMargin
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.masterContentScroller
+                                                                      attribute:NSLayoutAttributeBottomMargin
+                                                                     multiplier:1.0
+                                                                       constant:0.0];
+    
+    NSLayoutConstraint *verticalAnchor2 = [NSLayoutConstraint constraintWithItem:self.socialSheetView
+                                                                       attribute:NSLayoutAttributeTopMargin
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.webContentLoader.webView
+                                                                       attribute:NSLayoutAttributeBottomMargin
+                                                                      multiplier:1.0
+                                                                        constant:0.0];
+    
+    [self.socialSheetView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.webContentLoader.webView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+
+    
+    [self.masterContentScroller removeConstraint:self.webViewBottomAnchor];
+    [self.socialSheetView addConstraint:heightConstraint];
+    [self.socialSheetView addConstraint:widthConstraint];
+    [self.masterContentScroller addConstraints:constraints];
+    [self.masterContentScroller addConstraint:verticalAnchor1];
+    [self.masterContentScroller addConstraint:verticalAnchor2];
+
   }
   
   if (self.socialCountHash) {
@@ -1137,39 +1062,6 @@
     [self.twitterLogoImage setImage:[UIImage imageNamed:@"icon-social-twitter-disabled"]];
   }
   
-  // Resize Facebook count frame to fit its contents.
-  CGRect origFacebookFrame = self.facebookCountLabel.frame;
-  [self.facebookCountLabel sizeToFit];
-  self.facebookCountLabel.frame = CGRectMake(self.facebookCountLabel.frame.origin.x,
-                                             origFacebookFrame.origin.y,
-                                             self.facebookCountLabel.frame.size.width,
-                                             origFacebookFrame.size.height);
-  
-  // Space the vertical line divider 6px to right of Facebook count label.
-  [[DesignManager shared] avoidNeighbor:self.facebookCountLabel
-                               withView:self.socialLineDivider
-                              direction:NeighborDirectionToLeft
-                                padding:6.0];
-  
-  // Space the twitter Logo 8px to right of vertical line divider.
-  self.twitterLogoImage.frame = CGRectMake(self.socialLineDivider.frame.origin.x + 8,
-                                           self.twitterLogoImage.frame.origin.y,
-                                           self.twitterLogoImage.frame.size.width,
-                                           self.twitterLogoImage.frame.size.height);
-  
-  // Position the twitter count label 20px to right of twitter logo.
-  self.twitterCountLabel.frame = CGRectMake(self.twitterLogoImage.frame.origin.x + 20,
-                                            self.twitterCountLabel.frame.origin.y,
-                                            self.twitterCountLabel.frame.size.width,
-                                            self.twitterCountLabel.frame.size.height);
-  
-  // Resize Twitter count frame to fit its contents.
-  CGRect origTwitterFrame = self.twitterCountLabel.frame;
-  [self.twitterCountLabel sizeToFit];
-  self.twitterCountLabel.frame = CGRectMake(self.twitterCountLabel.frame.origin.x,
-                                             origTwitterFrame.origin.y,
-                                             self.twitterCountLabel.frame.size.width,
-                                             origTwitterFrame.size.height);
 
   [self refreshHeight];
 }
@@ -1453,7 +1345,7 @@
   NSString *code = [NSString stringWithFormat:@"%@%d",[Utilities sha1:title],
                     (NSInteger)[[NSDate date] timeIntervalSince1970]];
   self.deactivationToken = code;
-  [[ContentManager shared] queueDeactivation:self];
+  //[[ContentManager shared] queueDeactivation:self];
   
   @try {
     [self.masterContentScroller removeObserver:self
@@ -1465,9 +1357,7 @@
   NSString *blank = [[FileManager shared] copyFromMainBundleToDocuments:@"blank.html"
                                                                destName:@"blank.html"];
   NSURL *url = [NSURL fileURLWithPath:blank];
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                         cachePolicy:NSURLCacheStorageAllowed
-                                                     timeoutInterval:10.0];
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
   
   [self.webContentLoader.webView stopLoading];
   self.webContentLoader.cleaningUp = YES;
@@ -1510,13 +1400,14 @@
   [[ContentManager shared] popDeactivation:self.deactivationToken];
 }
 
-#ifdef LOG_DEALLOCATIONS
+
 - (void)dealloc {
   
   NSLog(@"DEALLOCATING SINGLE ARTICLE VIEW CONTROLLER...");
+  [self safeKillContent];
   
 }
-#endif
+
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];

@@ -1222,7 +1222,11 @@ static ContentManager *singleton = nil;
   if ( [self.resizeVector count] > 0 ) {
     id obj = [self.resizeVector lastObject];
     NSLog(@"**** POPPING %@ FROM RESIZE VECTOR",[[obj class] description]);
-    [self.resizeVector removeLastObject];
+    if ( [self.resizeVector count] == 1 ) {
+      [self.resizeVector removeAllObjects];
+    } else {
+      [self.resizeVector removeLastObject];
+    }
   }
   NSLog(@"Number of items in resize vector : %d",[self.resizeVector count]);
 }

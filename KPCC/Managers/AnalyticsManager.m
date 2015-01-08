@@ -43,7 +43,7 @@ static AnalyticsManager *singleton = nil;
 #elif RELEASE
   [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"ProductionKey"] ];
 #else
-  [Flurry setDebugLogEnabled:YES];
+  //[Flurry setDebugLogEnabled:YES];
   [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"DebugKey"] ];
 #endif
   [Flurry setBackgroundSessionEnabled:NO];

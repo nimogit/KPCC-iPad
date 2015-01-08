@@ -38,6 +38,11 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  int x = 1;
+  x++;
+}
+
 - (void)prime {
   
   self.spinner.alpha = 0.0;
@@ -144,7 +149,8 @@
 }
 
 - (void)refresh {
-  self.headlineLabelAnchor.constant = 30.0;
+  self.headlineLabelAnchor.constant = [Utilities isLandscape] ? 138.0 : 30.0;
+  self.pantsViewAnchor.constant = [Utilities isLandscape] ? 188.0  : 253.0;
   self.timestampLabel.textAlignment = [Utilities isLandscape] ? NSTextAlignmentLeft : NSTextAlignmentCenter;
   self.shortListTitleLabel.textAlignment = [Utilities isLandscape] ? NSTextAlignmentLeft : NSTextAlignmentCenter;
 }

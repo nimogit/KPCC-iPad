@@ -129,6 +129,8 @@ typedef enum {
 @property (nonatomic,strong) UIPopoverController *sharePopover;
 #endif
 
+
+
 @property CGPoint capturedOffset;
 
 // Determining type of news and formatting to display

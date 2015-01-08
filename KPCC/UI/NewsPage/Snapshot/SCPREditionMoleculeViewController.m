@@ -56,12 +56,15 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  self.scroller.contentSize = CGSizeMake([self.editions count]*self.scroller.frame.size.width,
-                                         self.scroller.frame.size.height);
-  
   SCPRViewController *vc = [[Utilities del] viewController];
   vc.globalGradient.alpha = 1.0;
-  
+}
+
+- (void)viewDidLayoutSubviews {
+  if ( self.needsContentSnap ) {
+    self.needsContentSnap = NO;
+    [self snapContentSize];
+  }
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,59 +97,16 @@
   [self.editionInfoLabel titleizeText:full bold:NO];
   self.editionInfoLabel.alpha = 1.0;
   
-  if ( [Utilities isIpad] ) {
-    self.editionInfoLabel.frame = CGRectMake(self.editionInfoLabel.frame.origin.x,
-                                             60.0,
-                                             self.editionInfoLabel.frame.size.width,
-                                             self.editionInfoLabel.frame.size.height);
-  }
-  
   self.editions = editions;
-  
-  BOOL needsRefresh = NO;
-  for ( SCPREditionAtomViewController *atom in self.displayVector ) {
-    needsRefresh = YES;
-    [atom.view removeFromSuperview];
-  }
-  
-
-  
-  [self.displayVector removeAllObjects];
-  self.displayVector = [[NSMutableArray alloc] init];
-
-  
   self.currentIndex = index;
+  self.displayVector = [NSMutableArray new];
   
-  CGFloat widthToUse = self.scroller.frame.size.width;
-  CGFloat heightToUse = self.scroller.frame.size.height;
+  [self.scroller setTranslatesAutoresizingMaskIntoConstraints:NO];
   
-  if ( needsRefresh ) {
-    SCPREditionMoleculeViewController *emvc = [[SCPREditionMoleculeViewController alloc]
-                                               initWithNibName:[[DesignManager shared]
-                                                                xibForPlatformWithName:@"SCPREditionMoleculeViewController"]
-                                               bundle:nil];
-    emvc.view = emvc.view;
-    widthToUse = emvc.scroller.frame.size.width;
-    heightToUse = emvc.scroller.frame.size.height;
-    self.scroller.frame = emvc.scroller.frame;
-    
-  }
-  
-  if ( ![Utilities isIOS7] ) {
-    //self.scroller.frame = CGRectMake(0.0,-20.0,self.scroller.frame.size.width,self.scroller.frame.size.height);
-  }
-  
-  SCPREditionAtomViewController *atomDummy = [[SCPREditionAtomViewController alloc]
-                                         initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPREditionAtomViewController"]
-                                         bundle:nil];
-  atomDummy.view.frame = atomDummy.view.frame;
-  
-  CGSize s = CGSizeMake([editions count]*widthToUse,
-                                         heightToUse);
-  
-  self.scroller.contentSize = s;
-  
+  self.metricChain = [NSMutableDictionary new];
   int count = 0;
+  
+  SCPREditionAtomViewController *previousAtom = nil;
   for ( NSDictionary *edition in self.editions ) {
     
     SCPREditionAtomViewController *atom = nil;
@@ -157,26 +117,90 @@
     atom.parentMolecule = self;
     atom.relatedArticle = edition;
     atom.view.frame = atom.view.frame;
-    
-    CGFloat adjuster = [Utilities isIOS7] ? 0.0 : -20.0;
-    if ( !self.fromNewsPage ) {
-      adjuster = 0.0;
-    }
-
-    
     [self.displayVector addObject:atom];
-    atom.view.frame = CGRectMake(count*widthToUse,
-                                 adjuster,
-                                 widthToUse,
-                                 heightToUse-adjuster);
+
     atom.index = count;
     [atom mergeWithArticle];
     
     [self.scroller addSubview:atom.view];
+    [atom.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [self.scroller printDimensionsWithIdentifier:@"Editions Scroller Dimensions"];
+    
+    if ( previousAtom ) {
+      
+      NSString *HF = [NSString stringWithFormat:@"H:[prev][me]"];
+      if ( count == self.editions.count-1 ) {
+        HF = [NSString stringWithFormat:@"H:[prev][me]|"];
+      }
+      NSString *VF = [NSString stringWithFormat:@"V:|[me]"];
+      
+      NSArray *linkToPreviousH = [NSLayoutConstraint constraintsWithVisualFormat:HF
+                                                                         options:0
+                                                                         metrics:nil
+                                                                           views:@{ @"prev" : previousAtom.view,
+                                                                                    @"me" : atom.view }];
+      NSArray *linkToPreviousV = [NSLayoutConstraint constraintsWithVisualFormat:VF
+                                                                        options:0
+                                                                        metrics:nil
+                                                                        views:@{ @"me" : atom.view }];
+      
+      NSMutableArray *linkToPrevious = [linkToPreviousH mutableCopy];
+      [linkToPrevious addObjectsFromArray:linkToPreviousV];
+      [self.scroller addConstraints:linkToPrevious];
+      
+
+      
+    } else {
+      
+      NSString *HF = [NSString stringWithFormat:@"H:|[me]"];
+      NSString *VF = [NSString stringWithFormat:@"V:|[me]"];
+      
+      NSArray *linkToParentH = [NSLayoutConstraint constraintsWithVisualFormat:HF
+                                                                         options:0
+                                                                         metrics:nil
+                                                                           views:@{ @"me" : atom.view }];
+      NSArray *linkToParentV = [NSLayoutConstraint constraintsWithVisualFormat:VF
+                                                                         options:0
+                                                                         metrics:nil
+                                                                           views:@{ @"me" : atom.view }];
+      
+      NSMutableArray *linkToParent = [linkToParentH mutableCopy];
+      [linkToParent addObjectsFromArray:linkToParentV];
+      [self.scroller addConstraints:linkToParent];
+      
+    }
+    
+    NSLayoutConstraint *wC = [NSLayoutConstraint constraintWithItem:atom.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0
+                                                           constant:self.scroller.frame.size.width];
+    
+    
+    NSLayoutConstraint *hC = [NSLayoutConstraint constraintWithItem:atom.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0
+                                                           constant:self.scroller.frame.size.height];
+    
+    NSDictionary *metrics = @{ @"width" : wC,
+                               @"height" : hC };
+    [self.metricChain setObject:metrics
+                         forKey:@(count)];
+    
+    [atom.view addConstraint:wC];
+    [atom.view addConstraint:hC];
+    
+    previousAtom = atom;
     count++;
     
   }
-  
+  [self snapContentSize];
   [self.scroller setContentOffset:CGPointMake(index*self.scroller.frame.size.width,
                                               0.0)];
   
@@ -213,8 +237,28 @@
     [self.view bringSubviewToFront:self.infoSeatView];
   }
   
+
   [[NSNotificationCenter defaultCenter] postNotificationName:@"editions_finished_building"
                                                       object:nil];
+  
+}
+
+- (void)snapContentSize {
+  /*self.scroller.contentSize = CGSizeMake(self.scroller.frame.size.width*self.editions.count,
+                                         self.scroller.frame.size.height);*/
+  NSLog(@"Content Width : %1.1f",self.scroller.contentSize.width);
+  [self.scroller setNeedsLayout];
+  [self.scroller setNeedsUpdateConstraints];
+  for ( NSDictionary *metrics in [self.metricChain allValues] ) {
+    NSLayoutConstraint *w = metrics[@"width"];
+    [w setConstant:self.scroller.frame.size.width];
+    
+    NSLayoutConstraint *h = metrics[@"height"];
+    [h setConstant:self.scroller.frame.size.height];
+  }
+  
+  [self.scroller setContentOffset:CGPointMake(self.scroller.frame.size.width*self.currentIndex,
+                                              0.0)];
   
 }
 
@@ -368,10 +412,7 @@
 
 - (void)handleRotationPost {
   [[[Utilities del] globalTitleBar] restamp];
-  [self setupWithEditions:self.editions andIndex:self.currentIndex];
-  [UIView animateWithDuration:0.25 animations:^{
-    self.scroller.alpha = 1.0;
-  }];
+  [self setNeedsContentSnap:YES];
 }
 
 #ifdef LOG_DEALLOCATIONS

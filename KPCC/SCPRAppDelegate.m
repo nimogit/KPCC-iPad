@@ -241,9 +241,6 @@
   self.cloak = [[SCPRCloakViewController alloc] initWithNibName:[[DesignManager shared]
                                                                  xibForPlatformWithName:@"SCPRCloakViewController"]
                                                          bundle:nil];
-  CGRect rf = CGRectMake(0.0,0.0,self.masterRootController.view.bounds.size.width,
-                                     self.masterRootController.view.bounds.size.height);
-  self.cloak.view.frame = rf;
   
   self.cloak.view.autoresizingMask = kGlobalResize;
   self.cloak.view.backgroundColor = [[DesignManager shared] obsidianColor:0.9];
@@ -253,13 +250,15 @@
   self.slideshowModal = [[SCPRScrollingAssetViewController alloc] initWithNibName:[[DesignManager shared]
                                                                                    xibForPlatformWithName:@"SCPRScrollingAssetViewController"]
                                                                            bundle:nil];
-  self.slideshowModal.view.center = CGPointMake(self.cloak.view.frame.size.width/2.0,
-                                                self.cloak.view.frame.size.height/2.0);
-  [self.cloak.view addSubview:self.slideshowModal.view];
+  [self.slideshowModal.view printDimensionsWithIdentifier:@"Slideshow Modal"];
+  
+
+  
   self.cloak.cloakContent = self.slideshowModal;
+  
   [[ContentManager shared] pushToResizeVector:self.cloak];
   
-  [self.slideshowModal sourceWithArticle:article];
+
   
   self.slideshowModal.view.backgroundColor = [UIColor clearColor];
   self.slideshowModal.leftCurtain.alpha = 0.0;
@@ -271,12 +270,21 @@
   
   [self.cloak.view addGestureRecognizer:tap];
   
-  [self.masterRootController.view addSubview:self.cloak.view];
+  [[DesignManager shared] snapView:self.cloak.view
+                       toContainer:self.masterRootController.view];
+  [[DesignManager shared] snapView:self.slideshowModal.view
+                               toContainer:self.cloak.view];
   
-  [UIView beginAnimations:nil context:NULL];
-  [UIView setAnimationDuration:0.33];
-  self.cloak.view.alpha = 1.0;
-  [UIView commitAnimations];
+  self.slideshowModal.article = article;
+  self.slideshowModal.needsSetup = YES;
+  
+
+  
+  [UIView animateWithDuration:0.25 animations:^{
+      self.cloak.view.alpha = 1.0;
+  } completion:^(BOOL finished) {
+
+  }];
   
   self.appCloaked = YES;
 }

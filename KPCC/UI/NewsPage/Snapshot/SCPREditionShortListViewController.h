@@ -29,6 +29,7 @@
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *spinner;
 
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *headlineLabelAnchor;
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *pantsViewAnchor;
 
 @property (nonatomic,weak) id pushedContent;
 @property (nonatomic,weak) id parentMineral;
