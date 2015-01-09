@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -144,7 +144,7 @@
                     </constraints>
                 </imageView>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="10" translatesAutoresizingMaskIntoConstraints="NO" id="35">
-                    <rect key="frame" x="609" y="3" width="151" height="36"/>
+                    <rect key="frame" x="601" y="3" width="151" height="36"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="280" id="pld-V4-Lyx"/>
                         <constraint firstAttribute="height" constant="36" id="xhN-gM-BA8"/>
@@ -271,7 +271,7 @@
                 <constraint firstItem="31" firstAttribute="top" secondItem="2" secondAttribute="top" constant="4" id="sBp-f2-ojj"/>
                 <constraint firstAttribute="centerY" secondItem="47" secondAttribute="centerY" id="tmg-Cc-dqX"/>
                 <constraint firstAttribute="trailing" secondItem="Kmz-qk-34W" secondAttribute="trailing" constant="8" id="win-17-TKK"/>
-                <constraint firstAttribute="trailing" secondItem="35" secondAttribute="trailing" constant="8" id="wnq-2g-5Sg"/>
+                <constraint firstAttribute="trailing" secondItem="35" secondAttribute="trailing" constant="16" id="wnq-2g-5Sg"/>
                 <constraint firstAttribute="bottom" secondItem="42" secondAttribute="bottom" constant="-1" id="xam-nb-LcQ"/>
                 <constraint firstAttribute="trailing" secondItem="31" secondAttribute="trailing" constant="3" id="y7R-U5-8mS"/>
                 <constraint firstAttribute="centerX" secondItem="rH2-nn-Gj7" secondAttribute="centerX" id="z2Z-WX-YKf"/>

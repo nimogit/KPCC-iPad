@@ -101,12 +101,12 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   self.mainPageScroller.pagingEnabled = YES;
   self.showOrHidePlayerButton.alpha = 0.0;
   
-  if ( [Utilities isIOS7] ) {
+  /*if ( [Utilities isIOS7] ) {
     UIImageView *iv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"top_gradient_7.png"]];
     self.globalGradient.image = [UIImage imageNamed:@"top_gradient_7.png"];
     self.globalGradient.frame = CGRectMake(0.0,0.0,self.globalGradient.frame.size.width,
                                            iv.frame.size.height);
-  }
+  }*/
   
   self.globalGradient.alpha = 0.0;
   [self.view bringSubviewToFront:self.titleBarController.view];
@@ -143,8 +143,11 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   [self.displayPortView setNeedsUpdateConstraints];
   [self.displayPortView layoutIfNeeded];*/
   
-  [[DesignManager shared] snapView:view
+  NSLayoutConstraint *c = [[DesignManager shared] snapView:view
                        toContainer:self.displayPortView];
+  if ( c ) {
+    self.currentAnchors = @{ @"top" : c };
+  }
   
 }
 
@@ -678,6 +681,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   [self.contentVector addObject:vpvc];
   [[ContentManager shared] setCurrentNewsPage:1];
   [vpvc fetchAllContent:nil withCallback:nil];
+  
 }
 
 - (void)displayEventsPage:(NSMutableDictionary *)contentObjects {

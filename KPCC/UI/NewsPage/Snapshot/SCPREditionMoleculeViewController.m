@@ -32,27 +32,29 @@
     [super viewDidLoad];
   
   if ( [Utilities isIOS7] ) {
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    //[self setAutomaticallyAdjustsScrollViewInsets:NO];
   }
   
   self.scroller.pagingEnabled = YES;
   self.scroller.delegate = self;
-  
+
   if ( ![Utilities isIOS7] ) {
     if ( self.fromNewsPage ) {
-      self.scroller.center = CGPointMake(self.scroller.center.x,
-                                         self.scroller.center.y-20.0);
+      
     }
   }
   
   SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
   root.adSilenceVector = [@[ self.editionInfoLabel ] mutableCopy];
+
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  
+  if ( self.needsPush ) {
+    self.needsPush = NO;
 
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,6 +90,8 @@
 }
 
 - (void)setupWithEditions:(NSMutableArray *)editions andIndex:(NSInteger)index {
+
+  [self.view printDimensionsWithIdentifier:@"Editions Molecule"];
   
   NSString *pa = [self.editionShell objectForKey:@"published_at"];
   NSDate *published = [Utilities dateFromRFCString:pa];
@@ -124,8 +128,7 @@
     
     [self.scroller addSubview:atom.view];
     [atom.view setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    [self.scroller printDimensionsWithIdentifier:@"Editions Scroller Dimensions"];
+
     
     if ( previousAtom ) {
       
@@ -200,7 +203,8 @@
     count++;
     
   }
-  [self snapContentSize];
+  
+
   [self.scroller setContentOffset:CGPointMake(index*self.scroller.frame.size.width,
                                               0.0)];
   
@@ -231,24 +235,33 @@
     }
   }
   
+  [self snapContentSize];
+  
   if ( [Utilities isIpad] ) {
     [self.view bringSubviewToFront:self.editionInfoLabel];
   } else {
     [self.view bringSubviewToFront:self.infoSeatView];
   }
   
-
   [[NSNotificationCenter defaultCenter] postNotificationName:@"editions_finished_building"
                                                       object:nil];
   
 }
 
 - (void)snapContentSize {
-  /*self.scroller.contentSize = CGSizeMake(self.scroller.frame.size.width*self.editions.count,
-                                         self.scroller.frame.size.height);*/
-  NSLog(@"Content Width : %1.1f",self.scroller.contentSize.width);
-  [self.scroller setNeedsLayout];
-  [self.scroller setNeedsUpdateConstraints];
+  self.scroller.contentSize = CGSizeMake(self.scroller.frame.size.width*self.editions.count,
+                                         self.scroller.frame.size.height);
+
+
+  
+  for ( SCPREditionAtomViewController *atom in self.displayVector ) {
+    atom.bottomAnchor.constant = [Utilities isLandscape] ? 20.0 : 66.0;
+    atom.cardHeightAnchor.constant = [Utilities isLandscape] ? 384.0 : 496.0;
+    [atom.detailsSeatView layoutIfNeeded];
+    [atom.view layoutIfNeeded];
+    [atom.view updateConstraintsIfNeeded];
+  }
+  
   for ( NSDictionary *metrics in [self.metricChain allValues] ) {
     NSLayoutConstraint *w = metrics[@"width"];
     [w setConstant:self.scroller.frame.size.width];
@@ -257,8 +270,14 @@
     [h setConstant:self.scroller.frame.size.height];
   }
   
+
+  
   [self.scroller setContentOffset:CGPointMake(self.scroller.frame.size.width*self.currentIndex,
                                               0.0)];
+  [self.scroller setNeedsLayout];
+  [self.scroller setNeedsUpdateConstraints];
+  
+  NSLog(@"Content Width : %1.1f",self.scroller.contentSize.width);
   
 }
 
@@ -322,12 +341,21 @@
       [(SCPREditionMineralViewController*)svc.parentMineral setMoleculePushed:NO];
       svc.pushedContent = nil;
 
+    } else {
+      SCPRViewController *vc = [[Utilities del] viewController];
+      vc.globalGradient.alpha = 0.0;
+      
+      if ( vc.currentAnchors ) {
+        if ( vc.currentAnchors[@"top"] ) {
+          NSLayoutConstraint *top = vc.currentAnchors[@"top"];
+          [top setConstant:0.0];
+          [UIView animateWithDuration:5.33 animations:^{
+            [self.view layoutIfNeeded];
+          }];
+          
+        }
+      }
     }
-    
-  } else {
-    
-    SCPRViewController *vc = [[Utilities del] viewController];
-    vc.globalGradient.alpha = 0.0;
   }
 
 #ifdef AGGRESSIVE_DEALLOCATION

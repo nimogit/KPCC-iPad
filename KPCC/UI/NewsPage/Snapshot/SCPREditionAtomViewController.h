@@ -35,7 +35,8 @@
 @property (nonatomic,strong) IBOutlet SCPRGrayLineView *edgeDivider;
 @property (nonatomic,strong) IBOutlet UIScrollView *iphoneScroller;
 @property (nonatomic,strong) IBOutlet UIImageView *bottomGradient;
-
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *cardHeightAnchor;
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *bottomAnchor;
 @property NSUInteger index;
 
 @property BOOL trustedSource;
@@ -47,5 +48,6 @@
 - (IBAction)buttonTapped:(id)sender;
 - (BOOL)isKPCCArticle;
 - (void)fadePhotoCaption;
+- (void)squash;
 
 @end

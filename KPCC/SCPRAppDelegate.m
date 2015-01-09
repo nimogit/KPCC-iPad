@@ -16,6 +16,7 @@
 #import "SCPRSpinnerViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRCloakViewController.h"
+#import <DCIntrospect-ARC/DCIntrospect.h>
 
 @implementation SCPRAppDelegate
 
@@ -83,6 +84,10 @@
   self.masterRootController.globalGradient = self.viewController.globalGradient;
   
   [self.window makeKeyAndVisible];
+  
+#if TARGET_IPHONE_SIMULATOR
+  [[DCIntrospect sharedIntrospector] start];
+#endif
   
   [[DesignManager shared] setPredictedWindowSize:self.window.frame.size];
   

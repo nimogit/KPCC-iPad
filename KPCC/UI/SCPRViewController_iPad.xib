@@ -20,6 +20,13 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="top_gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sa5-OM-zRj">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="61"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="61" id="Q6r-BZ-ViH"/>
+                    </constraints>
+                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsz-fy-bc6" userLabel="TitleBar">
                     <rect key="frame" x="0.0" y="20" width="768" height="40"/>
                     <subviews>
@@ -140,7 +147,7 @@
                             </constraints>
                         </imageView>
                         <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="10" translatesAutoresizingMaskIntoConstraints="NO" id="2q9-z2-MG8">
-                            <rect key="frame" x="609" y="3" width="151" height="36"/>
+                            <rect key="frame" x="601" y="3" width="151" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="280" id="3pT-Bg-6Dv"/>
                                 <constraint firstAttribute="height" constant="36" id="4lp-Uf-KZt"/>
@@ -232,7 +239,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="tyy-Oo-VTY" firstAttribute="top" secondItem="gsz-fy-bc6" secondAttribute="top" constant="4" id="00f-fm-kwX"/>
                         <constraint firstItem="WYi-Cs-UT2" firstAttribute="top" secondItem="gsz-fy-bc6" secondAttribute="top" constant="4" id="0Cz-o2-XAL"/>
@@ -261,7 +268,7 @@
                         <constraint firstAttribute="bottom" secondItem="WYi-Cs-UT2" secondAttribute="bottom" constant="4" id="gB0-yf-fjn"/>
                         <constraint firstAttribute="bottom" secondItem="dE8-zr-i3R" secondAttribute="bottom" constant="-1" id="hsV-Av-9CC"/>
                         <constraint firstAttribute="bottom" secondItem="ntA-hw-CHH" secondAttribute="bottom" constant="-1" id="isa-cR-8GV"/>
-                        <constraint firstAttribute="trailing" secondItem="2q9-z2-MG8" secondAttribute="trailing" constant="8" id="kce-d1-5Mc"/>
+                        <constraint firstAttribute="trailing" secondItem="2q9-z2-MG8" secondAttribute="trailing" constant="16" id="kce-d1-5Mc"/>
                         <constraint firstAttribute="bottom" secondItem="CWL-VC-fUg" secondAttribute="bottom" constant="2" id="krP-9T-yEJ"/>
                         <constraint firstAttribute="trailing" secondItem="tyy-Oo-VTY" secondAttribute="trailing" constant="3" id="mdx-cb-H51"/>
                         <constraint firstAttribute="centerX" secondItem="8aZ-Cr-KLL" secondAttribute="centerX" constant="-0.5" id="oCc-dK-rC4"/>
@@ -449,12 +456,6 @@
                         <constraint firstItem="geo-fO-trp" firstAttribute="leading" secondItem="H2j-Pp-5UH" secondAttribute="leading" id="kdL-Do-62p"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="top_gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sa5-OM-zRj">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="61"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="61" id="Q6r-BZ-ViH"/>
-                    </constraints>
-                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hq7-ng-vI5" userLabel="DisplayPortView">
                     <rect key="frame" x="0.0" y="60" width="768" height="904"/>
                     <color key="backgroundColor" red="0.58351732336956519" green="0.58351732336956519" blue="0.58351732336956519" alpha="1" colorSpace="calibratedRGB"/>
@@ -478,7 +479,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="546" y="-1836"/>
+            <point key="canvasLocation" x="517" y="-2033"/>
         </view>
         <viewController id="32" customClass="SCPRShareDrawerViewController">
             <extendedEdge key="edgesForExtendedLayout"/>

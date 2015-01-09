@@ -149,6 +149,7 @@ typedef enum {
 @property BOOL onboardingFirstTime;
 
 @property (nonatomic,strong) UIView *whiteSheet;
+@property (nonatomic,strong) NSDictionary *currentAnchors;
 
 @property (atomic) NSInteger backgroundProcessesToPend;
 
@@ -211,6 +212,7 @@ typedef enum {
 - (void)openShareDrawer:(id)targetContent;
 - (void)closeShareDrawer;
 - (void)toggleShareDrawer;
+
 
 - (void)snapToDisplayPortWithView:(id)view;
 

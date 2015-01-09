@@ -50,8 +50,10 @@
                                                name:@"update_news_feed_ui"
                                              object:nil];
 
+  
   // Config table background colors, scroll appearance, and bottom loading spinner.
   self.view.backgroundColor = [UIColor blackColor];
+  self.view.clipsToBounds = NO;
   self.photoVideoTable.showsVerticalScrollIndicator = NO;
   self.photoVideoTable.showsHorizontalScrollIndicator = NO;
   self.photoVideoTable.separatorColor = [UIColor clearColor];
@@ -851,8 +853,21 @@
     
     self.pushedContent = emvc;
 
-    [self.navigationController pushViewController:emvc
-                                         animated:YES];
+    SCPRViewController *vc = [[Utilities del] viewController];
+    if ( vc.currentAnchors ) {
+      if ( vc.currentAnchors[@"top"] ) {
+        NSLayoutConstraint *top = vc.currentAnchors[@"top"];
+        [UIView animateWithDuration:1.33 animations:^{
+          
+          [top setConstant:-40.0];
+          [self.view.superview layoutIfNeeded];
+          
+        } completion:^(BOOL finished) {
+          [self.navigationController pushViewController:emvc
+                                               animated:YES];
+        }];
+      }
+    }
     
   } else {
     if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage) {

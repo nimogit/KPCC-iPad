@@ -156,6 +156,7 @@
     case BarTypeEditions:
     {
       [self applyClearBackground];
+    
       self.drawerButton.alpha = 0.0;
       self.backButtonSeat.alpha = 1.0;
       
@@ -397,6 +398,7 @@
 - (void)applyClearBackground {
   [UIView animateWithDuration:0.22 animations:^{
     self.view.layer.backgroundColor = [UIColor clearColor].CGColor;
+    //self.view.layer.backgroundColor = [UIColor redColor].CGColor;
   }];
 }
 
@@ -404,6 +406,10 @@
   [UIView animateWithDuration:0.22 animations:^{
     self.view.layer.backgroundColor = [[DesignManager shared] onyxColor].CGColor;
   }];
+}
+
+- (void)applyGrayBackground {
+  self.view.backgroundColor = [[DesignManager shared] deepOnyxColor];
 }
 
 - (void)applyBackButtonText:(NSString *)backButtonText {
@@ -558,29 +564,17 @@
 - (void)applyPagerWithCount:(NSInteger)count currentPage:(NSInteger)currentPage {
   
   [self eraseDonateButton];
-  /*[self.pager removeFromSuperview];
-  [self.view addSubview:self.pager];
-  self.pager.numberOfPages = count;
-  CGFloat nudge = 0.0;
-  if (count >= 14) {
-    nudge = 20.0;
-  }
-  self.pager.frame = CGRectMake(self.view.frame.size.width - self.pager.frame.size.width - 20.0 - nudge,
-                                self.view.frame.size.height / 2.0 - (self.pager.frame.size.height / 2.0),
-                                self.pager.frame.size.width,
-                                self.pager.frame.size.height);*/
   self.pager.alpha = 1.0;
   self.pager.currentPage = currentPage;
   self.pager.userInteractionEnabled = NO;
+  
 }
 
 - (void)erasePager {
   self.pager.alpha = 0.0;
 }
 
-- (void)applyGrayBackground {
-  self.view.backgroundColor = [[DesignManager shared] deepOnyxColor];
-}
+
 
 - (void)toggleReduced:(BOOL)reduced {
   self.reduced = reduced;

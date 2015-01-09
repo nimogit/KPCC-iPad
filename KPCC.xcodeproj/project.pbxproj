@@ -1638,8 +1638,6 @@
 		28A0CF0F171E007300776579 /* SCPRTitlebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A0CF0D171E007300776579 /* SCPRTitlebarViewController.m */; };
 		28A0CF14171E02B800776579 /* person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A0CF12171E02B800776579 /* person@2x.png */; };
 		28A0CF15171E02B800776579 /* stripes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A0CF13171E02B800776579 /* stripes@2x.png */; };
-		28A0CF17171E032400776579 /* SCPRTitlebarViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A0CF16171E032400776579 /* SCPRTitlebarViewController_iPad.xib */; };
-		28A0CF18171E032400776579 /* SCPRTitlebarViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A0CF16171E032400776579 /* SCPRTitlebarViewController_iPad.xib */; };
 		28A0CF19171E055600776579 /* SCPRTitlebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A0CF0D171E007300776579 /* SCPRTitlebarViewController.m */; };
 		28A0CF1A171E05D900776579 /* person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A0CF12171E02B800776579 /* person@2x.png */; };
 		28A0CF1B171E05D900776579 /* stripes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A0CF13171E02B800776579 /* stripes@2x.png */; };
@@ -2724,7 +2722,6 @@
 		28A0CF0D171E007300776579 /* SCPRTitlebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRTitlebarViewController.m; path = UI/Titlebar/SCPRTitlebarViewController.m; sourceTree = "<group>"; };
 		28A0CF12171E02B800776579 /* person@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "person@2x.png"; sourceTree = "<group>"; };
 		28A0CF13171E02B800776579 /* stripes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stripes@2x.png"; sourceTree = "<group>"; };
-		28A0CF16171E032400776579 /* SCPRTitlebarViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRTitlebarViewController_iPad.xib; path = UI/Titlebar/SCPRTitlebarViewController_iPad.xib; sourceTree = "<group>"; };
 		28A0CF1D171E080800776579 /* SCPRDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRDrawerViewController.h; path = UI/Drawer/SCPRDrawerViewController.h; sourceTree = "<group>"; };
 		28A0CF1E171E080800776579 /* SCPRDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRDrawerViewController.m; path = UI/Drawer/SCPRDrawerViewController.m; sourceTree = "<group>"; };
 		28A0CF1F171E080800776579 /* SCPRDrawerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDrawerViewController.xib; path = UI/Drawer/SCPRDrawerViewController.xib; sourceTree = "<group>"; };
@@ -4369,7 +4366,6 @@
 				28A0CF0C171E007300776579 /* SCPRTitlebarViewController.h */,
 				28A0CF0D171E007300776579 /* SCPRTitlebarViewController.m */,
 				259AF5C418340E47008AFB2A /* SCPRTitlebarViewController.xib */,
-				28A0CF16171E032400776579 /* SCPRTitlebarViewController_iPad.xib */,
 				254CABA617396D700005341D /* SCPRSpecialTitlebarViewController.xib */,
 				255571731738AFFA00354D30 /* SCPRSpecialTitlebarViewController_iPad.xib */,
 			);
@@ -4875,7 +4871,6 @@
 				256421DF1810750E002F1C6A /* SCPRDeluxeNewsCellSingleSq_iPadLandscape.xib in Resources */,
 				28DF6D38171DCAF7002F0F99 /* SCPRNewsPageContainerController.xib in Resources */,
 				28DF6D3A171DCB9C002F0F99 /* SCPRNewsPageContainerController_iPad.xib in Resources */,
-				28A0CF18171E032400776579 /* SCPRTitlebarViewController_iPad.xib in Resources */,
 				28A0CF23171E080800776579 /* SCPRDrawerViewController.xib in Resources */,
 				28A0CF2A171E091D00776579 /* SCPRDrawerCell.xib in Resources */,
 				76A3089718BFECE70065D4B1 /* icon-timer-blue.png in Resources */,
@@ -5567,7 +5562,6 @@
 				28A0CF14171E02B800776579 /* person@2x.png in Resources */,
 				25A70BF017E13C220024E654 /* button-signin-linkedin.png in Resources */,
 				28A0CF15171E02B800776579 /* stripes@2x.png in Resources */,
-				28A0CF17171E032400776579 /* SCPRTitlebarViewController_iPad.xib in Resources */,
 				28A0CF22171E080800776579 /* SCPRDrawerViewController.xib in Resources */,
 				28A0CF29171E091D00776579 /* SCPRDrawerCell.xib in Resources */,
 				28A0CF2C171E133E00776579 /* SCPRDrawerViewController_iPad.xib in Resources */,

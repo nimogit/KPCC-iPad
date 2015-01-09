@@ -301,6 +301,8 @@ static DesignManager *singleton = nil;
                                                                     views:@{ @"view" : view }];
   
   NSMutableArray *total = [NSMutableArray new];
+  
+  
   [total addObjectsFromArray:hConstraints];
   [total addObjectsFromArray:vConstraints];
   
@@ -329,7 +331,7 @@ static DesignManager *singleton = nil;
   
 }
 
-- (void)snapView:(id)view toContainer:(id)container {
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container {
   UIView *v2u = nil;
   UIView *c2u = nil;
   if ( [view isKindOfClass:[UIView class]] ) {
@@ -354,6 +356,14 @@ static DesignManager *singleton = nil;
   [c2u addConstraints:anchors];
   [c2u setNeedsUpdateConstraints];
   [c2u setNeedsLayout];
+  
+  for ( NSLayoutConstraint *anchor in anchors ) {
+    if ( anchor.firstAttribute == NSLayoutAttributeTop && anchor.secondAttribute == NSLayoutAttributeTop ) {
+      return anchor;
+    }
+  }
+  
+  return nil;
   
 }
 
