@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="top_gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sa5-OM-zRj">
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="top_gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sa5-OM-zRj">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="61"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>

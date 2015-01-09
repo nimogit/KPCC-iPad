@@ -47,7 +47,7 @@
   
   //if ( [Utilities isIOS7] ) {
   if ( [Utilities isIpad] ) {
-    self.topGradient.alpha = 0.0;
+    //self.topGradient.alpha = 0.0;
   }
   
   //}
