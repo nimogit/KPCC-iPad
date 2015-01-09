@@ -7,7 +7,7 @@
 //
 
 #import "AnalyticsManager.h"
-#import "TestFlight.h"
+//#import "TestFlight.h"
 #import "Flurry.h"
 #import "global.h"
 #import "SBJson.h"
@@ -34,8 +34,8 @@ static AnalyticsManager *singleton = nil;
 }
 
 - (void)primeAnalytics {
-  NSString *tfKey = [Utilities isIpad] ? [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPadKey"] : [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPhoneKey"];
-  [TestFlight takeOff:tfKey];
+  //NSString *tfKey = [Utilities isIpad] ? [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPadKey"] : [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPhoneKey"];
+  //[TestFlight takeOff:tfKey];
   
   [Flurry setCrashReportingEnabled:YES];
 #ifdef PRODUCTION
