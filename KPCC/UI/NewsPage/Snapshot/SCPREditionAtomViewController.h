@@ -37,6 +37,9 @@
 @property (nonatomic,strong) IBOutlet UIImageView *bottomGradient;
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *cardHeightAnchor;
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *bottomAnchor;
+@property (nonatomic, strong) IBOutlet UIImageView *buttonIcon;
+@property (nonatomic, strong) IBOutlet UIButton *secondaryExpandButton;
+
 @property NSUInteger index;
 
 @property BOOL trustedSource;

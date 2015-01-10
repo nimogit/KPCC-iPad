@@ -36,7 +36,6 @@
 - (void)pushToAtomDetails:(NSInteger)index;
 - (void)pushToCurrentAtomDetails;
 - (void)sendAnalysis;
-
 - (void)snapContentSize;
 
 @end

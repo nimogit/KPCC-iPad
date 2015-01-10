@@ -14,8 +14,9 @@
 
 - (void)setupWithEditions:(NSArray*)editions;
 - (void)unplug;
+- (void)snapContent;
 
-
+@property (nonatomic,strong) NSMutableDictionary *metricChain;
 @property (nonatomic,strong) NSArray *editions;
 @property (nonatomic,strong) IBOutlet UIScrollView *editionsScroller;
 @property (nonatomic,strong) NSMutableArray *contentVector;
@@ -24,5 +25,7 @@
 @property BOOL needsRotation;
 @property BOOL moleculePushed;
 @property (nonatomic,strong) id targetMolecule;
+@property BOOL needsSnap;
+@property BOOL setupCompleted;
 
 @end

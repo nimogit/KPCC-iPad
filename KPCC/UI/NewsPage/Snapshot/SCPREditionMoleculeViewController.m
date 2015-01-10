@@ -44,6 +44,8 @@
     }
   }
   
+  [self setNeedsContentSnap:YES];
+  
   SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
   root.adSilenceVector = [@[ self.editionInfoLabel ] mutableCopy];
 
@@ -53,8 +55,9 @@
 - (void)viewDidAppear:(BOOL)animated {
   if ( self.needsPush ) {
     self.needsPush = NO;
-
   }
+  
+  [self.view.superview setNeedsLayout];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -255,8 +258,8 @@
 
   
   for ( SCPREditionAtomViewController *atom in self.displayVector ) {
-    atom.bottomAnchor.constant = [Utilities isLandscape] ? 20.0 : 66.0;
-    atom.cardHeightAnchor.constant = [Utilities isLandscape] ? 384.0 : 496.0;
+    atom.bottomAnchor.constant = [Utilities isLandscape] ? 20.0 : 26.0;
+    atom.cardHeightAnchor.constant = [Utilities isLandscape] ? 378.0 : 496.0;
     [atom.detailsSeatView layoutIfNeeded];
     [atom.view layoutIfNeeded];
     [atom.view updateConstraintsIfNeeded];
@@ -344,17 +347,6 @@
     } else {
       SCPRViewController *vc = [[Utilities del] viewController];
       vc.globalGradient.alpha = 0.0;
-      
-      if ( vc.currentAnchors ) {
-        if ( vc.currentAnchors[@"top"] ) {
-          NSLayoutConstraint *top = vc.currentAnchors[@"top"];
-          [top setConstant:0.0];
-          [UIView animateWithDuration:5.33 animations:^{
-            [self.view layoutIfNeeded];
-          }];
-          
-        }
-      }
     }
   }
 

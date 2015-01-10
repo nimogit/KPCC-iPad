@@ -149,8 +149,11 @@
 }
 
 - (void)refresh {
-  self.headlineLabelAnchor.constant = [Utilities isLandscape] ? 138.0 : 30.0;
-  self.pantsViewAnchor.constant = [Utilities isLandscape] ? 188.0  : 253.0;
+  self.headlineLabelAnchor.constant = [Utilities isLandscape] ? 138.0f : 30.0f;
+  if ( !self.fromNews ) {
+    self.headlineLabelAnchor.constant += 20.0f;
+  }
+  self.pantsViewAnchor.constant = [Utilities isLandscape] ? 188.0f  : 253.0f;
   self.timestampLabel.textAlignment = [Utilities isLandscape] ? NSTextAlignmentLeft : NSTextAlignmentCenter;
   self.shortListTitleLabel.textAlignment = [Utilities isLandscape] ? NSTextAlignmentLeft : NSTextAlignmentCenter;
 }

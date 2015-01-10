@@ -148,6 +148,7 @@ typedef enum {
 @property BOOL silentlyFetchingNews;
 @property BOOL onboardingFirstTime;
 
+
 @property (nonatomic,strong) UIView *whiteSheet;
 @property (nonatomic,strong) NSDictionary *currentAnchors;
 

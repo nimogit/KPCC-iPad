@@ -92,6 +92,8 @@
 @property (nonatomic,strong) IBOutlet SCPRShareDrawerViewController *shareDrawer;
 - (void)queryParse;
 
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *bylineToCaptionAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *grayLineToByLineAnchor;
 
 @property NSInteger index;
 @property BOOL videoStarted;

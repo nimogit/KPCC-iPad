@@ -328,8 +328,12 @@
   ctrl.view.center = CGPointMake(self.cloak.view.frame.size.width/2.0,
                                  self.cloak.view.frame.size.height/2.0+push);
   ctrl.view.tag = 1501;
+  NSArray *layout = [[DesignManager shared] sizeContraintsForView:ctrl.view];
+  [ctrl.view addConstraints:layout];
   
-  [self.cloak.view addSubview:ctrl.view];
+  [[DesignManager shared] snapCenteredView:ctrl.view
+                               toContainer:self.cloak.view];
+  
   self.cloak.cloakContent = ctrl;
   [[ContentManager shared] pushToResizeVector:self.cloak];
   
@@ -342,7 +346,9 @@
     [self.cloak.view addGestureRecognizer:tap];
   }
   
-  [self.masterRootController.view addSubview:self.cloak.view];
+  //[self.masterRootController.view addSubview:self.cloak.view];
+  [[DesignManager shared] snapView:self.cloak.view
+                       toContainer:self.masterRootController.view];
   
   [UIView animateWithDuration:0.33 animations:^{
     self.cloak.view.alpha = 1.0;

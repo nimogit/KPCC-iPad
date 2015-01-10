@@ -144,7 +144,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   [self.displayPortView layoutIfNeeded];*/
   
   NSLayoutConstraint *c = [[DesignManager shared] snapView:view
-                       toContainer:self.displayPortView];
+                       toContainer:self.displayPortView
+                           withTopOffset:-40.0];
   if ( c ) {
     self.currentAnchors = @{ @"top" : c };
   }
@@ -576,21 +577,21 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                                initWithNibName:[[DesignManager shared]
                                                                 xibForPlatformWithName:@"SCPREditionMineralViewController"]
                                                bundle:nil];
-  
+  mineral.view.frame = mineral.view.frame;
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mineral];
-  CGFloat offset = [Utilities isIOS7] ? 0.0 : -20.0;
-  nav.view.frame = CGRectMake(0.0,
-                              offset,
-                              mineral.view.bounds.size.width,
-                              mineral.view.bounds.size.height);
 
   [self.contentVector addObject:mineral];
   [self snapToDisplayPortWithView:nav.view];
+
+  
   nav.navigationBarHidden = YES;
   
   self.pushedContent = nav;
   [[ContentManager shared] pushToResizeVector:mineral];
-  [mineral setupWithEditions:[NSArray arrayWithArray:contentObjects]];
+  mineral.editions = contentObjects;
+  [mineral setNeedsSnap:YES];
+  
+  //[mineral setupWithEditions:[NSArray arrayWithArray:contentObjects]];
 }
 
 - (void)displayProgramAZPage:(NSMutableArray *)contentObjects {

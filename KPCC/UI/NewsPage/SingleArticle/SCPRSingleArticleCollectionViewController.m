@@ -35,7 +35,6 @@
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
   }
   
-
   self.view.backgroundColor = [UIColor whiteColor];
   self.contentLock = NO;
   self.fetchLock = NO;
@@ -44,32 +43,13 @@
   self.visualComponents = [[NSMutableArray alloc] init];
   self.queuedForTrash = [[NSMutableDictionary alloc] init];
   self.webcontentQueue = [[NSOperationQueue alloc] init];
-  /*
-  self.articlePageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-                                                                   navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                                                 options:@{ UIPageViewControllerOptionSpineLocationKey : @( UIPageViewControllerSpineLocationMin)}];
-  
-  self.articlePageViewController.view.frame = CGRectMake(0.0,0.0,self.view.frame.size.width,
-                                                         self.view.frame.size.height);*/
   self.articlePageViewController = self;
-  
-  
   self.articlePageViewController.delegate = self;
   self.articlePageViewController.dataSource = self;
-  
-  /*[[DesignManager shared] snapView:self.articlePageViewController.view
-                       toContainer:self.view];*/
-  
-
   [self.articlePageViewController.view printDimensionsWithIdentifier:@"Article Page Container"];
 
   [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
   [self.view printDimensionsWithIdentifier:@"Single Article Collection"];
-  
-  /*
-  UIView *dummy = [[UIView alloc] initWithFrame:CGRectMake(120.0,140.0,120.0,120.0)];
-  dummy.backgroundColor = [[DesignManager shared] prettyRandomColor];
-  [self.view addSubview:dummy];*/
   
 }
 

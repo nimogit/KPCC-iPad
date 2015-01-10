@@ -192,6 +192,8 @@
     return;
   }
   
+  self.landscapeImageSheetView.clipsToBounds = YES;
+  
   SCPRSingleArticleCollectionViewController *pc = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
   if (pc.category == ContentCategoryEvents) {
     self.liveEvent = [[ScheduleManager shared] eventIsLive:self.relatedArticle];
@@ -274,7 +276,8 @@
       [self.basicTemplate.image1 removeFromSuperview];
       self.basicTemplate.matteView.alpha = 0.0;
       
-      self.articleDetailsAnchor.constant = 0.0;
+      self.articleDetailsAnchor.constant = 40.0;
+      
       
     } else {
       
@@ -291,6 +294,8 @@
                                                               multiplier:1.0
                                                                 constant:0.0];
       [self.masterContentScroller addConstraint:self.articleDetailsAnchor];
+      
+
       
     }
 
@@ -385,6 +390,21 @@
     if (!self.shortPage) {
       [self.basicTemplate.image1 removeFromSuperview];
       [self.view addSubview:self.basicTemplate.image1];
+      
+
+      NSArray *hPosition = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[image]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:@{ @"image" : self.basicTemplate.image1 }];
+      
+      CGFloat height = self.basicTemplate.image1.frame.size.height;
+      NSArray *vPosition = [NSLayoutConstraint
+                            constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-(40)-[image(%ld)]",(long)height]
+                            options:0
+                                                                   metrics:nil
+                                                                     views:@{ @"image" : self.basicTemplate.image1 }];
+      [self.view addConstraints:hPosition];
+      [self.view addConstraints:vPosition];
       [self.view sendSubviewToBack:self.basicTemplate.image1];
       self.masterContentScroller.backgroundColor = [UIColor clearColor];
     }
@@ -453,16 +473,7 @@
   self.locationCaptionLabel.textColor = labelColor;
   self.locationContentLabel.textColor = labelColor;
   
-  [[DesignManager shared] avoidNeighbor:self.dateCaptionLabel
-                               withView:self.dateContentLabel
-                              direction:NeighborDirectionToLeft
-                                padding:3.0];
-  
-  [[DesignManager shared] avoidNeighbor:self.locationCaptionLabel
-                               withView:self.locationContentLabel
-                              direction:NeighborDirectionToLeft
-                                padding:3.0];
-  
+
   NSDictionary *location = [self.relatedArticle objectForKey:@"location"];
   NSString *locationTitle = @"TBA";
   if (location) {
@@ -485,9 +496,6 @@
     NSString *formattedStart = [NSDate stringFromDate:startTime withFormat:@"h:mm a"];
     NSString *formattedEnd = [NSDate stringFromDate:finish withFormat:@"h:mm a"];
     
-    formattedStart = [Utilities stripLeadingZero:formattedStart];
-    formattedEnd = [Utilities stripLeadingZero:formattedEnd];
-    
     prettyDuration = [NSString stringWithFormat:@"%@-%@",formattedStart,formattedEnd];
     
   }
@@ -508,11 +516,43 @@
                                    bold:NO];
   }
   
-  [self.basicTemplate.byLine removeFromSuperview];
-  [self.textSheetView addSubview:self.rsvpSeatView];
-  
-  self.rsvpButtonSeatView.layer.cornerRadius = 5.0;
-  self.rsvpButtonSeatView.backgroundColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
+  if (self.liveEvent || [Utilities pureNil:[self.relatedArticle objectForKey:@"rsvp_url"]] ) {
+    
+    if (self.shortPage || self.pushAssetIntoBody) {
+      [[DesignManager shared] globalSetImageTo:@"" forButton:self.playOverlayButton];
+    }
+    
+  } else {
+
+    [self.textSheetView addSubview:self.rsvpSeatView];
+    [self.rsvpSeatView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    NSArray *sizeLocks = [[DesignManager shared] sizeContraintsForView:self.rsvpSeatView];
+    //[self.rsvpSeatView addConstraints:sizeLocks];
+    
+    NSArray *hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[rsvp]|"
+                                                                options:0
+                                                                metrics:nil
+                                                                  views:@{ @"rsvp" : self.rsvpSeatView }];
+    NSArray *vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:[caption][rsvp]-(10)-[line]"]
+                                                                options:0
+                                                                metrics:nil
+                                                                  views:@{ @"caption" : self.basicTemplate.headLine,
+                                                                           @"rsvp" : self.rsvpSeatView,
+                                                                           @"line" : self.contentDividerLine }];
+    [self.textSheetView removeConstraint:self.bylineToCaptionAnchor];
+    [self.textSheetView removeConstraint:self.grayLineBottomAnchor];
+    
+    [self.textSheetView addConstraints:hAnchors];
+    [self.textSheetView addConstraints:vAnchors];
+
+    [self.basicTemplate.byLine removeFromSuperview];
+    [self.textSheetView setNeedsLayout];
+
+    self.rsvpButtonSeatView.layer.cornerRadius = 5.0;
+    self.rsvpButtonSeatView.backgroundColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
+
+  }
   
   BOOL videoAsset = [[ContentManager shared] storyHasYouTubeAsset:self.relatedArticle];
   videoAsset = [[ScheduleManager shared] eventIsLive:self.relatedArticle];
@@ -524,81 +564,11 @@
     self.categorySeat.alpha = 1.0;
     
   } else {
-    self.categorySeat.alpha = 0.0;
-    
-    self.basicTemplate.headLine.frame = CGRectMake(self.basicTemplate.headLine.frame.origin.x,
-                                                   self.categorySeat.frame.origin.y,
-                                                   self.basicTemplate.headLine.frame.size.width,
-                                                   self.basicTemplate.headLine.frame.size.height);
+    [self.categoryLabel titleizeText:@"LIVE EVENT"
+                                bold:YES];
+    self.categorySeat.alpha = 1.0;
   }
   
-  if (self.liveEvent || [Utilities pureNil:[self.relatedArticle objectForKey:@"rsvp_url"]] ) {
-    
-    self.rsvpSeatView.frame = CGRectMake(0.0,
-                                         self.basicTemplate.headLine.frame.origin.y + self.basicTemplate.headLine.frame.size.height,
-                                         self.rsvpSeatView.frame.size.width,
-                                         self.dateCaptionLabel.frame.origin.y + self.locationCaptionLabel.frame.origin.y + self.locationCaptionLabel.frame.size.height + self.dateCaptionLabel.frame.origin.y);
-    
-    self.rsvpButtonSeatView.alpha = 0.0;
-    
-    if (self.shortPage || self.pushAssetIntoBody) {
-      [self.extraAssetsSeat removeFromSuperview];
-      [self.textSheetView addSubview:self.extraAssetsSeat];
-      
-      [[DesignManager shared] alignRightOf:self.extraAssetsSeat
-                                  withView:self.contentDividerLine];
-      
-      [[DesignManager shared] avoidNeighbor:self.contentDividerLine
-                                   withView:self.extraAssetsSeat
-                                  direction:NeighborDirectionBelow
-                                    padding:10.0];
-      
-      [self.playOverlayButton removeFromSuperview];
-      self.playOverlayButton.frame = CGRectMake(0.0, 0.0, self.extraAssetsSeat.frame.size.width,
-                                                self.extraAssetsSeat.frame.size.height);
-      
-      [self.extraAssetsSeat addSubview:self.playOverlayButton];
-      [[DesignManager shared] globalSetImageTo:@"" forButton:self.playOverlayButton];
-    }
-    
-  } else {
-    
-    self.rsvpSeatView.frame = CGRectMake(0.0,
-                                         self.basicTemplate.headLine.frame.origin.y + self.basicTemplate.headLine.frame.size.height,
-                                         self.rsvpSeatView.frame.size.width,
-                                         self.rsvpSeatView.frame.size.height);
-  }
-  
-  if ([Utilities isLandscape] && !self.shortPage) {
-    
-    [[DesignManager shared] avoidNeighbor:self.landscapeImageSheetView
-                                 withView:self.webContentLoader.webView
-                                direction:NeighborDirectionAbove
-                                  padding:0.0];
-    CGFloat heightDiff = self.masterContentScroller.frame.size.height - (self.textSheetView.frame.origin.y+self.textSheetView.frame.size.height)-self.landscapeImageSheetView.frame.size.height;
-    
-    self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
-                                                     self.webContentLoader.webView.frame.origin.y,
-                                                     self.webContentLoader.webView.frame.size.width,
-                                                     heightDiff);
-  } else {
-    
-    [[DesignManager shared] avoidNeighbor:self.rsvpSeatView
-                                 withView:self.contentDividerLine
-                                direction:NeighborDirectionAbove
-                                  padding:0.0];
-    
-    self.textSheetView.frame = CGRectMake(self.textSheetView.frame.origin.x,
-                                          self.textSheetView.frame.origin.y,
-                                          self.textSheetView.frame.size.width,
-                                          self.contentDividerLine.frame.origin.y+self.contentDividerLine.frame.size.height);
-    
-    CGFloat heightDiff = self.masterContentScroller.frame.size.height - (self.textSheetView.frame.origin.y+self.textSheetView.frame.size.height);
-    self.webContentLoader.webView.frame = CGRectMake(self.webContentLoader.webView.frame.origin.x,
-                                                     self.textSheetView.frame.origin.y+self.textSheetView.frame.size.height,
-                                                     self.webContentLoader.webView.frame.size.width,
-                                                     heightDiff);
-  }
 }
 
 
@@ -684,52 +654,27 @@
     return;
   }
 
+  UIView *v2u = [Utilities isLandscape] ? self.landscapeImageSheetView : self.basicTemplate.matteView;
   self.captionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  if ([Utilities isLandscape]) {
-    self.captionButton.frame = self.landscapeImageSheetView.frame;
-  } else {
-    self.captionButton.frame = self.playOverlayButton.frame;
-  }
-
   [self.captionButton addTarget:self
                          action:@selector(showCaption:)
                forControlEvents:UIControlEventTouchUpInside];
-  [self.masterContentScroller addSubview:self.captionButton];
+  [v2u addSubview:self.captionButton];
+  
+  NSArray *typical = [[DesignManager shared] typicalConstraints:self.captionButton];
+  [v2u addConstraints:typical];
+  
 
   // Set, style, and arrange caption labels.
   [self.captionLabel titleizeText:[leadingAsset objectForKey:@"caption"] bold:NO respectHeight:YES];
   [self.captionCreditLabel titleizeText:[leadingAsset objectForKey:@"owner"] bold:NO respectHeight:YES];
   self.captionCreditLabel.textColor = [[DesignManager shared] charcoalColor];
 
-  [[DesignManager shared] avoidNeighbor:self.captionLabel
-                               withView:self.captionCreditLabel
-                              direction:NeighborDirectionAbove
-                                padding:2.0];
-
   self.captionView.backgroundColor = [[DesignManager shared] frostedWindowColor:0.88];
   self.captionView.frame = CGRectMake(0.0, 0.0, self.captionView.frame.size.width,
                                       self.captionCreditLabel.frame.origin.y + self.captionCreditLabel.frame.size.height + self.captionLabel.frame.origin.y + 2.0);
   self.captionView.alpha = 0.0;
-  [self.masterContentScroller addSubview:self.captionView];
-  
-  // Align caption view to bottom edge of main asset image, with a slight vertical nudge.
-  // Different placements for Portrait and Landscape.
-  if (![Utilities isLandscape]) {
-    [[DesignManager shared] avoidNeighbor:self.textSheetView
-                                 withView:self.captionView
-                                direction:NeighborDirectionBelow
-                                  padding:20.0];
-  } else {
-    [self.captionView removeFromSuperview];
-    [self.landscapeImageSheetView addSubview:self.captionView];
-    self.captionView.frame = CGRectMake(self.captionView.frame.origin.x,
-                                        self.landscapeImageSheetView.frame.size.height - self.captionView.frame.size.height - 20.0,
-                                        self.captionView.frame.size.width,
-                                        self.captionView.frame.size.height);
-  }
-  
-  [[DesignManager shared] alignHorizontalCenterOf:self.captionView
-                                         withView:self.textSheetView];
+
 }
 
 - (void)showCaption:(id)sender {

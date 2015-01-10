@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -17,17 +17,23 @@
             <rect key="frame" x="0.0" y="0.0" width="748" height="606"/>
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="white" id="6" userLabel="Gray Activity Indicator">
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="6" userLabel="Gray Activity Indicator">
                     <rect key="frame" x="364" y="293" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </activityIndicatorView>
-                <webView contentMode="scaleToFill" scalesPageToFit="YES" id="4">
+                <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4">
                     <rect key="frame" x="0.0" y="0.0" width="748" height="606"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </webView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="6" secondAttribute="centerY" id="0aA-ek-LLR"/>
+                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="DbC-iI-9WK"/>
+                <constraint firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="QTA-Xh-OgF"/>
+                <constraint firstItem="4" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="X6d-kG-9hA"/>
+                <constraint firstItem="4" firstAttribute="top" secondItem="2" secondAttribute="top" id="cm1-AH-g26"/>
+                <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" id="x1G-WI-ERg"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>

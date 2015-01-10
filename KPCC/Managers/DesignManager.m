@@ -287,7 +287,7 @@ static DesignManager *singleton = nil;
   }
 }
 
-- (NSArray*)typicalConstraints:(UIView *)view {
+- (NSArray*)typicalConstraints:(UIView *)view withTopOffset:(CGFloat)topOffset {
   
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
@@ -295,7 +295,7 @@ static DesignManager *singleton = nil;
                                                                   metrics:nil
                                                                     views:@{ @"view" : view }];
   
-  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[view]-(0)-|"
+  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-(%ld)-[view]-(0)-|",(long)topOffset]
                                                                   options:0
                                                                   metrics:nil
                                                                     views:@{ @"view" : view }];
@@ -331,7 +331,12 @@ static DesignManager *singleton = nil;
   
 }
 
-- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container {
+- (NSArray*)typicalConstraints:(UIView *)view {
+  return [self typicalConstraints:view
+                    withTopOffset:0.0];
+}
+
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset {
   UIView *v2u = nil;
   UIView *c2u = nil;
   if ( [view isKindOfClass:[UIView class]] ) {
@@ -350,7 +355,7 @@ static DesignManager *singleton = nil;
   [c2u addSubview:v2u];
   [v2u setTranslatesAutoresizingMaskIntoConstraints:NO];
   
-  NSArray *anchors = [self typicalConstraints:v2u];
+  NSArray *anchors = [self typicalConstraints:v2u withTopOffset:topOffset];
   
   [c2u setTranslatesAutoresizingMaskIntoConstraints:NO];
   [c2u addConstraints:anchors];
@@ -365,6 +370,12 @@ static DesignManager *singleton = nil;
   
   return nil;
   
+}
+
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container {
+  return [self snapView:view
+            toContainer:container
+          withTopOffset:0.0];
 }
 
 - (void)snapCenteredView:(id)view toContainer:(id)container {
@@ -434,6 +445,9 @@ static DesignManager *singleton = nil;
   [v2u setNeedsUpdateConstraints];
   [c2u updateConstraintsIfNeeded];
   [v2u updateConstraintsIfNeeded];
+  
+  [v2u layoutIfNeeded];
+  [c2u layoutIfNeeded];
   
   v2u.clipsToBounds = YES;
   

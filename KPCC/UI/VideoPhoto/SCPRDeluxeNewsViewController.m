@@ -853,6 +853,7 @@
     
     self.pushedContent = emvc;
 
+    /*
     SCPRViewController *vc = [[Utilities del] viewController];
     if ( vc.currentAnchors ) {
       if ( vc.currentAnchors[@"top"] ) {
@@ -867,7 +868,9 @@
                                                animated:YES];
         }];
       }
-    }
+    }*/
+    [self.navigationController pushViewController:emvc
+                                         animated:YES];
     
   } else {
     if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage) {

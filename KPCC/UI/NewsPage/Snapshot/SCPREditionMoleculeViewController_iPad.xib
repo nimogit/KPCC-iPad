@@ -21,7 +21,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                 </scrollView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THE SHORT LIST: MONDAY, 10PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FTI-lC-eLs">
-                    <rect key="frame" x="64" y="82" width="641" height="21"/>
+                    <rect key="frame" x="64" y="60" width="641" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="641" id="ehf-Hi-qfT"/>
                         <constraint firstAttribute="height" constant="21" id="uHF-k3-Awh"/>
@@ -35,14 +35,14 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" id="3vY-RK-P0B"/>
                 <constraint firstAttribute="centerX" secondItem="FTI-lC-eLs" secondAttribute="centerX" constant="-0.5" id="93q-wi-jPm"/>
-                <constraint firstItem="FTI-lC-eLs" firstAttribute="top" secondItem="2" secondAttribute="top" constant="82" id="EGH-ov-z8G"/>
+                <constraint firstItem="FTI-lC-eLs" firstAttribute="top" secondItem="2" secondAttribute="top" constant="60" id="EGH-ov-z8G"/>
                 <constraint firstItem="4" firstAttribute="top" secondItem="2" secondAttribute="top" id="QBw-aH-jTs"/>
                 <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="g0Q-cg-0s1"/>
                 <constraint firstItem="4" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="r93-Pq-RfO"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="503" y="444"/>
+            <point key="canvasLocation" x="521" y="404"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

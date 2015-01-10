@@ -180,10 +180,14 @@ typedef enum {
 - (void)alignVerticalCenterOf:(UIView*)floatingView withView:(UIView*)anchoredView;
 - (void)turn:(id<Turnable>)turnable withValues:(NSDictionary*)changes;
 - (void)nudge:(UIView*)view direction:(NeighborDirection)direction amount:(CGFloat)amount;
+
 - (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container;
 - (void)snapCenteredView:(id)view toContainer:(id)container;
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset;
 
+- (NSArray*)typicalConstraints:(UIView*)view withTopOffset:(CGFloat)topOffset;
 - (NSArray*)typicalConstraints:(UIView*)view;
+
 - (NSArray*)sizeContraintsForView:(UIView*)view;
 - (void)unelasticizeView:(UIView*)view;
 
