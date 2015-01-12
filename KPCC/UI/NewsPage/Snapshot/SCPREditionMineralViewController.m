@@ -54,6 +54,8 @@
   
   self.editionsScroller.contentSize = CGSizeMake([self.editions count]*self.editionsScroller.frame.size.width,
                                                  self.editionsScroller.frame.size.height);
+  self.editionsScroller.contentOffset = CGPointMake(self.currentIndex*self.editionsScroller.frame.size.width,
+                                                    0.0);
   [self.editionsScroller setNeedsLayout];
   
   for ( NSDictionary *metrics in [self.metricChain allValues] ) {
@@ -63,6 +65,8 @@
     NSLayoutConstraint *h = metrics[@"height"];
     [h setConstant:self.editionsScroller.frame.size.height];
   }
+  
+  
 }
 
 - (void)setupWithEditions:(NSArray *)editions {

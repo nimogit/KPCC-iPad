@@ -37,7 +37,7 @@
   
   self.scroller.pagingEnabled = YES;
   self.scroller.delegate = self;
-
+  self.cloakView.alpha = 0.0;
   if ( ![Utilities isIOS7] ) {
     if ( self.fromNewsPage ) {
       
@@ -334,40 +334,43 @@
 #pragma mark - Backable
 - (void)backTapped {
   
-  [[ContentManager shared] popFromResizeVector];
-  
-  if ( self.parentEditionContentViewController ) {
+  [UIView animateWithDuration:0.25 animations:^{
+    self.cloakView.alpha = 1.0;
+  } completion:^(BOOL finished) {
+    [[ContentManager shared] popFromResizeVector];
     
-    if ( [self.parentEditionContentViewController isKindOfClass:[SCPREditionCrystalViewController class]] ) {
+    if ( self.parentEditionContentViewController ) {
       
-      SCPREditionCrystalViewController *svc = (SCPREditionCrystalViewController*)self.parentEditionContentViewController;
-      [(SCPREditionMineralViewController*)svc.parentMineral setMoleculePushed:NO];
-      svc.pushedContent = nil;
-
-    } else {
-      SCPRViewController *vc = [[Utilities del] viewController];
-      vc.globalGradient.alpha = 0.0;
+      if ( [self.parentEditionContentViewController isKindOfClass:[SCPREditionCrystalViewController class]] ) {
+        
+        SCPREditionCrystalViewController *svc = (SCPREditionCrystalViewController*)self.parentEditionContentViewController;
+        [(SCPREditionMineralViewController*)svc.parentMineral setMoleculePushed:NO];
+        svc.pushedContent = nil;
+        
+      } else {
+        SCPRViewController *vc = [[Utilities del] viewController];
+        vc.globalGradient.alpha = 0.0;
+      }
     }
-  }
-
+    
 #ifdef AGGRESSIVE_DEALLOCATION
-  for ( SCPREditionAtomViewController *atom in self.displayVector ) {
-    [atom.splashImageView setImage:nil];
-    [atom.splashImageView removeFromSuperview];
-  }
+    for ( SCPREditionAtomViewController *atom in self.displayVector ) {
+      [atom.splashImageView setImage:nil];
+      [atom.splashImageView removeFromSuperview];
+    }
 #endif
-  
-  [[[Utilities del] globalTitleBar] pop];
-  
-
-  
-  if ( [[ContentManager shared] adReadyOffscreen] ) {
-    [[[Utilities del] masterRootController] killAdOffscreen:^{
+    
+    [[[Utilities del] globalTitleBar] pop];
+    
+    if ( [[ContentManager shared] adReadyOffscreen] ) {
+      [[[Utilities del] masterRootController] killAdOffscreen:^{
+        [self.navigationController popViewControllerAnimated:YES];
+      }];
+    } else {
       [self.navigationController popViewControllerAnimated:YES];
-    }];
-  } else {
-    [self.navigationController popViewControllerAnimated:YES];
-  }
+    }
+  }];
+
   
 }
 

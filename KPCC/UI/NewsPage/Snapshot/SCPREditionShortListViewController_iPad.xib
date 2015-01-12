@@ -167,7 +167,7 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THE SHORT LIST" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrr-dM-aMH">
-                                    <rect key="frame" x="21" y="60" width="725" height="23"/>
+                                    <rect key="frame" x="21" y="30" width="725" height="23"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="23" id="heB-lX-M0k"/>
                                     </constraints>
@@ -176,7 +176,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MONDAY, 11AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XtD-WO-0mj">
-                                    <rect key="frame" x="21" y="82" width="725" height="21"/>
+                                    <rect key="frame" x="21" y="52" width="725" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="a6P-Hl-r2f"/>
                                     </constraints>
@@ -199,7 +199,7 @@
                                 <constraint firstItem="XtD-WO-0mj" firstAttribute="top" secondItem="yrr-dM-aMH" secondAttribute="bottom" constant="-1" id="Atb-yX-yZX"/>
                                 <constraint firstItem="yrr-dM-aMH" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" constant="21" id="FIh-yp-E5r"/>
                                 <constraint firstItem="RIm-NE-P0A" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" id="LyH-7B-GTS"/>
-                                <constraint firstItem="yrr-dM-aMH" firstAttribute="top" secondItem="QGU-HH-7cO" secondAttribute="top" constant="60" id="SfL-Jj-ZuR"/>
+                                <constraint firstItem="yrr-dM-aMH" firstAttribute="top" secondItem="QGU-HH-7cO" secondAttribute="top" constant="30" id="SfL-Jj-ZuR"/>
                                 <constraint firstItem="XtD-WO-0mj" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" constant="21" id="Svj-aV-e2Z"/>
                                 <constraint firstAttribute="bottom" secondItem="dKi-nc-VOY" secondAttribute="bottom" constant="242" id="WKg-tp-vGh"/>
                                 <constraint firstItem="RIm-NE-P0A" firstAttribute="top" secondItem="QGU-HH-7cO" secondAttribute="top" constant="253" id="jRT-gg-lgg"/>

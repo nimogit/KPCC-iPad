@@ -79,6 +79,7 @@
     
     SCPRProgramPageViewController *ppvc = (SCPRProgramPageViewController*)self.parentController;
     [ppvc playRequested:self.actionButton];
+    
   }];
 }
 
@@ -171,7 +172,7 @@
   segmentCell.selectionStyle = UITableViewCellSelectionStyleNone;
   
  
-    [[DesignManager shared] avoidNeighbor:segmentCell.segmentTitleLabel
+  [[DesignManager shared] avoidNeighbor:segmentCell.segmentTitleLabel
                                withView:segmentCell.segmentDurationLabel
                               direction:NeighborDirectionAbove
                                 padding:3.0];

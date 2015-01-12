@@ -38,6 +38,13 @@ static CGFloat expanseLimit = 100.0;
   self.headerCaption.alpha = 0.0;
   self.footerCaption.alpha = 0.0;
   
+#ifdef DEBUG
+  /*self.scroller.backgroundColor = [[DesignManager shared] prettyRandomColor];
+  self.mainCaptionLabel.backgroundColor = [[DesignManager shared] prettyRandomColor];
+  self.footerCaption.backgroundColor = [[DesignManager shared] prettyRandomColor];
+  self.titleCaptionLabel.backgroundColor = [[DesignManager shared] prettyRandomColor];*/
+#endif
+  
   if ( [Utilities isLandscape] ) {
     if ( ![Utilities isIOS7] ) {
       for ( UIView *v in [self.view subviews] ) {
@@ -57,8 +64,8 @@ static CGFloat expanseLimit = 100.0;
                               bold:NO
                      respectHeight:NO];
   
-  [self.headerCaption snapText:self.headerCaption.text bold:NO];
-  [self.footerCaption snapText:self.footerCaption.text bold:NO];
+  //[self.headerCaption snapText:self.headerCaption.text bold:NO];
+  //[self.footerCaption snapText:self.footerCaption.text bold:NO];
   
   self.scroller.delegate = self;
   
@@ -226,17 +233,14 @@ static CGFloat expanseLimit = 100.0;
     fadein = YES;
   }
   
-    self.titleCaptionLabel.frame = self.originalHeadlineHeight;
-    self.footerCaption.frame = self.originalBylineHeight;
-    self.mainCaptionLabel.frame = self.originalCaptionHeight;
     
-    [self.footerCaption titleizeText:[meta objectForKey:@"owner"]
+  [self.footerCaption titleizeText:[meta objectForKey:@"owner"]
                                 bold:NO
      respectHeight:YES];
-    [self.titleCaptionLabel titleizeText:[self.article objectForKey:@"title"]
+  [self.titleCaptionLabel titleizeText:[self.article objectForKey:@"title"]
                                     bold:NO
      respectHeight:YES];
-    [self.mainCaptionLabel titleizeText:[meta objectForKey:@"caption"]
+  [self.mainCaptionLabel titleizeText:[meta objectForKey:@"caption"]
                                    bold:NO
      respectHeight:YES];
   
@@ -244,38 +248,36 @@ static CGFloat expanseLimit = 100.0;
     //self.mainCaptionLabel.backgroundColor = [UIColor greenColor];
 #endif
   
-    NSString *progress = [NSString stringWithFormat:@"%d of %d",offset+1,[self.imageVector count]];
+  NSString *progress = [NSString stringWithFormat:@"%d of %d",offset+1,[self.imageVector count]];
     
 
-    self.progressLabel.text = progress;
-    
+  self.progressLabel.text = progress;
 
+  if ( self.captionExpanded ) {
+    [self contractCaption];
+  }
     
-    if ( self.captionExpanded ) {
-      [self contractCaption];
-    }
-    
-    [self.captionExpansionButton removeFromSuperview];
-    self.captionExpansionButton = [[UIButton alloc] initWithFrame:self.mainCaptionLabel.frame];
-    self.captionExpansionButton.backgroundColor = [UIColor clearColor];
-    
-
-    [self.captionSeat addSubview:self.captionExpansionButton];
-    
-    self.captionExpanded = NO;
-    [self.captionExpansionButton addTarget:self
-                                    action:@selector(expandCaption)
-                          forControlEvents:UIControlEventTouchUpInside];
+  /*[self.captionExpansionButton removeFromSuperview];
+  self.captionExpansionButton = [[UIButton alloc] initWithFrame:self.mainCaptionLabel.frame];*/
+  self.captionExpansionButton.backgroundColor = [UIColor clearColor];
   
+
+  //[self.captionSeat addSubview:self.captionExpansionButton];
   
-    if ( fadein ) {
-        [UIView animateWithDuration:0.22 animations:^{
-          self.titleCaptionLabel.alpha = 1.0;
-          self.footerCaption.alpha = 1.0;
-          self.mainCaptionLabel.alpha = 1.0;
-          self.progressLabel.alpha = 1.0;
-        }];
-    }
+  self.captionExpanded = NO;
+  [self.captionExpansionButton addTarget:self
+                                  action:@selector(expandCaption)
+                        forControlEvents:UIControlEventTouchUpInside];
+
+
+  if ( fadein ) {
+      [UIView animateWithDuration:0.22 animations:^{
+        self.titleCaptionLabel.alpha = 1.0;
+        self.footerCaption.alpha = 1.0;
+        self.mainCaptionLabel.alpha = 1.0;
+        self.progressLabel.alpha = 1.0;
+      }];
+  }
   
 }
 

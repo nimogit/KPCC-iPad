@@ -277,7 +277,7 @@
   [state setObject:self.view.backgroundColor
             forKey:@"bgcolor"];
   
-  if ( self.backButton.titleLabel.text ) {
+  if ( self.backButton.titleLabel.text && !SEQ(self.backButton.titleLabel.text,@"") ) {
     [state setObject:self.backButton.titleLabel.text
               forKey:@"backtitle"];
   }
@@ -293,13 +293,13 @@
             forKey:@"currentPage"];
   
   for (id v in [self.view subviews]) {
-    if ([v isKindOfClass:[UIPageControl class]]) {
+    if ([v isKindOfClass:[UIPageControl class]] && [(UIView*)v alpha] > 0.0 ) {
       [state setObject:@1 forKey:@"hasPager"];
     }
-    if (v == self.donateButton) {
+    if (v == self.donateButton && [(UIView*)v alpha] > 0.0 ) {
       [state setObject:@1 forKey:@"hasDonate"];
     }
-    if (v == self.categoriesButton) {
+    if (v == self.categoriesButton && [(UIView*)v alpha] > 0.0 ) {
       [state setObject:@1 forKey:@"hasCategories"];
     }
   }
@@ -433,7 +433,6 @@
 - (void)eraseDonateButton {
   [UIView animateWithDuration:0.22 animations:^{
     [self.donateButton setAlpha:0.0];
-    [self.donateButton removeFromSuperview];
   }];
 }
 
@@ -480,7 +479,6 @@
 - (void)eraseCategoriesButton {
   [UIView animateWithDuration:0.22 animations:^{
     [self.categoriesButton setAlpha:0.0];
-    [self.categoriesButton removeFromSuperview];
   }];
 }
 
@@ -497,7 +495,6 @@
 - (void)eraseCloseCategoriesButton {
   [UIView animateWithDuration:0.22 animations:^{
     [self.closeCategoriesButton setAlpha:0.0];
-    [self.closeCategoriesButton removeFromSuperview];
   }];
 }
 
@@ -538,7 +535,6 @@
 - (void)eraseSharingButton {
   [UIView animateWithDuration:0.22 animations:^{
     [self.personalInfoButton setAlpha:0.0];
-    [self.personalInfoButton removeFromSuperview];
   }];
 }
 
@@ -564,6 +560,7 @@
 - (void)applyPagerWithCount:(NSInteger)count currentPage:(NSInteger)currentPage {
   
   [self eraseDonateButton];
+  self.pager.numberOfPages = count;
   self.pager.alpha = 1.0;
   self.pager.currentPage = currentPage;
   self.pager.userInteractionEnabled = NO;

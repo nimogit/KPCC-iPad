@@ -110,6 +110,7 @@
         }
       }
     }
+    
   }
 }
 
@@ -596,13 +597,6 @@
     self.extraAssetsImage.frame = iv.frame;
     self.extraAssetsImage.image = [UIImage imageNamed:@"playButtonSmall.png"];
     
-    [[DesignManager shared] alignVerticalCenterOf:self.extraAssetsImage
-                                         withView:self.extraAssetsLabel];
-    
-    [[DesignManager shared] avoidNeighbor:self.extraAssetsLabel
-                                 withView:self.extraAssetsImage
-                                direction:NeighborDirectionToRight
-                                  padding:8.0];
     
     NSString *videoText = pc.category == ContentCategoryEvents ? @"WATCH LIVE VIDEO" : @"PLAY VIDEO";
     [self.extraAssetsLabel titleizeText:videoText
@@ -614,8 +608,6 @@
                      forControlEvents:UIControlEventTouchUpInside];
     prime = YES;
     
-    self.extraAssetsSeat.center = CGPointMake(self.basicTemplate.image1.frame.size.width / 2.0,
-                                              self.basicTemplate.image1.frame.size.height / 2.0);
     
   } else {
 
@@ -632,7 +624,7 @@
                                  action:@selector(presentSlideshow:)
                        forControlEvents:UIControlEventTouchUpInside];
       prime = YES;
-
+      self.captionView.alpha = 0.0;
       
     } else { // Set caption for article with only one asset.
       if (primary) {
@@ -651,6 +643,7 @@
 - (void)armCaption:(NSDictionary*)leadingAsset {
   
   if ([leadingAsset objectForKey:@"caption"] == [NSNull null] || [leadingAsset objectForKey:@"owner"] == [NSNull null]) {
+    self.captionView.alpha = 0.0;
     return;
   }
 
@@ -669,7 +662,6 @@
   [self.captionLabel titleizeText:[leadingAsset objectForKey:@"caption"] bold:NO respectHeight:YES];
   [self.captionCreditLabel titleizeText:[leadingAsset objectForKey:@"owner"] bold:NO respectHeight:YES];
   self.captionCreditLabel.textColor = [[DesignManager shared] charcoalColor];
-
   self.captionView.backgroundColor = [[DesignManager shared] frostedWindowColor:0.88];
   self.captionView.frame = CGRectMake(0.0, 0.0, self.captionView.frame.size.width,
                                       self.captionCreditLabel.frame.origin.y + self.captionCreditLabel.frame.size.height + self.captionLabel.frame.origin.y + 2.0);

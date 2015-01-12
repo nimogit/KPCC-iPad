@@ -17,6 +17,8 @@
 @property (nonatomic,strong) IBOutlet UIButton *backButton;
 @property (nonatomic,strong) NSMutableArray *editions;
 @property (nonatomic,strong) NSMutableArray *displayVector;
+@property (nonatomic,strong) IBOutlet UIView *cloakView;
+
 @property (nonatomic,weak) SCPREditionAtomViewController *currentAtom;
 @property (nonatomic,strong) id parentEditionContentViewController;
 @property NSInteger currentIndex;
