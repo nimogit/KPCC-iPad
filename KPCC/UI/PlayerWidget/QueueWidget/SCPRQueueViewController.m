@@ -635,8 +635,6 @@
     SCPRPlayerWidgetViewController *playa = [[Utilities del] globalPlayer];
     [playa.view setAlpha:1.0];
   }];
-  
-
     
   SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
   [root hideQueue];
@@ -686,7 +684,6 @@
 
   if ([[AlarmManager shared] isSleepTimerActive]) {
     int secondsLeft = [[AlarmManager shared] secondsLeft];
-
     if (secondsLeft > 0) {
       int minutes, seconds;
       minutes = secondsLeft / 60;
@@ -701,6 +698,7 @@
       }];
     }
   }
+  
 }
 
 - (void)dropAllItemsFromQueue {

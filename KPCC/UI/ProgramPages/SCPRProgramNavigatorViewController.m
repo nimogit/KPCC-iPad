@@ -54,7 +54,8 @@
   
   self.programDataVector = [programs mutableCopy];
   
-  for ( UIView *v in [self.programScroller subviews] ) {
+  for ( SCPRProgramPageViewController *program in self.programVector ) {
+    UIView *v = program.view;
     [v removeFromSuperview];
   }
   
@@ -74,9 +75,9 @@
                                            initWithNibName:[[DesignManager shared]
                                                             xibForPlatformWithName:@"SCPRProgramPageViewController"]
                                            bundle:nil];
-    ppvc.view.frame = CGRectMake(i*ppvc.view.frame.size.width,0.0,
+    /*ppvc.view.frame = CGRectMake(i*ppvc.view.frame.size.width,0.0,
                                  ppvc.view.frame.size.width,
-                                 ppvc.view.frame.size.height);
+                                 ppvc.view.frame.size.height);*/
     
     [ppvc.view setTranslatesAutoresizingMaskIntoConstraints:NO];
     
@@ -176,7 +177,7 @@
 
 
 - (void)focusShowWithIndex:(NSInteger)index {
-  self.programScroller.userInteractionEnabled = NO;
+  //self.programScroller.userInteractionEnabled = NO;
   self.currentIndex = index;
   SCPRProgramPageViewController * ppvc = [self.programVector objectAtIndex:index];
   ppvc.mainScroller = self.programScroller;

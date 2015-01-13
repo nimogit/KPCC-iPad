@@ -766,6 +766,7 @@
     vpc.facade1.parentPVController = self;
     vpc.facade0.contentType = self.contentType;
     vpc.facade1.contentType = self.contentType;
+    vpc.containerTopAnchor.constant = self.contentType == ScreenContentTypeVideoPhotoPage ? 0.0 : -23.0;
     vpc.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.cells addObject:vpc];
   }
@@ -1618,7 +1619,8 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.currentIndexPath = indexPath;
     cell.landscape = [Utilities isLandscape];
-
+    cell.containerTopAnchor.constant = -23.0;
+    
     return cell;
   }
   
@@ -1760,7 +1762,7 @@
       NSDictionary *meta = [map objectAtIndex:indexPath.row];
       NSString *type = [meta objectForKey:@"type"];
       NSMutableArray *posts = [meta objectForKey:@"posts"];
-      CGFloat squish = indexPath.row == 0 ? 23.0 : 0.0;
+      CGFloat squish = indexPath.row == 0 ? 0.0 : 0.0;
 
       if ([type isEqualToString:@"editions"]) {
         CGFloat mod = [Utilities isLandscape] ? 100.0 : 0.0;
@@ -1801,10 +1803,10 @@
       }
       
       cell = [self.cells objectAtIndex:indexPath.row+1];
-      CGFloat squish = indexPath.row == 0 ? 23.0 : 0.0;
+      CGFloat squish = indexPath.row == 0 ? 0.0 : 0.0;
       return cell.frame.size.height-squish;
     } else {
-      CGFloat squish = indexPath.row == 0 ? 23.0 : 0.0;
+      CGFloat squish = indexPath.row == 0 ? 0.0 : 0.0;
       cell = [self.cells objectAtIndex:indexPath.row];
       return cell.frame.size.height-squish;
     }

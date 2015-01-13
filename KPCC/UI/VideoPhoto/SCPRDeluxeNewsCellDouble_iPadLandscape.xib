@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -352,15 +351,16 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="1" firstAttribute="top" secondItem="soR-3O-HyK" secondAttribute="topMargin" constant="-8" id="1Dv-9L-6Y0"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="1" secondAttribute="trailing" constant="-8" id="QPN-EM-JrF"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="1" secondAttribute="bottom" constant="-8" id="Ynn-hr-KaJ"/>
-                    <constraint firstItem="1" firstAttribute="leading" secondItem="soR-3O-HyK" secondAttribute="leadingMargin" constant="-8" id="n6a-cF-NpI"/>
+                    <constraint firstItem="1" firstAttribute="top" secondItem="soR-3O-HyK" secondAttribute="top" id="1Dv-9L-6Y0"/>
+                    <constraint firstAttribute="trailing" secondItem="1" secondAttribute="trailing" id="QPN-EM-JrF"/>
+                    <constraint firstAttribute="bottom" secondItem="1" secondAttribute="bottom" id="Ynn-hr-KaJ"/>
+                    <constraint firstItem="1" firstAttribute="leading" secondItem="soR-3O-HyK" secondAttribute="leading" id="n6a-cF-NpI"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="betweenConstraint" destination="JWT-PM-ITF" id="DFK-DR-sfu"/>
                 <outlet property="containerSlateView" destination="1" id="eiW-ss-dgS"/>
+                <outlet property="containerTopAnchor" destination="1Dv-9L-6Y0" id="CZy-th-2W0"/>
                 <outlet property="facade0" destination="12" id="PoD-2G-foO"/>
                 <outlet property="facade1" destination="36" id="PBv-et-gQf"/>
                 <outlet property="leftSpacing" destination="CX4-it-mgr" id="egu-3S-Mej"/>
@@ -398,6 +398,7 @@
             <connections>
                 <outlet property="bluePaddingView" destination="80v-j4-kYj" id="aJk-C6-qHy"/>
                 <outlet property="blurbLabel" destination="48e-sr-Til" id="7Vy-Xt-nuY"/>
+                <outlet property="cardView" destination="Z07-EI-njQ" id="4Ja-ld-BjM"/>
                 <outlet property="categorySeatView" destination="gBB-Dc-z7Z" id="ZRi-0K-5Ud"/>
                 <outlet property="facebookCountLabel" destination="Gh8-dP-8i7" id="phq-rl-Yo7"/>
                 <outlet property="facebookLogoImage" destination="9IY-RL-SjU" id="8B7-hl-4Up"/>

@@ -52,6 +52,8 @@
 @property (atomic) BOOL animationLock;
 @property (atomic) BOOL populateOnAppearance;
 @property (atomic) BOOL accessedFromAZ;
+@property BOOL merged;
+@property BOOL loaded;
 
 @property (nonatomic,strong) IBOutlet UIButton *toggleTable;
 @property (nonatomic,strong) NSNumber *expandedCellTag;
@@ -65,6 +67,8 @@
 @property (nonatomic,strong) IBOutlet UIView *cloakView;
 
 @property (nonatomic,strong) SCPRProgramCell *dummyCell;
+
+
 
 - (void)fetchShowInformation;
 - (IBAction)buttonTapped:(id)sender;

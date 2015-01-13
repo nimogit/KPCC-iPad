@@ -564,7 +564,6 @@
 		258535531835664A00853085 /* SCPRCloakViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 258535521835664A00853085 /* SCPRCloakViewController.xib */; };
 		2585355518356FAE00853085 /* SCPRScrollingAssetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2585355418356FAE00853085 /* SCPRScrollingAssetViewController.xib */; };
 		2585355718359C6100853085 /* SCPRProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2585355618359C6100853085 /* SCPRProfileViewController.xib */; };
-		258535591835A23C00853085 /* SCPROnboardingFlowViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 258535581835A23C00853085 /* SCPROnboardingFlowViewController_iPadLandscape.xib */; };
 		2585355B1835A26100853085 /* SCPRModalListPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2585355A1835A26100853085 /* SCPRModalListPickerViewController.xib */; };
 		2585355E1835A38E00853085 /* SCPRProfileListenedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2585355C1835A38E00853085 /* SCPRProfileListenedCell.xib */; };
 		2585355F1835A38E00853085 /* SCPRProfileReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2585355D1835A38E00853085 /* SCPRProfileReminderCell.xib */; };
@@ -2097,7 +2096,6 @@
 		258535521835664A00853085 /* SCPRCloakViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRCloakViewController.xib; path = UI/UtilityViews/SCPRCloakViewController.xib; sourceTree = "<group>"; };
 		2585355418356FAE00853085 /* SCPRScrollingAssetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRScrollingAssetViewController.xib; path = UI/UtilityViews/SCPRScrollingAssetViewController.xib; sourceTree = "<group>"; };
 		2585355618359C6100853085 /* SCPRProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRProfileViewController.xib; path = UI/Profile/SCPRProfileViewController.xib; sourceTree = "<group>"; };
-		258535581835A23C00853085 /* SCPROnboardingFlowViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPROnboardingFlowViewController_iPadLandscape.xib; path = UI/Onboarding/SCPROnboardingFlowViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		2585355A1835A26100853085 /* SCPRModalListPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRModalListPickerViewController.xib; path = UI/UtilityViews/SCPRModalListPickerViewController.xib; sourceTree = "<group>"; };
 		2585355C1835A38E00853085 /* SCPRProfileListenedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRProfileListenedCell.xib; path = UI/Profile/SCPRProfileListenedCell.xib; sourceTree = "<group>"; };
 		2585355D1835A38E00853085 /* SCPRProfileReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRProfileReminderCell.xib; path = UI/Profile/SCPRProfileReminderCell.xib; sourceTree = "<group>"; };
@@ -3530,7 +3528,6 @@
 				25A70BAD17E135800024E654 /* SCPROnboardingFlowViewController.m */,
 				259AF5B218340C25008AFB2A /* SCPROnboardingFlowViewController.xib */,
 				25A70BAE17E135800024E654 /* SCPROnboardingFlowViewController_iPad.xib */,
-				258535581835A23C00853085 /* SCPROnboardingFlowViewController_iPadLandscape.xib */,
 				25A70BFC17E13DC40024E654 /* SCPROnboardingCardViewController.h */,
 				25A70BFD17E13DC40024E654 /* SCPROnboardingCardViewController.m */,
 				259AF5B118340C25008AFB2A /* SCPROnboardingCardViewController.xib */,
@@ -5924,7 +5921,6 @@
 				76E698031909A05800D373BF /* sections_close_icon.png in Resources */,
 				251EF54D17A2E035002893AF /* programCellGradient@2x.png in Resources */,
 				251EF55117A2E44F002893AF /* programFavorite.png in Resources */,
-				258535591835A23C00853085 /* SCPROnboardingFlowViewController_iPadLandscape.xib in Resources */,
 				251EF55317A2E44F002893AF /* programFavorite@2x.png in Resources */,
 				2585354A18354E2200853085 /* SCPREditionMineralViewController.xib in Resources */,
 				251EF56317A325DC002893AF /* section_2_header_icon.png in Resources */,

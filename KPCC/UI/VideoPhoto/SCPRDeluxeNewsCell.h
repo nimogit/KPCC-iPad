@@ -23,7 +23,7 @@
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *widthConstraint;
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *heightConstraint;
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *betweenConstraint;
-
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *containerTopAnchor;
 
 @property BOOL squished;
 @property BOOL primed;

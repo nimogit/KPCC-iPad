@@ -31,7 +31,7 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8CB-Wd-JO5">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8CB-Wd-JO5" userLabel="cloakView">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
@@ -39,19 +39,19 @@
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" id="3vY-RK-P0B"/>
+                <constraint firstAttribute="trailing" secondItem="8CB-Wd-JO5" secondAttribute="trailing" id="5uk-Gu-FUJ"/>
                 <constraint firstAttribute="centerX" secondItem="FTI-lC-eLs" secondAttribute="centerX" constant="-0.5" id="93q-wi-jPm"/>
-                <constraint firstAttribute="trailing" secondItem="8CB-Wd-JO5" secondAttribute="trailing" id="9ja-bp-dOJ"/>
+                <constraint firstItem="8CB-Wd-JO5" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="ADK-5m-zWw"/>
+                <constraint firstItem="8CB-Wd-JO5" firstAttribute="top" secondItem="2" secondAttribute="top" id="CfU-0T-nHq"/>
                 <constraint firstItem="FTI-lC-eLs" firstAttribute="top" secondItem="2" secondAttribute="top" constant="60" id="EGH-ov-z8G"/>
                 <constraint firstItem="4" firstAttribute="top" secondItem="2" secondAttribute="top" id="QBw-aH-jTs"/>
-                <constraint firstAttribute="bottom" secondItem="8CB-Wd-JO5" secondAttribute="bottom" id="WTU-iV-hzR"/>
                 <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="g0Q-cg-0s1"/>
-                <constraint firstItem="8CB-Wd-JO5" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="iLg-Jb-OWv"/>
+                <constraint firstAttribute="bottom" secondItem="8CB-Wd-JO5" secondAttribute="bottom" id="qNq-e3-z0I"/>
                 <constraint firstItem="4" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="r93-Pq-RfO"/>
-                <constraint firstItem="8CB-Wd-JO5" firstAttribute="top" secondItem="2" secondAttribute="top" id="zff-X4-fsP"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="521" y="404"/>
+            <point key="canvasLocation" x="596" y="260"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

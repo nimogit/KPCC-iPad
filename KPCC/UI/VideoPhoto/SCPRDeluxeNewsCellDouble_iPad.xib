@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -348,22 +347,23 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="1" secondAttribute="bottom" constant="-8" id="HMd-vh-Lni"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="1" secondAttribute="trailing" constant="-8" id="KsS-l3-SGc"/>
-                    <constraint firstItem="1" firstAttribute="leading" secondItem="soR-3O-HyK" secondAttribute="leadingMargin" constant="-8" id="T5Z-AM-SBa"/>
-                    <constraint firstItem="1" firstAttribute="top" secondItem="soR-3O-HyK" secondAttribute="topMargin" constant="-8" id="gXN-e0-cDb"/>
+                    <constraint firstAttribute="bottom" secondItem="1" secondAttribute="bottom" id="HMd-vh-Lni"/>
+                    <constraint firstAttribute="trailing" secondItem="1" secondAttribute="trailing" id="KsS-l3-SGc"/>
+                    <constraint firstItem="1" firstAttribute="leading" secondItem="soR-3O-HyK" secondAttribute="leading" id="T5Z-AM-SBa"/>
+                    <constraint firstItem="1" firstAttribute="top" secondItem="soR-3O-HyK" secondAttribute="top" id="gXN-e0-cDb"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="betweenConstraint" destination="Xrg-tD-qqv" id="1HA-BV-cbL"/>
                 <outlet property="containerSlateView" destination="1" id="txs-wk-Mtu"/>
+                <outlet property="containerTopAnchor" destination="gXN-e0-cDb" id="3qP-ru-Xlr"/>
                 <outlet property="facade0" destination="12" id="PoD-2G-foO"/>
                 <outlet property="facade1" destination="36" id="PBv-et-gQf"/>
                 <outlet property="leftSpacing" destination="Xek-8o-IdS" id="qN9-97-q6I"/>
                 <outlet property="topSpacing" destination="KUN-Fk-u6f" id="J1i-8b-Hvo"/>
                 <outlet property="widthConstraint" destination="M9e-6o-Oc8" id="xWH-pR-T6R"/>
             </connections>
-            <point key="canvasLocation" x="579" y="129.5"/>
+            <point key="canvasLocation" x="536" y="-57.5"/>
         </tableViewCell>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <viewController id="12" customClass="SCPRDeluxeNewsFacadeViewController">
@@ -409,6 +409,7 @@
                 <outlet property="twitterLogoImage" destination="dqB-FB-aBA" id="B4x-5W-RLy"/>
                 <outlet property="view" destination="0HJ-IS-ubG" id="0OX-0h-TIf"/>
             </connections>
+            <point key="canvasLocation" x="508" y="850"/>
         </viewController>
     </objects>
     <resources>

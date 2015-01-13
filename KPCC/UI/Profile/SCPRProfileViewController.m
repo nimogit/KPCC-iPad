@@ -88,6 +88,10 @@
   self.pastListensTable.backgroundColor = [UIColor whiteColor];
   self.pastReadsTable.backgroundColor = [UIColor whiteColor];
 
+  self.nameLabel.alpha = 0.0;
+  self.socialIcon.alpha = 0.0;
+  self.socialTitle.alpha = 0.0;
+  
   self.view.backgroundColor = [[DesignManager shared] onyxColor];
   self.headerView.backgroundColor = [[DesignManager shared] onyxColor];
   self.grayLine.strokeColor = [[DesignManager shared] turquoiseCrystalColor:0.45];
@@ -96,8 +100,20 @@
   [self doNotifications];
   [self doPastListens];
   
+  self.logoutButton = [[[Utilities del] globalTitleBar] signoutButton];
+  [self.logoutButton addTarget:self
+                        action:@selector(buttonTapped:)
+              forControlEvents:UIControlEventTouchUpInside];
   
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewDidLayoutSubviews {
+  [UIView animateWithDuration:0.25 animations:^{
+    self.nameLabel.alpha = 1.0;
+    self.socialTitle.alpha = 1.0;
+    self.socialIcon.alpha = 1.0;
+  }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -106,13 +122,6 @@
   [[[Utilities del] globalTitleBar] applyKpccLogo];
   [[[Utilities del] globalTitleBar] applyOnyxBackground];
   
-  self.logoutButton = [[[Utilities del] globalTitleBar] signoutButton];
-  
-
-  
-  [self.logoutButton addTarget:self
-                        action:@selector(buttonTapped:)
-              forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)respin {
@@ -192,7 +201,7 @@
   [self.expandButton setShadeColor:[[DesignManager shared] deepCharcoalColor]];
   
 
-  
+
 }
 
 - (void)calculateListeningTime {
@@ -475,7 +484,7 @@
                              action:@selector(buttonTapped:)
                    forControlEvents:UIControlEventTouchUpInside];
     
-    [[[Utilities del] viewController] primeUI:ScreenContentTypeOnboarding newsPath:@""];
+    [[[Utilities del] viewController] primeUI:ScreenContentTypeCompositePage newsPath:@""];
     
   }
   if ( sender == self.linkedInButton ) {

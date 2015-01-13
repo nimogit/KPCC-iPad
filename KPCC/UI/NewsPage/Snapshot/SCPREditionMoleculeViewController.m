@@ -337,6 +337,7 @@
   [UIView animateWithDuration:0.25 animations:^{
     self.cloakView.alpha = 1.0;
   } completion:^(BOOL finished) {
+    
     [[ContentManager shared] popFromResizeVector];
     
     if ( self.parentEditionContentViewController ) {
@@ -359,6 +360,8 @@
       [atom.splashImageView removeFromSuperview];
     }
 #endif
+    
+    self.scroller.alpha = 0.0;
     
     [[[Utilities del] globalTitleBar] pop];
     
@@ -436,6 +439,7 @@
 - (void)handleRotationPost {
   [[[Utilities del] globalTitleBar] restamp];
   [self setNeedsContentSnap:YES];
+  [self.view layoutIfNeeded];
 }
 
 #ifdef LOG_DEALLOCATIONS

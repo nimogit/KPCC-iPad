@@ -32,6 +32,8 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UILabel *versionLabel;
 @property (nonatomic,strong) IBOutlet UIButton *notRightNowButton;
 
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *topAnchor;
+
 - (void)setup;
 - (void)pushCard:(NSInteger)step;
 - (void)popCard;

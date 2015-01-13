@@ -581,8 +581,6 @@
     primary = [assets objectAtIndex:0];
   }
   
-  
-  
   BOOL prime = NO;
   BOOL hasNative = [primary objectForKey:@"native"] != nil;
   
@@ -797,6 +795,7 @@
                        } completion:nil];
     }
   }
+  
 }
 
 

@@ -368,29 +368,36 @@
                               initWithNibName:[[DesignManager shared]
                                                xibForPlatformWithName:@"SCPRDFPViewController"]
                               bundle:nil];
-  
+  self.dfpAdViewController.view.frame = self.dfpAdViewController.view.frame;
+  [self.adPresentationView addSubview:self.dfpAdViewController.view];
   NSLog(@"Ad presentation dimensions : W: %1.1f, H: %1.1f",self.adPresentationView.frame.size.width,self.adPresentationView.frame.size.height);
   
   CGFloat xDelta = direction == UISwipeGestureRecognizerDirectionLeft ? self.adPresentationView.frame.size.width : -1.0*self.adPresentationView.frame.size.width;
   CGPoint offset = [(UIScrollView*)self.adPresentationView contentOffset];
   xDelta = offset.x + xDelta;
   
-  CGFloat yOrigin = [Utilities isIOS7] ? 0.0 : 20.0;
+  NSString *alFormat = [NSString stringWithFormat:@"H:|-(%ld)-[ad(%1.1f)]",(long)xDelta,self.adPresentationView.frame.size.width];
+  NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:alFormat
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"ad" : self.dfpAdViewController.view }];
+  NSString *valFormat = [NSString stringWithFormat:@"V:|[ad(%1.1f)]|",self.adPresentationView.frame.size.height];
+  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:valFormat
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"ad" : self.dfpAdViewController.view }];
   
-  self.dfpAdViewController.view.frame = CGRectMake(xDelta,
-                                                   yOrigin,
-                                                   self.dfpAdViewController.view.frame.size.width,
-                                                   self.dfpAdViewController.view.frame.size.height+yOrigin);
-  [self.adPresentationView addSubview:self.dfpAdViewController.view];
+  [self.dfpAdViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  
+  [self.adPresentationView addConstraints:hConstraints];
+  [self.adPresentationView addConstraints:vConstraints];
 
   if ([Utilities isIOS7]) {
     [(UIScrollView*)self.adPresentationView setClipsToBounds:NO];
   } else {
     [(UIScrollView*)self.adPresentationView setClipsToBounds:NO];
-    self.dfpAdViewController.view.frame = CGRectMake(xDelta,
-                                                     yOrigin,
-                                                     self.dfpAdViewController.view.frame.size.width,
-                                                     self.dfpAdViewController.view.frame.size.height+yOrigin);
+
   }
   
   self.dfpAdViewController.view.alpha = 1.0;
@@ -464,6 +471,8 @@
   for ( UIView *v in [self adSilenceVector] ) {
     v.alpha = 1.0;
   }
+  
+  [self.adSilenceVector removeAllObjects];
   
   [[ContentManager shared] setAdIsDisplayingOnScreen:NO];
   [[ContentManager shared] setAdReadyOffscreen:NO];

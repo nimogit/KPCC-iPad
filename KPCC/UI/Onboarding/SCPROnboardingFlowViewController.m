@@ -39,19 +39,14 @@
                              bold:YES];
 #endif
   
-  if ( [Utilities isIOS7] ) {
-    self.automaticallyAdjustsScrollViewInsets = NO;
-  } else {
-    self.view.frame = CGRectMake(0.0,0.0,self.view.frame.size.width,
-                                 self.view.frame.size.height+20.0);
-  }
-  
   self.view.backgroundColor = [[DesignManager shared] silverCurtainsColor];
   self.contentStack = [[NSMutableArray alloc] init];
   self.cardScroller.scrollEnabled = NO;
   
   [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.notRightNowButton.titleLabel.font.pointSize]
                                 forButton:self.notRightNowButton];
+  
+  self.topAnchor.constant = 15.0;
   
   [self setup];
   [self prepOrientation];
@@ -221,36 +216,17 @@
 
 - (void)prepOrientation {
   if ( ![Utilities isLandscape] ) {
-    self.cardScroller.center = CGPointMake(self.view.frame.size.width/2.0,
-                                           self.view.frame.size.height/2.0);
     
+    self.topAnchor.constant = 200.0;
 
   } else {
     
-    CGFloat push = [Utilities isIOS7] ? 64.0 : 44.0;
-    self.cardScroller.frame = CGRectMake(0.0,push,self.cardScroller.frame.size.width,
-                                         self.cardScroller.frame.size.height);
-    
-    self.cardScroller.center = CGPointMake(self.view.frame.size.width/2.0,
-                                           self.cardScroller.center.y);
+    self.topAnchor.constant = 50.0;
     
   }
   
-  [[DesignManager shared] alignHorizontalCenterOf:self.notRightNowButton
-                                         withView:self.cardScroller];
-  
-  [[DesignManager shared] avoidNeighbor:self.cardScroller
-                               withView:self.notRightNowButton
-                              direction:NeighborDirectionAbove
-                                padding:1.0];
-  
-  [[DesignManager shared] avoidNeighbor:self.notRightNowButton
-                               withView:self.versionLabel
-                              direction:NeighborDirectionAbove
-                                padding:2.0];
-  
-  [[DesignManager shared] alignHorizontalCenterOf:self.versionLabel
-                                         withView:self.notRightNowButton];
+  [self.view layoutIfNeeded];
+
 }
 
 - (void)unplug {

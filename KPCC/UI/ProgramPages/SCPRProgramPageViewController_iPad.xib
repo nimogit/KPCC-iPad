@@ -42,7 +42,7 @@
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="redraw" image="black_gradient_fade.png" translatesAutoresizingMaskIntoConstraints="NO" id="27">
-                    <rect key="frame" x="0.0" y="200" width="768" height="909"/>
+                    <rect key="frame" x="0.0" y="260" width="768" height="909"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="909" id="JGb-nF-9V7"/>
                     </constraints>
@@ -205,7 +205,7 @@
                 <constraint firstAttribute="trailing" secondItem="26" secondAttribute="trailing" id="b8k-ex-xxO"/>
                 <constraint firstAttribute="trailing" secondItem="WST-5Z-v1f" secondAttribute="trailing" id="dNw-9F-JAt"/>
                 <constraint firstItem="YhK-8J-PvL" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" id="dex-C9-au1"/>
-                <constraint firstAttribute="bottom" secondItem="27" secondAttribute="bottom" constant="-105" id="iim-T7-o5I"/>
+                <constraint firstAttribute="bottom" secondItem="27" secondAttribute="bottom" constant="-165" id="iim-T7-o5I"/>
                 <constraint firstItem="9" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" id="ilI-hf-Rp1"/>
                 <constraint firstItem="WST-5Z-v1f" firstAttribute="top" secondItem="2" secondAttribute="top" id="mA4-UM-Nri"/>
                 <constraint firstAttribute="trailing" secondItem="36" secondAttribute="trailing" id="rk7-wF-Tsm"/>
