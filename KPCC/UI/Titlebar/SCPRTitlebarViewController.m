@@ -513,12 +513,7 @@
   [self erasePager];
   
   self.personalInfoButton.alpha = 1.0;
-  /*self.personalInfoButton.frame = CGRectMake(self.view.frame.size.width - self.personalInfoButton.frame.size.width - 10.0,
-                                             0.0,
-                                             self.personalInfoButton.frame.size.width,
-                                             self.personalInfoButton.frame.size.height);
-  self.personalInfoButton.center = CGPointMake(self.personalInfoButton.center.x,
-                                               self.view.frame.size.height / 2.0);*/
+
 
   [[DesignManager shared] globalSetTitleTo:@"SHARE"
                                  forButton:self.personalInfoButton];
@@ -526,7 +521,10 @@
   [[DesignManager shared] globalSetImageTo:@"icon-share-active.png"
                                  forButton:self.personalInfoButton];
 
-  //[self.view addSubview:self.personalInfoButton];
+  [self.personalInfoButton removeTarget:nil
+                                 action:nil
+                       forControlEvents:UIControlEventAllEvents];
+  
   [self.personalInfoButton addTarget:[[Utilities del] viewController]
                               action:@selector(toggleShareDrawer)
                     forControlEvents:UIControlEventTouchUpInside];

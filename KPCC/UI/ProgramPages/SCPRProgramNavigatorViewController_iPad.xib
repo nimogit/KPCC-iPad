@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPRProgramNavigatorViewController">
@@ -17,19 +17,32 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" id="4">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </scrollView>
-                <view contentMode="scaleToFill" id="OwB-kL-zLf">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OwB-kL-zLf">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="4" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="CU5-gt-UrB"/>
+                <constraint firstItem="OwB-kL-zLf" firstAttribute="top" secondItem="2" secondAttribute="top" id="E0q-d8-x9F"/>
+                <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" id="HUV-tB-0hJ"/>
+                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="SE3-fI-beE"/>
+                <constraint firstAttribute="trailing" secondItem="OwB-kL-zLf" secondAttribute="trailing" id="Usz-wn-5YZ"/>
+                <constraint firstItem="OwB-kL-zLf" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="bcs-D7-aQ7"/>
+                <constraint firstItem="4" firstAttribute="top" secondItem="2" secondAttribute="top" id="eIH-Sh-gOs"/>
+                <constraint firstAttribute="bottom" secondItem="OwB-kL-zLf" secondAttribute="bottom" id="lyf-Wi-ynD"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
 </document>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPROnboardingFlowViewController">
@@ -18,20 +18,26 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="2di-sD-G42">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2di-sD-G42">
                     <rect key="frame" x="0.0" y="69" width="768" height="649"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="649" id="ieg-7u-039"/>
+                    </constraints>
                 </scrollView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BCv-Xm-nsX">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCv-Xm-nsX">
                     <rect key="frame" x="243" y="764" width="282" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Fo9-Qf-Atf"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.82205332880434789" green="0.82205332880434789" blue="0.82205332880434789" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ejE-s7-vcp">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejE-s7-vcp">
                     <rect key="frame" x="252" y="726" width="265" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="j51-a1-QOF"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="Not right now, thanks.">
                         <color key="titleColor" red="0.63705842391304346" green="0.63705842391304346" blue="0.63705842391304346" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,8 +49,24 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="2di-sD-G42" secondAttribute="trailing" id="D8e-xb-jNF"/>
+                <constraint firstAttribute="trailing" secondItem="BCv-Xm-nsX" secondAttribute="trailing" constant="243" id="MiV-2h-aRZ"/>
+                <constraint firstItem="2di-sD-G42" firstAttribute="top" secondItem="2" secondAttribute="top" constant="69" id="Ske-ho-Zaq"/>
+                <constraint firstItem="2di-sD-G42" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="b3o-5k-wzR"/>
+                <constraint firstItem="ejE-s7-vcp" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="252" id="iT9-6p-KDU"/>
+                <constraint firstItem="BCv-Xm-nsX" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="243" id="oK5-PB-PCU"/>
+                <constraint firstItem="ejE-s7-vcp" firstAttribute="top" secondItem="2di-sD-G42" secondAttribute="bottom" constant="8" id="t5C-aq-BUH"/>
+                <constraint firstAttribute="trailing" secondItem="ejE-s7-vcp" secondAttribute="trailing" constant="251" id="tfe-fL-aDd"/>
+                <constraint firstItem="BCv-Xm-nsX" firstAttribute="top" secondItem="ejE-s7-vcp" secondAttribute="bottom" constant="8" id="udO-Gv-ed1"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
 </document>

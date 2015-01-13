@@ -288,6 +288,10 @@ static DesignManager *singleton = nil;
 }
 
 - (NSArray*)typicalConstraints:(UIView *)view withTopOffset:(CGFloat)topOffset {
+  return [self typicalConstraints:view withTopOffset:topOffset fullscreen:NO];
+}
+
+- (NSArray*)typicalConstraints:(UIView *)view withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen {
   
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
@@ -299,6 +303,7 @@ static DesignManager *singleton = nil;
                                                                   options:0
                                                                   metrics:nil
                                                                     views:@{ @"view" : view }];
+  
   
   NSMutableArray *total = [NSMutableArray new];
   
@@ -335,8 +340,11 @@ static DesignManager *singleton = nil;
   return [self typicalConstraints:view
                     withTopOffset:0.0];
 }
-
 - (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset {
+  return [self snapView:view toContainer:container withTopOffset:topOffset fullscreen:NO];
+}
+
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen {
   UIView *v2u = nil;
   UIView *c2u = nil;
   if ( [view isKindOfClass:[UIView class]] ) {
@@ -355,18 +363,31 @@ static DesignManager *singleton = nil;
   [c2u addSubview:v2u];
   [v2u setTranslatesAutoresizingMaskIntoConstraints:NO];
   
-  NSArray *anchors = [self typicalConstraints:v2u withTopOffset:topOffset];
+  NSArray *anchors = [self typicalConstraints:v2u withTopOffset:topOffset fullscreen:fullscreen];
   
   [c2u setTranslatesAutoresizingMaskIntoConstraints:NO];
   [c2u addConstraints:anchors];
   [c2u setNeedsUpdateConstraints];
   [c2u setNeedsLayout];
-  
+  if ( fullscreen ) {
+    for ( NSLayoutConstraint *anchor in [c2u constraints] ) {
+      if ( anchor.firstAttribute == NSLayoutAttributeBottom && anchor.secondAttribute == NSLayoutAttributeBottom ) {
+        anchor.constant = 0.0;
+      }
+    }
+  } else {
+    for ( NSLayoutConstraint *anchor in [c2u constraints] ) {
+      if ( anchor.firstAttribute == NSLayoutAttributeBottom && anchor.secondAttribute == NSLayoutAttributeBottom ) {
+        anchor.constant = 0.0;
+      }
+    }
+  }
   for ( NSLayoutConstraint *anchor in anchors ) {
     if ( anchor.firstAttribute == NSLayoutAttributeTop && anchor.secondAttribute == NSLayoutAttributeTop ) {
       return anchor;
     }
   }
+
   
   return nil;
   
@@ -426,7 +447,7 @@ static DesignManager *singleton = nil;
   
 
   
-  long spacer = (long)(c2u.frame.size.width-v2u.frame.size.width)/2.0;
+  long spacer = 20.0/*(long)(c2u.frame.size.width-v2u.frame.size.width)/2.0*/;
   NSString *format = [NSString stringWithFormat:@"H:|-(%ld)-[view]-(%ld)-|",spacer,spacer];
   NSArray *horizontal = [NSLayoutConstraint constraintsWithVisualFormat:format
                                                                 options:0

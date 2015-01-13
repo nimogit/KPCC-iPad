@@ -39,14 +39,135 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewDidLayoutSubviews {
+  if ( self.needsSnap ) {
+    self.needsSnap = NO;
+    [self snap];
+  }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
+
+}
+
+- (void)setupWithPrograms:(NSArray *)programs {
+  
+  self.programDataVector = [programs mutableCopy];
+  
+  for ( UIView *v in [self.programScroller subviews] ) {
+    [v removeFromSuperview];
+  }
+  
+  self.view.frame = CGRectMake(0.0,0.0,self.view.frame.size.width,
+                                            self.view.frame.size.height);
+  self.programVector = [[NSMutableArray alloc] init];
+  CGSize s = CGSizeMake([programs count]*self.programScroller.frame.size.width,
+                        self.programScroller.frame.size.height);
+  self.programScroller.contentSize = s;
+  self.metricChain = [NSMutableDictionary new];
+  [self.programScroller setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  SCPRProgramPageViewController *previousPage = nil;
+  for ( unsigned i = 0; i < [programs count]; i++ ) {
+    NSDictionary *program = [programs objectAtIndex:i];
+    SCPRProgramPageViewController *ppvc = [[SCPRProgramPageViewController alloc]
+                                           initWithNibName:[[DesignManager shared]
+                                                            xibForPlatformWithName:@"SCPRProgramPageViewController"]
+                                           bundle:nil];
+    ppvc.view.frame = CGRectMake(i*ppvc.view.frame.size.width,0.0,
+                                 ppvc.view.frame.size.width,
+                                 ppvc.view.frame.size.height);
+    
+    [ppvc.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [self.programScroller addSubview:ppvc.view];
+    ppvc.programObject = [[ContentManager shared] maximizedProgramForMinimized:program];
+    [self.programVector addObject:ppvc];
+    
+    if ( previousPage ) {
+      NSString *hFormat = [NSString stringWithFormat:@"H:[prev][me]"];
+      if ( i == [programs count]-1 ) {
+        hFormat = [NSString stringWithFormat:@"H:[prev][me]|"];
+      }
+      
+      NSArray *hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:hFormat
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"prev" : previousPage.view,
+                                                                             @"me" : ppvc.view }];
+      NSArray *vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[me]"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"me" : ppvc.view }];
+      [self.programScroller addConstraints:hAnchors];
+      [self.programScroller addConstraints:vAnchors];
+      
+    } else {
+      
+      NSString *hFormat = [NSString stringWithFormat:@"H:|[me]"];
+      NSArray *hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:hFormat
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{
+                                                                             @"me" : ppvc.view }];
+      
+      NSArray *vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[me]"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"me" : ppvc.view }];
+      [self.programScroller addConstraints:hAnchors];
+      [self.programScroller addConstraints:vAnchors];
+      
+    }
+    
+    NSLayoutConstraint *wC = [NSLayoutConstraint constraintWithItem:ppvc.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0
+                                                           constant:self.programScroller.frame.size.width];
+    
+    
+    NSLayoutConstraint *hC = [NSLayoutConstraint constraintWithItem:ppvc.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0
+                                                           constant:self.programScroller.frame.size.height];
+    
+    NSDictionary *metrics = @{ @"width" : wC,
+                               @"height" : hC };
+    [self.metricChain setObject:metrics
+                         forKey:@(i)];
+    
+    [ppvc.view addConstraints:@[wC,hC]];
+    previousPage = ppvc;
+    
+  }
+  
   self.programScroller.contentSize = CGSizeMake([self.programVector count]*self.programScroller.frame.size.width,
                                                 self.programScroller.frame.size.height);
+  [self setNeedsSnap:YES];
+  [self.view layoutIfNeeded];
+  
+}
+
+- (void)snap {
+  for ( NSDictionary *metrics in [self.metricChain allValues] ) {
+    NSLayoutConstraint *width = metrics[@"width"];
+    NSLayoutConstraint *height = metrics[@"height"];
+    [self.programScroller printDimensionsWithIdentifier:@"Scroller at Layout Time"];
+    
+    width.constant = self.programScroller.frame.size.width;
+    height.constant = self.programScroller.frame.size.height;
+  }
+  [self focusShowWithIndex:self.currentIndex];
 }
 
 #pragma mark - UIScrollView
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  
   NSInteger index = floorf(self.programScroller.contentOffset.x / self.programScroller.frame.size.width);
   if ( index != self.currentIndex ) {
     [self focusShowWithIndex:index];
@@ -107,9 +228,13 @@
 }
 
 - (void)handleRotationPost {
-  SCPRProgramPageViewController *program = [self.programVector objectAtIndex:self.currentIndex];
-  [[[Utilities del] viewController] buildProgramPages:YES];
-  [[[Utilities del] viewController] primeUI:ScreenContentTypeProgramPage newsPath:[program.programObject objectForKey:@"title"]];
+
+  [self setupWithPrograms:self.programDataVector];
+  [self focusShowWithIndex:self.currentIndex];
+  [self setNeedsSnap:YES];
+  
+  [self.view layoutIfNeeded];
+  
   self.cloakView.alpha = 0.0;
   
 }

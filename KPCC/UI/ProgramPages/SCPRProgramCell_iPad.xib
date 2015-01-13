@@ -86,6 +86,7 @@
                 <outlet property="showSegmentsButton" destination="7" id="9NG-eG-7ZB"/>
                 <outlet property="spinner" destination="INh-r3-pK0" id="Hkr-dq-mar"/>
             </connections>
+            <point key="canvasLocation" x="414" y="338.5"/>
         </tableViewCell>
         <view contentMode="scaleToFill" id="12">
             <rect key="frame" x="0.0" y="0.0" width="768" height="55"/>

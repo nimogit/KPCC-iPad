@@ -69,7 +69,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Anonymous" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35">
-                            <rect key="frame" x="94" y="69" width="130" height="21"/>
+                            <rect key="frame" x="94" y="72" width="130" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="130" id="GfM-1N-UcR"/>
                                 <constraint firstAttribute="height" constant="21" id="YIF-wM-9wN"/>
@@ -78,8 +78,8 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="36">
-                            <rect key="frame" x="77" y="75" width="13" height="13"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="36" userLabel="socialIconImage">
+                            <rect key="frame" x="77" y="77" width="13" height="13"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="13" id="7pO-fV-Fnb"/>
                                 <constraint firstAttribute="height" constant="13" id="nUM-Y6-Fnb"/>
@@ -121,8 +121,8 @@
                     <constraints>
                         <constraint firstItem="71" firstAttribute="top" secondItem="14" secondAttribute="top" constant="-2" id="1hF-xF-F4a"/>
                         <constraint firstAttribute="bottom" secondItem="71" secondAttribute="bottom" constant="1" id="8yA-rN-iMV"/>
-                        <constraint firstItem="35" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="1" id="ANu-QT-vSi"/>
-                        <constraint firstItem="36" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="7" id="Fnn-p4-0pI"/>
+                        <constraint firstItem="35" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="4" id="ANu-QT-vSi"/>
+                        <constraint firstItem="36" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="9" id="Fnn-p4-0pI"/>
                         <constraint firstAttribute="height" constant="110" id="Juz-7f-sfn"/>
                         <constraint firstItem="69" firstAttribute="leading" secondItem="17" secondAttribute="trailing" constant="150" id="Mn5-Up-Ju4"/>
                         <constraint firstAttribute="bottom" secondItem="19" secondAttribute="bottom" constant="7" id="Uk5-6I-DJB"/>
