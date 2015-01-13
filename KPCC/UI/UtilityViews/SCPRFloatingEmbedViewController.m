@@ -56,12 +56,19 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewDidLayoutSubviews {
+  if ( self.needsSnap ) {
+    self.needsSnap = NO;
+    self.loadedOnce = NO;
+    [self setupWithPVArticle:self.pvArticle];
+  }
+}
+
 - (void)movieEnteredFullscreen {
   [[DesignManager shared] setHasBeenInFullscreen:YES];
 }
 
 - (void)movieExitedFullscreen {
-
   [[Utilities del] uncloakUI];
 }
 
@@ -136,20 +143,9 @@
   [self.blurb italicizeText:caption bold:NO respectHeight:YES];
   
   self.blurb.textColor = [[DesignManager shared] number3pencilColor];
-  [[DesignManager shared] avoidNeighbor:self.headline
-                               withView:self.blurb
-                              direction:NeighborDirectionAbove
-                                padding:6.0];
-  
 
-  
   if ( self.fadeAudio ) {
     if ( [[AudioManager shared] isPlayingAnyAudio] ) {
-      /*[[AudioManager shared] fadeAudio:^{
-        self.audioWasPlaying = YES;
-        [[AudioManager shared] pauseStream];
-      } hard:NO];
-       */
       self.audioWasPlaying = YES;
       [[AudioManager shared] pauseStream];
     }

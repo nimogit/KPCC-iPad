@@ -424,7 +424,7 @@
   // Store 'original' height of webView, prior to placing any article content inside of it.
   // Used later to calculate content size for masterScoller.
   self.originalWebViewHeight = self.webContentLoader.webView.frame;
-
+  self.captionView.alpha = 0.0; 
   
   // Send article to the webcontentLoader - place HTML content inside webView body.
   [self.webContentLoader setupWithArticle:self.relatedArticle
@@ -581,6 +581,8 @@
     primary = [assets objectAtIndex:0];
   }
   
+  
+  
   BOOL prime = NO;
   BOOL hasNative = [primary objectForKey:@"native"] != nil;
   
@@ -601,6 +603,9 @@
     NSString *videoText = pc.category == ContentCategoryEvents ? @"WATCH LIVE VIDEO" : @"PLAY VIDEO";
     [self.extraAssetsLabel titleizeText:videoText
                                    bold:NO];
+    
+    
+    [self.basicTemplate.matteView layoutIfNeeded];
     
     self.extraAssetsSeat.alpha = 1.0;
     [self.playOverlayButton addTarget:self
@@ -624,8 +629,7 @@
                                  action:@selector(presentSlideshow:)
                        forControlEvents:UIControlEventTouchUpInside];
       prime = YES;
-      self.captionView.alpha = 0.0;
-      
+
     } else { // Set caption for article with only one asset.
       if (primary) {
         [self armCaption:primary];

@@ -73,6 +73,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 
   self.decorativeStripe.backgroundColor = [[DesignManager shared] kpccOrangeColor];
 
+  
+  
   [self globalInit];
   [self placeShareDrawer];
   [self.playerWidget quietMinimize];
@@ -114,42 +116,26 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)snapToDisplayPortWithView:(id)view {
-  /*UIView *v2u = nil;
-  if ( [view isKindOfClass:[UIView class]] ) {
-    v2u = view;
-  }
-  if ( [view isKindOfClass:[UIViewController class]] ) {
-    v2u = [(UIViewController*)view view];
-  }
+
+  [self snapToDisplayPortWithView:view fullscreen:NO];
   
-  [self.displayPortView addSubview:v2u];
-  [v2u setTranslatesAutoresizingMaskIntoConstraints:NO];
-  
-  NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:@{ @"view" : v2u }];
-  
-  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[view]-(0)-|"
-                                                                  options:0
-                                                                  metrics:nil
-                                                                    views:@{ @"view" : v2u }];
-  
-  NSMutableArray *total = [NSMutableArray new];
-  [total addObjectsFromArray:hConstraints];
-  [total addObjectsFromArray:vConstraints];
-  [self.displayPortView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.displayPortView addConstraints:total];
-  [self.displayPortView setNeedsUpdateConstraints];
-  [self.displayPortView layoutIfNeeded];*/
+}
+
+- (void)snapToDisplayPortWithView:(id)view fullscreen:(BOOL)fullscreen {
+  [[ContentManager shared] popFromResizeVector];
   
   NSLayoutConstraint *c = [[DesignManager shared] snapView:view
-                       toContainer:self.displayPortView
-                           withTopOffset:-40.0];
+                                               toContainer:self.displayPortView
+                                             withTopOffset:-40.0];
   if ( c ) {
     self.currentAnchors = @{ @"top" : c };
   }
   
+  if ( fullscreen ) {
+    [self hidePlayer];
+  } else {
+    [self displayPlayer];
+  }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -389,27 +375,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                        initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRProgramNavigatorViewController"]
                        bundle:nil];
   
-  NSArray *programs = [[ContentManager shared] favoritedProgramsList];
-  self.programPages.view.frame = CGRectMake(0.0,0.0,self.programPages.view.frame.size.width,
-                                            self.programPages.view.frame.size.height);
-  self.programPages.programVector = [[NSMutableArray alloc] init];
-  CGSize s = CGSizeMake([programs count]*self.programPages.programScroller.frame.size.width,
-                                                             self.programPages.programScroller.frame.size.height);
-  self.programPages.programScroller.contentSize = s;
-  for ( unsigned i = 0; i < [programs count]; i++ ) {
-    NSDictionary *program = [programs objectAtIndex:i];
-    SCPRProgramPageViewController *ppvc = [[SCPRProgramPageViewController alloc]
-                                           initWithNibName:[[DesignManager shared]
-                                                            xibForPlatformWithName:@"SCPRProgramPageViewController"]
-                                           bundle:nil];
-    ppvc.view.frame = CGRectMake(i*ppvc.view.frame.size.width,0.0,
-                                 ppvc.view.frame.size.width,
-                                 ppvc.view.frame.size.height);
 
-    [self.programPages.programScroller addSubview:ppvc.view];
-    ppvc.programObject = [[ContentManager shared] maximizedProgramForMinimized:program];
-    [self.programPages.programVector addObject:ppvc];
-  }
+  
 }
 
 - (void)buildCompleteProgramList {
@@ -420,7 +387,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   NSArray *programs = [[ContentManager shared] sortedProgramList];
   self.completeProgramPages.view.frame = CGRectMake(0.0,0.0,self.completeProgramPages.view.frame.size.width,
                                             self.completeProgramPages.view.frame.size.height);
-  self.completeProgramPages.programVector = [[NSMutableArray alloc] init];
+  [self.completeProgramPages setupWithPrograms:programs];
+  /*self.completeProgramPages.programVector = [[NSMutableArray alloc] init];
   self.completeProgramPages.programScroller.contentSize = CGSizeMake([programs count]*self.completeProgramPages.programScroller.frame.size.width,
                                                              self.completeProgramPages.programScroller.frame.size.height);
   for ( unsigned i = 0; i < [programs count]; i++ ) {
@@ -436,7 +404,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
     [self.completeProgramPages.programScroller addSubview:ppvc.view];
     ppvc.programObject = [[ContentManager shared] maximizedProgramForMinimized:program];
     [self.completeProgramPages.programVector addObject:ppvc];
-  }
+  }*/
 }
 
 - (void)buildNewsPages:(NSMutableArray *)contentObjects {
@@ -651,6 +619,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                             self.programPages.view.frame.size.width,
                                             self.programPages.view.frame.size.height);
   [self snapToDisplayPortWithView:self.programPages.view];
+  [self.programPages.view layoutIfNeeded];
+  [self.programPages setupWithPrograms:programs];
   [self.programPages focusShowWithIndex:index];
   [self finishTransition];
 }
@@ -785,10 +755,13 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                                             bundle:nil];
   flow.firstRun = self.onboardingFirstTime;
   
+
+  
   UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:flow];
   self.pushedContent = nav;
-  [self snapToDisplayPortWithView:nav.view];
-
+  //[self snapToDisplayPortWithView:nav.view];
+  
+  [self snapToDisplayPortWithView:nav.view fullscreen:YES];
 
   flow.navigationController.navigationBarHidden = YES;
   [[ContentManager shared] pushToResizeVector:flow];
@@ -1345,14 +1318,20 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)displayPlayer {
+  if ( self.playerControlsBottomAnchor.constant == 0.0 ) return;
+  
   [UIView animateWithDuration:0.25 animations:^{
-    self.playerWidget.view.alpha = 1.0;
+    self.playerControlsBottomAnchor.constant = 0.0;
+    [self.view layoutIfNeeded];
   }];
 }
 
 - (void)hidePlayer {
+  if ( self.playerControlsBottomAnchor.constant == -60.0 ) return;
+  
   [UIView animateWithDuration:0.25 animations:^{
-    self.playerWidget.view.alpha = 0.0;
+    self.playerControlsBottomAnchor.constant = -60.0;
+    [self.view layoutIfNeeded];
   }];
 }
 

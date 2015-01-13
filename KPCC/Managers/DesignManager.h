@@ -182,9 +182,12 @@ typedef enum {
 - (void)nudge:(UIView*)view direction:(NeighborDirection)direction amount:(CGFloat)amount;
 
 - (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container;
+
 - (void)snapCenteredView:(id)view toContainer:(id)container;
 - (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset;
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen;
 
+- (NSArray*)typicalConstraints:(UIView*)view withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen;
 - (NSArray*)typicalConstraints:(UIView*)view withTopOffset:(CGFloat)topOffset;
 - (NSArray*)typicalConstraints:(UIView*)view;
 

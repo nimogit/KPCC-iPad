@@ -125,6 +125,8 @@ typedef enum {
 @property (nonatomic,strong) SCPRSmallCutViewController *smallCutter;
 @property (nonatomic,strong) IBOutlet UIImageView *globalGradient;
 
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *playerControlsBottomAnchor;
+
 #ifdef IPAD_VERSION
 @property (nonatomic,strong) UIPopoverController *sharePopover;
 #endif
@@ -216,6 +218,7 @@ typedef enum {
 
 
 - (void)snapToDisplayPortWithView:(id)view;
+- (void)snapToDisplayPortWithView:(id)view fullscreen:(BOOL)fullscreen;
 
 @property CGRect originalShareDrawerFrame;
 

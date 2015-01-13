@@ -46,8 +46,6 @@
                                  self.view.frame.size.height+20.0);
   }
   
-  [[[Utilities del] globalPlayer].view setHidden:YES];
-  
   self.view.backgroundColor = [[DesignManager shared] silverCurtainsColor];
   self.contentStack = [[NSMutableArray alloc] init];
   self.cardScroller.scrollEnabled = NO;

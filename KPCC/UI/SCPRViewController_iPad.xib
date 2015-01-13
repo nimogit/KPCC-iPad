@@ -10,6 +10,7 @@
                 <outlet property="displayPortView" destination="Hq7-ng-vI5" id="wBg-FV-W8m"/>
                 <outlet property="globalGradient" destination="Sa5-OM-zRj" id="iI9-oE-eFe"/>
                 <outlet property="globalShareDrawer" destination="32" id="Abg-Vy-xcj"/>
+                <outlet property="playerControlsBottomAnchor" destination="a3p-Z2-lbH" id="pGC-si-AlZ"/>
                 <outlet property="playerWidget" destination="Xuk-Kx-rCV" id="dgY-f0-uRJ"/>
                 <outlet property="titleBarController" destination="dmP-3W-ixM" id="34z-OE-WzE"/>
                 <outlet property="view" destination="2" id="3"/>
