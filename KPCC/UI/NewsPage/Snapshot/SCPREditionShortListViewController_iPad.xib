@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -40,7 +40,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="768" height="766"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGU-HH-7cO">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="994"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="762"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKi-nc-VOY">
                                     <rect key="frame" x="0.0" y="440" width="768" height="312"/>
@@ -83,9 +83,6 @@
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IDF-WN-sRn">
                                             <rect key="frame" x="53" y="29" width="690" height="188"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="188" id="6p8-KY-uFA"/>
-                                            </constraints>
                                             <string key="text">• One
 
 • Two
@@ -104,10 +101,11 @@
                                     <constraints>
                                         <constraint firstItem="Y49-fT-Ql4" firstAttribute="leading" secondItem="dKi-nc-VOY" secondAttribute="leading" constant="20" id="1Q6-So-Uld"/>
                                         <constraint firstItem="lbz-rg-M29" firstAttribute="leading" secondItem="yeX-BL-00n" secondAttribute="trailing" constant="8" id="1jN-N6-0PR"/>
-                                        <constraint firstAttribute="height" constant="312" id="6Cl-io-qgd"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="312" id="6Cl-io-qgd"/>
                                         <constraint firstItem="Y49-fT-Ql4" firstAttribute="top" secondItem="dKi-nc-VOY" secondAttribute="top" id="KWi-Ew-ZlX"/>
                                         <constraint firstItem="IDF-WN-sRn" firstAttribute="top" secondItem="Y49-fT-Ql4" secondAttribute="bottom" constant="8" id="d6a-9p-hYS"/>
                                         <constraint firstItem="yeX-BL-00n" firstAttribute="centerY" secondItem="lbz-rg-M29" secondAttribute="centerY" constant="1" id="eps-xN-xQV"/>
+                                        <constraint firstItem="yeX-BL-00n" firstAttribute="top" secondItem="IDF-WN-sRn" secondAttribute="bottom" constant="25" id="knX-1R-RRu"/>
                                         <constraint firstAttribute="bottom" secondItem="yeX-BL-00n" secondAttribute="bottom" constant="20" id="lZL-Nc-Mss"/>
                                         <constraint firstItem="IDF-WN-sRn" firstAttribute="leading" secondItem="dKi-nc-VOY" secondAttribute="leading" constant="53" id="mON-1T-TH6"/>
                                         <constraint firstItem="yeX-BL-00n" firstAttribute="leading" secondItem="dKi-nc-VOY" secondAttribute="leading" constant="20" id="nmS-Tb-Zg1"/>
@@ -167,7 +165,7 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THE SHORT LIST" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrr-dM-aMH">
-                                    <rect key="frame" x="21" y="30" width="725" height="23"/>
+                                    <rect key="frame" x="21" y="50" width="725" height="23"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="23" id="heB-lX-M0k"/>
                                     </constraints>
@@ -176,7 +174,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MONDAY, 11AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XtD-WO-0mj">
-                                    <rect key="frame" x="21" y="52" width="725" height="21"/>
+                                    <rect key="frame" x="21" y="72" width="725" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="a6P-Hl-r2f"/>
                                     </constraints>
@@ -199,9 +197,9 @@
                                 <constraint firstItem="XtD-WO-0mj" firstAttribute="top" secondItem="yrr-dM-aMH" secondAttribute="bottom" constant="-1" id="Atb-yX-yZX"/>
                                 <constraint firstItem="yrr-dM-aMH" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" constant="21" id="FIh-yp-E5r"/>
                                 <constraint firstItem="RIm-NE-P0A" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" id="LyH-7B-GTS"/>
-                                <constraint firstItem="yrr-dM-aMH" firstAttribute="top" secondItem="QGU-HH-7cO" secondAttribute="top" constant="30" id="SfL-Jj-ZuR"/>
+                                <constraint firstItem="yrr-dM-aMH" firstAttribute="top" secondItem="QGU-HH-7cO" secondAttribute="top" constant="50" id="SfL-Jj-ZuR"/>
                                 <constraint firstItem="XtD-WO-0mj" firstAttribute="leading" secondItem="QGU-HH-7cO" secondAttribute="leading" constant="21" id="Svj-aV-e2Z"/>
-                                <constraint firstAttribute="bottom" secondItem="dKi-nc-VOY" secondAttribute="bottom" constant="242" id="WKg-tp-vGh"/>
+                                <constraint firstAttribute="bottom" secondItem="dKi-nc-VOY" secondAttribute="bottom" constant="10" id="WKg-tp-vGh"/>
                                 <constraint firstItem="RIm-NE-P0A" firstAttribute="top" secondItem="QGU-HH-7cO" secondAttribute="top" constant="253" id="jRT-gg-lgg"/>
                                 <constraint firstAttribute="trailing" secondItem="RIm-NE-P0A" secondAttribute="trailing" id="jT6-W4-mid"/>
                                 <constraint firstAttribute="trailing" secondItem="XtD-WO-0mj" secondAttribute="trailing" constant="22" id="mxs-70-2eE"/>

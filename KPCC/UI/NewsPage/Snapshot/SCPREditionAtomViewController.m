@@ -45,16 +45,6 @@
 
 - (void)mergeWithArticle {
   
-  //if ( [Utilities isIOS7] ) {
-  if ( [Utilities isIpad] ) {
-    //self.topGradient.alpha = 0.0;
-  }
-  
-  //}
-  
-  
-
-  
   NSString *source = [self.relatedArticle objectForKey:@"source"];
   CGFloat iconPadding = 0.0;
   if ( [self isKPCCArticle] ) {

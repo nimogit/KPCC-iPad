@@ -33,6 +33,13 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewWillLayoutSubviews {
+  if ( self.needsSnap ) {
+    self.needsSnap = NO;
+    [self buildIntro];
+  }
+}
+
 - (void)deactivate {
   
 }
@@ -116,9 +123,12 @@
 }
 
 - (void)handleRotationPost {
-  [self buildIntro];
+  [self setNeedsSnap:YES];
   [UIView animateWithDuration:0.25 animations:^{
-    self.cardScroller.alpha = 1.0;
+    self.cardScroller.alpha = 0.0;
+  } completion:^(BOOL finished) {
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
   }];
 }
 

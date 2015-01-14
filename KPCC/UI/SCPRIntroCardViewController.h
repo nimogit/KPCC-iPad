@@ -26,6 +26,12 @@ typedef enum {
 @property (nonatomic,weak) id parentIntro;
 @property CardType cardType;
 
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *buttonCenterXAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *buttonCenterYAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *cardTopAnchor;
+@property (nonatomic, strong) NSArray *cornerImageAnchors;
+@property BOOL needsSnap;
+
 - (void)setupForCardType:(CardType)type;
 - (void)placeOrnamentInCorner:(CornerPosition)position;
 

@@ -135,6 +135,8 @@
     [self.readMoreButton addTarget:self
                             action:@selector(proxyPush)
                   forControlEvents:UIControlEventTouchUpInside];
+    
+    
   } else {
     finishedTimeString = shortListSpecificTitle;
   }
@@ -149,13 +151,20 @@
 }
 
 - (void)refresh {
-  self.headlineLabelAnchor.constant = [Utilities isLandscape] ? 138.0f : 30.0f;
+  self.headlineLabelAnchor.constant = [Utilities isLandscape] ? 108.0f : 50.0f;
   if ( !self.fromNews ) {
     //self.headlineLabelAnchor.constant += 20.0f;
   }
-  self.pantsViewAnchor.constant = [Utilities isLandscape] ? 188.0f  : 253.0f;
+  self.pantsViewAnchor.constant = [Utilities isLandscape] ? 158.0f  : 253.0f;
   self.timestampLabel.textAlignment = [Utilities isLandscape] ? NSTextAlignmentLeft : NSTextAlignmentCenter;
   self.shortListTitleLabel.textAlignment = [Utilities isLandscape] ? NSTextAlignmentLeft : NSTextAlignmentCenter;
+  
+  if ( !self.fromNews ) {
+    self.pantsViewAnchor.constant += [Utilities isLandscape] ? 0.0 : 140.0;
+  }
+  
+  [[[Utilities del] globalTitleBar] applyKpccLogo];
+  
 }
 
 - (void)shrinkStoriesBox {

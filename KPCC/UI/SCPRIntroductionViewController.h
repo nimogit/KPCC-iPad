@@ -24,6 +24,7 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UIScrollView *cardScroller;
 @property (nonatomic,strong) NSMutableArray *cardVector;
 @property CardType currentCard;
+@property BOOL needsSnap;
 
 - (void)buildIntro;
 - (void)nextCard;

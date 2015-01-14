@@ -33,6 +33,7 @@
 @property (nonatomic,strong) IBOutlet UIView *infoSeatView;
 @property (nonatomic,strong) NSMutableDictionary *metricChain;
 
+
 - (void)setupWithEditions:(NSMutableArray*)editions andIndex:(NSInteger)index;
 - (void)setupWithEdition:(NSDictionary*)edition andIndex:(NSInteger)index;
 - (void)pushToAtomDetails:(NSInteger)index;
