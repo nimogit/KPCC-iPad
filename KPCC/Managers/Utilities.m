@@ -719,8 +719,8 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 + (void)primeTitlebarWithText:(NSString *)text shareEnabled:(BOOL)shareEnabled container:(id<Backable>)container {
   [UIView animateWithDuration:0.33 animations:^{
     SCPRTitlebarViewController *titlebar = [[Utilities del] globalTitleBar];
-    [titlebar.kpccLogo removeFromSuperview];
-    [titlebar.editionsLogo removeFromSuperview];
+    titlebar.kpccLogo.alpha = 0.0;
+    titlebar.editionsLogo.alpha = 0.0;
     
     [titlebar.view addSubview:titlebar.pageTitleLabel];
     [titlebar.pageTitleLabel titleizeText:text bold:YES];

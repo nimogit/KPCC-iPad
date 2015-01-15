@@ -978,6 +978,8 @@
 		25BA551317AB0DBD00328233 /* twitter-icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 25BA54D817AB0DBD00328233 /* twitter-icon-small.png */; };
 		25BA551417AB0DBD00328233 /* twitter-icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25BA54D917AB0DBD00328233 /* twitter-icon-small@2x.png */; };
 		25BA551517AB0DBD00328233 /* twitter-icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25BA54D917AB0DBD00328233 /* twitter-icon-small@2x.png */; };
+		25C55F3A1A66EDB7000A755B /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C55F391A66EDB7000A755B /* UIColor+Additions.m */; };
+		25C55F3B1A66EEDE000A755B /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C55F391A66EDB7000A755B /* UIColor+Additions.m */; };
 		25C6A945174AB72B008331FF /* SCPRQueueCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C6A944174AB72B008331FF /* SCPRQueueCellView.m */; };
 		25C6A946174AB72B008331FF /* SCPRQueueCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C6A944174AB72B008331FF /* SCPRQueueCellView.m */; };
 		25C8F15E173190C100229891 /* vimeo_container.html in Resources */ = {isa = PBXBuildFile; fileRef = 25C8F15C173190C100229891 /* vimeo_container.html */; };
@@ -1479,7 +1481,6 @@
 		25EC8E5417C4364100673DFF /* SCPRCompBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EC8E5217C4364100673DFF /* SCPRCompBaseCell.m */; };
 		25EC8E5617C54DD900673DFF /* flat_youtube.html in Resources */ = {isa = PBXBuildFile; fileRef = 25EC8E5517C54DD800673DFF /* flat_youtube.html */; };
 		25EC8E5717C54DD900673DFF /* flat_youtube.html in Resources */ = {isa = PBXBuildFile; fileRef = 25EC8E5517C54DD800673DFF /* flat_youtube.html */; };
-		25EC8E5917C5520800673DFF /* SCPRSingleArticleViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25EC8E5817C5520700673DFF /* SCPRSingleArticleViewController_iPad.xib */; };
 		25EC8E5A17C5520800673DFF /* SCPRSingleArticleViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25EC8E5817C5520700673DFF /* SCPRSingleArticleViewController_iPad.xib */; };
 		25EC8E5E17C5529500673DFF /* SCPRFloatingEmbedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EC8E5C17C5529400673DFF /* SCPRFloatingEmbedViewController.m */; };
 		25EC8E5F17C5529500673DFF /* SCPRFloatingEmbedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EC8E5C17C5529400673DFF /* SCPRFloatingEmbedViewController.m */; };
@@ -1588,7 +1589,6 @@
 		28036AAE1718A344007DBDE2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28683CBE170B9BBD00346B6E /* CoreGraphics.framework */; };
 		28036AB31718A344007DBDE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28683CC3170B9BBD00346B6E /* InfoPlist.strings */; };
 		28036ABB1718A344007DBDE2 /* SCPRViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AFBE9A170F416C00125DB8 /* SCPRViewController_iPad.xib */; };
-		28036ABC1718A344007DBDE2 /* SCPRViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AFBE9B170F416C00125DB8 /* SCPRViewController.xib */; };
 		28036ABE1718A344007DBDE2 /* SCPRVolumeWidgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2832FF031715F114009FF2F0 /* SCPRVolumeWidgetViewController.xib */; };
 		28036ABF1718A344007DBDE2 /* SCPRVolumeWidgetViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2832FF061715F161009FF2F0 /* SCPRVolumeWidgetViewController_iPad.xib */; };
 		28036AC01718A344007DBDE2 /* SCPRSliderBubbleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284B964B17163BBC0079D4CA /* SCPRSliderBubbleViewController.xib */; };
@@ -1717,8 +1717,6 @@
 		76709F4719131A6600E0574C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76709F4619131A6600E0574C /* Accelerate.framework */; };
 		76709F49191934C700E0574C /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 76709F48191934C700E0574C /* categories.json */; };
 		76709F4A191934C700E0574C /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 76709F48191934C700E0574C /* categories.json */; };
-		76709F4E1919354300E0574C /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F4D1919354300E0574C /* FXBlurView.m */; };
-		76709F4F1919354300E0574C /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F4D1919354300E0574C /* FXBlurView.m */; };
 		76A3087318B696630065D4B1 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 76A3087018B696630065D4B1 /* iRate.bundle */; };
 		76A3087418B696630065D4B1 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3087218B696630065D4B1 /* iRate.m */; };
 		76A3088018BBDFD00065D4B1 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FA086D1821D758008BADF2 /* libGoogleAdMobAds.a */; };
@@ -2352,6 +2350,8 @@
 		25BA54D717AB0DBD00328233 /* twitter-icon-large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter-icon-large@2x.png"; sourceTree = "<group>"; };
 		25BA54D817AB0DBD00328233 /* twitter-icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter-icon-small.png"; sourceTree = "<group>"; };
 		25BA54D917AB0DBD00328233 /* twitter-icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter-icon-small@2x.png"; sourceTree = "<group>"; };
+		25C55F381A66EDB7000A755B /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Additions.h"; path = "Helpers/UIColor+Additions.h"; sourceTree = "<group>"; };
+		25C55F391A66EDB7000A755B /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Additions.m"; path = "Helpers/UIColor+Additions.m"; sourceTree = "<group>"; };
 		25C6A943174AB72B008331FF /* SCPRQueueCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRQueueCellView.h; path = UI/PlayerWidget/QueueWidget/SCPRQueueCellView.h; sourceTree = "<group>"; };
 		25C6A944174AB72B008331FF /* SCPRQueueCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRQueueCellView.m; path = UI/PlayerWidget/QueueWidget/SCPRQueueCellView.m; sourceTree = "<group>"; };
 		25C8F15C173190C100229891 /* vimeo_container.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = vimeo_container.html; path = Assets/html/vimeo_container.html; sourceTree = "<group>"; };
@@ -2810,8 +2810,6 @@
 		76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRControllerOverlayAnimator.m; path = Helpers/SCPRControllerOverlayAnimator.m; sourceTree = "<group>"; };
 		76709F4619131A6600E0574C /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		76709F48191934C700E0574C /* categories.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = categories.json; path = Assets/flatResources/categories.json; sourceTree = "<group>"; };
-		76709F4C1919354300E0574C /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
-		76709F4D1919354300E0574C /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		76A3087018B696630065D4B1 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		76A3087118B696630065D4B1 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		76A3087218B696630065D4B1 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -4599,6 +4597,8 @@
 				252EA38B181890480093BFDA /* SCPRBadgeLabel.m */,
 				76709F3D19106DD200E0574C /* SCPRControllerOverlayAnimator.h */,
 				76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */,
+				25C55F381A66EDB7000A755B /* UIColor+Additions.h */,
+				25C55F391A66EDB7000A755B /* UIColor+Additions.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -4606,7 +4606,6 @@
 		28C9E776170D064200ED18FB /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				76709F4B1919354300E0574C /* FXBlurView */,
 				76658B5918E2141C00026176 /* TestFlight */,
 				76658AC618E1F43700026176 /* Flurry */,
 				76A3086F18B696630065D4B1 /* iRate */,
@@ -4711,16 +4710,6 @@
 			);
 			name = TestFlight;
 			path = ThirdParty/TestFlight;
-			sourceTree = "<group>";
-		};
-		76709F4B1919354300E0574C /* FXBlurView */ = {
-			isa = PBXGroup;
-			children = (
-				76709F4C1919354300E0574C /* FXBlurView.h */,
-				76709F4D1919354300E0574C /* FXBlurView.m */,
-			);
-			name = FXBlurView;
-			path = ThirdParty/FXBlurView;
 			sourceTree = "<group>";
 		};
 		76A3086F18B696630065D4B1 /* iRate */ = {
@@ -4855,7 +4844,6 @@
 				28036AB31718A344007DBDE2 /* InfoPlist.strings in Resources */,
 				28036ABB1718A344007DBDE2 /* SCPRViewController_iPad.xib in Resources */,
 				25A70BDB17E13C220024E654 /* avatar-leadership-circle@2x.png in Resources */,
-				28036ABC1718A344007DBDE2 /* SCPRViewController.xib in Resources */,
 				28DAFC5C17D0219100498A17 /* SCPRDeluxeEditionsCell_iPad.xib in Resources */,
 				28036ABE1718A344007DBDE2 /* SCPRVolumeWidgetViewController.xib in Resources */,
 				25C9A4AA17F4CBF400B6BBB6 /* icon-share-active@2x.png in Resources */,
@@ -6259,7 +6247,6 @@
 				2585154317CEAD6F0094F030 /* mail-icon-large.png in Resources */,
 				25EC8E5617C54DD900673DFF /* flat_youtube.html in Resources */,
 				25D113B71811E96F0001C434 /* gray_minus_circle@2x.png in Resources */,
-				25EC8E5917C5520800673DFF /* SCPRSingleArticleViewController_iPad.xib in Resources */,
 				25EC8E6017C5529500673DFF /* SCPRFloatingEmbedViewController_iPad.xib in Resources */,
 				257761ED17C5884D00758CC9 /* SCPRDeluxeNewsCellSingle43_iPad.xib in Resources */,
 			);
@@ -6429,11 +6416,11 @@
 				280A3BF117A89A1D0077763C /* SCPRFeedbackViewController.m in Sources */,
 				259EB08717B0208C0009EE4C /* UIImage+StackBlur.m in Sources */,
 				255B583617B1A2F9004E9712 /* SCPRCompositeNewsViewController.m in Sources */,
+				25C55F3B1A66EEDE000A755B /* UIColor+Additions.m in Sources */,
 				255B583C17B1A400004E9712 /* SCPRCompSingleCell.m in Sources */,
 				255B584017B1A419004E9712 /* SCPRCompDoubleCell.m in Sources */,
 				25A70BB017E135800024E654 /* SCPROnboardingFlowViewController.m in Sources */,
 				257001D3182196B1008B43F6 /* SCPREditionShortListViewController.m in Sources */,
-				76709F4F1919354300E0574C /* FXBlurView.m in Sources */,
 				255B584417B1A687004E9712 /* SCPRCompositeCellViewController.m in Sources */,
 				2547FC4A17B5930D009F35E6 /* SCPREditionMineralViewController.m in Sources */,
 				25AC7D2D17BB00B8008B1599 /* XMLDictionary.m in Sources */,
@@ -6574,11 +6561,11 @@
 				280A3BE917A896260077763C /* FeedbackManager.m in Sources */,
 				280A3BF017A89A1D0077763C /* SCPRFeedbackViewController.m in Sources */,
 				259EB08617B0208C0009EE4C /* UIImage+StackBlur.m in Sources */,
+				25C55F3A1A66EDB7000A755B /* UIColor+Additions.m in Sources */,
 				255B583517B1A2F9004E9712 /* SCPRCompositeNewsViewController.m in Sources */,
 				255B583B17B1A400004E9712 /* SCPRCompSingleCell.m in Sources */,
 				255B583F17B1A419004E9712 /* SCPRCompDoubleCell.m in Sources */,
 				255B584317B1A687004E9712 /* SCPRCompositeCellViewController.m in Sources */,
-				76709F4E1919354300E0574C /* FXBlurView.m in Sources */,
 				2547FC4917B5930D009F35E6 /* SCPREditionMineralViewController.m in Sources */,
 				25A6774D18285EF600565925 /* SCPRIntroductionViewController.m in Sources */,
 				25A70C4917E378F90024E654 /* SCPROnboardingStep5ViewController.m in Sources */,
@@ -6716,7 +6703,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = 3;
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.0.6;
+				VERSION = 1.0.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Production;
@@ -6838,7 +6825,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = "NFR build 2";
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.0.6;
+				VERSION = 1.0.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = NFR;
@@ -6864,7 +6851,6 @@
 					USE_PARSE,
 					MOST_VIEWED_STYLE_FETCHING,
 					AGGRESSIVE_DEALLOCATION,
-					ENABLE_ADS,
 					FAKE_AD_DELIVERY_FAILURE,
 					FORCE_MAIN_THREAD_SETTINGS,
 				);
@@ -6889,7 +6875,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = SANDBOX;
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.0.6;
+				VERSION = 1.0.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -6915,7 +6901,6 @@
 					MOST_VIEWED_STYLE_FETCHING,
 					SUPPORT_LANDSCAPE,
 					AGGRESSIVE_DEALLOCATION,
-					ENABLE_ADS,
 					TURN_OFF_UNTESTED_FEATURES,
 					TURN_OFF_LOGGING,
 				);
@@ -6940,7 +6925,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = "build 1";
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.0.6;
+				VERSION = 1.0.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -31,6 +31,7 @@
 {
     [super viewDidLoad];
   
+  //[self.cruxView setBackgroundColor:[[UIColor virtualBlackColor] translucify:0.5]];
   [self.view setAccessibilityLabel:@"The Short List Table of Contents"];
   [self.drillDownButton setAccessibilityLabel:@"Go to The Short List"];
   [self.readMoreButton setAccessibilityLabel:@"Go to The Short List"];

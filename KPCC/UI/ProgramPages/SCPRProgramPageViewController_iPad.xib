@@ -191,7 +191,7 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.4954356318" green="0.24979159970000001" blue="0.0297139181" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="WST-5Z-v1f" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="033-7y-1bR"/>
                 <constraint firstItem="27" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="2fa-Nd-q6S"/>

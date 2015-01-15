@@ -34,6 +34,7 @@
   
   self.currentIndex = 0;
   self.editionsScroller.pagingEnabled = YES;
+  
   [[[Utilities del] globalTitleBar] applyClearBackground];
   
     // Do any additional setup after loading the view from its nib.
@@ -43,21 +44,21 @@
   if ( self.needsSnap ) {
     self.needsSnap = NO;
     [self snapContent];
+
   }
 }
 
 - (void)snapContent {
   
+  self.editionsScroller.contentSize = CGSizeMake([self.editions count]*self.editionsScroller.frame.size.width,
+                                                 self.editionsScroller.frame.size.height);
+  
   if ( !self.setupCompleted ) {
     [self setupWithEditions:self.editions];
   }
   
-  self.editionsScroller.contentSize = CGSizeMake([self.editions count]*self.editionsScroller.frame.size.width,
-                                                 self.editionsScroller.frame.size.height);
-  self.editionsScroller.contentOffset = CGPointMake(self.currentIndex*self.editionsScroller.frame.size.width,
-                                                    0.0);
-  [self.editionsScroller setNeedsLayout];
-  
+  [self.editionsScroller printDimensionsWithIdentifier:@"*** EDITIONS SCROLLER ***"];
+
   for ( NSDictionary *metrics in [self.metricChain allValues] ) {
     NSLayoutConstraint *w = metrics[@"width"];
     [w setConstant:self.editionsScroller.frame.size.width];
@@ -65,6 +66,23 @@
     NSLayoutConstraint *h = metrics[@"height"];
     [h setConstant:self.editionsScroller.frame.size.height];
   }
+  
+  for ( SCPREditionShortListViewController *slvc in self.contentVector ) {
+    
+    [slvc refresh];
+    [[DesignManager shared] touch:@[ slvc.view, slvc.shadowedSeatView, slvc.cruxView ]];
+    
+  }
+  
+
+  self.editionsScroller.contentOffset = CGPointMake(self.currentIndex*self.editionsScroller.frame.size.width,
+                                                    0.0);
+  
+  [self.editionsScroller setNeedsLayout];
+  [self.editionsScroller setNeedsUpdateConstraints];
+  [self.editionsScroller layoutIfNeeded];
+  [self.editionsScroller updateConstraintsIfNeeded];
+
   
   
 }
@@ -81,7 +99,7 @@
   
   CGFloat contentHeight = self.editionsScroller.frame.size.height;
   if ( [Utilities isIOS7] ) {
-    self.automaticallyAdjustsScrollViewInsets = NO;
+
   } else {
     
   }
@@ -100,6 +118,8 @@
   
   NSInteger processingIndex = -1;
   SCPREditionShortListViewController *prev = nil;
+  self.metricChain = [NSMutableDictionary new];
+  
   for ( unsigned i = 0; i < [self.editions count]; i++ ) {
     
     NSMutableDictionary *edition = [self.editions objectAtIndex:i];
@@ -118,15 +138,18 @@
     [snap setupWithEdition:snap.edition];
     [snap.view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [snap.view layoutIfNeeded];
-    [snap.view printDimensionsWithIdentifier:@"SHORT LIST INDIVIDUAL"];
     
     contentHeight = snap.view.frame.size.height;
     
     [self.editionsScroller addSubview:snap.view];
+    [self.editionsScroller sendSubviewToBack:snap.view];
     [self.contentVector addObject:snap];
     
+    NSArray *hAnchors = nil;
+    NSArray *vAnchors = nil;
+    
     if ( prev ) {
-      NSArray *hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[prev][me]"
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[prev][me]"
                                                                   options:0
                                                                   metrics:nil
                                                                     views:@{ @"prev" : prev.view,
@@ -139,33 +162,30 @@
                                                                       @"me" : snap.view }];
       }
 
-      NSArray *vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[me]"
+      vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[me]"
                                                                   options:0
                                                                   metrics:nil
                                                                     views:@{ @"me" : snap.view }];
       
-      [self.editionsScroller addConstraints:hAnchors];
-      [self.editionsScroller addConstraints:vAnchors];
       
     } else {
       
-      NSArray *hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[me]"
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[me]"
                                                                   options:0
                                                                   metrics:nil
                                                                     views:@{ @"me" : snap.view }];
-      NSArray *vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[me]"
+      vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[me]"
                                                                   options:0
                                                                   metrics:nil
                                                                     views:@{ @"me" : snap.view }];
-      
-      [self.editionsScroller addConstraints:hAnchors];
-      [self.editionsScroller addConstraints:vAnchors];
       
     }
     
     prev = snap;
+    [self.editionsScroller addConstraints:hAnchors];
+    [self.editionsScroller addConstraints:vAnchors];
     
-    self.metricChain = [NSMutableDictionary new];
+
     NSLayoutConstraint *wC = [NSLayoutConstraint constraintWithItem:snap.view
                                                           attribute:NSLayoutAttributeWidth
                                                           relatedBy:NSLayoutRelationEqual
@@ -190,6 +210,7 @@
                          forKey:@(i)];
     
     [snap.view addConstraints:@[wC,hC]];
+
     
     if ( self.targetMolecule ) {
       if ( i == self.currentIndex ) {
@@ -364,7 +385,6 @@
 }
 
 - (void)handleRotationPost {
-  [self setSetupCompleted:NO];
   [self setNeedsSnap:YES];
 }
 

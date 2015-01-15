@@ -766,7 +766,20 @@
     vpc.facade1.parentPVController = self;
     vpc.facade0.contentType = self.contentType;
     vpc.facade1.contentType = self.contentType;
-    vpc.containerTopAnchor.constant = self.contentType == ScreenContentTypeVideoPhotoPage ? 0.0 : -23.0;
+    
+    if ( [Utilities isLandscape] ) {
+      vpc.containerTopAnchor.constant = self.contentType == ScreenContentTypeVideoPhotoPage ? 0.0 : -23.0;
+    } else {
+      if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
+        vpc.containerTopAnchor.constant = 0.0;
+      } else {
+        if ( [self.cells count] == 0 ) {
+          vpc.containerTopAnchor.constant = -23.0;
+        } else {
+          vpc.containerTopAnchor.constant = 0.0;
+        }
+      }
+    }
     vpc.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.cells addObject:vpc];
   }
@@ -984,9 +997,9 @@
         }
       }
       
-      SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc]
-                                                             initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
-                                                             bundle:nil];
+      SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                                                                                   navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                                                                                 options:@{ UIPageViewControllerOptionSpineLocationKey : @( UIPageViewControllerSpineLocationMin)}];
     
       collection.category = ContentCategoryEvents;
       collection.view.frame = collection.view.frame;
@@ -1137,24 +1150,27 @@
   self.categoriesBlurView.alpha = 0.0;
   self.categoriesDarkView.alpha = 0.0;
   
-  [self.view addSubview:self.categoriesBlurView];
-  [self.view addSubview:self.categoriesDarkView];
-
+  //[self.view addSubview:self.categoriesBlurView];
+  //[self.view addSubview:self.categoriesDarkView];
+  [[DesignManager shared] snapView:self.categoriesBlurView
+                       toContainer:[[Utilities del].viewController displayPortView]];
+  [[DesignManager shared] snapView:self.categoriesDarkView
+                       toContainer:[[Utilities del].viewController displayPortView]];
+  
   self.categoriesTableViewController.view.layer.cornerRadius = 5;
   self.categoriesTableViewController.view.layer.masksToBounds = YES;
 
   self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(1.8, 1.8);
-  [self.view addSubview:self.categoriesTableViewController.view];
+  //[self.view addSubview:self.categoriesTableViewController.view];
+  
+  [[DesignManager shared] snapView:self.categoriesTableViewController.view
+                       toContainer:[[Utilities del].viewController displayPortView]];
 
   // Hide the player widget
   [[[Utilities del] viewController] hidePlayer];
   
   if ([Utilities isIOS7]) {
     [UIView animateWithDuration:0.45
-                          delay:0.0
-         usingSpringWithDamping:0.75
-          initialSpringVelocity:0.0
-                        options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                        self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
                        self.categoriesDarkView.alpha = 0.7;
@@ -1619,7 +1635,16 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.currentIndexPath = indexPath;
     cell.landscape = [Utilities isLandscape];
-    cell.containerTopAnchor.constant = -23.0;
+    
+    if ( [Utilities isLandscape] ) {
+      cell.containerTopAnchor.constant = -23.0;
+    } else {
+      if ( indexPath.row == 0 ) {
+        cell.containerTopAnchor.constant = -20.0;
+      } else {
+        cell.containerTopAnchor.constant = 0.0;
+      }
+    }
     
     return cell;
   }

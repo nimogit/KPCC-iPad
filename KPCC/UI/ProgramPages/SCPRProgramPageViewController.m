@@ -804,6 +804,8 @@
                                                       xibForPlatformWithName:@"SCPRProgramPageViewController"]
                                                owner:self
                                              options:nil];
+    self.merged = NO;
+    self.loaded = NO;
     [self mergeWithShow];
     [self fetchShowInformation];
     [UIView animateWithDuration:0.15 animations:^{

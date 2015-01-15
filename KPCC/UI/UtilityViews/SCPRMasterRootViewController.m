@@ -183,9 +183,13 @@
   ivc.view.frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width,
                               self.view.bounds.size.height);
   
-  [ivc buildIntro];
-  [[Utilities del] cloakUIWithCustomView:ivc
-                             dismissible:NO];
+  ivc.view.alpha = 0.0;
+  
+  [[DesignManager shared] snapView:ivc.view
+                       toContainer:self.view];
+  
+  [ivc setNeedsSnap:YES];
+  self.introView = ivc;
   self.introDisplaying = YES;
   
   [[ContentManager shared] pushToResizeVector:ivc];
@@ -195,6 +199,10 @@
   } else {
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
   }
+  
+  [UIView animateWithDuration:0.33 animations:^{
+    ivc.view.alpha = 1.0;
+  }];
   
 }
 
@@ -213,6 +221,14 @@
   
   [[Utilities del] setAppIsShowingTour:NO];
   [[Utilities del] uncloakUI];
+  
+  SCPRIntroductionViewController *ivc = (SCPRIntroductionViewController*)self.introView;
+  [UIView animateWithDuration:0.33 animations:^{
+    ivc.view.alpha = 0.0;
+  } completion:^(BOOL finished) {
+    [ivc.view removeFromSuperview];
+    self.introView = nil;
+  }];
   
 }
 
@@ -388,8 +404,6 @@
                                                                     views:@{ @"ad" : self.dfpAdViewController.view }];
   
   [self.dfpAdViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
-  
-  
   [self.adPresentationView addConstraints:hConstraints];
   [self.adPresentationView addConstraints:vConstraints];
 
@@ -664,6 +678,7 @@
                                                    self.queueViewController.view.frame.size.width,
                                                    self.queueViewController.view.frame.size.height);
   [self.view addSubview:self.queueViewController.view];
+  [self.queueViewController primeQueueForState];
   
   [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
     self.queueViewController.view.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width,

@@ -203,7 +203,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.4954356318" green="0.24979159970000001" blue="0.0297139181" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="36" secondAttribute="bottom" constant="176" id="0lG-c6-ZxI"/>
                 <constraint firstAttribute="centerY" secondItem="54" secondAttribute="centerY" constant="-41" id="2CT-GN-elw"/>

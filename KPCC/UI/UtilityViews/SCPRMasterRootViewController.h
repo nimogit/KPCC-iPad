@@ -27,6 +27,7 @@ typedef void (^AdKilledCompletion)(void);
 @property (nonatomic,strong) GADInterstitial *interstitial;
 @property (nonatomic,strong) IBOutlet SCPRBreakingNewsViewController *breakingNewsOverlay;
 @property (nonatomic,strong) id pushedContent;
+@property (nonatomic,strong) id introView;
 @property (nonatomic,strong) SCPRDFPViewController *dfpAdViewController;
 @property (nonatomic,weak) UIView *adPresentationView;
 

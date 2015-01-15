@@ -273,8 +273,6 @@
     [h setConstant:self.scroller.frame.size.height];
   }
   
-
-  
   [self.scroller setContentOffset:CGPointMake(self.scroller.frame.size.width*self.currentIndex,
                                               0.0)];
   [self.scroller setNeedsLayout];

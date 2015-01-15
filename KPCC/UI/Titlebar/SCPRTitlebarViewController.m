@@ -182,16 +182,7 @@
       }
       
       [self applySharingButton];
-      
-      
-      
-      [[DesignManager shared] avoidNeighbor:self.personalInfoButton
-                                   withView:self.parserOrFullButton
-                                  direction:NeighborDirectionToRight
-                                    padding:10.0];
-      
-      [[DesignManager shared] alignVerticalCenterOf:self.personalInfoButton
-                                           withView:self.parserOrFullButton];
+      self.parserOrFullButton.alpha = 1.0;
 
       self.container = container;
       [self applyBackButtonText:@"Back"];
@@ -471,9 +462,11 @@
   [Utilities primeTitlebarWithText:@""
                       shareEnabled:NO
                          container:nil];
-  [self applyKpccLogo];
+
   [self eraseCloseCategoriesButton];
   [self applyCategoriesButton];
+  [self applyKpccLogo];
+  
 }
 
 - (void)eraseCategoriesButton {
@@ -537,20 +530,12 @@
 }
 
 - (void)applyEditionsLabel {
-  /*[self.view addSubview:self.editionsLogo];
-  
-  self.editionsLogo.center = CGPointMake(self.view.frame.size.width / 2.0,
-                                         self.view.frame.size.height / 2.0);*/
   self.kpccLogo.alpha = 0.0;
   self.editionsLogo.alpha = 1.0;
   
 }
 
 - (void)applyKpccLogo {
- /* [self.view addSubview:self.kpccLogo];
-  
-  self.kpccLogo.center = CGPointMake(self.view.frame.size.width / 2.0,
-                                         self.view.frame.size.height / 2.0);*/
   self.editionsLogo.alpha = 0.0;
   self.kpccLogo.alpha = 1.0;
 }
@@ -584,11 +569,11 @@
 }
 
 - (BOOL)isDonateButtonShown {
-  return ([self.view.subviews containsObject:self.donateButton]);
+  return self.donateButton.alpha > 0.0;
 }
 
 - (BOOL)isCategoriesButtonShown {
-  return ([self.view.subviews containsObject:self.categoriesButton]);
+  return self.categoriesButton.alpha > 0.0;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -369,7 +369,7 @@ static DesignManager *singleton = nil;
   [c2u addConstraints:anchors];
   [c2u setNeedsUpdateConstraints];
   [c2u setNeedsLayout];
-  if ( fullscreen ) {
+  /*if ( fullscreen ) {
     for ( NSLayoutConstraint *anchor in [c2u constraints] ) {
       if ( anchor.firstAttribute == NSLayoutAttributeBottom && anchor.secondAttribute == NSLayoutAttributeBottom ) {
         anchor.constant = 0.0;
@@ -381,7 +381,7 @@ static DesignManager *singleton = nil;
         anchor.constant = 0.0;
       }
     }
-  }
+  }*/
   for ( NSLayoutConstraint *anchor in anchors ) {
     if ( anchor.firstAttribute == NSLayoutAttributeTop && anchor.secondAttribute == NSLayoutAttributeTop ) {
       return anchor;
@@ -391,6 +391,19 @@ static DesignManager *singleton = nil;
   
   return nil;
   
+}
+
+- (void)touch:(NSArray *)views {
+  for ( UIView *v in views ) {
+    if ( [v respondsToSelector:@selector(updateConstraintsIfNeeded)] ) {
+      [v setNeedsUpdateConstraints];
+      [v setNeedsLayout];
+      [v setNeedsDisplay];
+      
+      [v updateConstraintsIfNeeded];
+      [v layoutIfNeeded];
+    }
+  }
 }
 
 - (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container {

@@ -49,7 +49,7 @@
         </view>
     </objects>
     <resources>
-        <image name="blue_kpcc_button_short.png" width="400" height="80"/>
+        <image name="blue_kpcc_button_short.png" width="768" height="61"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

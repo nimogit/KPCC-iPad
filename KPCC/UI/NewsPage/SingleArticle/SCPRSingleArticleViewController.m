@@ -324,7 +324,9 @@
                                  withFormat:@"MMM d, YYYY, h:mm a"];
 
   self.basicTemplate.byLine.textColor = [[DesignManager shared] burnedCharcoalColor];
-  [self.basicTemplate.byLine titleizeText:[NSString stringWithFormat:@"%@\n%@",bylineStr,pretty]
+  
+  NSString *formatted = bylineStr ? [NSString stringWithFormat:@"%@\n%@",bylineStr,pretty] : pretty;
+  [self.basicTemplate.byLine titleizeText:formatted
                                      bold:NO
                             respectHeight:YES];
 
@@ -1182,8 +1184,8 @@
   if ([Utilities isLandscape]) {
     @try {
       
-      [self.masterContentScroller removeObserver:self
-                                      forKeyPath:@"contentOffset"];
+      /*[self.masterContentScroller removeObserver:self
+                                      forKeyPath:@"contentOffset"];*/
       
     } @catch (NSException *e) {
       
@@ -1220,7 +1222,7 @@
     SCPRTitlebarViewController *tb = [[Utilities del] globalTitleBar];
     
     [tb pop];
-    [tb.personalInfoButton removeFromSuperview];
+    [tb.personalInfoButton setAlpha:0.0];
     
     
     SCPRViewController *svc = [[Utilities del] viewController];

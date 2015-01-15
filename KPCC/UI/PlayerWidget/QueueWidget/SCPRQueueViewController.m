@@ -654,6 +654,8 @@
   CGRect raw = self.sleepTimerButton.frame;
   CGRect cooked = [self.view convertRect:raw fromView:self.sleepTimerInactiveView];
   cooked = CGRectMake(cooked.origin.x, cooked.origin.y + 4, cooked.size.width, cooked.size.height);
+  [self.sleepTimerTableViewController.view layoutIfNeeded];
+  self.sleepTimerTableViewController.view.frame = self.sleepTimerTableViewController.view.frame;
   
   CGFloat s = [self.sleepTimerTableViewController.sleepTimerData count]*44.0;
   self.sleepTimerModal.popoverContentSize = CGSizeMake(self.sleepTimerTableViewController.tableView.frame.size.width,s);

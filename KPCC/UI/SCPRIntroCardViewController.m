@@ -7,6 +7,7 @@
 //
 
 #import "SCPRIntroCardViewController.h"
+#import "DesignManager.h"
 
 @interface SCPRIntroCardViewController ()
 
@@ -26,11 +27,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+  
+  [self.view removeConstraints:@[ self.cornerImageLeftAnchor, self.cornerImageTopAnchor, self.cornerImageTmpSizeX, self.cornerImageTmpSizeY ]];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)setupForCardType:(CardType)type {
   
+                               
   self.cardTopAnchor.constant = [Utilities isLandscape] ? 60.0 : 135.0;
   NSArray *cards = [Utilities loadJson:@"intro_cards"];
   NSString *mainImage = [NSString stringWithFormat:@"onboarding-card-step%d",(int)type+1];
@@ -61,7 +65,7 @@
   
   if ( self.cardType == CardTypeWelcome ) {
     self.buttonCenterXAnchor.constant = -416.0;
-    self.buttonCenterYAnchor.constant = -358.0;
+    self.buttonCenterYAnchor.constant = -168.0;
   }
 }
 
@@ -157,6 +161,7 @@
       self.ornamentImage.alpha = 0.0;
   }
   
+  [self.ornamentImage setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSMutableArray *combined = [hAnchors mutableCopy];
   [combined addObjectsFromArray:vAnchors];
   self.cornerImageAnchors = [NSArray arrayWithArray:combined];

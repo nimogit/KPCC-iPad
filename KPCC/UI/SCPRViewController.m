@@ -583,9 +583,9 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
                               ppvc.view.frame.size.width,
                               self.mainPageScroller.frame.size.height);
 
-  [[ContentManager shared] pushToResizeVector:ppvc];
+
   [self snapToDisplayPortWithView:nav.view];
-  
+  [[ContentManager shared] pushToResizeVector:ppvc];
   
   [self.contentVector addObject:ppvc];
   self.pushedContent = nav;
@@ -1323,19 +1323,19 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 - (void)displayPlayer {
   if ( self.playerControlsBottomAnchor.constant == 0.0 ) return;
   
-  [UIView animateWithDuration:0.25 animations:^{
+  //[UIView animateWithDuration:0.25 animations:^{
     self.playerControlsBottomAnchor.constant = 0.0;
     [self.view layoutIfNeeded];
-  }];
+  //}];
 }
 
 - (void)hidePlayer {
   if ( self.playerControlsBottomAnchor.constant == -60.0 ) return;
   
-  [UIView animateWithDuration:0.25 animations:^{
+  //[UIView animateWithDuration:0.25 animations:^{
     self.playerControlsBottomAnchor.constant = -60.0;
     [self.view layoutIfNeeded];
-  }];
+  //}];
 }
 
 - (void)checkAutomation {

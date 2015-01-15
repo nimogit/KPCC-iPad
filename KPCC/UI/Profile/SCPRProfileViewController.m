@@ -109,11 +109,7 @@
 }
 
 - (void)viewDidLayoutSubviews {
-  [UIView animateWithDuration:0.25 animations:^{
-    self.nameLabel.alpha = 1.0;
-    self.socialTitle.alpha = 1.0;
-    self.socialIcon.alpha = 1.0;
-  }];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -405,6 +401,20 @@
                                      self.socialIcon.frame.origin.y,
                                      iconSize.width,iconSize.height);
   
+
+  
+
+  
+  [[DesignManager shared] avoidNeighbor:self.circleSeat
+                               withView:self.nameLabel
+                              direction:NeighborDirectionAbove
+                                padding:10.0];
+  
+  [[DesignManager shared] avoidNeighbor:self.nameLabel
+                               withView:self.socialTitle
+                              direction:NeighborDirectionAbove
+                                padding:0.0];
+  
   if ( [[SocialManager shared] isAuthenticatedWithMembership] ||
       [[SocialManager shared] isAuthenticatedWithTwitter] ) {
     
@@ -422,25 +432,15 @@
                                   padding:5.0];
   }
   
-  [[DesignManager shared] avoidNeighbor:self.circleSeat
-                               withView:self.nameLabel
-                              direction:NeighborDirectionAbove
-                                padding:10.0];
-  
-  [[DesignManager shared] avoidNeighbor:self.nameLabel
-                               withView:self.socialTitle
-                              direction:NeighborDirectionAbove
-                                padding:0.0];
-  
-
-  
   if ( ![[SocialManager shared] isAuthenticatedWithMembership] ) {
     
   } else {
     self.circleSeat.backgroundColor = [UIColor clearColor];
   }
 
-  
+  self.nameLabel.alpha = 1.0;
+  self.socialIcon.alpha = 1.0;
+  self.socialTitle.alpha = 1.0;
 }
 
 - (IBAction)buttonTapped:(id)sender {

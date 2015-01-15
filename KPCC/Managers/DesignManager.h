@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import "UIColor+Additions.h"
 
 #define kBaselinePadding 20.0
 
@@ -193,6 +194,7 @@ typedef enum {
 
 - (NSArray*)sizeContraintsForView:(UIView*)view;
 - (void)unelasticizeView:(UIView*)view;
+- (void)touch:(NSArray*)views;
 
 @property BOOL inSingleArticle;
 @property BOOL hasBeenInFullscreen;

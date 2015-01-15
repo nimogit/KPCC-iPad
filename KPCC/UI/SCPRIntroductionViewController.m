@@ -29,11 +29,13 @@
 {
     [super viewDidLoad];
   
+  
+  self.view.backgroundColor = [[UIColor virtualBlackColor] translucify:0.75];
   self.cardScroller.delegate = self;
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)viewWillLayoutSubviews {
+- (void)viewDidLayoutSubviews {
   if ( self.needsSnap ) {
     self.needsSnap = NO;
     [self buildIntro];
@@ -46,14 +48,8 @@
 
 - (void)buildIntro {
   
-  SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
   
   NSArray *introCards = [Utilities loadJson:@"intro_cards"];
-
-  self.cardScroller.frame = CGRectMake(0.0,
-                                       0.0,
-                                       root.view.bounds.size.width,
-                                       root.view.bounds.size.height);
   CGFloat width = self.cardScroller.bounds.size.width;
   
   for ( SCPRIntroCardViewController *card in self.cardVector ) {
@@ -65,6 +61,7 @@
                                              self.cardScroller.bounds.size.height);
   self.cardScroller.pagingEnabled = YES;
   
+  SCPRIntroCardViewController *prevCard = nil;
   for ( unsigned i = 0; i < [introCards count]; i++ ) {
     
     SCPRIntroCardViewController *card = [[SCPRIntroCardViewController alloc]
@@ -77,11 +74,52 @@
     [card setupForCardType:(int)i];
     [self.cardVector addObject:card];
     [self.cardScroller addSubview:card.view];
+    [card.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    NSArray *hAnchors = nil;
+    NSArray *vAnchors = nil;
+    if ( prevCard ) {
+      
+      NSString *hFmt = [NSString stringWithFormat:@"H:[prev][me(%1.1f)]",self.cardScroller.frame.size.width];
+      if ( i == [introCards count]-1 ) {
+        hFmt = [NSString stringWithFormat:@"H:[prev][me(%1.1f)]|",self.cardScroller.frame.size.width];
+      }
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:hFmt
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"prev" : prevCard.view,
+                                                                             @"me" : card.view }];
+      
+    } else {
+      
+      NSString *hFmt = [NSString stringWithFormat:@"H:|[me(%1.1f)]",self.cardScroller.frame.size.width];
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:hFmt
+                                                         options:0
+                                                         metrics:nil
+                                                           views:@{ @"me" : card.view }];
+      
+    }
+    
+    vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|[me(%1.1f)]",self.cardScroller.frame.size.height]
+                                                       options:0
+                                                       metrics:nil
+                                                         views:@{ @"me" : card.view }];
+    
+    [self.cardScroller addConstraints:hAnchors];
+    [self.cardScroller addConstraints:vAnchors];
+    prevCard = card;
     
   }
   
-  self.cardScroller.contentOffset = CGPointMake(self.currentCard*width,
-                                                0.0);
+  [UIView animateWithDuration:0.15 animations:^{
+    self.cardScroller.contentOffset = CGPointMake(self.currentCard*width,
+                                                  0.0);
+  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:0.25 animations:^{
+      self.cardScroller.alpha = 1.0;
+    }];
+  }];
+
 }
 
 - (void)nextCard {

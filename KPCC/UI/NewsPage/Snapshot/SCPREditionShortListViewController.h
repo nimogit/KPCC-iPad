@@ -27,6 +27,7 @@
 @property (nonatomic,strong) IBOutlet UIButton *drillDownButton;
 @property (nonatomic,strong) IBOutlet UIView *additionalSeat;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic,strong) IBOutlet UIView *shadowedSeatView;
 
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *headlineLabelAnchor;
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *pantsViewAnchor;
