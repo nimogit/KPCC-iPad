@@ -64,6 +64,7 @@ typedef enum {
 
 @optional
 - (void)deactivationMethod;
+- (BOOL)okToDelete;
 
 @end
 
@@ -153,6 +154,8 @@ typedef enum {
 @property (nonatomic,strong) NSMutableDictionary *compositeNewsLookupHash;
 @property (nonatomic,strong) NSMutableDictionary *deactivationQueue;
 @property (nonatomic,strong) NSMutableDictionary *pendingNotification;
+
+@property (nonatomic,strong) NSMutableArray *garbageCan;
 
 @property NSInteger swipeCount;
 @property NSInteger adCount;
@@ -270,5 +273,7 @@ typedef enum {
 - (BOOL)isKPCCArticle:(NSDictionary*)sourceArticle;
 - (BOOL)isKPCCURL:(NSString*)url;
 
+- (void)disposeOfObject:(id<Deactivatable>)object protect:(BOOL)protect;
+- (void)emptyTrash;
 
 @end

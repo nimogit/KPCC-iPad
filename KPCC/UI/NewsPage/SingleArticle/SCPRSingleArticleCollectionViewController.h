@@ -32,7 +32,7 @@ typedef enum {
 @property (nonatomic,strong) NSString *protect;
 @property (nonatomic,strong) id currentPage;
 @property (nonatomic,strong) IBOutlet UIView *maskingView;
-
+@property (nonatomic,strong) NSMutableArray *untouchables;
 @property (nonatomic,strong) IBOutlet UIView *pageContainerView;
 
 @property (nonatomic,strong) NSString *collectionType;
@@ -59,6 +59,11 @@ typedef enum {
 - (void)setupWithCollection:(NSArray*)articles beginningAtIndex:(NSInteger)index processIndex:(BOOL)processIndex;
 - (void)cleanup;
 - (void)brandWithCategory:(ContentCategory)category;
+- (void)snapCurrent;
+- (void)sweep;
+
+@property NSInteger dirtySwipes;
+
 - (SCPRSingleArticleViewController*)prepareArticleViewWithIndex:(NSInteger)index;
 
 @end

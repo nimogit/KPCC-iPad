@@ -30,7 +30,6 @@
                 <outlet property="facebookCountLabel" destination="GBl-sH-aI5" id="HKl-G4-zIr"/>
                 <outlet property="facebookLogoImage" destination="r5p-WL-gK0" id="zpD-xe-eXE"/>
                 <outlet property="grayLineBottomAnchor" destination="XmK-sR-1Bf" id="H1d-V4-Int"/>
-                <outlet property="grayLineToByLineAnchor" destination="XmK-sR-1Bf" id="uMD-xy-uoH"/>
                 <outlet property="locationCaptionLabel" destination="NSY-hs-Vvf" id="C8V-9Q-ijJ"/>
                 <outlet property="locationContentLabel" destination="Tzv-m8-6xq" id="WMj-MT-6oZ"/>
                 <outlet property="masterContentScroller" destination="53" id="54"/>
@@ -44,6 +43,7 @@
                 <outlet property="rsvpSeatView" destination="4hW-ge-twn" id="Gcw-OK-UQl"/>
                 <outlet property="socialLineDivider" destination="xf2-jW-bf5" id="f9Y-qG-oSo"/>
                 <outlet property="socialShareButton" destination="cnI-9a-vVq" id="QGP-TJ-Vmx"/>
+                <outlet property="socialShareView" destination="u57-Yv-mTc" id="wAF-bO-6ts"/>
                 <outlet property="socialSheetView" destination="Sfl-ye-KVp" id="nbq-13-3rO"/>
                 <outlet property="textSheetView" destination="48" id="49"/>
                 <outlet property="twitterCountLabel" destination="D4i-WK-xjF" id="KZL-Rh-ihk"/>

@@ -14,6 +14,8 @@
 #import "UIImageView+Analysis.h"
 #import "SCPRSingleArticleCollectionViewController.h"
 #import "SCPRExternalWebContentViewController.h"
+#import "SCPREditionAtomViewController.h"
+#import "SCPREditionMoleculeViewController.h"
 
 @interface SCPRSingleArticleViewController() <UIPopoverControllerDelegate>
 
@@ -49,6 +51,7 @@
   self.basicTemplate.backgroundColor = [UIColor whiteColor];
   self.textSheetView.backgroundColor = [UIColor whiteColor];
   
+  
   self.basicTemplate.templateStyle = NewsPageTemplateSingleArticle;
   self.socialSheetView.alpha = 0.0;
   self.categorySeat.backgroundColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
@@ -59,6 +62,7 @@
 
   self.shareDrawer = [[Utilities del] viewController].globalShareDrawer;
   
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(adjustUIForQueue:)
                                                name:@"notify_listeners_of_queue_change"
@@ -434,7 +438,15 @@
                                 pushAsset:self.pushAssetIntoBody
                                completion:^{
 
+
+                                 
                                }];
+  
+  if ( self.fromSnapshot ) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [[Utilities del] uncloakUI];
+    });
+  }
 }
 
 - (void)shortenForNoAudio {
@@ -1163,6 +1175,14 @@
 
 - (void)handleRotationPost {
   
+  [[Utilities del] blackoutCloak:^{
+    SCPREditionAtomViewController *atom = self.parentEditionAtom;
+    SCPREditionMoleculeViewController *molecule = [atom parentMolecule];
+    [molecule setNeedsPush:YES];
+    [self backTapped];
+  }];
+
+  /*
   [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
                                        xibForPlatformWithName:@"SCPRSingleArticleViewController"]
                                 owner:self
@@ -1185,7 +1205,7 @@
     @try {
       
       /*[self.masterContentScroller removeObserver:self
-                                      forKeyPath:@"contentOffset"];*/
+                                      forKeyPath:@"contentOffset"];
       
     } @catch (NSException *e) {
       
@@ -1195,6 +1215,7 @@
   [UIView animateWithDuration:0.12 animations:^{
     self.masterContentScroller.alpha = 1.0;
   }];
+   */
 }
 
 - (BOOL)shouldAutorotate {
@@ -1279,6 +1300,7 @@
   [self.webContentLoader.webView loadHTMLString:@"" baseURL:nil];
   
   self.okToDelete = YES;
+  
 }
 
 - (void)killContent {
@@ -1307,11 +1329,13 @@
 }
 
 - (void)safeKillContent {
-  @try {
-    [self.masterContentScroller removeObserver:self
-                                    forKeyPath:@"contentOffset"];
-  } @catch (NSException *e) {
-    //NSLog(@"Unnecessary observation removal...");
+  if ( ![Utilities isLandscape] ) {
+    @try {
+      [self.masterContentScroller removeObserver:self
+                                      forKeyPath:@"contentOffset"];
+    } @catch (NSException *e) {
+      //NSLog(@"Unnecessary observation removal...");
+    }
   }
 }
 
@@ -1354,6 +1378,7 @@
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   [[NSURLCache sharedURLCache] removeAllCachedResponses];
+
 }
 
 @end

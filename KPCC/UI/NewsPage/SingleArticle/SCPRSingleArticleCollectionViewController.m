@@ -47,11 +47,14 @@
   self.articlePageViewController.delegate = self;
   self.articlePageViewController.dataSource = self;
   [self.articlePageViewController.view printDimensionsWithIdentifier:@"Article Page Container"];
-
+  self.untouchables = [[NSMutableArray alloc] init];
+  
   [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
   [self.view printDimensionsWithIdentifier:@"Single Article Collection"];
   
 }
+
+
 
 - (SCPRSingleArticleViewController*)prepareArticleViewWithIndex:(NSInteger)index {
   NSDictionary *relatedArticle = [self.articles objectAtIndex:index];
@@ -59,21 +62,36 @@
                                                   initWithNibName:[[DesignManager shared]
                                                                    xibForPlatformWithName:@"SCPRSingleArticleViewController"]
                                                   bundle:nil];
-  articleView.view.frame = articleView.view.frame;
+  articleView.view.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width,
+                                      self.view.frame.size.height);
   
   [articleView setParentCollection:self];
   [articleView setIndex:index];
   [articleView setRelatedArticle:relatedArticle];
-
   articleView.webContentLoader.loadingSkeletonContent = NO;
   articleView.parentNewsPage = self.parentContainer;
-  
   [articleView arrangeContent];
   
   [articleView.view setNeedsLayout];
   [articleView.view layoutIfNeeded];
   
+  [self.untouchables addObject:articleView];
+  
   return articleView;
+}
+
+- (void)sweep {
+  NSMutableArray *tmp = [NSMutableArray new];
+  for ( SCPRSingleArticleViewController *article in self.untouchables ) {
+    if ( abs(article.index - self.currentIndex) > 3 ) {
+      [[ContentManager shared] disposeOfObject:article protect:NO];
+    } else {
+      [tmp addObject:article];
+    }
+  }
+  self.untouchables = tmp;
+  [[ContentManager shared] emptyTrash];
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -102,24 +120,32 @@
     return;
   }
   
+  for ( UIViewController *vc in self.childViewControllers ) {
+    [self.untouchables addObject:vc];
+  }
+  
   self.articles = [NSMutableArray arrayWithArray:articles];
   self.currentIndex = index;
+
   
   SCPRSingleArticleViewController *articleView = [self prepareArticleViewWithIndex:index];
   self.visualComponents = [NSMutableArray new];
   [self.visualComponents addObject:articleView];
+  self.currentPage = articleView;
   
   __block SCPRSingleArticleCollectionViewController *weakself_ = self;
-  
   [self.articlePageViewController setViewControllers:@[articleView]
                                            direction:UIPageViewControllerNavigationDirectionForward
                                             animated:NO
                                           completion:^(BOOL finished) {
                                             
-                                            
                                             [articleView.view printDimensionsWithIdentifier:@"Single Article View"];
                                             weakself_.view.alpha = 1.0;
                                             articleView.view.alpha = 1.0;
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                              [[ContentManager shared] emptyTrash];
+                                              weakself_.dirtySwipes = 0;
+                                            });
                                             
                                           }];
   
@@ -335,11 +361,13 @@
 #pragma mark - Backable
 - (void)backTapped {
   
+  [self sweep];
+  
   [[ContentManager shared] popFromResizeVector];
   [[DesignManager shared] setInSingleArticle:NO];
   [[[Utilities del] globalTitleBar] pop];
   
-  [[FileManager shared] cleanupTemporaryFiles];
+  //[[FileManager shared] cleanupTemporaryFiles];
   
   if ([[ContentManager shared] adReadyOffscreen]) {
     [[[Utilities del] masterRootController] killAdOffscreen:^{
@@ -349,6 +377,7 @@
     [self.navigationController popViewControllerAnimated:YES];
   }
 
+  [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self cleanup];
 }
 
@@ -375,17 +404,54 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
   if ( [pendingViewControllers count] > 0 ) {
     SCPRSingleArticleViewController *svc = (SCPRSingleArticleViewController*)[pendingViewControllers firstObject];
+    self.currentPage = svc;
     self.pendingIndex = svc.index;
+    self.dirtySwipes++;
+    if ( self.dirtySwipes % 3 == 0 ) {
+      [self sweep];
+    }
   }
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
   
+
   self.currentIndex = self.pendingIndex;
   [[ContentManager shared] setFocusedContentObject:self.articles[self.currentIndex]];
   
+
+  
 }
 
+- (void)snapCurrent {
+  
+  UIViewController *cv = (UIViewController*)self.currentPage;
+  
+  NSLayoutConstraint *hc = [NSLayoutConstraint constraintWithItem:cv.view
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0
+                                                         constant:self.view.frame.size.width];
+  
+  NSLayoutConstraint *vc = [NSLayoutConstraint constraintWithItem:cv.view
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0
+                                                         constant:self.view.frame.size.height];
+  
+  [cv.view addConstraints:@[hc,vc]];
+  
+  [UIView animateWithDuration:0.33 animations:^{
+    [cv.view.superview layoutIfNeeded];
+    cv.view.alpha = 1.0;
+  } completion:^(BOOL finished) {
+    
+  }];
+}
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -568,6 +634,10 @@
   }];
   */
   
+  if ( self.currentPage ) {
+    [[ContentManager shared] disposeOfObject:self.currentPage protect:YES];
+  }
+  
   [self setupWithCollection:self.articles
            beginningAtIndex:self.currentIndex
                processIndex:YES];
@@ -617,7 +687,7 @@
   [super didReceiveMemoryWarning];
   
   // Dispose of any resources that can be recreated.
-  [self.queuedForTrash removeAllObjects];
+  [[ContentManager shared] emptyTrash];
 }
 
 @end

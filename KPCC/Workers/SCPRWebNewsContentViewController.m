@@ -391,16 +391,16 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
   
   if ( self.cleaningUp ) {
-#ifdef LOG_DEALLOCATIONS
-    NSLog(@"Finished cleanup for : %@",[self.referenceArticle objectForKey:@"title"]);
 
+    NSLog(@"Finished cleanup for : %@",[self.referenceArticle objectForKey:@"title"]);
     [[ContentManager shared] printCacheUsage];
-#endif
     self.cleaningUp = NO;
     if ( self.delegate ) {
       [self.delegate cleanup];
-      return;
     }
+    self.webView.delegate = nil;
+    [self.webView removeFromSuperview];
+    return;
   }
   
   BOOL firstTime = NO;
@@ -420,6 +420,9 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
   NSLog(@"Error on web content load : %@",[error localizedDescription]);
+  if ( self.cleaningUp ) {
+    NSLog(@" **** // This happened while cleaning up \\ ****");
+  }
   [self.delegate webContentFailed];
 }
 

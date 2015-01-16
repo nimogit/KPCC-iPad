@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPRSingleArticleViewController">
             <connections>
+                <outlet property="activity" destination="X82-I6-HQQ" id="e8E-Ip-Egf"/>
                 <outlet property="articleDetailsAnchor" destination="AMc-fH-MdH" id="kXU-Jv-KbT"/>
                 <outlet property="audioDividerLine" destination="lDA-R9-eU2" id="ICV-yV-gL0"/>
                 <outlet property="audioDurationLabel" destination="zkm-U5-bg8" id="PW4-Q7-1oe"/>
@@ -19,6 +20,7 @@
                 <outlet property="captionView" destination="RWu-PW-GXW" id="LmL-FU-8VS"/>
                 <outlet property="categoryLabel" destination="LYX-eI-4xm" id="at1-w2-gv2"/>
                 <outlet property="categorySeat" destination="dtj-em-cg0" id="EUe-fo-1uM"/>
+                <outlet property="cloakView" destination="Hla-av-PGj" id="cc2-nG-gRX"/>
                 <outlet property="contentDividerLine" destination="kvl-NV-kgn" id="jEt-h1-EOs"/>
                 <outlet property="dateCaptionLabel" destination="fUR-dV-O3V" id="CWl-Mz-NsE"/>
                 <outlet property="dateContentLabel" destination="XL6-T1-gaf" id="qmL-Td-pRF"/>
@@ -366,7 +368,7 @@
                 <outlet property="headLine" destination="39" id="42"/>
                 <outlet property="image1" destination="16" id="41"/>
             </connections>
-            <point key="canvasLocation" x="602" y="13"/>
+            <point key="canvasLocation" x="650" y="-201"/>
         </view>
         <viewController id="57" customClass="SCPRWebNewsContentViewController">
             <extendedEdge key="edgesForExtendedLayout"/>
@@ -563,6 +565,15 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="676" y="543"/>
+        </view>
+        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="X82-I6-HQQ">
+            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+        </activityIndicatorView>
+        <view contentMode="scaleToFill" id="Hla-av-PGj">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
         </view>
     </objects>
     <resources>

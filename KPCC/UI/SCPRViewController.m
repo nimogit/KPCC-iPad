@@ -82,10 +82,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)globalInit {
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(revive)
-                                               name:@"wake_up_ui"
-                                             object:nil];
+
   
   if ( [[Utilities del] appCloaked] ) {
     return;
@@ -559,7 +556,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   mineral.editions = contentObjects;
   [mineral setNeedsSnap:YES];
   
-  //[mineral setupWithEditions:[NSArray arrayWithArray:contentObjects]];
+  [mineral setupWithEditions:[NSArray arrayWithArray:contentObjects]];
 }
 
 - (void)displayProgramAZPage:(NSMutableArray *)contentObjects {

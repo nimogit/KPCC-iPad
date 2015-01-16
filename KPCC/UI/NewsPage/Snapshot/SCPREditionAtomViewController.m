@@ -354,8 +354,13 @@
     sac.parentEditionAtom = self;
     self.internalContent = sac;
     
-    UIViewController *molecule = (UIViewController*)self.parentMolecule;
-    [molecule.navigationController pushViewController:sac animated:YES];
+    SCPREditionMoleculeViewController *molecule = (SCPREditionMoleculeViewController*)self.parentMolecule;
+    BOOL animated = YES;
+    if ( [molecule intermediaryAppearance] ) {
+      animated = NO;
+      [molecule setIntermediaryAppearance:NO];
+    }
+    [molecule.navigationController pushViewController:sac animated:animated];
     [sac arrangeContent];
 
     [[ContentManager shared] pushToResizeVector:sac];

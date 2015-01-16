@@ -27,6 +27,7 @@
 @property BOOL fromNewsPage;
 @property BOOL needsContentSnap;
 @property BOOL needsPush;
+@property BOOL intermediaryAppearance;
 
 @property (nonatomic,strong) NSDictionary *editionShell;
 @property (nonatomic,strong) IBOutlet UILabel *editionInfoLabel;

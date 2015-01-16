@@ -110,6 +110,8 @@
 @property BOOL twitterSynthesized;
 @property BOOL pushAssetIntoBody;
 
+@property BOOL untouchable;
+
 
 #pragma mark - Content Display Port
 @property (nonatomic,strong) NSMutableArray *mediaContent;

@@ -55,6 +55,8 @@
 - (void)viewDidAppear:(BOOL)animated {
   if ( self.needsPush ) {
     self.needsPush = NO;
+    self.intermediaryAppearance = YES;
+    [self pushToCurrentAtomDetails];
   }
   
   [self.view.superview setNeedsLayout];
@@ -252,6 +254,8 @@
 }
 
 - (void)snapContentSize {
+  [self.scroller layoutSubviews];
+  
   self.scroller.contentSize = CGSizeMake(self.scroller.frame.size.width*self.editions.count,
                                          self.scroller.frame.size.height);
 
@@ -260,9 +264,8 @@
   for ( SCPREditionAtomViewController *atom in self.displayVector ) {
     atom.bottomAnchor.constant = [Utilities isLandscape] ? 20.0 : 26.0;
     atom.cardHeightAnchor.constant = [Utilities isLandscape] ? 378.0 : 496.0;
-    [atom.detailsSeatView layoutIfNeeded];
-    [atom.view layoutIfNeeded];
-    [atom.view updateConstraintsIfNeeded];
+    [atom.view layoutSubviews];
+    [atom.view updateConstraints];
   }
   
   for ( NSDictionary *metrics in [self.metricChain allValues] ) {
@@ -275,8 +278,6 @@
   
   [self.scroller setContentOffset:CGPointMake(self.scroller.frame.size.width*self.currentIndex,
                                               0.0)];
-  [self.scroller setNeedsLayout];
-  [self.scroller setNeedsUpdateConstraints];
   
   NSLog(@"Content Width : %1.1f",self.scroller.contentSize.width);
   
@@ -437,7 +438,7 @@
 - (void)handleRotationPost {
   [[[Utilities del] globalTitleBar] restamp];
   [self setNeedsContentSnap:YES];
-  [self.view layoutIfNeeded];
+  [self.view layoutSubviews];
 }
 
 #ifdef LOG_DEALLOCATIONS

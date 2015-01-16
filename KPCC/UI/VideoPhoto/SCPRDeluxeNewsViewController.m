@@ -867,22 +867,6 @@
     
     self.pushedContent = emvc;
 
-    /*
-    SCPRViewController *vc = [[Utilities del] viewController];
-    if ( vc.currentAnchors ) {
-      if ( vc.currentAnchors[@"top"] ) {
-        NSLayoutConstraint *top = vc.currentAnchors[@"top"];
-        [UIView animateWithDuration:1.33 animations:^{
-          
-          [top setConstant:-40.0];
-          [self.view.superview layoutIfNeeded];
-          
-        } completion:^(BOOL finished) {
-          [self.navigationController pushViewController:emvc
-                                               animated:YES];
-        }];
-      }
-    }*/
     [self.navigationController pushViewController:emvc
                                          animated:YES];
     
@@ -1002,7 +986,9 @@
                                                                                                                                  options:@{ UIPageViewControllerOptionSpineLocationKey : @( UIPageViewControllerSpineLocationMin)}];
     
       collection.category = ContentCategoryEvents;
-      collection.view.frame = collection.view.frame;
+      collection.view.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width,
+                                         self.view.frame.size.height);
+      
       NSMutableArray *arrayToUse = [NSMutableArray arrayWithArray:self.posts];
       self.pushedCollection = collection;
       
@@ -1016,6 +1002,12 @@
       
       [self.navigationController
        pushViewController:collection animated:YES];
+      
+
+      
+
+      
+      [collection.view printDimensionsWithIdentifier:@"Article collection"];
       
       [[[Utilities del] globalTitleBar] morph:BarTypeModal
                                   container:collection];

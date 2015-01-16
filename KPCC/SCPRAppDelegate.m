@@ -184,6 +184,30 @@
   [self cloakUIWithMessage:message andUnfreezeString:@"network_ok"];
 }
 
+- (void)blackoutCloak:(VoidBlock)cloakAppeared {
+  if ( self.appCloaked ) {
+    return;
+  }
+  
+  
+  self.cloak = [[SCPRCloakViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRCloakViewController"] bundle:nil];
+  self.cloak.view.frame = CGRectMake(0.0,0.0,self.window.frame.size.width,
+                                     self.window.frame.size.height);
+  self.cloak.view.backgroundColor = [UIColor blackColor];
+  self.cloak.view.alpha = 0.0;
+  
+  [[DesignManager shared] snapView:self.cloak.view
+                       toContainer:self.masterRootController.view];
+  [[ContentManager shared] pushToResizeVector:self.cloak];
+  
+  [UIView animateWithDuration:0.25 animations:^{
+      self.cloak.view.alpha = 1.0;
+  } completion:^(BOOL finished) {
+    self.appCloaked = YES;
+    cloakAppeared();
+  }];
+}
+
 - (void)cloakUIWithMessage:(NSString *)message andUnfreezeString:(NSString *)string {
   
   if ( self.appCloaked ) {

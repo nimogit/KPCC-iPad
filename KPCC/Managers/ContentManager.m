@@ -38,6 +38,7 @@ static ContentManager *singleton = nil;
       singleton.resizeVector = [[NSMutableArray alloc] init];
       singleton.deactivationQueue = [[NSMutableDictionary alloc] init];
       singleton.globalCompositeNews = [[NSMutableDictionary alloc] init];
+      singleton.garbageCan = [NSMutableArray new];
       
       NSMutableDictionary *marshalledNews = singleton.globalCompositeNews;
       [marshalledNews setObject:[[NSMutableArray alloc] init]
@@ -1610,6 +1611,34 @@ static ContentManager *singleton = nil;
   [self saveContext];
   
   return queue;
+}
+
+#pragma mark - Maintenance
+- (void)disposeOfObject:(id<Deactivatable>)object protect:(BOOL)protect {
+  if ( [self.garbageCan containsObject:object] ) return;
+  
+  @synchronized(self.garbageCan) {
+    [self.garbageCan addObject:object];
+    if ( !protect ) {
+      [object deactivationMethod];
+    }
+  }
+}
+
+- (void)emptyTrash {
+  
+  NSMutableArray *newCan = [NSMutableArray new];
+  for ( id<Deactivatable> thing in self.garbageCan ) {
+    if ( [thing okToDelete] ) {
+      continue;
+    }
+    [newCan addObject:thing];
+    [thing deactivationMethod];
+  }
+  
+  @synchronized(self.garbageCan) {
+    self.garbageCan = newCan;
+  }
 }
 
 #pragma mark - Schedulers
