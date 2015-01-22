@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SCPREditionAtomViewController.h"
+#import "SCPRDFPViewController.h"
+
 #import "global.h"
 
 @interface SCPREditionMoleculeViewController : UIViewController<Backable,UIScrollViewDelegate,Rotatable>
@@ -19,6 +21,13 @@
 @property (nonatomic,strong) NSMutableArray *displayVector;
 @property (nonatomic,strong) IBOutlet UIView *cloakView;
 
+@property NSInteger adIndex;
+@property (nonatomic,strong) NSMutableDictionary *adConstraints;
+@property (nonatomic,strong) NSMutableArray *displayChain;
+@property (nonatomic,strong) NSMutableDictionary *pushedConstraints;
+
+@property (nonatomic,strong) SCPRDFPViewController *currentAdController;
+
 @property (nonatomic,weak) SCPREditionAtomViewController *currentAtom;
 @property (nonatomic,strong) id parentEditionContentViewController;
 @property NSInteger currentIndex;
@@ -28,6 +37,8 @@
 @property BOOL needsContentSnap;
 @property BOOL needsPush;
 @property BOOL intermediaryAppearance;
+@property BOOL adIsHot;
+@property BOOL dismissalWentLeft;
 
 @property (nonatomic,strong) NSDictionary *editionShell;
 @property (nonatomic,strong) IBOutlet UILabel *editionInfoLabel;
@@ -41,5 +52,7 @@
 - (void)pushToCurrentAtomDetails;
 - (void)sendAnalysis;
 - (void)snapContentSize;
+- (void)insertAdAtIndex:(NSInteger)index;
+- (void)removeAdFromIndex:(NSInteger)index;
 
 @end

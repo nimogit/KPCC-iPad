@@ -67,27 +67,15 @@
   raw = [raw stringByReplacingOccurrencesOfString:kAdGTPIdMacro
                                        withString:[[AnalyticsManager shared] adGtpID]];
   
+  NSLog(@"Raw Ad HTML : %@",raw);
+  
   NSString *cooked = [[FileManager shared] writeFileFromData:raw
                                                   toFilename:[NSString stringWithFormat:@"article_base_%d.html",(int)(random() % 398045)]];
   
   NSURL *url = [NSURL fileURLWithPath:cooked];
   self.adRequest = [NSURLRequest requestWithURL:url];
-  
-#ifdef FAKE_AD_DELIVERY_FAILURE
-  
-  /*int rn = random() % 100;
-  
-  if ( rn < 85 ) {*/
-    self.loadCount = 3;
-    [self fail];
-    return;
-  //}
-  
-#else
-  
   [self.adView loadRequest:[NSURLRequest requestWithURL:url]];
 
-#endif
   
 }
 
@@ -116,7 +104,8 @@
   }
   
   self.loadCount++;
-
+   
+  
 }
 
 - (void)forceFinish {

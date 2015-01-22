@@ -279,15 +279,15 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",prefix,sub]];
         [[UIApplication sharedApplication] openURL:url];
       }
+        
         break;
       case EmbedSupportInlineFullWebView:
         [self.delegate externalWebContentRequest:request];
         break;
+        
       default:
         break;
     }
-    
-    
     
     return NO;
     
@@ -304,6 +304,7 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
       NSLog(@"Bad Callout");
       return NO;
     }
+    
     NSString *message = [components objectAtIndex:1];
     NSString *player = [components objectAtIndex:2];
     NSLog(@"Message is %@ and player is %@",message,player);
@@ -321,8 +322,8 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
                           waitUntilDone:NO];
     }
     
-    
     return NO;
+    
   }
   
   if ( !self.initialLoadFinished ) {
@@ -398,8 +399,6 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
     if ( self.delegate ) {
       [self.delegate cleanup];
     }
-    self.webView.delegate = nil;
-    [self.webView removeFromSuperview];
     return;
   }
   

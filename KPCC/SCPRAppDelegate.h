@@ -72,7 +72,11 @@ typedef enum {
 - (void)cloakUIWithCustomView:(id<Cloakable>)controller dismissible:(BOOL)dismissible;
 - (void)cloakUIWithCustomView:(id<Cloakable>)controller dismissible:(BOOL)dismissible push:(CGFloat)push;
 - (void)cloakUIWithMessage:(NSString *)message andUnfreezeString:(NSString*)string;
+
 - (void)uncloakUI;
+- (void)uncloakUI:(BOOL)blackout;
+
+- (void)uncloakBlackoutUI;
 - (void)hideTitleBar;
 - (void)showTitleBar;
 - (void)dropOnWindow:(UIView*)view fromView:(UIView*)originalView animateToFrame:(CGRect)animateToFrame completion:(VoidBlock)completion;

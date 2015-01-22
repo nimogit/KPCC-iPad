@@ -23,6 +23,7 @@ PODS:
   - Facebook-iOS-SDK (3.20.0):
     - Bolts (~> 1.0)
   - FXBlurView (1.6.3)
+  - Google-Mobile-Ads-SDK (6.12.2)
   - MBProgressHUD (0.8)
   - Parse (1.5.0):
     - Bolts (~> 1.1.3)
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - DCIntrospect-ARC
   - Facebook-iOS-SDK
   - FXBlurView
+  - Google-Mobile-Ads-SDK
   - MBProgressHUD (~> 0.8)
   - Parse
 
@@ -41,6 +43,7 @@ SPEC CHECKSUMS:
   DCIntrospect-ARC: 89963e8f905ef26eac2884d58eb7021d30b02db0
   Facebook-iOS-SDK: 5854404b4b651f612a8ef79ca06d766858f4cb8e
   FXBlurView: abe1046285813c4f6e9008abbc324fc5ab32af90
+  Google-Mobile-Ads-SDK: 9761186eb5dc5e1493e71dcce2b525159f763d42
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   Parse: 7de25b6f70f0b233e5d25835f62eabfa91e4f9d7
 

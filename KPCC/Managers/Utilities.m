@@ -703,12 +703,6 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
   return [NSDictionary dictionaryWithDictionary:reversed];
 }
 
-
-
-
-
-
-
 + (BOOL)validLink:(NSString *)link {
   NSString *urlRegEx =
   @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";

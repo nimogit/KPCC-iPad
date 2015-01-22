@@ -10,13 +10,13 @@
 #import "SCPRQueueViewController.h"
 #import "global.h"
 #import "SCPRDFPViewController.h"
-#import "GADInterstitial.h"
+#import <Google-Mobile-Ads-SDK/GADInterstitial.h>
 #import "SCPRBreakingNewsViewController.h"
 #import "SCPRDFPViewController.h"
 
 typedef void (^AdKilledCompletion)(void);
 
-@interface SCPRMasterRootViewController : UIViewController<Rotatable,GADInterstitialDelegate,ContentProcessor,UIAlertViewDelegate,SCPRDFPAdDelegate>
+@interface SCPRMasterRootViewController : UIViewController<Rotatable,ContentProcessor,UIAlertViewDelegate,SCPRDFPAdDelegate>
 
 @property NSInteger screenContentType;
 @property (nonatomic,strong) IBOutlet UIImageView *globalGradient;
@@ -69,5 +69,6 @@ typedef void (^AdKilledCompletion)(void);
 - (void)hideBreakingNews;
 - (void)displayAtomicArticleWithURL:(NSString*)url;
 - (void)puntToSafariWithURL:(NSString*)url;
+
 
 @end

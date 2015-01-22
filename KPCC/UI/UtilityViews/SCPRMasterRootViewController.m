@@ -332,6 +332,8 @@
 // This method is actually called when the user reaches the penultimate swipe ([[AnalyticsManager shared] numberOfSwipesPerAd]-1) so
 // it can prepare the ad offscreen in the direction the user appears to have been swiping.
 //
+
+
 - (void)deliverAd:(UISwipeGestureRecognizerDirection)direction intoView:(UIView *)scroller silence:(NSMutableArray *)silenceVector {
 #ifdef ENABLE_ADS
   
@@ -372,12 +374,12 @@
   // Non-native ghetto ads.
   self.adPresentationView = scroller;
   
-  #ifdef TRACK_SCROLLING_PROGRESS
+#ifdef TRACK_SCROLLING_PROGRESS
     [self.adPresentationView addObserver:self
                               forKeyPath:@"contentOffset"
                                  options:NSKeyValueObservingOptionNew
                                  context:nil];
-  #endif
+#endif
 
 
   self.dfpAdViewController = [[SCPRDFPViewController alloc]
@@ -518,112 +520,9 @@
   }];
 }
 
-#pragma mark - Our DFP Delegate
-- (void)adDidFinishLoading {
-  [UIView animateWithDuration:.38 animations:^{
-    self.dfpAdViewController.view.alpha = 1.0;
-  } completion:^(BOOL finished) {
-    
-    
-    
-  }];
-}
 
-- (void)armDismissal {
-  self.dismissLeft = [[UISwipeGestureRecognizer alloc]
-                      initWithTarget:self
-                      action:@selector(dismissAdLeft)];
-  
-  self.dismissRight = [[UISwipeGestureRecognizer alloc]
-                       initWithTarget:self
-                       action:@selector(dismissAdRight)];
-  
-  self.dismissRight.direction = UISwipeGestureRecognizerDirectionRight;
-  self.dismissLeft.direction = UISwipeGestureRecognizerDirectionLeft;
-  
-  [self.view addGestureRecognizer:self.dismissLeft];
-  [self.view addGestureRecognizer:self.dismissRight];
-}
 
-- (void)disarmDismissal {
-  [self.view removeGestureRecognizer:self.dismissRight];
-  [self.view removeGestureRecognizer:self.dismissLeft];
-}
 
-- (void)dismissAdLeft {
-  [self adWillDismiss:DismissDirectionLeft];
-}
-
-- (void)dismissAdRight {
-  [self adWillDismiss:DismissDirectionRight];
-}
-
-- (void)adWillDismiss:(DismissDirection)direction {
-  
-  NSTimer *failureTimer = [[ContentManager shared] adFailureTimer];
-  if ( failureTimer ) {
-    if ( [failureTimer isValid] ) {
-      [failureTimer invalidate];
-    }
-  }
-  
-  [[ContentManager shared] setAdFailureTimer:nil];
-  [(UIScrollView*)self.adPresentationView setScrollEnabled:YES];
-  [(UIScrollView*)self.adPresentationView setClipsToBounds:YES];
-
-  
-  [self disarmDismissal];
-  
-  CGFloat xDelta = 0.0;
-  if ( direction == DismissDirectionRight ) {
-    xDelta = self.view.frame.size.width;
-  }
-  if ( direction == DismissDirectionLeft ) {
-    xDelta = self.view.frame.size.width*-1.0;
-  }
-  
-  CGPoint offset = [(UIScrollView*)self.adPresentationView contentOffset];
-  xDelta = xDelta + offset.x;
-  
-  [UIView animateWithDuration:.38 animations:^{
-    self.dfpAdViewController.view.frame = CGRectMake(xDelta, 0.0,self.dfpAdViewController.view.frame.size.width,
-                                                     self.dfpAdViewController.view.frame.size.height);
-
-    
-    for ( UIView *v in [self adSilenceVector] ) {
-      v.alpha = 1.0;
-    }
-    
-  } completion:^(BOOL finished) {
-    
-    self.adSilenceVector = nil;
-    [self.dfpAdViewController.view removeFromSuperview];
-    self.dfpAdViewController = nil;
-    [[ContentManager shared] setAdIsDisplayingOnScreen:NO];
-    
-  }];
-  
-}
-
-- (void)adDidFail {
-  [self armDismissal];
-}
-
-#pragma mark - Google DFP Delegate
-
-- (void)interstitialDidReceiveAd:(GADInterstitial *)ad {
-  self.modalPresentationStyle = UIModalPresentationPageSheet;
-  [ad presentFromRootViewController:self];
-}
-
-- (void)interstitialWillDismissScreen:(GADInterstitial *)ad {
-  [self uncloak];
-}
-
-- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error {
-  NSLog(@"DFP Error : %@",[error userInfo]);
-  [[ContentManager shared] setAdFailure:YES];
-}
 
 - (void)puntToSafariWithURL:(NSString *)url {
   NSURL *urlObj = [NSURL URLWithString:url];

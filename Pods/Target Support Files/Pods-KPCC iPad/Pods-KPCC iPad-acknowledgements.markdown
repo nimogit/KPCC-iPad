@@ -305,6 +305,10 @@ freely, subject to the following restrictions:
    limitations under the License.
 
 
+## Google-Mobile-Ads-SDK
+
+Copyright 2011 Google Inc. All Rights Reserved.
+
 ## MBProgressHUD
 
 Copyright (c) 2013 Matej Bukovinski

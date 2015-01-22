@@ -12,6 +12,7 @@ pod 'Parse'
 pod 'Facebook-iOS-SDK'
 pod 'DCIntrospect-ARC'
 pod 'FXBlurView'
+pod 'Google-Mobile-Ads-SDK'
 
 end
 

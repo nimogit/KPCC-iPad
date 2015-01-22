@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "global.h"
+#import "SCPRDFPViewController.h"
 
 @class SCPRSingleArticleViewController;
 
@@ -20,7 +21,7 @@ typedef enum {
   
 } ContentCategory;
 
-@interface SCPRSingleArticleCollectionViewController : UIPageViewController<UIPageViewControllerDataSource,UIPageViewControllerDelegate,Backable,Rotatable>
+@interface SCPRSingleArticleCollectionViewController : UIPageViewController<UIPageViewControllerDataSource,UIPageViewControllerDelegate,Backable,Rotatable,SCPRDFPAdDelegate>
 
 @property (nonatomic,strong) IBOutlet UIScrollView *articleScroller;
 @property (nonatomic,strong) NSMutableDictionary *wingArticles;
@@ -34,6 +35,8 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UIView *maskingView;
 @property (nonatomic,strong) NSMutableArray *untouchables;
 @property (nonatomic,strong) IBOutlet UIView *pageContainerView;
+@property (nonatomic,strong) SCPRDFPViewController *adContainerLeft;
+@property (nonatomic,strong) SCPRDFPViewController *adContainerRight;
 
 @property (nonatomic,strong) NSString *collectionType;
 
@@ -51,6 +54,8 @@ typedef enum {
 @property BOOL trash;
 @property (atomic) BOOL contentLock;
 @property (atomic) BOOL fetchLock;
+@property BOOL adWillDisplay;
+@property BOOL adHasDisplayed;
 @property CGFloat targetX;
 
 @property (nonatomic,strong) NSTimer *contentTimer;
@@ -61,6 +66,7 @@ typedef enum {
 - (void)brandWithCategory:(ContentCategory)category;
 - (void)snapCurrent;
 - (void)sweep;
+
 
 @property NSInteger dirtySwipes;
 

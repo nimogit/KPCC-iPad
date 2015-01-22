@@ -12,6 +12,7 @@
 #import "SCPRNewsPageViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRDeluxeNewsViewController.h"
+#import "SCPRDFPViewController.h"
 #import "UIView+PrintDimensions.h"
 
 @interface SCPRSingleArticleCollectionViewController ()
@@ -149,206 +150,10 @@
                                             
                                           }];
   
-  
-  
-  /*
-  for (NSString *key in [self.wingArticles allKeys]) {
-    if ([key isEqualToString:self.protect]) {
-      SCPRSingleArticleViewController *svc = [self.wingArticles objectForKey:key];
-      svc.workerThread = NO;
-      continue;
-    }
-    
-    SCPRSingleArticleViewController *svc = [self.wingArticles objectForKey:key];
-    [svc killContent];
-    [self.wingArticles removeObjectForKey:key];
-  }
-  
-  NSDictionary *relatedArticle = [articles objectAtIndex:index];
-  SCPRSingleArticleViewController *articleView = nil;
-  
-  if (!processIndex) {
-    articleView = [self.wingArticles objectForKey:self.protect];
-  } else {
-    articleView = [[SCPRSingleArticleViewController alloc]
-                   initWithNibName:[[DesignManager shared]
-                                    xibForPlatformWithName:@"SCPRSingleArticleViewController"]
-                    bundle:nil];
-  }
-  
-  if (!articleView) {
-    articleView = [[SCPRSingleArticleViewController alloc]
-                   initWithNibName:[[DesignManager shared]
-                                    xibForPlatformWithName:@"SCPRSingleArticleViewController"]
-                   bundle:nil];
-  }
-  
-  articleView.index = index;
-  self.currentPage = articleView;
-
-  articleView.relatedArticle = relatedArticle;
-  [[ContentManager shared] setFocusedContentObject:relatedArticle];
-  
-  CGFloat widthToUse = self.articleScroller.frame.size.width;
-  CGFloat heightToUse = self.articleScroller.frame.size.height;
-  BOOL needsRefresh = NO;
-  if (UIDeviceOrientationIsLandscape(self.interfaceOrientation)) {
-    if (widthToUse < heightToUse) {
-      needsRefresh = YES;
-    }
-  }
-  if (UIDeviceOrientationIsPortrait(self.interfaceOrientation)) {
-    if (heightToUse < widthToUse) {
-      needsRefresh = YES;
-    }
-  }
-  
-  if (needsRefresh) {
-    SCPRSingleArticleCollectionViewController *cd = [[SCPRSingleArticleCollectionViewController alloc]
-                                                     initWithNibName:[[DesignManager shared]
-                                                                      xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
-                                                     bundle:nil];
-    cd.view.frame = cd.view.frame;
-    widthToUse = cd.articleScroller.frame.size.width;
-    heightToUse = cd.articleScroller.frame.size.height;
-    self.articleScroller.frame = cd.articleScroller.frame;
-  }
-  
-  if (index == 0 || index == [articles count]-1) {
-    if ([articles count] == 1) {
-      self.articleScroller.contentSize = CGSizeMake(widthToUse,
-                                                  heightToUse);
-    } else {
-      self.articleScroller.contentSize = CGSizeMake(2*widthToUse,
-                                                    heightToUse);
-    }
-  } else {
-    self.articleScroller.contentSize = CGSizeMake(3*widthToUse,
-                                                  heightToUse);
-  }
-
-  
-  CGFloat xOrigin = index == 0 ? 0.0 : widthToUse;
-  
-  CGFloat yDelta = [Utilities isIOS7] ? 0.0 : 20.0;
-  
-  CGRect rFrame = CGRectMake(xOrigin, yDelta, widthToUse, heightToUse);
-  articleView.view.frame = rFrame;
-  articleView.parentCollection = self;
-  articleView.webContentLoader.loadingSkeletonContent = NO;
-  articleView.parentNewsPage = self.parentContainer;
-  
-  [articleView arrangeContent];
-
-  if (processIndex) {
-    [self.articleScroller addSubview:articleView.view];
-  }
-
-  SCPRSingleArticleViewController *svc = (SCPRSingleArticleViewController*)self.currentPage;
-  if (svc) {
-    [self.articleScroller bringSubviewToFront:svc.view];
-  }
-
-  if (!self.visualComponents) {
-    NSMutableArray *newVisual = [[NSMutableArray alloc] init];
-    self.visualComponents = newVisual;
-  } else {
-    [self.visualComponents removeAllObjects];
-  }
-  [self.visualComponents addObject:articleView];
-  
-  if (self.protect) {
-    [self.wingArticles removeObjectForKey:self.protect];
-    self.protect = @"";
-  }
-  
-  NSInteger pages = 1;
-  
-  // Set up left side article
-  if (index != 0 && [articles count] > 1) {
-    
-    NSDictionary *leftArticle = [articles objectAtIndex:index-1];
-    
-    SCPRSingleArticleViewController *leftArticleView = [[SCPRSingleArticleViewController alloc] initWithNibName:
-                                                        [[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleViewController"] bundle:nil];
-    
-    leftArticleView.index = index-1;
-    leftArticleView.relatedArticle = leftArticle;
-    leftArticleView.view.frame = CGRectMake(0.0,
-                                            yDelta,
-                                            widthToUse,
-                                            heightToUse);
-    
-    leftArticleView.parentNewsPage = self.parentContainer;
-    leftArticleView.parentCollection = self;
-    leftArticleView.webContentLoader.loadingSkeletonContent = YES;
-    [leftArticleView arrangeContent];
-    [self.articleScroller addSubview:leftArticleView.view];
-    
-    if ([self.wingArticles objectForKey:@"left"]) {
-      SCPRSingleArticleViewController *oldLeft = [self.wingArticles objectForKey:@"left"];
-      [oldLeft killContent];
-    }
-    
-    [self.wingArticles setObject:leftArticleView
-                          forKey:@"left"];
-    pages++;
-    
-    self.waitingForLoad++;
-    [self.visualComponents addObject:leftArticleView];
-  } // left article setup
-  
-  // Set up right side article
-  if (index != [articles count]-1 && [articles count] > 1) {
-    
-    NSDictionary *rightArticle = [articles objectAtIndex:index+1];
-    
-    SCPRSingleArticleViewController *rightArticleView = [[SCPRSingleArticleViewController alloc] initWithNibName:
-                                                         [[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleViewController"] bundle:nil];
-    
-    rightArticleView.index = index+1;
-    rightArticleView.relatedArticle = rightArticle;
-    rightArticleView.view.frame = CGRectMake(xOrigin + widthToUse,
-                                             yDelta,
-                                             widthToUse,
-                                             heightToUse);
-    
-    rightArticleView.parentNewsPage = self.parentContainer;
-    rightArticleView.parentCollection = self;
-    rightArticleView.webContentLoader.loadingSkeletonContent = YES;
-    [rightArticleView arrangeContent];
-    [self.articleScroller addSubview:rightArticleView.view];
-    
-    if ([self.wingArticles objectForKey:@"right"]) {
-      SCPRSingleArticleViewController *oldRight = [self.wingArticles objectForKey:@"right"];
-      [oldRight killContent];
-    }
-    
-    [self.wingArticles setObject:rightArticleView
-                          forKey:@"right"];
-    pages++;
-    self.waitingForLoad++;
-    [self.visualComponents addObject:rightArticleView];
-  } // right article setup
-  
-
-  self.articleScroller.contentOffset = CGPointMake(xOrigin, 0.0);
-  self.articleScroller.delegate = self;
-  self.currentOffset = self.articleScroller.contentOffset;
-
-  if (self.articleScroller) {
-    self.articleScroller.contentSize = CGSizeMake([self.visualComponents count] * self.articleScroller.frame.size.width,
-                                                  self.articleScroller.frame.size.height);
-  }
-  
-#ifdef ENABLE_ADS
-  SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
-  [root preserveAd];
-#endif
-  */
 
   [[NSNotificationCenter defaultCenter] postNotificationName:@"single_article_finished_loading"
                                                       object:nil];
+  
 }
 
 - (void)hideStalePage {
@@ -389,6 +194,12 @@
     nextIndex = 0;
   }
 
+  if ( [[ContentManager shared] adReadyOffscreen] ) {
+    self.adContainerRight = [[SCPRDFPViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRDFPViewController"]
+                                                                    bundle:nil];
+    return self.adContainerRight;
+  }
+  
   return [self prepareArticleViewWithIndex:nextIndex];
 }
 
@@ -398,26 +209,59 @@
     previousIndex = [self.articles count]-1;
   }
   
+  if ( [[ContentManager shared] adReadyOffscreen] ) {
+    self.adContainerLeft = [[SCPRDFPViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRDFPViewController"]
+                                                                   bundle:nil];
+    return self.adContainerLeft;
+  }
+  
   return [self prepareArticleViewWithIndex:previousIndex];
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
   if ( [pendingViewControllers count] > 0 ) {
-    SCPRSingleArticleViewController *svc = (SCPRSingleArticleViewController*)[pendingViewControllers firstObject];
-    self.currentPage = svc;
-    self.pendingIndex = svc.index;
-    self.dirtySwipes++;
-    if ( self.dirtySwipes % 3 == 0 ) {
-      [self sweep];
+    
+    if ( [[ContentManager shared] adReadyOffscreen] ) {
+      
+      id pendingId = [pendingViewControllers firstObject];
+      if ( [pendingId isKindOfClass:[SCPRDFPViewController class]] ) {
+        SCPRDFPViewController *adController = (SCPRDFPViewController*)pendingId;
+        adController.delegate = self;
+        [(SCPRDFPViewController*)pendingId loadDFPAd];
+      }
+
+      
+    } else {
+      SCPRSingleArticleViewController *svc = (SCPRSingleArticleViewController*)[pendingViewControllers firstObject];
+      self.currentPage = svc;
+      self.pendingIndex = svc.index;
+      self.dirtySwipes++;
+      if ( self.dirtySwipes % 3 == 0 ) {
+        [self sweep];
+      }
     }
+    
   }
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
   
-
-  self.currentIndex = self.pendingIndex;
-  [[ContentManager shared] setFocusedContentObject:self.articles[self.currentIndex]];
+  if ( [[ContentManager shared] adReadyOffscreen] ) {
+  
+    // potentially arm some dismissal gestures
+    [[ContentManager shared] adDeliveredSuccessfully];
+    
+  } else {
+  
+    UISwipeGestureRecognizerDirection d = UISwipeGestureRecognizerDirectionRight;
+    [[ContentManager shared] tickSwipe:d
+                                inView:nil
+                           penultimate:NO
+                         silenceVector:[NSMutableArray new]];
+    self.currentIndex = self.pendingIndex;
+    [[ContentManager shared] setFocusedContentObject:self.articles[self.currentIndex]];
+    
+  }
   
 
   
@@ -547,6 +391,7 @@
   [hud titleizeText:[NSString stringWithFormat:@"Offset X : %1.1f",self.articleScroller.contentOffset.x]
                bold:YES];
 #endif
+  
   [[AnalyticsManager shared] logEvent:@"story_read"
                        withParameters:params];
   
@@ -581,6 +426,97 @@
       [savc handleDelayedLoad];
     }
   }
+}
+
+#pragma mark - Our DFP Delegate
+- (void)adDidFinishLoading {
+  [UIView animateWithDuration:.38 animations:^{
+    self.adContainerLeft.view.alpha = 1.0;
+    self.adContainerRight.view.alpha = 1.0;
+  } completion:^(BOOL finished) {
+    
+  }];
+}
+
+- (void)armDismissal {
+  /*self.dismissLeft = [[UISwipeGestureRecognizer alloc]
+                      initWithTarget:self
+                      action:@selector(dismissAdLeft)];
+  
+  self.dismissRight = [[UISwipeGestureRecognizer alloc]
+                       initWithTarget:self
+                       action:@selector(dismissAdRight)];
+  
+  self.dismissRight.direction = UISwipeGestureRecognizerDirectionRight;
+  self.dismissLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+  
+  [self.view addGestureRecognizer:self.dismissLeft];
+  [self.view addGestureRecognizer:self.dismissRight];*/
+}
+
+- (void)disarmDismissal {
+  /*[self.view removeGestureRecognizer:self.dismissRight];
+  [self.view removeGestureRecognizer:self.dismissLeft];*/
+}
+
+- (void)dismissAdLeft {
+  //[self adWillDismiss:DismissDirectionLeft];
+}
+
+- (void)dismissAdRight {
+  //[self adWillDismiss:DismissDirectionRight];
+}
+
+- (void)adWillDismiss:(DismissDirection)direction {
+  
+  /*
+  NSTimer *failureTimer = [[ContentManager shared] adFailureTimer];
+  if ( failureTimer ) {
+    if ( [failureTimer isValid] ) {
+      [failureTimer invalidate];
+    }
+  }
+  
+  [[ContentManager shared] setAdFailureTimer:nil];
+  [(UIScrollView*)self.adPresentationView setScrollEnabled:YES];
+  [(UIScrollView*)self.adPresentationView setClipsToBounds:YES];
+  
+  
+  [self disarmDismissal];
+  
+  CGFloat xDelta = 0.0;
+  if ( direction == DismissDirectionRight ) {
+    xDelta = self.view.frame.size.width;
+  }
+  if ( direction == DismissDirectionLeft ) {
+    xDelta = self.view.frame.size.width*-1.0;
+  }
+  
+  CGPoint offset = [(UIScrollView*)self.adPresentationView contentOffset];
+  xDelta = xDelta + offset.x;
+  
+  [UIView animateWithDuration:.38 animations:^{
+    self.dfpAdViewController.view.frame = CGRectMake(xDelta, 0.0,self.dfpAdViewController.view.frame.size.width,
+                                                     self.dfpAdViewController.view.frame.size.height);
+    
+    
+    for ( UIView *v in [self adSilenceVector] ) {
+      v.alpha = 1.0;
+    }
+    
+  } completion:^(BOOL finished) {
+    
+    self.adSilenceVector = nil;
+    [self.dfpAdViewController.view removeFromSuperview];
+    self.dfpAdViewController = nil;
+    [[ContentManager shared] setAdIsDisplayingOnScreen:NO];
+    
+  }];
+  */
+}
+
+- (void)adDidFail {
+  [self armDismissal];
 }
 
 

@@ -40,7 +40,6 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
   self.masterContentScroller.backgroundColor = [UIColor whiteColor];
-
   self.webContentLoader.webView.alpha = 0.0;
   self.textSheetView.alpha = 0.0;
   self.cloakView.alpha = 1.0;
@@ -50,8 +49,6 @@
   self.basicTemplate.aspectCode = @"SingleArticle";
   self.basicTemplate.backgroundColor = [UIColor whiteColor];
   self.textSheetView.backgroundColor = [UIColor whiteColor];
-  
-  
   self.basicTemplate.templateStyle = NewsPageTemplateSingleArticle;
   self.socialSheetView.alpha = 0.0;
   self.categorySeat.backgroundColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
@@ -98,7 +95,6 @@
       
       CGPoint initial = [[change objectForKey:@"initial"] CGPointValue];
       CGPoint new = [[change objectForKey:@"new"] CGPointValue];
-      
       if (!self.twitterSynthesized) {
         if (abs(new.y - initial.y) > 10.0) {
           
@@ -113,6 +109,7 @@
           }
         }
       }
+      
     }
     
   }
@@ -444,7 +441,7 @@
   
   if ( self.fromSnapshot ) {
     dispatch_async(dispatch_get_main_queue(), ^{
-      [[Utilities del] uncloakUI];
+      [[Utilities del] uncloakUI:YES];
     });
   }
 }
@@ -1182,40 +1179,6 @@
     [self backTapped];
   }];
 
-  /*
-  [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
-                                       xibForPlatformWithName:@"SCPRSingleArticleViewController"]
-                                owner:self
-                              options:nil];
-  self.contentArranged = NO;
-  [self stretch];
-  
-  if (self.fromSnapshot) {
-    SCPRViewController *svc = [[Utilities del] viewController];
-    
-    CGFloat offset = [Utilities isIOS7] ? -40.0 : -60.0;
-    [UIView animateWithDuration:0.22 animations:^{
-      [svc.mainPageScroller setContentOffset:CGPointMake(0.0, offset)];
-    }];
-  }
-  
-  [self arrangeContent];
-  
-  if ([Utilities isLandscape]) {
-    @try {
-      
-      /*[self.masterContentScroller removeObserver:self
-                                      forKeyPath:@"contentOffset"];
-      
-    } @catch (NSException *e) {
-      
-    }
-  }
-  
-  [UIView animateWithDuration:0.12 animations:^{
-    self.masterContentScroller.alpha = 1.0;
-  }];
-   */
 }
 
 - (BOOL)shouldAutorotate {
@@ -1245,7 +1208,6 @@
     [tb pop];
     [tb.personalInfoButton setAlpha:0.0];
     
-    
     SCPRViewController *svc = [[Utilities del] viewController];
     [UIView animateWithDuration:0.22 animations:^{
       [svc.mainPageScroller setContentOffset:CGPointMake(0.0, 0.0)];
@@ -1262,13 +1224,13 @@
       }
     }
     
-    self.webContentLoader.webView.delegate = nil;
     SCPRSingleArticleCollectionViewController *savc = (SCPRSingleArticleCollectionViewController*)self.parentCollection;
     
     savc.trash = YES;
     [savc cleanup];
     [savc.navigationController popViewControllerAnimated:YES];
     [[DesignManager shared] setInSingleArticle:NO];
+    
     [[ContentManager shared] popFromResizeVector];
     
     [[[Utilities del] globalTitleBar] pop];
@@ -1280,27 +1242,16 @@
     }
   }
   
-  @try {
-    [self.masterContentScroller removeObserver:self
-                                    forKeyPath:@"contentOffset"];
-  } @catch (NSException *e) {
-    
-  }
+  [self deactivationMethod];
   [[ContentManager shared] setUserIsViewingExpandedDetails:NO];
+  
 }
 
 
 #pragma mark - Deactivatable
 - (void)deactivationMethod {
   NSLog(@" ***** KILLING CONTENT ****** ");
-  
-  self.webContentLoader.cleaningUp = YES;
-  [self.webContentLoader.webView stopLoading];
-  self.webContentLoader.delegate = nil;
-  [self.webContentLoader.webView loadHTMLString:@"" baseURL:nil];
-  
-  self.okToDelete = YES;
-  
+  [self killContent];
 }
 
 - (void)killContent {
@@ -1309,13 +1260,13 @@
   NSString *code = [NSString stringWithFormat:@"%@%d",[Utilities sha1:title],
                     (NSInteger)[[NSDate date] timeIntervalSince1970]];
   self.deactivationToken = code;
-  //[[ContentManager shared] queueDeactivation:self];
+
   
   @try {
     [self.masterContentScroller removeObserver:self
                                     forKeyPath:@"contentOffset"];
   } @catch (NSException *e) {
-    //NSLog(@"Unnecessary observation removal...");
+
   }
   
   NSString *blank = [[FileManager shared] copyFromMainBundleToDocuments:@"blank.html"
@@ -1370,8 +1321,7 @@
 - (void)dealloc {
   
   NSLog(@"DEALLOCATING SINGLE ARTICLE VIEW CONTROLLER...");
-  [self safeKillContent];
-  
+
 }
 
 

@@ -189,16 +189,39 @@
     return;
   }
   
-  
   self.cloak = [[SCPRCloakViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRCloakViewController"] bundle:nil];
   self.cloak.view.frame = CGRectMake(0.0,0.0,self.window.frame.size.width,
                                      self.window.frame.size.height);
   self.cloak.view.backgroundColor = [UIColor blackColor];
   self.cloak.view.alpha = 0.0;
   
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+  
+  [self.cloak.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [spinner setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
   [[DesignManager shared] snapView:self.cloak.view
                        toContainer:self.masterRootController.view];
-  [[ContentManager shared] pushToResizeVector:self.cloak];
+  
+  NSLayoutConstraint *hC = [NSLayoutConstraint constraintWithItem:spinner
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.cloak.view
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.0
+                                                         constant:0.0];
+  
+  NSLayoutConstraint *vC = [NSLayoutConstraint constraintWithItem:spinner
+                                                        attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.cloak.view
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.0
+                                                         constant:0.0];
+  
+  [self.cloak.view addSubview:spinner];
+  [self.cloak.view addConstraints:@[ hC, vC ]];
+  [spinner startAnimating];
   
   [UIView animateWithDuration:0.25 animations:^{
       self.cloak.view.alpha = 1.0;
@@ -206,6 +229,11 @@
     self.appCloaked = YES;
     cloakAppeared();
   }];
+  
+}
+
+- (void)uncloakBlackoutUI {
+  
 }
 
 - (void)cloakUIWithMessage:(NSString *)message andUnfreezeString:(NSString *)string {
@@ -287,8 +315,6 @@
   
   [[ContentManager shared] pushToResizeVector:self.cloak];
   
-
-  
   self.slideshowModal.view.backgroundColor = [UIColor clearColor];
   self.slideshowModal.leftCurtain.alpha = 0.0;
   self.slideshowModal.rightCurtain.alpha = 0.0;
@@ -306,8 +332,6 @@
   
   self.slideshowModal.article = article;
   self.slideshowModal.needsSetup = YES;
-  
-
   
   [UIView animateWithDuration:0.25 animations:^{
       self.cloak.view.alpha = 1.0;
@@ -386,6 +410,10 @@
 }
 
 - (void)uncloakUI {
+  [self uncloakUI:NO];
+}
+
+- (void)uncloakUI:(BOOL)blackout {
   
   if ( self.appIsShowingTour ) {
     return;
@@ -407,40 +435,38 @@
     self.unfreezeKey = nil;
   }
   
-  [UIView beginAnimations:nil context:NULL];
-  [UIView setAnimationDuration:0.33];
-  [UIView setAnimationDelegate:self];
-  [UIView setAnimationDidStopSelector:@selector(uncloaked)];
-  self.cloak.view.alpha = 0.0;
-  [UIView commitAnimations];
-}
+  [UIView animateWithDuration:0.25 animations:^{
+      self.cloak.view.alpha = 0.0;
+  } completion:^(BOOL finished) {
+    self.appCloaked = NO;
+    
+    [self.cloak.view removeFromSuperview];
+    self.cloak = nil;
+    
+    if ( !self.safeCloak ) {
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"wake_up_ui"
+                                                          object:nil];
+    } else {
+      self.safeCloak = NO;
+    }
+    
+    if ( self.customCloak ) {
+      [self.customCloak deactivate];
+      self.customCloak = nil;
+    }
+    if ( self.slideshowModal ) {
+      [self.slideshowModal deactivate];
+      self.slideshowModal = nil;
+    }
+    
+    if ( !blackout ) {
+      [[ContentManager shared] popFromResizeVector];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"app_uncloaked"
+                                                        object:nil];
+  }];
 
-- (void)uncloaked {
-  self.appCloaked = NO;
-  
-  [self.cloak.view removeFromSuperview];
-  self.cloak = nil;
-  
-  if ( !self.safeCloak ) {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"wake_up_ui"
-                                                      object:nil];
-  } else {
-    self.safeCloak = NO;
-  }
-  
-  if ( self.customCloak ) {
-    [self.customCloak deactivate];
-    self.customCloak = nil;
-  }
-  if ( self.slideshowModal ) {
-    [self.slideshowModal deactivate];
-    self.slideshowModal = nil;
-  }
-
-  [[ContentManager shared] popFromResizeVector];
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"app_uncloaked"
-                                                      object:nil];
 }
 
 - (SCPRPlayerWidgetViewController*)globalPlayer {

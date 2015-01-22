@@ -1315,8 +1315,6 @@
 		25E9354B1843D3E5004ED1DA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E935491843D3E5004ED1DA /* README.md */; };
 		25E9354D1843D3E5004ED1DA /* RefactoringProposals.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E9354A1843D3E5004ED1DA /* RefactoringProposals.md */; };
 		25E9354E1843D3E5004ED1DA /* RefactoringProposals.md in Resources */ = {isa = PBXBuildFile; fileRef = 25E9354A1843D3E5004ED1DA /* RefactoringProposals.md */; };
-		25E93550184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E9354F184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib */; };
-		25E93551184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E9354F184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib */; };
 		25EC8DAF17C4356000673DFF /* small_airtalk_splash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25EC8D6117C4356000673DFF /* small_airtalk_splash.jpg */; };
 		25EC8DB017C4356000673DFF /* small_airtalk_splash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25EC8D6117C4356000673DFF /* small_airtalk_splash.jpg */; };
 		25EC8DB117C4356000673DFF /* small_airtalk_splash@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25EC8D6217C4356000673DFF /* small_airtalk_splash@2x.jpg */; };
@@ -1526,7 +1524,6 @@
 		25F0D19E178E1A260009F841 /* selectedMask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F0D19A178E1A260009F841 /* selectedMask@2x.png */; };
 		25F49E21176BC4EE00C0FCA7 /* category_groups.json in Resources */ = {isa = PBXBuildFile; fileRef = 25F49E20176BC4EE00C0FCA7 /* category_groups.json */; };
 		25F49E22176BC76600C0FCA7 /* category_groups.json in Resources */ = {isa = PBXBuildFile; fileRef = 25F49E20176BC4EE00C0FCA7 /* category_groups.json */; };
-		25FA086E1821D758008BADF2 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FA086D1821D758008BADF2 /* libGoogleAdMobAds.a */; };
 		25FA27FB1784D8E600FFB70F /* fakeprogram_episodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FA27FA1784D8E600FFB70F /* fakeprogram_episodes.json */; };
 		25FA27FC1784D8E600FFB70F /* fakeprogram_episodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 25FA27FA1784D8E600FFB70F /* fakeprogram_episodes.json */; };
 		25FA3DE2175FAE2600D25D50 /* SCPRLinkedInShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FA3DE0175FAE2600D25D50 /* SCPRLinkedInShareViewController.m */; };
@@ -1719,7 +1716,6 @@
 		76709F4A191934C700E0574C /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 76709F48191934C700E0574C /* categories.json */; };
 		76A3087318B696630065D4B1 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 76A3087018B696630065D4B1 /* iRate.bundle */; };
 		76A3087418B696630065D4B1 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3087218B696630065D4B1 /* iRate.m */; };
-		76A3088018BBDFD00065D4B1 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FA086D1821D758008BADF2 /* libGoogleAdMobAds.a */; };
 		76A3089018BD5ABA0065D4B1 /* AlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3088F18BD5ABA0065D4B1 /* AlarmManager.m */; };
 		76A3089118BD5ABA0065D4B1 /* AlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A3088F18BD5ABA0065D4B1 /* AlarmManager.m */; };
 		76A3089618BFECE70065D4B1 /* icon-timer-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A3089218BFECE70065D4B1 /* icon-timer-blue.png */; };
@@ -2533,7 +2529,6 @@
 		25E0C4671746FA4B00F3D0DE /* badassets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = badassets.json; path = Assets/flatResources/badassets.json; sourceTree = "<group>"; };
 		25E935491843D3E5004ED1DA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		25E9354A1843D3E5004ED1DA /* RefactoringProposals.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RefactoringProposals.md; sourceTree = SOURCE_ROOT; };
-		25E9354F184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRDFPViewController_iPadLandscape.xib; path = UI/SCPRDFPViewController_iPadLandscape.xib; sourceTree = "<group>"; };
 		25EC8D6117C4356000673DFF /* small_airtalk_splash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = small_airtalk_splash.jpg; sourceTree = "<group>"; };
 		25EC8D6217C4356000673DFF /* small_airtalk_splash@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "small_airtalk_splash@2x.jpg"; sourceTree = "<group>"; };
 		25EC8D6317C4356000673DFF /* small_allthingsconsidered_splash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = small_allthingsconsidered_splash.jpg; sourceTree = "<group>"; };
@@ -2647,16 +2642,6 @@
 		25F0D199178E1A260009F841 /* selectedMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectedMask.png; sourceTree = "<group>"; };
 		25F0D19A178E1A260009F841 /* selectedMask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectedMask@2x.png"; sourceTree = "<group>"; };
 		25F49E20176BC4EE00C0FCA7 /* category_groups.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = category_groups.json; path = Assets/flatResources/category_groups.json; sourceTree = "<group>"; };
-		25FA08641821D758008BADF2 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
-		25FA08651821D758008BADF2 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
-		25FA08661821D758008BADF2 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
-		25FA08671821D758008BADF2 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
-		25FA08681821D758008BADF2 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
-		25FA08691821D758008BADF2 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
-		25FA086A1821D758008BADF2 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
-		25FA086B1821D758008BADF2 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
-		25FA086C1821D758008BADF2 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
-		25FA086D1821D758008BADF2 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		25FA27FA1784D8E600FFB70F /* fakeprogram_episodes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = fakeprogram_episodes.json; path = Assets/flatResources/fakeprogram_episodes.json; sourceTree = "<group>"; };
 		25FA3DDF175FAE2600D25D50 /* SCPRLinkedInShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRLinkedInShareViewController.h; path = UI/UtilityViews/ShareDrawer/SCPRLinkedInShareViewController.h; sourceTree = "<group>"; };
 		25FA3DE0175FAE2600D25D50 /* SCPRLinkedInShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRLinkedInShareViewController.m; path = UI/UtilityViews/ShareDrawer/SCPRLinkedInShareViewController.m; sourceTree = "<group>"; };
@@ -2865,7 +2850,6 @@
 				25C8F20E1732FCD500229891 /* CoreMedia.framework in Frameworks */,
 				2571C06A172993B500B43422 /* CoreText.framework in Frameworks */,
 				76658B5818E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */,
-				76A3088018BBDFD00065D4B1 /* libGoogleAdMobAds.a in Frameworks */,
 				28036AA21718A344007DBDE2 /* CoreTelephony.framework in Frameworks */,
 				28036AA31718A344007DBDE2 /* AVFoundation.framework in Frameworks */,
 				28036AA41718A344007DBDE2 /* CFNetwork.framework in Frameworks */,
@@ -2892,7 +2876,6 @@
 				259AF5A91834092F008AFB2A /* MessageUI.framework in Frameworks */,
 				259AF5A818340929008AFB2A /* MediaPlayer.framework in Frameworks */,
 				2881EB3C1773F6D400311C33 /* Accounts.framework in Frameworks */,
-				25FA086E1821D758008BADF2 /* libGoogleAdMobAds.a in Frameworks */,
 				254CABA517396CE00005341D /* CoreMedia.framework in Frameworks */,
 				2571C06B172993BF00B43422 /* CoreText.framework in Frameworks */,
 				2832FEF417149D96009FF2F0 /* CoreTelephony.framework in Frameworks */,
@@ -3899,7 +3882,6 @@
 				257001E91821CEBE008B43F6 /* SCPRDFPViewController.h */,
 				257001EA1821CEBF008B43F6 /* SCPRDFPViewController.m */,
 				257001EB1821CEBF008B43F6 /* SCPRDFPViewController_iPad.xib */,
-				25E9354F184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib */,
 			);
 			name = Ads;
 			sourceTree = "<group>";
@@ -4064,24 +4046,6 @@
 				25602984181738020099C9F7 /* flat_googlemaps.html */,
 			);
 			name = html;
-			sourceTree = "<group>";
-		};
-		25FA08631821D758008BADF2 /* DFP */ = {
-			isa = PBXGroup;
-			children = (
-				25FA08641821D758008BADF2 /* GADAdMobExtras.h */,
-				25FA08651821D758008BADF2 /* GADAdNetworkExtras.h */,
-				25FA08661821D758008BADF2 /* GADAdSize.h */,
-				25FA08671821D758008BADF2 /* GADBannerView.h */,
-				25FA08681821D758008BADF2 /* GADBannerViewDelegate.h */,
-				25FA08691821D758008BADF2 /* GADInterstitial.h */,
-				25FA086A1821D758008BADF2 /* GADInterstitialDelegate.h */,
-				25FA086B1821D758008BADF2 /* GADRequest.h */,
-				25FA086C1821D758008BADF2 /* GADRequestError.h */,
-				25FA086D1821D758008BADF2 /* libGoogleAdMobAds.a */,
-			);
-			name = DFP;
-			path = ThirdParty/DFP;
 			sourceTree = "<group>";
 		};
 		28036A7A171898AE007DBDE2 /* Buttons */ = {
@@ -4609,7 +4573,6 @@
 				76658B5918E2141C00026176 /* TestFlight */,
 				76658AC618E1F43700026176 /* Flurry */,
 				76A3086F18B696630065D4B1 /* iRate */,
-				25FA08631821D758008BADF2 /* DFP */,
 				25AC7D2917BB00B8008B1599 /* XMLD */,
 				259C4A061721ED2700FC3CEC /* UIDeviceAdditions */,
 				28C9E77A170D065700ED18FB /* SBJson */,
@@ -5258,7 +5221,6 @@
 				25A70BEF17E13C220024E654 /* button-signin-facebook@2x.png in Resources */,
 				25E0B1B117C2E088009C3C72 /* videoPlayButton@2x.png in Resources */,
 				25E0B1B717C2E2FB009C3C72 /* SCPRDeluxeNewsCellSingleSq_iPad.xib in Resources */,
-				25E93551184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib in Resources */,
 				252ADCE417F227B1002F2938 /* SCPRCloakViewController_iPad.xib in Resources */,
 				256FFD5B18232C250060F538 /* icon-edit-favorites@2x.png in Resources */,
 				25E0B1D317C2F0C7009C3C72 /* airtalk_splash.jpg in Resources */,
@@ -5983,7 +5945,6 @@
 				2547FC5217B5AAFB009F35E6 /* lighterGradient.png in Resources */,
 				76A3089C18BFECE70065D4B1 /* icon-timer-white@2x.png in Resources */,
 				2547FC5417B5AAFB009F35E6 /* lighterGradient@2x.png in Resources */,
-				25E93550184417BC004ED1DA /* SCPRDFPViewController_iPadLandscape.xib in Resources */,
 				25E9354D1843D3E5004ED1DA /* RefactoringProposals.md in Resources */,
 				2547FC5817B5BC67009F35E6 /* editionsLogo.png in Resources */,
 				259AF5BD18340DD3008AFB2A /* SCPROnboardingStep1ViewController.xib in Resources */,
@@ -6923,7 +6884,7 @@
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "92b9c3f6-4039-4005-93a0-90471d88e766";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = "build 1";
+				UNIQUE_BUNDLE_VERSION = "build 2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSION = 1.0.7;
 				WRAPPER_EXTENSION = app;

@@ -346,12 +346,16 @@
 
     NSDictionary *category = [self.pvArticle objectForKey:@"category"];
     if ( ![Utilities pureNil:category] ) {
-      title = [(NSString*)[category objectForKey:@"title"] uppercaseString];
-
+      if ( ![Utilities pureNil:category[@"title"]] ) {
+        title = [(NSString*)[category objectForKey:@"title"] uppercaseString];
+      } else {
+        NSLog(@"No title");
+      }
       // If we have a really long category title (ie. "Immigration and Emerging Communities"),
       // use the shorter "slug" name and uppercase it.
       if (title.length > 25) {
-        title = [(NSString*)[category objectForKey:@"slug"] uppercaseString];
+        if ( ![Utilities pureNil:category[@"slug"]] )
+          title = [(NSString*)[category objectForKey:@"slug"] uppercaseString];
       }
     }
     

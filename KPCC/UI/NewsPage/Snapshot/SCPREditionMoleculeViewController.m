@@ -11,6 +11,7 @@
 #import "SCPRTitlebarViewController.h"
 #import "SCPREditionCrystalViewController.h"
 #import "SCPRMasterRootViewController.h"
+#import "SCPRDFPViewController.h"
 
 @interface SCPREditionMoleculeViewController ()
 
@@ -114,6 +115,7 @@
   
   self.metricChain = [NSMutableDictionary new];
   int count = 0;
+  self.displayChain = [NSMutableArray new];
   
   SCPREditionAtomViewController *previousAtom = nil;
   for ( NSDictionary *edition in self.editions ) {
@@ -156,7 +158,7 @@
       NSMutableArray *linkToPrevious = [linkToPreviousH mutableCopy];
       [linkToPrevious addObjectsFromArray:linkToPreviousV];
       [self.scroller addConstraints:linkToPrevious];
-      
+      [self.displayChain addObject:linkToPrevious];
 
       
     } else {
@@ -176,6 +178,7 @@
       NSMutableArray *linkToParent = [linkToParentH mutableCopy];
       [linkToParent addObjectsFromArray:linkToParentV];
       [self.scroller addConstraints:linkToParent];
+      [self.displayChain addObject:linkToParent];
       
     }
     
@@ -256,7 +259,8 @@
 - (void)snapContentSize {
   [self.scroller layoutSubviews];
   
-  self.scroller.contentSize = CGSizeMake(self.scroller.frame.size.width*self.editions.count,
+  CGFloat addition = self.currentAdController ? self.scroller.frame.size.width : 0.0f;
+  self.scroller.contentSize = CGSizeMake(self.scroller.frame.size.width*self.editions.count+addition,
                                          self.scroller.frame.size.height);
 
 
@@ -276,11 +280,159 @@
     [h setConstant:self.scroller.frame.size.height];
   }
   
+  if ( self.adConstraints ) {
+    NSLayoutConstraint *w = self.adConstraints[@"width"];
+    [w setConstant:self.scroller.frame.size.width];
+    
+    NSLayoutConstraint *h = self.adConstraints[@"height"];
+    [h setConstant:self.scroller.frame.size.height];
+  }
+  
+
   [self.scroller setContentOffset:CGPointMake(self.scroller.frame.size.width*self.currentIndex,
                                               0.0)];
   
+  
   NSLog(@"Content Width : %1.1f",self.scroller.contentSize.width);
   
+}
+
+- (void)insertAdAtIndex:(NSInteger)index {
+  self.adIndex = index;
+  self.pushedConstraints = [NSMutableDictionary new];
+  
+  if ( index + 1 <= [self.displayVector count]-1 ) {
+    NSArray *nextConstraints = self.displayChain[index+1];
+    NSLayoutConstraint *leftSide = nil;
+    for ( NSLayoutConstraint *constraint in nextConstraints ) {
+      if ( constraint.firstAttribute == NSLayoutAttributeLeading || constraint.firstAttribute == NSLayoutAttributeLeft ) {
+        leftSide = constraint;
+      }
+    }
+    
+    if ( leftSide ) {
+      [self.scroller removeConstraint:leftSide];
+      [self.pushedConstraints setObject:leftSide
+                                 forKey:@"next"];
+    }
+  } else {
+
+    NSArray *currentConstraints = self.displayChain[index-1];
+    NSLayoutConstraint *rightSide = nil;
+    for ( NSLayoutConstraint *constraint in currentConstraints ) {
+      if ( constraint.firstAttribute == NSLayoutAttributeRight || constraint.firstAttribute == NSLayoutAttributeTrailing ) {
+        rightSide = constraint;
+      }
+    }
+    
+    if ( rightSide ) {
+      [self.scroller removeConstraint:rightSide];
+      [self.pushedConstraints setObject:rightSide
+                                 forKey:@"rightAnchor"];
+    }
+      
+    
+    
+  }
+  
+  SCPRDFPViewController *dfp = [[SCPRDFPViewController alloc]
+                                initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRDFPViewController"]
+                                bundle:nil];
+  dfp.view.frame = dfp.view.frame;
+  [self.scroller addSubview:dfp.view];
+  
+  SCPREditionAtomViewController *prevAtom = nil;
+  SCPREditionAtomViewController *nextAtom = nil;
+  if ( index != 0 ) {
+    prevAtom = self.displayVector[index-1];
+  }
+  if ( self.pushedConstraints[@"next"] ) {
+    nextAtom = self.displayVector[index+1];
+  }
+  
+  NSString *fmt = @"H:";
+  NSMutableDictionary *views = [@{ @"me" : dfp.view } mutableCopy];
+  
+  if ( prevAtom ) {
+    fmt = [fmt stringByAppendingString:@"[prev][me]"];
+    views[@"prev"] = prevAtom.view;
+  } else {
+    fmt = [fmt stringByAppendingString:@"|"];
+  }
+  if ( nextAtom ) {
+    fmt = [fmt stringByAppendingString:@"[next]"];
+    views[@"next"] = nextAtom.view;
+    if ( index + 1 == self.displayVector.count-1 ) {
+      fmt = [fmt stringByAppendingString:@"|"];
+    }
+  } else {
+    fmt = [fmt stringByAppendingString:@"|"];
+  }
+  
+  UIView *adView = dfp.view;
+  [dfp.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:fmt
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:views];
+  
+  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[me]"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"me" : adView }];
+  
+  NSLayoutConstraint *wC = [NSLayoutConstraint constraintWithItem:dfp.view
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0
+                                                         constant:self.scroller.frame.size.width];
+  
+  
+  NSLayoutConstraint *hC = [NSLayoutConstraint constraintWithItem:dfp.view
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0
+                                                         constant:self.scroller.frame.size.height];
+  
+  NSDictionary *metrics = @{ @"width" : wC,
+                             @"height" : hC,
+                             @"layoutH" : hConstraints,
+                             @"layoutV" : vConstraints };
+  
+  self.adConstraints = [metrics mutableCopy];
+  
+  [dfp.view addConstraint:wC];
+  [dfp.view addConstraint:hC];
+  [self.metricChain setObject:self.adConstraints
+                       forKey:@"ad"];
+  
+
+  [dfp loadDFPAd];
+  [self.scroller addConstraints:hConstraints];
+  [self.scroller addConstraints:vConstraints];
+  self.currentAdController = dfp;
+  
+  [self snapContentSize];
+  self.adIsHot = YES;
+  
+}
+
+- (void)removeAdFromIndex:(NSInteger)index {
+  [self.currentAdController.view removeFromSuperview];
+  for ( NSLayoutConstraint *c in [self.pushedConstraints allValues] ) {
+    [self.scroller addConstraint:c];
+  }
+  [self.metricChain removeObjectForKey:@"ad"];
+  self.currentAdController = nil;
+  [self snapContentSize];
+  self.adConstraints = nil;
+  self.pushedConstraints = nil;
+  self.adIsHot = NO;
 }
 
 - (void)pushToCurrentAtomDetails {
@@ -312,9 +464,6 @@
   
   
   [params setObject: ([[AudioManager shared] isPlayingAnyAudio]) ? @"YES" : @"NO" forKey:@"audio_on"];
-
-  /*NSString *eid = [NSString stringWithFormat:@"%@",[edition objectForKey:@"id"]];
-  [params setObject:eid forKey:@"edition_id"];*/
   
   [[AnalyticsManager shared] logEvent:@"abstract_read"
                        withParameters:params];
@@ -411,6 +560,31 @@
                                 inView:scrollView
                                 penultimate:penultimate
                          silenceVector:[@[ self.editionInfoLabel ] mutableCopy]];
+    
+    if ( [[ContentManager shared] adReadyOffscreen] ) {
+      if ( self.adIsHot ) {
+        [[ContentManager shared] adDeliveredSuccessfully];
+      } else {
+        NSInteger nextIndex = index > self.currentIndex ? index + 1 : index - 1;
+        nextIndex = nextIndex < 0 ? 1 : nextIndex;
+        
+        self.currentIndex = index;
+        [self insertAdAtIndex:nextIndex];
+        [self sendAnalysis];
+        return;
+      }
+    } else {
+      if ( self.adIsHot ) {
+        if ( self.currentIndex < index ) {
+          self.dismissalWentLeft = NO;
+        } else {
+          self.dismissalWentLeft = YES;
+          self.currentIndex = index - 1;
+        }
+        [self removeAdFromIndex:self.adIndex];
+      }
+    }
+    
   }
   
   self.currentIndex = index;

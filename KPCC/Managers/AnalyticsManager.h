@@ -61,6 +61,7 @@ typedef enum {
 - (void)openTimedSessionForContentType:(NSInteger)contentType;
 - (void)terminateTimedSessionForContentType:(NSInteger)contentType;
 - (void)app404;
+- (void)kTrackSession:(NSString*)modifier;
 
 - (NSDictionary*)paramsForArticle:(NSDictionary*)article;
 - (void)tS;
