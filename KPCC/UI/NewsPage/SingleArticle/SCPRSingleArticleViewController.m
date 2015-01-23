@@ -1019,6 +1019,7 @@
   
 
   [self refreshHeight];
+  
 }
 
 
