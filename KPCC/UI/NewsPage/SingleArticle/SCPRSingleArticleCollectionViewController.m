@@ -105,6 +105,10 @@
                                                 self.articleScroller.frame.size.height);*/
 }
 
+- (void)viewDidLayoutSubviews {
+
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
   if ( self.trash ) {
     self.trash = NO;
@@ -134,6 +138,8 @@
   [self.visualComponents addObject:articleView];
   self.currentPage = articleView;
   
+
+  
   __block SCPRSingleArticleCollectionViewController *weakself_ = self;
   [self.articlePageViewController setViewControllers:@[articleView]
                                            direction:UIPageViewControllerNavigationDirectionForward
@@ -144,6 +150,18 @@
                                             weakself_.view.alpha = 1.0;
                                             articleView.view.alpha = 1.0;
                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                              
+                                              if ( [[DesignManager shared] reservedRotationFlag] ) {
+                                                [[DesignManager shared] setReservedRotationFlag:NO];
+                                                [articleView openShareModal];
+                                              }
+                                              
+                                              if ( weakself_.reopenTitlebarShareOverlay ) {
+                                                weakself_.reopenTitlebarShareOverlay = NO;
+                                                [[[Utilities del] viewController] toggleShareDrawer];
+                                              }
+                                              
+                                              
                                               [[ContentManager shared] emptyTrash];
                                               weakself_.dirtySwipes = 0;
                                             });
@@ -569,6 +587,15 @@
     self.articleScroller.alpha = 1.0;
   }];
   */
+  SCPRSingleArticleViewController *currentArticle = (SCPRSingleArticleViewController*)self.currentPage;
+  if ( currentArticle.shareModalOpen ) {
+    [currentArticle closeShareModal];
+  }
+  
+  SCPRViewController *scpr = [[Utilities del] viewController];
+  if ( [scpr shareDrawerOpen] ) {
+    [scpr toggleShareDrawer];
+  }
   
   if ( self.currentPage ) {
     [[ContentManager shared] disposeOfObject:self.currentPage protect:YES];

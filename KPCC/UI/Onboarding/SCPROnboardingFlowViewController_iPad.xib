@@ -54,10 +54,9 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="BCv-Xm-nsX" firstAttribute="top" secondItem="ejE-s7-vcp" secondAttribute="bottom" constant="8" id="0F0-eV-Qnt"/>
-                <constraint firstItem="BCv-Xm-nsX" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="243" id="4NF-iG-kWe"/>
+                <constraint firstAttribute="centerX" secondItem="BCv-Xm-nsX" secondAttribute="centerX" id="AYJ-oT-FDr"/>
                 <constraint firstAttribute="trailing" secondItem="2di-sD-G42" secondAttribute="trailing" id="CKm-Sm-Y7T"/>
                 <constraint firstItem="ejE-s7-vcp" firstAttribute="top" secondItem="2di-sD-G42" secondAttribute="bottom" constant="14" id="F7K-tc-T5r"/>
-                <constraint firstAttribute="trailing" secondItem="BCv-Xm-nsX" secondAttribute="trailing" constant="243" id="PCt-Ko-T5G"/>
                 <constraint firstAttribute="centerX" secondItem="ejE-s7-vcp" secondAttribute="centerX" constant="-0.5" id="nvr-88-JzI"/>
                 <constraint firstItem="2di-sD-G42" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="td0-D9-Jn7"/>
                 <constraint firstItem="2di-sD-G42" firstAttribute="top" secondItem="2" secondAttribute="top" constant="48" id="yt9-CH-VIY"/>

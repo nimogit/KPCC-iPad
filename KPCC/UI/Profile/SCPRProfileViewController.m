@@ -112,6 +112,13 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  if ( [[DesignManager shared] reservedRotationFlag] ) {
+    [self doNotifications];
+    [[DesignManager shared] setReservedRotationFlag:NO];
+  }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   
   [[[Utilities del] globalTitleBar] applySignoutButton];
@@ -219,6 +226,8 @@
   [self.logoutButton removeTarget:self
                            action:@selector(buttonTapped:)
                  forControlEvents:UIControlEventTouchUpInside];
+  
+  [[DesignManager shared] setReservedRotationFlag:self.notificationsTabSelected];
   
   [[[Utilities del] viewController] primeUI:ScreenContentTypeProfilePage newsPath:@""];
 }
@@ -460,22 +469,27 @@
     
     NSString *type = @"";
     if ( [[SocialManager shared] isAuthenticatedWithFacebook] ) {
-      [[SocialManager shared] logoutOfFacebook];
       type = @"Facebook";
+      [[SocialManager shared] logoutOfFacebook];
     } else {
       if ( [[SocialManager shared] isAuthenticatedWithTwitter] ) {
-        [[SocialManager shared] logoutOfTwitter];
         type = @"Twitter";
+        [[SocialManager shared] logoutOfTwitter];
       } else {
         if ( [[SocialManager shared] isAuthenticatedWithLinkedIn] ) {
-          [[SocialManager shared] logoutOfLinkedIn];
           type = @"LinkedIn";
+          [[SocialManager shared] logoutOfLinkedIn];
         } else {
-          [[SocialManager shared] logoutOfMembership];
           type = @"Membership";
+          [[SocialManager shared] logoutOfMembership];
         }
       }
     }
+    
+    
+    
+    
+    
     
     [[AnalyticsManager shared] logEvent:@"logged_out_social"
                          withParameters:@{ @"type" : type }];
@@ -544,6 +558,8 @@
     
   } completion:^(BOOL finished) {
     
+    self.notificationsTabSelected = YES;
+    
   }];
  
 }
@@ -564,6 +580,8 @@
     
     
   } completion:^(BOOL finished) {
+    
+    self.notificationsTabSelected = NO;
     
   }];
 }

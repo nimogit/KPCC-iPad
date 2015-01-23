@@ -68,6 +68,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [[[Utilities del] globalTitleBar] applyKpccLogo];
+  if ( self.needsShareOpen ) {
+    self.needsShareOpen = NO;
+    [self openShareModal];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

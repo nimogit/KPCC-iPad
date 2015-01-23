@@ -29,10 +29,13 @@ typedef enum {
 @property (nonatomic,strong) UITapGestureRecognizer *tapper;
 @property (nonatomic,strong) id cardMetaData;
 @property BOOL firstRun;
+@property BOOL needsSnap;
+
 @property (nonatomic,strong) IBOutlet UILabel *versionLabel;
 @property (nonatomic,strong) IBOutlet UIButton *notRightNowButton;
 
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *topAnchor;
+@property (nonatomic,strong) NSMutableArray *metricChain;
 
 - (void)setup;
 - (void)pushCard:(NSInteger)step;

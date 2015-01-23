@@ -198,6 +198,8 @@ typedef enum {
 
 @property BOOL inSingleArticle;
 @property BOOL hasBeenInFullscreen;
+@property BOOL reservedRotationFlag;
+
 @property CGSize predictedWindowSize;
 
 @end

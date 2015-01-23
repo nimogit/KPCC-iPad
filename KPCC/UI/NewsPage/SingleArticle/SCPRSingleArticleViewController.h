@@ -102,6 +102,8 @@
 @property BOOL workerThread;
 @property BOOL contentArranged;
 @property BOOL gateOpen;
+@property BOOL needsShareOpen;
+
 
 @property BOOL captionUp;
 @property BOOL okToDelete;

@@ -308,6 +308,7 @@
   } else {
     
     [[Utilities del] setDrawerIsDirty:YES];
+    [self prepHeader];
     
   }
 }

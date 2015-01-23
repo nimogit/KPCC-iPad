@@ -359,8 +359,17 @@ static DesignManager *singleton = nil;
   if ( [container isKindOfClass:[UIViewController class]] ) {
     c2u = [(UIViewController*)container view];
   }
-  
   [c2u addSubview:v2u];
+  
+  CGFloat expectedWidth = c2u.frame.size.width;
+  CGFloat expectedHeight = c2u.frame.size.height;
+  NSLog(@"Expected width : %1.1f",expectedWidth);
+  NSLog(@"Expected height : %1.1f",expectedHeight);
+  
+  v2u.frame = CGRectMake(0.0, 0.0, expectedWidth,
+                         expectedHeight);
+  
+
   [v2u setTranslatesAutoresizingMaskIntoConstraints:NO];
   
   NSArray *anchors = [self typicalConstraints:v2u withTopOffset:topOffset fullscreen:fullscreen];
@@ -369,6 +378,8 @@ static DesignManager *singleton = nil;
   [c2u addConstraints:anchors];
   [c2u setNeedsUpdateConstraints];
   [c2u setNeedsLayout];
+  [c2u layoutIfNeeded];
+  
   /*if ( fullscreen ) {
     for ( NSLayoutConstraint *anchor in [c2u constraints] ) {
       if ( anchor.firstAttribute == NSLayoutAttributeBottom && anchor.secondAttribute == NSLayoutAttributeBottom ) {

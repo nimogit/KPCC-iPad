@@ -245,6 +245,7 @@ typedef enum {
 - (void)threadedSettings;
 - (void)syncSettingsWithParse;
 - (void)forceSettingsWithParse;
+- (void)sweepUnsavedSettings;
 
 // Cache
 - (void)initDataStores;

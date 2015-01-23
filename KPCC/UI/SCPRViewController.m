@@ -124,6 +124,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   NSLayoutConstraint *c = [[DesignManager shared] snapView:view
                                                toContainer:self.displayPortView
                                              withTopOffset:-40.0];
+  
+
   if ( c ) {
     self.currentAnchors = @{ @"top" : c };
   }
@@ -133,6 +135,10 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   } else {
     [self displayPlayer];
   }
+  
+  [self.displayPortView printDimensionsWithIdentifier:@"Display Port"];
+  [self.displayPortView setNeedsLayout];
+  [self.displayPortView layoutIfNeeded];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -692,6 +698,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   [self.contentVector addObject:profile];
   self.mediaContent = contentObjects;
   [profile sourceWithListenedSegments:contentObjects];
+  
 }
 
 - (void)displayVideoPhotoPage:(NSDictionary *)contentObjects {
@@ -1121,7 +1128,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)drawerOpened {
-  self.mainPageScroller.userInteractionEnabled = NO;
+  self.displayPortView.userInteractionEnabled = NO;
   self.playerWidget.view.userInteractionEnabled = NO;
   self.drawerSwiper = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(closeDrawerBySwipe)];
   self.drawerSwiper.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -1130,6 +1137,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 
 - (void)drawerClosed {
   self.mainPageScroller.userInteractionEnabled = YES;
+  self.displayPortView.userInteractionEnabled = YES;
   self.playerWidget.view.userInteractionEnabled = YES;
   [self.view removeGestureRecognizer:self.drawerSwiper];
   self.drawerSwiper = nil;

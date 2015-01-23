@@ -62,6 +62,8 @@
 @property (nonatomic,strong) IBOutlet UILabel *versionLabel;
 @property (nonatomic,strong) IBOutlet UIView *circleSeat;
 
+@property BOOL notificationsTabSelected;
+
 
 // Movable
 @property (nonatomic,strong) IBOutlet UIScrollView *contentScroller;

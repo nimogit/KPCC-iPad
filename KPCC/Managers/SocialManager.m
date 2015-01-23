@@ -1191,6 +1191,7 @@ static SocialManager *singleton = nil;
 - (void)logoutOfFacebook {
   [[ContentManager shared].settings setProfileImageURL:nil];
   [[ContentManager shared].settings setUserFacebookInformation:nil];
+  //[[ContentManager shared]]
   [[ContentManager shared] writeSettings];
   
   [[FBSession activeSession] closeAndClearTokenInformation];
@@ -1325,6 +1326,7 @@ static SocialManager *singleton = nil;
   container.text = [container.text capitalizedString];
   [[[ContentManager shared] settings] setUserFacebookInformation:[fbgo JSONRepresentation]];
   [[ContentManager shared] writeSettings];
+  
 }
 
 - (NSString*)facebookName {

@@ -52,6 +52,8 @@ typedef enum {
 @property CGPoint currentOffset;
 @property BOOL gateOpen;
 @property BOOL trash;
+@property BOOL reopenTitlebarShareOverlay;
+
 @property (atomic) BOOL contentLock;
 @property (atomic) BOOL fetchLock;
 @property BOOL adWillDisplay;
