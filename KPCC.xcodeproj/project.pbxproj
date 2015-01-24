@@ -521,6 +521,7 @@
 		257AB802177BA3F200D2F4EA /* thisamericanlife_episodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 257AB7FB177BA3F200D2F4EA /* thisamericanlife_episodes.json */; };
 		257AB803177BA3F200D2F4EA /* waitwaitdonttellme_episodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 257AB7FC177BA3F200D2F4EA /* waitwaitdonttellme_episodes.json */; };
 		257AB804177BA3F200D2F4EA /* waitwaitdonttellme_episodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 257AB7FC177BA3F200D2F4EA /* waitwaitdonttellme_episodes.json */; };
+		257B72AB1A72CEBC0091CF7A /* ad-placeholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 257B72A91A72CCC40091CF7A /* ad-placeholder.html */; };
 		257EA02A179DC54B000FD572 /* skip_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 257EA026179DC54B000FD572 /* skip_back.png */; };
 		257EA02B179DC54B000FD572 /* skip_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 257EA026179DC54B000FD572 /* skip_back.png */; };
 		257EA02C179DC54B000FD572 /* skip_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 257EA027179DC54B000FD572 /* skip_back@2x.png */; };
@@ -2064,6 +2065,7 @@
 		257AB7FA177BA3F200D2F4EA /* offramp_episodes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = offramp_episodes.json; path = Assets/flatResources/offramp_episodes.json; sourceTree = "<group>"; };
 		257AB7FB177BA3F200D2F4EA /* thisamericanlife_episodes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = thisamericanlife_episodes.json; path = Assets/flatResources/thisamericanlife_episodes.json; sourceTree = "<group>"; };
 		257AB7FC177BA3F200D2F4EA /* waitwaitdonttellme_episodes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = waitwaitdonttellme_episodes.json; path = Assets/flatResources/waitwaitdonttellme_episodes.json; sourceTree = "<group>"; };
+		257B72A91A72CCC40091CF7A /* ad-placeholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "ad-placeholder.html"; path = "Assets/html/ad-placeholder.html"; sourceTree = "<group>"; };
 		257EA026179DC54B000FD572 /* skip_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skip_back.png; sourceTree = "<group>"; };
 		257EA027179DC54B000FD572 /* skip_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skip_back@2x.png"; sourceTree = "<group>"; };
 		257EA028179DC54B000FD572 /* skip_fwd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skip_fwd.png; sourceTree = "<group>"; };
@@ -4044,6 +4046,7 @@
 				251D4CB217A7456700D4CAA3 /* parser_test.html */,
 				25EC8E5517C54DD800673DFF /* flat_youtube.html */,
 				25602984181738020099C9F7 /* flat_googlemaps.html */,
+				257B72A91A72CCC40091CF7A /* ad-placeholder.html */,
 			);
 			name = html;
 			sourceTree = "<group>";
@@ -5000,6 +5003,7 @@
 				257AB7FE177BA3F200D2F4EA /* airtalk_episodes.json in Resources */,
 				257AB800177BA3F200D2F4EA /* offramp_episodes.json in Resources */,
 				257AB802177BA3F200D2F4EA /* thisamericanlife_episodes.json in Resources */,
+				257B72AB1A72CEBC0091CF7A /* ad-placeholder.html in Resources */,
 				76D71F1918A452D500487864 /* icon-social-facebook.png in Resources */,
 				257AB804177BA3F200D2F4EA /* waitwaitdonttellme_episodes.json in Resources */,
 				76A3089B18BFECE70065D4B1 /* icon-timer-white.png in Resources */,

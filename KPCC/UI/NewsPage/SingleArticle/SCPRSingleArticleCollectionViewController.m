@@ -138,8 +138,6 @@
   [self.visualComponents addObject:articleView];
   self.currentPage = articleView;
   
-
-  
   __block SCPRSingleArticleCollectionViewController *weakself_ = self;
   [self.articlePageViewController setViewControllers:@[articleView]
                                            direction:UIPageViewControllerNavigationDirectionForward
@@ -161,9 +159,9 @@
                                                 [[[Utilities del] viewController] toggleShareDrawer];
                                               }
                                               
-                                              
                                               [[ContentManager shared] emptyTrash];
                                               weakself_.dirtySwipes = 0;
+                                              
                                             });
                                             
                                           }];
@@ -211,29 +209,40 @@
   if ( self.currentIndex + 1 >= [self.articles count] ) {
     nextIndex = 0;
   }
-
-  if ( [[ContentManager shared] adReadyOffscreen] ) {
+  
+  if ( [[ContentManager shared] adReadyOffscreen] && !self.adNeedsDisposal ) {
     self.adContainerRight = [[SCPRDFPViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRDFPViewController"]
                                                                     bundle:nil];
+    self.adContainerRight.index = nextIndex;
+    self.adContainerRight.delegate = self;
+    [self.adContainerRight armSwipers];
+    
     return self.adContainerRight;
   }
   
   return [self prepareArticleViewWithIndex:nextIndex];
+  
 }
 
 - (UIViewController*)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+  
   NSInteger previousIndex = self.currentIndex - 1;
   if ( self.currentIndex - 1 < 0 ) {
     previousIndex = [self.articles count]-1;
   }
   
-  if ( [[ContentManager shared] adReadyOffscreen] ) {
+  if ( [[ContentManager shared] adReadyOffscreen] && !self.adNeedsDisposal ) {
     self.adContainerLeft = [[SCPRDFPViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRDFPViewController"]
                                                                    bundle:nil];
+    self.adContainerLeft.index = previousIndex;
+    self.adContainerLeft.delegate = self;
+    [self.adContainerLeft armSwipers];
+    
     return self.adContainerLeft;
   }
   
   return [self prepareArticleViewWithIndex:previousIndex];
+  
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
@@ -246,42 +255,78 @@
         SCPRDFPViewController *adController = (SCPRDFPViewController*)pendingId;
         adController.delegate = self;
         [(SCPRDFPViewController*)pendingId loadDFPAd];
+        self.adWillDisplay = YES;
       }
 
       
-    } else {
-      SCPRSingleArticleViewController *svc = (SCPRSingleArticleViewController*)[pendingViewControllers firstObject];
-      self.currentPage = svc;
-      self.pendingIndex = svc.index;
-      self.dirtySwipes++;
-      if ( self.dirtySwipes % 3 == 0 ) {
-        [self sweep];
-      }
     }
+
+    id<Pageable> svc = (id<Pageable>)[pendingViewControllers firstObject];
+    self.preservedController = svc;
+    self.pendingIndex = [svc index];
+    
+    self.dirtySwipes++;
+    if ( self.dirtySwipes % 3 == 0 ) {
+      [self sweep];
+    }
+    
     
   }
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
   
-  if ( [[ContentManager shared] adReadyOffscreen] ) {
+  if ( !completed ) return;
   
-    // potentially arm some dismissal gestures
+
+  if ( self.adWillDisplay ) {
     [[ContentManager shared] adDeliveredSuccessfully];
-    
+    self.adWillDisplay = NO;
   } else {
-  
+    self.currentIndex = self.pendingIndex;
     UISwipeGestureRecognizerDirection d = UISwipeGestureRecognizerDirectionRight;
     [[ContentManager shared] tickSwipe:d
                                 inView:nil
                            penultimate:NO
                          silenceVector:[NSMutableArray new]];
-    self.currentIndex = self.pendingIndex;
-    [[ContentManager shared] setFocusedContentObject:self.articles[self.currentIndex]];
-    
   }
   
+  /*else {
+   
+    if ( self.adNeedsDisposal ) {
 
+      SCPRSingleArticleViewController *article = [self prepareArticleViewWithIndex:self.currentIndex];
+
+      
+      self.articlePageViewController.view.userInteractionEnabled = NO;
+      [self.articlePageViewController setViewControllers:@[article]
+                                               direction:UIPageViewControllerNavigationDirectionForward
+                                                animated:NO
+                                              completion:^(BOOL finished) {
+                                                
+                                                weakself_.adNeedsDisposal = NO;
+                                                weakself_.articlePageViewController.view.userInteractionEnabled = YES;
+                                                
+                                              }];
+      
+      if ( self.currentIndex != self.pendingIndex ) {
+        self.currentIndex = self.pendingIndex;
+      }
+      
+    } else {
+      if ( self.currentIndex != self.pendingIndex ) {
+        self.adIsAdjusting = NO;
+        UISwipeGestureRecognizerDirection d = UISwipeGestureRecognizerDirectionRight;
+        [[ContentManager shared] tickSwipe:d
+                                    inView:nil
+                               penultimate:NO
+                             silenceVector:[NSMutableArray new]];
+        
+        self.currentIndex = self.pendingIndex;
+      }
+    }
+    
+  }*/
   
 }
 
@@ -316,6 +361,7 @@
 }
 
 #pragma mark - UIScrollViewDelegate
+/*
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   @synchronized(self) {
     self.contentLock = YES;
@@ -415,6 +461,7 @@
   
   
 }
+ */
 
 - (void)brandWithCategory:(ContentCategory)category {
   switch (category) {
@@ -487,50 +534,6 @@
 
 - (void)adWillDismiss:(DismissDirection)direction {
   
-  /*
-  NSTimer *failureTimer = [[ContentManager shared] adFailureTimer];
-  if ( failureTimer ) {
-    if ( [failureTimer isValid] ) {
-      [failureTimer invalidate];
-    }
-  }
-  
-  [[ContentManager shared] setAdFailureTimer:nil];
-  [(UIScrollView*)self.adPresentationView setScrollEnabled:YES];
-  [(UIScrollView*)self.adPresentationView setClipsToBounds:YES];
-  
-  
-  [self disarmDismissal];
-  
-  CGFloat xDelta = 0.0;
-  if ( direction == DismissDirectionRight ) {
-    xDelta = self.view.frame.size.width;
-  }
-  if ( direction == DismissDirectionLeft ) {
-    xDelta = self.view.frame.size.width*-1.0;
-  }
-  
-  CGPoint offset = [(UIScrollView*)self.adPresentationView contentOffset];
-  xDelta = xDelta + offset.x;
-  
-  [UIView animateWithDuration:.38 animations:^{
-    self.dfpAdViewController.view.frame = CGRectMake(xDelta, 0.0,self.dfpAdViewController.view.frame.size.width,
-                                                     self.dfpAdViewController.view.frame.size.height);
-    
-    
-    for ( UIView *v in [self adSilenceVector] ) {
-      v.alpha = 1.0;
-    }
-    
-  } completion:^(BOOL finished) {
-    
-    self.adSilenceVector = nil;
-    [self.dfpAdViewController.view removeFromSuperview];
-    self.dfpAdViewController = nil;
-    [[ContentManager shared] setAdIsDisplayingOnScreen:NO];
-    
-  }];
-  */
 }
 
 - (void)adDidFail {
@@ -587,18 +590,25 @@
     self.articleScroller.alpha = 1.0;
   }];
   */
-  SCPRSingleArticleViewController *currentArticle = (SCPRSingleArticleViewController*)self.currentPage;
-  if ( currentArticle.shareModalOpen ) {
-    [currentArticle closeShareModal];
-  }
   
+  [self setAdNeedsDisposal:NO];
+  
+  SCPRSingleArticleViewController *currentArticle = (SCPRSingleArticleViewController*)self.currentPage;
   SCPRViewController *scpr = [[Utilities del] viewController];
   if ( [scpr shareDrawerOpen] ) {
     [scpr toggleShareDrawer];
   }
   
-  if ( self.currentPage ) {
-    [[ContentManager shared] disposeOfObject:self.currentPage protect:YES];
+  if ( [currentArticle isKindOfClass:[SCPRSingleArticleViewController class]] ) {
+    if ( currentArticle.shareModalOpen ) {
+      [currentArticle closeShareModal];
+    }
+  
+
+  
+    if ( self.currentPage ) {
+      [[ContentManager shared] disposeOfObject:self.currentPage protect:YES];
+    }
   }
   
   [self setupWithCollection:self.articles

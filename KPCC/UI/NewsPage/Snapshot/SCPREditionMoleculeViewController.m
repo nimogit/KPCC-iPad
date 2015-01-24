@@ -257,6 +257,11 @@
 }
 
 - (void)snapContentSize {
+  [self snapContentSize:NO];
+}
+
+- (void)snapContentSize:(BOOL)animated {
+
   [self.scroller layoutSubviews];
   
   CGFloat addition = self.currentAdController ? self.scroller.frame.size.width : 0.0f;
@@ -290,7 +295,7 @@
   
 
   [self.scroller setContentOffset:CGPointMake(self.scroller.frame.size.width*self.currentIndex,
-                                              0.0)];
+                                              0.0) animated:animated];
   
   
   NSLog(@"Content Width : %1.1f",self.scroller.contentSize.width);
@@ -340,11 +345,14 @@
                                 bundle:nil];
   dfp.view.frame = dfp.view.frame;
   [self.scroller addSubview:dfp.view];
+  [dfp armSwipers];
   
   SCPREditionAtomViewController *prevAtom = nil;
   SCPREditionAtomViewController *nextAtom = nil;
   if ( index != 0 ) {
     prevAtom = self.displayVector[index-1];
+  } else {
+    // TODO: 
   }
   if ( self.pushedConstraints[@"next"] ) {
     nextAtom = self.displayVector[index+1];
@@ -411,28 +419,43 @@
   [self.metricChain setObject:self.adConstraints
                        forKey:@"ad"];
   
-
+  dfp.delegate = self;
   [dfp loadDFPAd];
   [self.scroller addConstraints:hConstraints];
   [self.scroller addConstraints:vConstraints];
   self.currentAdController = dfp;
   
   [self snapContentSize];
+
+  
   self.adIsHot = YES;
   
 }
 
 - (void)removeAdFromIndex:(NSInteger)index {
-  [self.currentAdController.view removeFromSuperview];
-  for ( NSLayoutConstraint *c in [self.pushedConstraints allValues] ) {
-    [self.scroller addConstraint:c];
-  }
-  [self.metricChain removeObjectForKey:@"ad"];
-  self.currentAdController = nil;
-  [self snapContentSize];
-  self.adConstraints = nil;
-  self.pushedConstraints = nil;
-  self.adIsHot = NO;
+  [UIView animateWithDuration:0.33 animations:^{
+    [self.currentAdController.view setAlpha:0.0];
+  } completion:^(BOOL finished) {
+    [self.currentAdController.view removeFromSuperview];
+    self.currentAdController = nil;
+    for ( NSLayoutConstraint *c in [self.pushedConstraints allValues] ) {
+      [self.scroller addConstraint:c];
+    }
+    [self.metricChain removeObjectForKey:@"ad"];
+    
+    [UIView animateWithDuration:0.33 animations:^{
+      [self snapContentSize];
+      self.adConstraints = nil;
+      self.pushedConstraints = nil;
+      self.adIsHot = NO;
+      
+      SCPRTitlebarViewController *titleBar = [[Utilities del] globalTitleBar];
+      titleBar.pager.currentPage = index;
+      
+    }];
+
+    
+  }];
 }
 
 - (void)pushToCurrentAtomDetails {
@@ -447,6 +470,10 @@
   [self.currentAtom buttonTapped:self.currentAtom.expandButton];
   
 }
+
+
+
+
 
 - (void)sendAnalysis {
   
@@ -476,6 +503,22 @@
                                            @"title" : [self.editionShell objectForKey:@"title"],
                                            @"abstract_count" : abstractCount}];
   }
+  
+}
+
+#pragma mark - DFP delegate
+- (void)adDidFinishLoading {
+  
+}
+
+- (void)adDidFail {
+  
+}
+
+- (void)adWillDismiss:(DismissDirection)direction {
+  
+  self.dismissDirection = direction;
+  [self removeAdFromIndex:self.adIndex];
   
 }
 
@@ -539,52 +582,45 @@
   self.currentAtom = [self.displayVector objectAtIndex:index];
   [[ContentManager shared] setFocusedContentObject:self.currentAtom.relatedArticle];
   
-  if ( [Utilities isIpad] ) {
-    SCPRTitlebarViewController *titleBar = [[Utilities del] globalTitleBar];
-    titleBar.pager.currentPage = index;
-  } else {
-    self.pageControl.currentPage = index;
-  }
-  
+
+  BOOL skipDot = NO;
   BOOL noMovement = self.currentIndex == index;
   if ( !noMovement ) {
-    UISwipeGestureRecognizerDirection dir = self.currentIndex > index ? UISwipeGestureRecognizerDirectionRight : UISwipeGestureRecognizerDirectionLeft;
-    BOOL penultimate = NO;
-    if ( dir == UISwipeGestureRecognizerDirectionLeft ) {
-      penultimate = index == [self.editions count]-1;
-    } else {
-      penultimate = index == 0;
-    }
-    
-    [[ContentManager shared] tickSwipe:dir
+
+    [[ContentManager shared] tickSwipe:UISwipeGestureRecognizerDirectionLeft
                                 inView:scrollView
-                                penultimate:penultimate
+                           penultimate:NO
                          silenceVector:[@[ self.editionInfoLabel ] mutableCopy]];
     
+
     if ( [[ContentManager shared] adReadyOffscreen] ) {
       if ( self.adIsHot ) {
         [[ContentManager shared] adDeliveredSuccessfully];
+        self.adIsHot = NO;
+        skipDot = YES;
       } else {
+        
+        
         NSInteger nextIndex = index > self.currentIndex ? index + 1 : index - 1;
         nextIndex = nextIndex < 0 ? 1 : nextIndex;
         
         self.currentIndex = index;
         [self insertAdAtIndex:nextIndex];
-        [self sendAnalysis];
-        return;
+        
       }
     } else {
-      if ( self.adIsHot ) {
-        if ( self.currentIndex < index ) {
-          self.dismissalWentLeft = NO;
-        } else {
-          self.dismissalWentLeft = YES;
-          self.currentIndex = index - 1;
-        }
-        [self removeAdFromIndex:self.adIndex];
-      }
+      
     }
     
+  }
+ 
+  if ( !skipDot ) {
+    if ( [Utilities isIpad] ) {
+      SCPRTitlebarViewController *titleBar = [[Utilities del] globalTitleBar];
+      titleBar.pager.currentPage = index;
+    } else {
+      self.pageControl.currentPage = index;
+    }
   }
   
   self.currentIndex = index;

@@ -1579,7 +1579,9 @@ static ContentManager *singleton = nil;
   @synchronized(self.garbageCan) {
     [self.garbageCan addObject:object];
     if ( !protect ) {
-      [object deactivationMethod];
+      if ( [object respondsToSelector:@selector(deactivationMethod)] ) {
+        [object deactivationMethod];
+      }
     }
   }
 }
@@ -1588,11 +1590,17 @@ static ContentManager *singleton = nil;
   
   NSMutableArray *newCan = [NSMutableArray new];
   for ( id<Deactivatable> thing in self.garbageCan ) {
-    if ( [thing okToDelete] ) {
+    if ( [thing respondsToSelector:@selector(okToDelete)] ) {
+      if ( [thing okToDelete] ) {
+        continue;
+      }
+    } else {
       continue;
     }
     [newCan addObject:thing];
-    [thing deactivationMethod];
+    if ( [thing respondsToSelector:@selector(deactivationMethod)] ) {
+      [thing deactivationMethod];
+    }
   }
   
   @synchronized(self.garbageCan) {

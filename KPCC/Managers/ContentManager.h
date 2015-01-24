@@ -52,6 +52,11 @@ typedef enum {
   ModelTypeKeyword = 3
 } ModelType;
 
+@protocol Pageable <NSObject>
+
+- (NSInteger)index;
+
+@end
 
 @protocol VersionCheckable <NSObject>
 

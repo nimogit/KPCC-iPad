@@ -43,7 +43,7 @@
   self.adView.delegate = self;
   self.adView.scrollView.scrollEnabled = NO;
   
-
+#ifndef DEBUG
   NSString *path = [[NSBundle mainBundle]
                     pathForResource:@"webdfp"
                     ofType:@"html"];
@@ -75,6 +75,27 @@
   NSURL *url = [NSURL fileURLWithPath:cooked];
   self.adRequest = [NSURLRequest requestWithURL:url];
   [self.adView loadRequest:[NSURLRequest requestWithURL:url]];
+#else
+  
+  NSString *path = [[NSBundle mainBundle]
+                    pathForResource:@"ad-placeholder"
+                    ofType:@"html"];
+  
+  NSError *error = nil;
+  NSString *raw = [[NSString alloc] initWithContentsOfFile:path
+                                                  encoding:NSUTF8StringEncoding
+                                                     error:&error];
+  
+
+  
+  NSString *cooked = [[FileManager shared] writeFileFromData:raw
+                                                  toFilename:[NSString stringWithFormat:@"article_base_%d.html",(int)(random() % 398045)]];
+  
+  NSURL *url = [NSURL fileURLWithPath:cooked];
+  self.adRequest = [NSURLRequest requestWithURL:url];
+  [self.adView loadRequest:self.adRequest];
+  
+#endif
 
   
 }
@@ -93,8 +114,6 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
   
-
-  
   if ( !self.absoluteFinishTimer ) {
     self.absoluteFinishTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
                                                                 target:self
@@ -103,8 +122,12 @@
                                                                repeats:NO];
   }
   
+#ifndef DEBUG
   self.loadCount++;
-   
+#else
+  self.loadCount = 4;
+#endif
+  
   
 }
 
@@ -160,8 +183,55 @@
   
 }
 
+- (void)armSwipers {
+  if ( self.rightSwiper ) {
+    [self.view removeGestureRecognizer:self.rightSwiper];
+    self.rightSwiper = nil;
+  }
+  self.rightSwiper = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                               action:@selector(killSelf:)];
+  self.rightSwiper.direction = UISwipeGestureRecognizerDirectionRight;
+  
+  if ( self.leftSwiper ) {
+    [self.view removeGestureRecognizer:self.leftSwiper];
+    self.leftSwiper = nil;
+  }
+  self.leftSwiper = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                               action:@selector(killSelf:)];
+  self.leftSwiper.direction = UISwipeGestureRecognizerDirectionLeft;
+  
+  if ( self.panner ) {
+    [self.view removeGestureRecognizer:self.panner];
+    self.panner = nil;
+  }
+  self.panner = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                            action:@selector(killSelf:)];
+  
+  
 
+  [self.view addGestureRecognizer:self.panner];
+  [self.view addGestureRecognizer:self.leftSwiper];
+  [self.view addGestureRecognizer:self.rightSwiper];
+  
+}
 
+- (void)killSelf:(UIGestureRecognizer*)gr {
+  if ( gr == self.panner ) {
+    UIPanGestureRecognizer *pan = (UIPanGestureRecognizer*)gr;
+    CGPoint velocity = [pan velocityInView:self.view];
+    if ( velocity.x > 0 ) {
+      [self.delegate adWillDismiss:DismissDirectionRight];
+    } else {
+      [self.delegate adWillDismiss:DismissDirectionLeft];
+    }
+  }
+  if ( gr == self.rightSwiper ) {
+    [self.delegate adWillDismiss:DismissDirectionRight];
+  }
+  if ( gr == self.leftSwiper ) {
+    [self.delegate adWillDismiss:DismissDirectionLeft];
+  }
+}
 
 
 - (void)didReceiveMemoryWarning

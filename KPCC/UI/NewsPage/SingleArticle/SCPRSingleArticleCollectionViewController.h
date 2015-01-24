@@ -37,10 +37,13 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UIView *pageContainerView;
 @property (nonatomic,strong) SCPRDFPViewController *adContainerLeft;
 @property (nonatomic,strong) SCPRDFPViewController *adContainerRight;
+@property (nonatomic,strong) id<Pageable> preservedController;
 
 @property (nonatomic,strong) NSString *collectionType;
 
 @property (nonatomic,strong) UIPageViewController *articlePageViewController;
+@property UIPageViewControllerNavigationDirection navDirection;
+
 
 @property ContentCategory category;
 
@@ -53,11 +56,14 @@ typedef enum {
 @property BOOL gateOpen;
 @property BOOL trash;
 @property BOOL reopenTitlebarShareOverlay;
+@property BOOL lockFromTransition;
 
 @property (atomic) BOOL contentLock;
 @property (atomic) BOOL fetchLock;
+@property BOOL adIsAdjusting;
 @property BOOL adWillDisplay;
 @property BOOL adHasDisplayed;
+@property BOOL adNeedsDisposal;
 @property CGFloat targetX;
 
 @property (nonatomic,strong) NSTimer *contentTimer;

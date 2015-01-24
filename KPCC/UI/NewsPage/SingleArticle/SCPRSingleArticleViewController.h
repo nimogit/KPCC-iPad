@@ -20,7 +20,7 @@
 @class SCPRHBTView;
 @class SCPRNewsPageViewController;
 
-@interface SCPRSingleArticleViewController : UIViewController<ContentProcessor,UIWebViewDelegate,UIAlertViewDelegate,Backable,WebContentContainer,Deactivatable,Rotatable>
+@interface SCPRSingleArticleViewController : UIViewController<ContentProcessor,UIWebViewDelegate,UIAlertViewDelegate,Backable,WebContentContainer,Deactivatable,Rotatable,Pageable>
 
 
 @property (nonatomic,strong) NSDictionary *relatedArticle;

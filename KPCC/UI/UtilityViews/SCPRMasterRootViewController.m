@@ -473,6 +473,7 @@
 
 - (void)undeliverAd {
   
+  
   self.dfpAdViewController.view.alpha = 0.0;
   
   [self.dfpAdViewController.view removeFromSuperview];
@@ -493,7 +494,6 @@
   [[ContentManager shared] setAdIsDisplayingOnScreen:NO];
   [[ContentManager shared] setAdReadyOffscreen:NO];
   
-  [self disarmDismissal];
 }
 
 - (void)killAdOffscreen:(AdKilledCompletion)completion {
@@ -513,7 +513,7 @@
   } completion:^(BOOL finished) {
     [(UIScrollView*)self.adPresentationView setScrollEnabled:YES];
     [[ContentManager shared] setAdIsDisplayingOnScreen:NO];
-    [self disarmDismissal];
+ 
     if ( completion ) {
       dispatch_async(dispatch_get_main_queue(), completion);
     }

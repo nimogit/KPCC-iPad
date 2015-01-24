@@ -95,8 +95,13 @@ static AnalyticsManager *singleton = nil;
     NSLog(@"Using ad settings for %@ with ID : %@",[object objectForKey:@"buildType"],[object objectId]);
     
     if ( object ) {
+#ifdef DEBUG
+      [self setNumberOfAdsPerSession:@4];
+      [self setNumberOfSwipesPerAd:@4];
+#else
       [self setNumberOfAdsPerSession:[object objectForKey:@"numberOfAdsPerSession"]];
       [self setNumberOfSwipesPerAd:[object objectForKey:@"numberOfSwipesPerAd"]];
+#endif
       [self setAdVendorID:[object objectForKey:@"adVendorID"]];
       [self setAdUnitID:[object objectForKey:@"adUnitID"]];
       [self setUrlHint:[object objectForKey:@"urlHint"]];

@@ -12,7 +12,7 @@
 
 #import "global.h"
 
-@interface SCPREditionMoleculeViewController : UIViewController<Backable,UIScrollViewDelegate,Rotatable>
+@interface SCPREditionMoleculeViewController : UIViewController<Backable,UIScrollViewDelegate,Rotatable,SCPRDFPAdDelegate>
 
 @property (nonatomic,strong) IBOutlet UIScrollView *scroller;
 @property (nonatomic,strong) IBOutlet UIPageControl *pageControl;
@@ -39,6 +39,8 @@
 @property BOOL intermediaryAppearance;
 @property BOOL adIsHot;
 @property BOOL dismissalWentLeft;
+@property DismissDirection dismissDirection;
+
 
 @property (nonatomic,strong) NSDictionary *editionShell;
 @property (nonatomic,strong) IBOutlet UILabel *editionInfoLabel;
@@ -52,6 +54,7 @@
 - (void)pushToCurrentAtomDetails;
 - (void)sendAnalysis;
 - (void)snapContentSize;
+- (void)snapContentSize:(BOOL)animated;
 - (void)insertAdAtIndex:(NSInteger)index;
 - (void)removeAdFromIndex:(NSInteger)index;
 
