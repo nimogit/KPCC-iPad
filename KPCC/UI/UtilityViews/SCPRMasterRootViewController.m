@@ -180,15 +180,14 @@
                                          initWithNibName:[[DesignManager shared]
                                                           xibForPlatformWithName:@"SCPRIntroductionViewController"]
                                          bundle:nil];
-  ivc.view.frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width,
-                              self.view.bounds.size.height);
   
-  ivc.view.alpha = 0.0;
+
   
+  [ivc setNeedsSnap:YES];
   [[DesignManager shared] snapView:ivc.view
                        toContainer:self.view];
   
-  [ivc setNeedsSnap:YES];
+  ivc.view.alpha = 0.0;
   self.introView = ivc;
   self.introDisplaying = YES;
   

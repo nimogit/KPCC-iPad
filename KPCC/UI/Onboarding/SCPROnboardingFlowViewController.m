@@ -76,6 +76,10 @@
   [self.view layoutIfNeeded];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -89,11 +93,8 @@
   [tvc applyKpccLogo];
   
   self.metricChain = [NSMutableArray new];
-  
   [self pushCard:FlowStepLanding];
 
-  
-  //self.cardScroller.backgroundColor = [[DesignManager shared] prettyRandomColor];
 }
 
 - (IBAction)buttonTapped:(id)sender {

@@ -769,7 +769,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   //[self snapToDisplayPortWithView:nav.view];
   
   [self snapToDisplayPortWithView:nav.view fullscreen:YES];
-
+  
   flow.navigationController.navigationBarHidden = YES;
   [[ContentManager shared] pushToResizeVector:flow];
   
