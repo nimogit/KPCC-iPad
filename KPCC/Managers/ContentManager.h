@@ -288,5 +288,6 @@ typedef enum {
 
 - (void)disposeOfObject:(id<Deactivatable>)object protect:(BOOL)protect;
 - (void)emptyTrash;
+- (void)manuallyRemoveFromTrash:(id<Deactivatable>)object;
 
 @end

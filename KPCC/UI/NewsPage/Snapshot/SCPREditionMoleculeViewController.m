@@ -139,9 +139,12 @@
     
     if ( previousAtom ) {
       
+      BOOL saveTrailing = NO;
+      
       NSString *HF = [NSString stringWithFormat:@"H:[prev][me]"];
       if ( count == self.editions.count-1 ) {
         HF = [NSString stringWithFormat:@"H:[prev][me]|"];
+        saveTrailing = YES;
       }
       NSString *VF = [NSString stringWithFormat:@"V:|[me]"];
       
@@ -150,6 +153,18 @@
                                                                          metrics:nil
                                                                            views:@{ @"prev" : previousAtom.view,
                                                                                     @"me" : atom.view }];
+      
+      if ( saveTrailing ) {
+        for ( NSLayoutConstraint *c in linkToPreviousH ) {
+          if ( c.firstAttribute == NSLayoutAttributeTrailing || c.firstAttribute == NSLayoutAttributeRight ) {
+            if ( c.firstItem == self.scroller || c.secondItem == self.scroller ) {
+              self.trailingConstraint = c;
+              break;
+            }
+          }
+        }
+      }
+      
       NSArray *linkToPreviousV = [NSLayoutConstraint constraintsWithVisualFormat:VF
                                                                         options:0
                                                                         metrics:nil
@@ -170,6 +185,16 @@
                                                                          options:0
                                                                          metrics:nil
                                                                            views:@{ @"me" : atom.view }];
+      
+      for ( NSLayoutConstraint *c in linkToParentH ) {
+        if ( c.firstAttribute == NSLayoutAttributeLeft || c.firstAttribute == NSLayoutAttributeLeading ) {
+          if ( c.firstItem == self.scroller || c.secondItem == self.scroller ) {
+            self.leadingConstraint = c;
+            break;
+          }
+        }
+      }
+      
       NSArray *linkToParentV = [NSLayoutConstraint constraintsWithVisualFormat:VF
                                                                          options:0
                                                                          metrics:nil
@@ -308,6 +333,9 @@
   
   if ( index + 1 <= [self.displayVector count]-1 ) {
     NSArray *nextConstraints = self.displayChain[index+1];
+    if ( index == 0 ) {
+      nextConstraints = self.displayChain[0];
+    }
     NSLayoutConstraint *leftSide = nil;
     for ( NSLayoutConstraint *constraint in nextConstraints ) {
       if ( constraint.firstAttribute == NSLayoutAttributeLeading || constraint.firstAttribute == NSLayoutAttributeLeft ) {
@@ -320,6 +348,7 @@
       [self.pushedConstraints setObject:leftSide
                                  forKey:@"next"];
     }
+    
   } else {
 
     NSArray *currentConstraints = self.displayChain[index-1];
@@ -335,8 +364,6 @@
       [self.pushedConstraints setObject:rightSide
                                  forKey:@"rightAnchor"];
     }
-      
-    
     
   }
   
@@ -352,10 +379,14 @@
   if ( index != 0 ) {
     prevAtom = self.displayVector[index-1];
   } else {
-    // TODO: 
+    
   }
   if ( self.pushedConstraints[@"next"] ) {
-    nextAtom = self.displayVector[index+1];
+    if ( index != 0 ) {
+      nextAtom = self.displayVector[index+1];
+    } else {
+      nextAtom = self.displayVector[1];
+    }
   }
   
   NSString *fmt = @"H:";
@@ -368,7 +399,11 @@
     fmt = [fmt stringByAppendingString:@"|"];
   }
   if ( nextAtom ) {
-    fmt = [fmt stringByAppendingString:@"[next]"];
+    if ( index == 0 ) {
+      fmt = [fmt stringByAppendingString:@"[me][next]"];
+    } else {
+      fmt = [fmt stringByAppendingString:@"[next]"];
+    }
     views[@"next"] = nextAtom.view;
     if ( index + 1 == self.displayVector.count-1 ) {
       fmt = [fmt stringByAppendingString:@"|"];
@@ -448,7 +483,7 @@
       self.adConstraints = nil;
       self.pushedConstraints = nil;
       self.adIsHot = NO;
-      
+      self.adIndex = -1;
       SCPRTitlebarViewController *titleBar = [[Utilities del] globalTitleBar];
       titleBar.pager.currentPage = index;
       
@@ -519,7 +554,9 @@
   
   self.dismissDirection = direction;
   [self removeAdFromIndex:self.adIndex];
-  
+  [UIView animateWithDuration:0.25 animations:^{
+    self.editionInfoLabel.alpha = 1.0;
+  }];
 }
 
 #pragma mark - Backable
@@ -592,24 +629,29 @@
                            penultimate:NO
                          silenceVector:[@[ self.editionInfoLabel ] mutableCopy]];
     
-
     if ( [[ContentManager shared] adReadyOffscreen] ) {
-      if ( self.adIsHot ) {
+      if ( self.adIsHot && index == self.adIndex ) {
+        [UIView animateWithDuration:0.25 animations:^{
+          self.editionInfoLabel.alpha = 0.0;
+        }];
         [[ContentManager shared] adDeliveredSuccessfully];
         self.adIsHot = NO;
         skipDot = YES;
       } else {
         
-        
-        NSInteger nextIndex = index > self.currentIndex ? index + 1 : index - 1;
-        nextIndex = nextIndex < 0 ? 1 : nextIndex;
-        
-        self.currentIndex = index;
-        [self insertAdAtIndex:nextIndex];
+        if ( !self.adIsHot ) {
+          NSInteger nextIndex = index > self.currentIndex ? index + 1 : index - 1;
+          nextIndex = nextIndex < 0 ? 1 : nextIndex;
+          
+          self.currentIndex = index;
+          [self insertAdAtIndex:nextIndex];
+        }
         
       }
     } else {
-      
+      [UIView animateWithDuration:0.25 animations:^{
+        self.editionInfoLabel.alpha = 1.0;
+      }];
     }
     
   }

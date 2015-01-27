@@ -421,8 +421,11 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
   NSLog(@"Error on web content load : %@",[error localizedDescription]);
   if ( self.cleaningUp ) {
     NSLog(@" **** // This happened while cleaning up \\ ****");
+    [self.webView loadHTMLString:@"" baseURL:nil];
+    [self.delegate cleanup];
+  } else {
+    [self.delegate webContentFailed];
   }
-  [self.delegate webContentFailed];
 }
 
 #ifdef LOG_DEALLOCATIONS

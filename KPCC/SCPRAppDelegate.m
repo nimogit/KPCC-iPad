@@ -330,8 +330,10 @@
   [[DesignManager shared] snapView:self.slideshowModal.view
                                toContainer:self.cloak.view];
   
+  //[self.slideshowModal sourceWithArticle:article];
   self.slideshowModal.article = article;
   self.slideshowModal.needsSetup = YES;
+  [self.slideshowModal.view setNeedsLayout];
   
   [UIView animateWithDuration:0.25 animations:^{
       self.cloak.view.alpha = 1.0;
@@ -736,6 +738,10 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
   }
   
+  if ( ![[DesignManager shared] inSingleArticle] ) {
+    [[FileManager shared] cleanupTemporaryFiles];
+  }
+  
   [[NetworkManager shared] fetchContentForScheduleThisWeek:[ScheduleManager shared]];}
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -745,6 +751,7 @@
     [[ContentManager shared] saveContextOnMainThread];
   }
   
+  [[FileManager shared] cleanupTemporaryFiles];
   [[AnalyticsManager shared] setSavedScreenContent:[[AnalyticsManager shared] screenContent]];
   [[AnalyticsManager shared] terminateTimedSessionForContentType:[[AnalyticsManager shared] screenContent]];
 }

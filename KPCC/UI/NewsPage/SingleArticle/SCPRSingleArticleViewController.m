@@ -1255,11 +1255,18 @@
 
 #pragma mark - Deactivatable
 - (void)deactivationMethod {
-  NSLog(@" ***** KILLING CONTENT ****** ");
   [self killContent];
 }
 
 - (void)killContent {
+  
+  if ( self.deallocating ) return;
+  
+  @synchronized(self) {
+    self.deallocating = YES;
+  }
+  
+  NSLog(@" ***** KILLING CONTENT FOR %@ (%p) ****** ",self.relatedArticle[@"short_title"],self);
   
   NSString *title = [self.relatedArticle objectForKey:@"short_title"] ? [self.relatedArticle objectForKey:@"short_title"] : [self.relatedArticle objectForKey:@"title"];
   NSString *code = [NSString stringWithFormat:@"%@%d",[Utilities sha1:title],
@@ -1274,14 +1281,16 @@
 
   }
   
+  NSString *rand = [NSString stringWithFormat:@"blank-%ld.html",(long)(arc4random() % 100000)];
   NSString *blank = [[FileManager shared] copyFromMainBundleToDocuments:@"blank.html"
-                                                               destName:@"blank.html"];
+                                                               destName:rand];
   NSURL *url = [NSURL fileURLWithPath:blank];
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
   
   [self.webContentLoader.webView stopLoading];
   self.webContentLoader.cleaningUp = YES;
   [self.webContentLoader.webView loadRequest:request];
+
 }
 
 - (void)safeKillContent {
@@ -1315,17 +1324,23 @@
   self.extraAssetsController = nil;
   self.parentCollection = nil;
   
-  [self.view removeFromSuperview];
+
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
+  NSLog(@" ***** FINISHED KILLING CONTENT FOR %@ (%p) ****** ",self.relatedArticle[@"short_title"],self);
   self.okToDelete = YES;
   [[ContentManager shared] popDeactivation:self.deactivationToken];
+  
+  [[ContentManager shared] emptyTrash];
+  
+  //[self.view removeFromSuperview];
+  
 }
 
 
 - (void)dealloc {
   
-  NSLog(@"DEALLOCATING SINGLE ARTICLE VIEW CONTROLLER...");
+  NSLog(@"DEALLOCATING SINGLE ARTICLE VIEW CONTROLLER (%@ : %p)...",self.relatedArticle[@"short_title"],self);
 
 }
 

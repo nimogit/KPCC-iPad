@@ -31,11 +31,12 @@
   
   self.adView.alpha = 0.0;
   self.loadCount = 0;
+  
   [self.spinner startAnimating];
   [self.adLoadingLabel titleizeText:self.adLoadingLabel.text
                                bold:NO];
   
-    // Do any additional setup after loading the view from its nib.
+  // Do any additional setup after loading the view from its nib.
 }
 
 - (void)loadDFPAd {
@@ -43,7 +44,7 @@
   self.adView.delegate = self;
   self.adView.scrollView.scrollEnabled = NO;
   
-#ifndef DEBUG
+#ifndef USE_LOCAL_ADS
   NSString *path = [[NSBundle mainBundle]
                     pathForResource:@"webdfp"
                     ofType:@"html"];
@@ -74,7 +75,7 @@
   
   NSURL *url = [NSURL fileURLWithPath:cooked];
   self.adRequest = [NSURLRequest requestWithURL:url];
-  [self.adView loadRequest:[NSURLRequest requestWithURL:url]];
+  [self.adView loadRequest:self.adRequest];
 #else
   
   NSString *path = [[NSBundle mainBundle]
@@ -113,19 +114,12 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-  
-  if ( !self.absoluteFinishTimer ) {
-    self.absoluteFinishTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
-                                                                target:self
-                                                              selector:@selector(forceFinish)
-                                                              userInfo:nil
-                                                               repeats:NO];
-  }
-  
-#ifndef DEBUG
+#ifndef USE_LOCAL_ADS
   self.loadCount++;
+  [self forceFinish];
 #else
   self.loadCount = 4;
+  [self forceFinish];
 #endif
   
   
@@ -206,13 +200,18 @@
   }
   self.panner = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                             action:@selector(killSelf:)];
-  
-  
 
   [self.view addGestureRecognizer:self.panner];
   [self.view addGestureRecognizer:self.leftSwiper];
   [self.view addGestureRecognizer:self.rightSwiper];
   
+}
+
+- (void)deactivationMethod {
+  self.delegate = nil;
+  [self.adView loadHTMLString:@""
+                      baseURL:nil];
+  self.okToDelete = YES;
 }
 
 - (void)killSelf:(UIGestureRecognizer*)gr {

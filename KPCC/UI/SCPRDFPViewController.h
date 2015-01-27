@@ -28,7 +28,7 @@ typedef enum {
 
 @end
 
-@interface SCPRDFPViewController : UIViewController<UIWebViewDelegate,Pageable>
+@interface SCPRDFPViewController : UIViewController<UIWebViewDelegate,Pageable,Deactivatable>
 
 @property (nonatomic,strong) IBOutlet UIWebView *adView;
 
@@ -46,6 +46,7 @@ typedef enum {
 @property (nonatomic,strong) UISwipeGestureRecognizer *rightSwiper;
 @property (nonatomic,strong) UIPanGestureRecognizer *panner;
 
+@property BOOL okToDelete;
 
 - (void)loadDFPAd;
 - (void)fail;

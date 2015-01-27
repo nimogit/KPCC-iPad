@@ -304,7 +304,8 @@ static FileManager *singleton = nil;
     for ( NSString *filename in contents ) {
       
       
-      if ( [filename rangeOfString:@"article_base"].location == NSNotFound ) {
+      if ( [filename rangeOfString:@"article_base"].location == NSNotFound &&
+           [filename rangeOfString:@"blank-"].location == NSNotFound ) {
         continue;
       }
       
@@ -315,6 +316,7 @@ static FileManager *singleton = nil;
       if ( fileExists ) {
         [[NSFileManager defaultManager] removeItemAtPath:full
                                                    error:&error];
+        NSLog(@"Removed %@",[[full componentsSeparatedByString:@"/"] lastObject]);
       }
     }
     

@@ -57,6 +57,8 @@ typedef enum {
 @property BOOL trash;
 @property BOOL reopenTitlebarShareOverlay;
 @property BOOL lockFromTransition;
+@property BOOL adLoadedFromLeft;
+
 
 @property (atomic) BOOL contentLock;
 @property (atomic) BOOL fetchLock;
@@ -64,6 +66,7 @@ typedef enum {
 @property BOOL adWillDisplay;
 @property BOOL adHasDisplayed;
 @property BOOL adNeedsDisposal;
+@property BOOL adHasBeenDismissed;
 @property CGFloat targetX;
 
 @property (nonatomic,strong) NSTimer *contentTimer;

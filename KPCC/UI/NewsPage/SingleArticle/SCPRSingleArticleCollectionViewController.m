@@ -15,6 +15,8 @@
 #import "SCPRDFPViewController.h"
 #import "UIView+PrintDimensions.h"
 
+static NSInteger kCacheLockDistance = 3;
+
 @interface SCPRSingleArticleCollectionViewController ()
 
 @end
@@ -83,9 +85,15 @@
 
 - (void)sweep {
   NSMutableArray *tmp = [NSMutableArray new];
-  for ( SCPRSingleArticleViewController *article in self.untouchables ) {
-    if ( abs(article.index - self.currentIndex) > 3 ) {
-      [[ContentManager shared] disposeOfObject:article protect:NO];
+  
+  for ( id<Pageable,Deactivatable> article in self.untouchables ) {
+    if ( abs(article.index - self.currentIndex) > kCacheLockDistance &&
+         self.currentIndex > (kCacheLockDistance - 1) ) {
+      [[ContentManager shared] disposeOfObject:article protect:YES];
+    } else if ( self.currentIndex < kCacheLockDistance && article.index >= ([self.articles count]-(kCacheLockDistance-1) )) {
+      [tmp addObject:article];
+    } else if ( abs(article.index - self.currentIndex) > kCacheLockDistance ) {
+      [[ContentManager shared] disposeOfObject:article protect:YES];
     } else {
       [tmp addObject:article];
     }
@@ -97,12 +105,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [[DesignManager shared] setInSingleArticle:YES];
-  [[[Utilities del] globalTitleBar] applyKpccLogo];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  /*self.articleScroller.contentSize = CGSizeMake([self.visualComponents count] * self.articleScroller.frame.size.width,
-                                                self.articleScroller.frame.size.height);*/
+  [[[Utilities del] globalTitleBar] applyKpccLogo];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -182,13 +188,14 @@
 #pragma mark - Backable
 - (void)backTapped {
   
+  self.currentIndex = (NSInteger)MAXFLOAT;
   [self sweep];
   
   [[ContentManager shared] popFromResizeVector];
   [[DesignManager shared] setInSingleArticle:NO];
   [[[Utilities del] globalTitleBar] pop];
   
-  //[[FileManager shared] cleanupTemporaryFiles];
+
   
   if ([[ContentManager shared] adReadyOffscreen]) {
     [[[Utilities del] masterRootController] killAdOffscreen:^{
@@ -200,6 +207,7 @@
 
   [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self cleanup];
+  //[[FileManager shared] cleanupTemporaryFiles];
 }
 
 #pragma mark - UIPageViewController
@@ -258,7 +266,6 @@
         self.adWillDisplay = YES;
       }
 
-      
     }
 
     id<Pageable> svc = (id<Pageable>)[pendingViewControllers firstObject];
@@ -266,10 +273,9 @@
     self.pendingIndex = [svc index];
     
     self.dirtySwipes++;
-    if ( self.dirtySwipes % 3 == 0 ) {
+    if ( self.dirtySwipes % 4 == 0 ) {
       [self sweep];
     }
-    
     
   }
 }
@@ -277,56 +283,25 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
   
   if ( !completed ) return;
-  
-
   if ( self.adWillDisplay ) {
+    if ( self.currentIndex < [self.preservedController index] ) {
+      self.adLoadedFromLeft = YES;
+    } else {
+      self.adLoadedFromLeft = NO;
+    }
     [[ContentManager shared] adDeliveredSuccessfully];
     self.adWillDisplay = NO;
   } else {
     self.currentIndex = self.pendingIndex;
+    self.adLoadedFromLeft = NO;
     UISwipeGestureRecognizerDirection d = UISwipeGestureRecognizerDirectionRight;
     [[ContentManager shared] tickSwipe:d
                                 inView:nil
                            penultimate:NO
                          silenceVector:[NSMutableArray new]];
+    self.adHasBeenDismissed = NO;
   }
   
-  /*else {
-   
-    if ( self.adNeedsDisposal ) {
-
-      SCPRSingleArticleViewController *article = [self prepareArticleViewWithIndex:self.currentIndex];
-
-      
-      self.articlePageViewController.view.userInteractionEnabled = NO;
-      [self.articlePageViewController setViewControllers:@[article]
-                                               direction:UIPageViewControllerNavigationDirectionForward
-                                                animated:NO
-                                              completion:^(BOOL finished) {
-                                                
-                                                weakself_.adNeedsDisposal = NO;
-                                                weakself_.articlePageViewController.view.userInteractionEnabled = YES;
-                                                
-                                              }];
-      
-      if ( self.currentIndex != self.pendingIndex ) {
-        self.currentIndex = self.pendingIndex;
-      }
-      
-    } else {
-      if ( self.currentIndex != self.pendingIndex ) {
-        self.adIsAdjusting = NO;
-        UISwipeGestureRecognizerDirection d = UISwipeGestureRecognizerDirectionRight;
-        [[ContentManager shared] tickSwipe:d
-                                    inView:nil
-                               penultimate:NO
-                             silenceVector:[NSMutableArray new]];
-        
-        self.currentIndex = self.pendingIndex;
-      }
-    }
-    
-  }*/
   
 }
 
@@ -361,107 +336,6 @@
 }
 
 #pragma mark - UIScrollViewDelegate
-/*
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  @synchronized(self) {
-    self.contentLock = YES;
-  }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  CGFloat newIndex = self.articleScroller.contentOffset.x;
-  CGFloat oldIndex = self.currentOffset.x;
-
-  // Fetch more news if we are less than 3 swipes from the end of the article stack. Don't fetch for any CollectionTypes other than News.
-  if (self.category == ContentCategoryNews) {
-    if ([self.articles count] - self.currentIndex <= 4 && !self.fetchLock) {
-      @synchronized(self) {
-        self.fetchLock = YES;
-        SCPRDeluxeNewsViewController *dnc = (SCPRDeluxeNewsViewController*)self.parentDeluxeNewsPage;
-        [dnc fetchArticleContent:dnc.currentNewsCategorySlug withCallback:^(BOOL finished) {
-          if (finished) {
-            [self setupWithCollection:dnc.monolithicNewsVector
-                     beginningAtIndex:self.currentIndex
-                         processIndex:YES];
-            self.fetchLock = NO;
-          }
-        }];
-      }
-    }
-  }
-  
-  UISwipeGestureRecognizerDirection direction = UISwipeGestureRecognizerDirectionLeft;
-  if (newIndex > oldIndex) {
-    self.currentIndex++;
-    direction = UISwipeGestureRecognizerDirectionLeft;
-    self.protect = @"right";
-    [self setupWithCollection:self.articles
-             beginningAtIndex:self.currentIndex
-               processIndex:NO];
-    
-  } else if (newIndex < oldIndex) {
-    direction = UISwipeGestureRecognizerDirectionRight;
-    self.currentIndex--;
-    self.protect = @"left";
-    [self setupWithCollection:self.articles
-             beginningAtIndex:self.currentIndex
-                 processIndex:NO];
-    
-  }
-  
-  if (self.contentTimer) {
-    if ([self.contentTimer isValid]) {
-      [self.contentTimer invalidate];
-    }
-  }
-  
-  SCPRSingleArticleViewController *currentPage = (SCPRSingleArticleViewController*)self.currentPage;
-  [currentPage snapToContentHeight];
-  
-  self.contentTimer = [NSTimer scheduledTimerWithTimeInterval:0.15
-                                                        target:self
-                                                      selector:@selector(unlockSelf)
-                                                      userInfo:nil
-                                                       repeats:NO];
-  if (!self.collectionType) {
-    self.collectionType = @"Other";
-  }
-  
-  [self brandWithCategory:self.category];
-  
-  NSMutableDictionary *params = [[[AnalyticsManager shared] paramsForArticle:currentPage.relatedArticle] mutableCopy];
-  [params setObject:[NSDate stringFromDate:[NSDate date]
-                        withFormat:@"MMM dd, YYYY HH:mm"]
-             forKey:@"date"];
-  [params setObject:self.collectionType forKey:@"accessed_from"];
-  [params setObject: ([[AudioManager shared] isPlayingAnyAudio]) ? @"YES" : @"NO" forKey:@"audio_on"];
-  
-  BOOL penultimate = NO;
-  if ( direction == UISwipeGestureRecognizerDirectionLeft ) {
-    penultimate = self.currentIndex == [self.articles count]-1;
-  } else {
-    penultimate = self.currentIndex == 0;
-  }
-  
-  if (newIndex != oldIndex) {
-    [[ContentManager shared] tickSwipe:direction
-                                inView:self.articleScroller
-                             penultimate:penultimate
-                           silenceVector:[@[ ] mutableCopy]];
-  }
-  
-#ifdef DEBUG
-  UILabel *hud = [[[Utilities del] masterRootController] hudInformationLabel];
-  [hud titleizeText:[NSString stringWithFormat:@"Offset X : %1.1f",self.articleScroller.contentOffset.x]
-               bold:YES];
-#endif
-  
-  [[AnalyticsManager shared] logEvent:@"story_read"
-                       withParameters:params];
-  
-  
-}
- */
 
 - (void)brandWithCategory:(ContentCategory)category {
   switch (category) {
@@ -534,6 +408,31 @@
 
 - (void)adWillDismiss:(DismissDirection)direction {
   
+  if ( self.adHasBeenDismissed ) return;
+  self.adHasBeenDismissed = YES;
+  
+  __block SCPRSingleArticleCollectionViewController *weakself_ = self;
+  NSInteger index = direction == DismissDirectionLeft ? self.currentIndex + 1 : self.currentIndex - 1;
+  if ( (direction == DismissDirectionRight && self.adLoadedFromLeft) ||
+       (direction == DismissDirectionLeft && !self.adLoadedFromLeft ) ) {
+    index = self.currentIndex;
+  }
+  
+  if ( index < 0 ) index = [self.articles count]+index;
+  if ( index >= [self.articles count]-1 ) index = 0;
+  SCPRSingleArticleViewController *sac = [self prepareArticleViewWithIndex:index];
+  
+  UIPageViewControllerNavigationDirection scrollDir = direction == DismissDirectionLeft ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse;
+  
+  [self.articlePageViewController setViewControllers:@[sac]
+                                           direction:scrollDir
+                                            animated:YES
+                                          completion:^(BOOL finished) {
+                                            
+                                            weakself_.currentIndex = index;
+                                            
+                                            
+                                          }];
 }
 
 - (void)adDidFail {
@@ -604,8 +503,6 @@
       [currentArticle closeShareModal];
     }
   
-
-  
     if ( self.currentPage ) {
       [[ContentManager shared] disposeOfObject:self.currentPage protect:YES];
     }
@@ -621,33 +518,7 @@
 }
 
 - (void)cleanup {
-  /*
-  for (SCPRSingleArticleViewController *svc in self.visualComponents) {
-    [svc killContent];
-  }
-  
-  for (SCPRSingleArticleViewController *svc in [self.wingArticles allValues]) {
-    [svc killContent];
-  }
-  
-  [self.queuedForTrash removeAllObjects];
-  [self.visualComponents removeAllObjects];
-  [self.wingArticles removeAllObjects];
-  
-  [[NSURLCache sharedURLCache] removeAllCachedResponses];
-  
-  [[ContentManager shared] printCacheUsage];
-  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-  if (self.parentDeluxeNewsPage) {
-    SCPRDeluxeNewsViewController *dnc = (SCPRDeluxeNewsViewController*)self.parentDeluxeNewsPage;
-    dnc.pushedCollection = nil;
-  }*/
-  
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-  
 }
 
 #ifdef LOG_DEALLOCATIONS

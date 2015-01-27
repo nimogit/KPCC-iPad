@@ -16,6 +16,7 @@
 #import "SCPRQueueCellViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRDrawerViewController.h"
+#import "SCPRSingleArticleViewController.h"
 
 #define kImageFileLimit 180
 #define kImageMemoryFileLimit 20
@@ -1599,12 +1600,22 @@ static ContentManager *singleton = nil;
     }
     [newCan addObject:thing];
     if ( [thing respondsToSelector:@selector(deactivationMethod)] ) {
-      [thing deactivationMethod];
+      if ( ![thing okToDelete] )
+        [thing deactivationMethod];
     }
   }
   
   @synchronized(self.garbageCan) {
     self.garbageCan = newCan;
+  }
+  
+  NSLog(@"There are %ld items in the trash",(long)self.garbageCan.count);
+  
+}
+
+- (void)manuallyRemoveFromTrash:(id<Deactivatable>)object {
+  if ( [self.garbageCan containsObject:object] ) {
+    [self.garbageCan removeObject:object];
   }
 }
 

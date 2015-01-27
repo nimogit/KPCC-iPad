@@ -113,7 +113,7 @@
 @property BOOL pushAssetIntoBody;
 
 @property BOOL untouchable;
-
+@property BOOL deallocating;
 
 #pragma mark - Content Display Port
 @property (nonatomic,strong) NSMutableArray *mediaContent;

@@ -41,6 +41,8 @@
 @property BOOL dismissalWentLeft;
 @property DismissDirection dismissDirection;
 
+@property (nonatomic,strong) NSLayoutConstraint *leadingConstraint;
+@property (nonatomic,strong) NSLayoutConstraint *trailingConstraint;
 
 @property (nonatomic,strong) NSDictionary *editionShell;
 @property (nonatomic,strong) IBOutlet UILabel *editionInfoLabel;

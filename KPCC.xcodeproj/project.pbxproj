@@ -313,7 +313,6 @@
 		255EE4B917970DE5004D1D5E /* drawer_cell_caret@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 255EE4B517970DE5004D1D5E /* drawer_cell_caret@2x.png */; };
 		255EE4BD179740D5004D1D5E /* SCPR404ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 255EE4BB179740D5004D1D5E /* SCPR404ViewController.m */; };
 		255EE4BE179740D5004D1D5E /* SCPR404ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 255EE4BB179740D5004D1D5E /* SCPR404ViewController.m */; };
-		255EE4BF179740D5004D1D5E /* SCPR404ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 255EE4BC179740D5004D1D5E /* SCPR404ViewController_iPad.xib */; };
 		255EE4C0179740D5004D1D5E /* SCPR404ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 255EE4BC179740D5004D1D5E /* SCPR404ViewController_iPad.xib */; };
 		255EE4C3179741D6004D1D5E /* sad_listener_full.png in Resources */ = {isa = PBXBuildFile; fileRef = 255EE4C1179741D6004D1D5E /* sad_listener_full.png */; };
 		255EE4C4179741D6004D1D5E /* sad_listener_full.png in Resources */ = {isa = PBXBuildFile; fileRef = 255EE4C1179741D6004D1D5E /* sad_listener_full.png */; };
@@ -5829,7 +5828,6 @@
 				25A6778B1828785600565925 /* onboarding-card-step1.jpg in Resources */,
 				25C9A4AB17F4CBF400B6BBB6 /* icon-share-email.png in Resources */,
 				255EE4B817970DE5004D1D5E /* drawer_cell_caret@2x.png in Resources */,
-				255EE4BF179740D5004D1D5E /* SCPR404ViewController_iPad.xib in Resources */,
 				255EE4C3179741D6004D1D5E /* sad_listener_full.png in Resources */,
 				258535611835A74F00853085 /* SCPRFeedbackViewController.xib in Resources */,
 				255EE4C5179741D6004D1D5E /* sad_listener_full@2x.png in Resources */,
@@ -6666,7 +6664,7 @@
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "4679b9f3-4400-477b-8855-bfd40a790066";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = 3;
+				UNIQUE_BUNDLE_VERSION = 1;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSION = 1.0.7;
 				WRAPPER_EXTENSION = app;
@@ -6888,7 +6886,7 @@
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "92b9c3f6-4039-4005-93a0-90471d88e766";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = "build 2";
+				UNIQUE_BUNDLE_VERSION = "build 3";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSION = 1.0.7;
 				WRAPPER_EXTENSION = app;
