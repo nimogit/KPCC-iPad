@@ -14,6 +14,7 @@
 
 - (void)prepUI;
 - (NSInteger)myStepIndex;
+- (void)activate;
 
 @property (nonatomic,weak) id master;
 
@@ -31,7 +32,7 @@
 @property (nonatomic,strong) id myCardContent;
 @property NSInteger myStepIndex;
 
-- (void)setupWithStep:(FlowStep)step andMaster:(id)master;
+- (id<Cardable>)setupWithStep:(FlowStep)step andMaster:(id)master;
 - (IBAction)backTapped:(id)sender;
 
 @end

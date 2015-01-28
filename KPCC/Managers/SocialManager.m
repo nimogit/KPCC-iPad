@@ -487,6 +487,7 @@ static SocialManager *singleton = nil;
 }
 
 - (BOOL)isAuthenticatedWithLinkedIn {
+  /*
   NSString *token = [[ContentManager shared].settings linkedInToken];
   NSDate *expire = [[ContentManager shared].settings linkedInTokenExpire];
   
@@ -506,9 +507,12 @@ static SocialManager *singleton = nil;
   
   
   return [[ContentManager shared].settings singleSignOnWithLinkedIn];
+   */
+  return NO;
 }
 
 - (BOOL)isSilentlyAuthenticatedWithLinkedIn {
+  /*
   NSString *token = [[ContentManager shared].settings linkedInToken];
   NSDate *expire = [[ContentManager shared].settings linkedInTokenExpire];
   
@@ -526,15 +530,18 @@ static SocialManager *singleton = nil;
     return NO;
   }
 
-  return YES;
+  return YES;*/
+  return NO;
 }
 
 - (void)logoutOfLinkedIn {
+  /*
   [[ContentManager shared].settings setSingleSignOnWithLinkedIn:NO];
   [[ContentManager shared] writeSettings];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:@"logged_out"
                                                       object:@"linkedin"];
+   */
 }
 
 - (void)shareWithLinkedIn:(id)article delegate:(id)delegate {
@@ -915,6 +922,14 @@ static SocialManager *singleton = nil;
                                          });
 
                                                     
+                                       } else {
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                           [self twitterAuthFailed:[NSError errorWithDomain:@"KPCC:Disallowed"
+                                                                                       code:569
+                                                                                   userInfo:@{ @"disallowed" : @1 }]
+                                                          delegate:delegate];
+                                         });
+
                                        }
                                      }];
  
@@ -1130,12 +1145,22 @@ static SocialManager *singleton = nil;
     [delegate twitterAuthenticationFailed];
   } else {
     
-    [[[UIAlertView alloc] initWithTitle:@"Twitter Login Failed"
-                                message:@"We couldn't connect with Twitter. Try again later"
-                               delegate:nil
-                      cancelButtonTitle:@"OK"
-                      otherButtonTitles:nil] show];
-    
+    NSDictionary *ui = [error userInfo];
+    if ( ui && ui[@"disallowed"] ) {
+      [[[UIAlertView alloc] initWithTitle:@"Twitter Permission Error"
+                                  message:@"Please enable KPCC to access your Twitter accounts in your device settings"
+                                 delegate:nil
+                        cancelButtonTitle:@"OK"
+                        otherButtonTitles:nil] show];
+
+    } else {
+      [[[UIAlertView alloc] initWithTitle:@"Twitter Login Failed"
+                                  message:@"We couldn't connect with Twitter. Try again later"
+                                 delegate:nil
+                        cancelButtonTitle:@"OK"
+                        otherButtonTitles:nil] show];
+    }
+    [delegate twitterAuthenticationFailed];
   }
 }
 
@@ -1191,10 +1216,11 @@ static SocialManager *singleton = nil;
 - (void)logoutOfFacebook {
   [[ContentManager shared].settings setProfileImageURL:nil];
   [[ContentManager shared].settings setUserFacebookInformation:nil];
-  //[[ContentManager shared]]
+  
   [[ContentManager shared] writeSettings];
   
   [[FBSession activeSession] closeAndClearTokenInformation];
+  [FBSession setActiveSession:nil];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:@"logged_out"
                                                       object:@"facebook"];

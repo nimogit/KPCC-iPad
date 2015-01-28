@@ -162,6 +162,8 @@ typedef enum {
 @property (nonatomic,strong) NSMutableDictionary *deactivationQueue;
 @property (nonatomic,strong) NSMutableDictionary *pendingNotification;
 
+@property (nonatomic,strong) NSDate *lastSynchWithParse;
+
 @property (nonatomic,strong) NSMutableArray *garbageCan;
 
 @property (nonatomic,strong) GADInterstitial *loadedAd;

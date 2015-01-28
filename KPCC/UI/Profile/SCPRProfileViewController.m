@@ -449,7 +449,10 @@
 
   self.nameLabel.alpha = 1.0;
   self.socialIcon.alpha = 1.0;
-  self.socialTitle.alpha = 1.0;
+  
+  if ( ![[SocialManager shared] isAuthenticatedWithFacebook] ) {
+    self.socialTitle.alpha = 1.0;
+  }
 }
 
 - (IBAction)buttonTapped:(id)sender {

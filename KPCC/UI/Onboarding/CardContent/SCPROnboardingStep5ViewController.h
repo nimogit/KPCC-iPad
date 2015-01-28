@@ -24,6 +24,6 @@
 
 
 - (IBAction)buttonTapped:(id)sender;
-
+- (void)activate;
 
 @end

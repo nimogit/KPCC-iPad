@@ -51,10 +51,14 @@
                                                name:@"spinner_appeared"
                                              object:nil];
   
+  
+  
+  
+  
+}
+
+- (void)activate {
   [self.spinner spinInPlaceWithFinishedToken:@"logged_in"];
-  
-  
-  
 }
 
 - (void)backTapped {

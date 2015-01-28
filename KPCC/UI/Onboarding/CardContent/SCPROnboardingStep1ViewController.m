@@ -98,6 +98,10 @@
   }
 }
 
+- (void)activate {
+  
+}
+
 
 #pragma mark - Twitterable
 - (UIView*)twitterableView {

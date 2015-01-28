@@ -39,6 +39,7 @@ typedef enum {
 
 - (void)setup;
 - (void)pushCard:(NSInteger)step;
+- (void)pushCard:(NSInteger)step completion:(VoidBlock)completed;
 - (void)popCard;
 - (void)rubberBandCard:(CGFloat)distance responder:(UIResponder*)pusher;
 - (void)snapRubberBand;

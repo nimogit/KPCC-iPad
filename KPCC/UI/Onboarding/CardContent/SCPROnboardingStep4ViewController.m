@@ -65,6 +65,10 @@
   
 }
 
+- (void)activate {
+  
+}
+
 - (NSInteger)myStepIndex {
   return FlowStepMemberValidateMultiple;
 }

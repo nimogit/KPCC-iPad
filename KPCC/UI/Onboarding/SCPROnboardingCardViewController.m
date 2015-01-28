@@ -50,7 +50,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)setupWithStep:(FlowStep)step andMaster:(id)master {
+- (id<Cardable>)setupWithStep:(FlowStep)step andMaster:(id)master {
   
   UIViewController<Cardable> *stepCtrl = nil;
   self.contentScroller.clipsToBounds = YES;
@@ -96,9 +96,6 @@
       break;
   }
   
-  if ( !stepCtrl ) {
-    return;
-  }
   
   self.contentScroller.contentSize = CGSizeMake(self.contentScroller.frame.size.width,
                                                 stepCtrl.view.frame.size.height);
@@ -111,6 +108,8 @@
   self.myCardContent = stepCtrl;
   
   [self.contentScroller addSubview:stepCtrl.view];
+  
+  return stepCtrl;
   
 }
 

@@ -69,6 +69,10 @@
 #endif
 }
 
+- (void)activate {
+  
+}
+
 - (NSInteger)myStepIndex {
   return FlowStepMemberInfoInput;
 }

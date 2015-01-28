@@ -106,13 +106,14 @@
 }
 
 - (void)pushCard:(NSInteger)step {
+  [self pushCard:step completion:nil];
+}
+
+- (void)pushCard:(NSInteger)step completion:(VoidBlock)completed {
   
   SCPROnboardingCardViewController *card = [[SCPROnboardingCardViewController alloc]
                                             initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPROnboardingCardViewController"]
                                             bundle:nil];
-  
-  
-
   
   [self.contentStack addObject:card];
   
@@ -125,6 +126,7 @@
   
   NSString *hFmt = @"";
   NSArray *hConstraints = nil;
+  
   if ( self.contentStack.count == 1 ) {
     hFmt = @"H:|[card]";
     hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:hFmt
@@ -133,7 +135,7 @@
                                                                       views:@{ @"card" : card.view }];
   } else {
     
-    SCPROnboardingCardViewController *prevCard = [self.contentStack objectAtIndex:step-2];
+    SCPROnboardingCardViewController *prevCard = self.contentStack[self.contentStack.count-2];
     [prevCard.view setTranslatesAutoresizingMaskIntoConstraints:NO];
     
     hFmt = @"H:[prev][card]";
@@ -170,7 +172,7 @@
   } else {
     card.backButton.alpha = 0.0;
   }
-  [card setupWithStep:step andMaster:self];
+  id<Cardable> crux = [card setupWithStep:step andMaster:self];
 
   [self.cardScroller addConstraints:hConstraints];
   [self.cardScroller addConstraints:vConstraints];
@@ -178,7 +180,7 @@
   self.currentStepIndex = step;
   
   [UIView animateWithDuration:0.43 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-    [self.cardScroller setContentOffset:CGPointMake((step-1)*self.cardScroller.frame.size.width,0.0)];
+    [self.cardScroller setContentOffset:CGPointMake(([self.contentStack count]-1)*self.cardScroller.frame.size.width,0.0)];
     for ( unsigned i = 0; i < [self.contentStack count]; i++ ) {
       SCPROnboardingCardViewController *c = [self.contentStack objectAtIndex:i];
       if ( c.myStepIndex == self.currentStepIndex ) {
@@ -189,13 +191,12 @@
     }
   } completion:^(BOOL finished) {
     
-    /*for ( SCPROnboardingCardViewController *card in self.contentStack ) {
-      card.view.backgroundColor = [[DesignManager shared] prettyRandomColor];
-    }*/
+    [crux activate];
+    [self.cardScroller setNeedsLayout];
     
   }];
   
-  [self.cardScroller setNeedsLayout];
+  
   
 }
 
