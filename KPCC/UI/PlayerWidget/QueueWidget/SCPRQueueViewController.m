@@ -41,6 +41,13 @@
   self.sleepTimerLabelUpdateTimer = [NSTimer scheduledTimerWithTimeInterval: 1.0 target:self selector:@selector(updateSleepTimeLeft) userInfo:nil repeats: YES];
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [self.view setNeedsLayout];
+  [self.view setNeedsUpdateConstraints];
+  [self.view layoutIfNeeded];
+  [self.view updateConstraintsIfNeeded];
+}
+
 -(void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   
@@ -58,6 +65,8 @@
                                            selector:@selector(primeQueueForState)
                                                name:@"notify_listeners_of_queue_change"
                                              object:nil];
+  
+  [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
   
   [[QueueManager shared] setDelegate:self];
   
@@ -626,14 +635,9 @@
     SCPRPlayerWidgetViewController *playa = [[Utilities del] globalPlayer];
     [playa.view setAlpha:1.0];
   }];
-  
-  [self dismissViewControllerAnimated:YES completion:^{
     
-    SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
-    [root invalidateStatusBar];
-    root.frozenOrientation = 0;
-    
-  }];
+  SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
+  [root hideQueue];
 }
 
 - (IBAction)switchToLiveTapped:(id)sender {
@@ -650,6 +654,8 @@
   CGRect raw = self.sleepTimerButton.frame;
   CGRect cooked = [self.view convertRect:raw fromView:self.sleepTimerInactiveView];
   cooked = CGRectMake(cooked.origin.x, cooked.origin.y + 4, cooked.size.width, cooked.size.height);
+  [self.sleepTimerTableViewController.view layoutIfNeeded];
+  self.sleepTimerTableViewController.view.frame = self.sleepTimerTableViewController.view.frame;
   
   CGFloat s = [self.sleepTimerTableViewController.sleepTimerData count]*44.0;
   self.sleepTimerModal.popoverContentSize = CGSizeMake(self.sleepTimerTableViewController.tableView.frame.size.width,s);
@@ -680,7 +686,6 @@
 
   if ([[AlarmManager shared] isSleepTimerActive]) {
     int secondsLeft = [[AlarmManager shared] secondsLeft];
-
     if (secondsLeft > 0) {
       int minutes, seconds;
       minutes = secondsLeft / 60;
@@ -695,6 +700,7 @@
       }];
     }
   }
+  
 }
 
 - (void)dropAllItemsFromQueue {

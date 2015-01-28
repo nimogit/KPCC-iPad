@@ -308,6 +308,7 @@
   } else {
     
     [[Utilities del] setDrawerIsDirty:YES];
+    [self prepHeader];
     
   }
 }
@@ -352,20 +353,6 @@
   CGFloat push = [Utilities isIOS7] ? -12.0 : 2.0;
   push = [Utilities isIpad] ? push : 2.0;
   
-  [[DesignManager shared] avoidNeighbor:self.nameLabel
-                               withView:self.socialTitle
-                              direction:NeighborDirectionAbove
-                                padding:push];
-  
-  [[DesignManager shared] alignVerticalCenterOf:self.socialIcon
-                                       withView:self.socialTitle];
-  
-  if ( ![Utilities isIpad] ) {
-    [[DesignManager shared] avoidNeighbor:self.socialIcon
-                                 withView:self.socialTitle
-                                direction:NeighborDirectionToLeft
-                                  padding:3.0];
-  }
   
   self.avatarImage.layer.cornerRadius = self.avatarImage.frame.size.height/2.0;
   self.avatarImage.clipsToBounds = YES;

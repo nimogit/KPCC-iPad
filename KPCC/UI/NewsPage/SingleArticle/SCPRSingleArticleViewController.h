@@ -20,7 +20,7 @@
 @class SCPRHBTView;
 @class SCPRNewsPageViewController;
 
-@interface SCPRSingleArticleViewController : UIViewController<ContentProcessor,UIWebViewDelegate,UIAlertViewDelegate,Backable,WebContentContainer,Deactivatable,Rotatable>
+@interface SCPRSingleArticleViewController : UIViewController<ContentProcessor,UIWebViewDelegate,UIAlertViewDelegate,Backable,WebContentContainer,Deactivatable,Rotatable,Pageable>
 
 
 @property (nonatomic,strong) NSDictionary *relatedArticle;
@@ -92,6 +92,8 @@
 @property (nonatomic,strong) IBOutlet SCPRShareDrawerViewController *shareDrawer;
 - (void)queryParse;
 
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *bylineToCaptionAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *grayLineToByLineAnchor;
 
 @property NSInteger index;
 @property BOOL videoStarted;
@@ -100,6 +102,8 @@
 @property BOOL workerThread;
 @property BOOL contentArranged;
 @property BOOL gateOpen;
+@property BOOL needsShareOpen;
+
 
 @property BOOL captionUp;
 @property BOOL okToDelete;
@@ -108,6 +112,8 @@
 @property BOOL twitterSynthesized;
 @property BOOL pushAssetIntoBody;
 
+@property BOOL untouchable;
+@property BOOL deallocating;
 
 #pragma mark - Content Display Port
 @property (nonatomic,strong) NSMutableArray *mediaContent;
@@ -126,6 +132,14 @@
 @property (nonatomic,weak) id parentEditionAtom;
 
 
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *webContentHeightAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *articleDetailsAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *grayLineBottomAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *playerControlsByLineAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *webViewBottomAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *webViewTopAnchor;
+
+
 - (IBAction)buttonTapped:(id)sender;
 - (void)arrangeContent;
 - (void)adjustUIForQueue:(NSNotification*)note;
@@ -138,5 +152,6 @@
 - (void)photoVideoTreatment;
 - (void)presentVideo;
 - (void)armCaption:(NSDictionary*)leadingAsset;
+- (void)shortenForNoAudio;
 
 @end

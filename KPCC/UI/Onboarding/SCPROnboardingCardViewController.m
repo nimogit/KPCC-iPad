@@ -38,6 +38,9 @@
   
   self.cardCrux.layer.borderColor = [[DesignManager shared] silverliningColor].CGColor;
   self.cardCrux.layer.borderWidth = 1.0;
+  
+  [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
   [[DesignManager shared] globalSetTextColorTo:[[DesignManager shared] clayColor]
                                      forButton:self.backButton];
   

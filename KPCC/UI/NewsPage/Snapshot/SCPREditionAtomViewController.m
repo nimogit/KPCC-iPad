@@ -45,16 +45,6 @@
 
 - (void)mergeWithArticle {
   
-  //if ( [Utilities isIOS7] ) {
-  if ( [Utilities isIpad] ) {
-    self.topGradient.alpha = 0.0;
-  }
-  
-  //}
-  
-  
-
-  
   NSString *source = [self.relatedArticle objectForKey:@"source"];
   CGFloat iconPadding = 0.0;
   if ( [self isKPCCArticle] ) {
@@ -66,8 +56,10 @@
 
 
     
-    [[DesignManager shared] globalSetImageTo:@"icon-abstract-view-kpccarticle.png"
-                                   forButton:self.expandButton];
+    /*[[DesignManager shared] globalSetImageTo:@"icon-abstract-view-kpccarticle.png"
+                                   forButton:self.expandButton];*/
+    
+    self.buttonIcon.image = [UIImage imageNamed:@"icon-abstract-view-kpccarticle.png"];
   } else {
     
     iconPadding = 8.0;
@@ -78,15 +70,14 @@
                                  forButton:self.expandButton];
     
 
-    [[DesignManager shared] globalSetImageTo:@"icon-abstract-view-externalarticle.png"
-                                   forButton:self.expandButton];
+    /*[[DesignManager shared] globalSetImageTo:@"icon-abstract-view-externalarticle.png"
+                                   forButton:self.expandButton];*/
+    self.buttonIcon.image = [UIImage imageNamed:@"icon-abstract-view-externalarticle.png"];
   }
   
   [[DesignManager shared] globalSetTextColorTo:[[DesignManager shared] turquoiseCrystalColor:1.0]
                                      forButton:self.expandButton];
   
-  CGSize s = [self.expandButton.titleLabel.text sizeOfStringWithFont:self.expandButton.titleLabel.font
-                                                   constrainedToSize:self.expandButton.titleLabel.frame.size];
 
   
   [[DesignManager shared] globalSetFontTo:[[DesignManager shared]
@@ -99,16 +90,7 @@
       iconPadding = 10.0;
     }
   }
-  
-  CGFloat bigStretch = [Utilities isIpad] ? 60.0 : 10.0;
-  CGFloat xOffset = [Utilities isIpad] ? 10.0 : 12.0;
-  CGFloat smallStretch = [Utilities isIpad] ? 10.0 : 2.0;
-  self.expandButton.frame = CGRectMake(self.expandButton.frame.origin.x+xOffset,
-                                       self.expandButton.frame.origin.y,
-                                       smallStretch+s.width+bigStretch+smallStretch,
-                                       self.expandButton.frame.size.height);
-  
-  [self.expandButton setImageEdgeInsets:UIEdgeInsetsMake(0.0, ceilf(s.width)-iconPadding, 0.0, 0.0)];
+
   
   self.view.frame = self.view.frame;
   
@@ -225,7 +207,7 @@
 
 - (IBAction)buttonTapped:(id)sender {
   
-  if (sender == self.expandButton || sender == self.altTriggerButton) {
+  if (sender == self.expandButton || sender == self.altTriggerButton || sender == self.secondaryExpandButton ) {
 
     if (![self isKPCCArticle]) {
       NSString *url = [self.relatedArticle objectForKey:@"url"];
@@ -372,8 +354,13 @@
     sac.parentEditionAtom = self;
     self.internalContent = sac;
     
-    UIViewController *molecule = (UIViewController*)self.parentMolecule;
-    [molecule.navigationController pushViewController:sac animated:YES];
+    SCPREditionMoleculeViewController *molecule = (SCPREditionMoleculeViewController*)self.parentMolecule;
+    BOOL animated = YES;
+    if ( [molecule intermediaryAppearance] ) {
+      animated = NO;
+      [molecule setIntermediaryAppearance:NO];
+    }
+    [molecule.navigationController pushViewController:sac animated:animated];
     [sac arrangeContent];
 
     [[ContentManager shared] pushToResizeVector:sac];

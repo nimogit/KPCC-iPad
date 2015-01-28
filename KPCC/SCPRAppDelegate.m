@@ -16,6 +16,7 @@
 #import "SCPRSpinnerViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRCloakViewController.h"
+#import <DCIntrospect-ARC/DCIntrospect.h>
 
 @implementation SCPRAppDelegate
 
@@ -27,6 +28,8 @@
                                                 xibForPlatformWithName:@"SCPRMasterRootViewController"]
                                bundle:nil];
   self.masterRootController.view.autoresizesSubviews = YES;
+  
+  NSLog(@" ************* // APPLICATION DID FINISH LAUNCHING \\ ************** ");
   
 #ifdef USE_PARSE
   [Parse setApplicationId:[[[[FileManager shared] globalConfig] objectForKey:@"Parse"] objectForKey:@"ApplicationId"]
@@ -59,19 +62,8 @@
   self.globalSpinner = [[SCPRSpinnerViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRAltSpinnerViewController"] bundle:nil];
   self.viewController = [[SCPRViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRViewController"] bundle:nil];
 
-  self.masterRootController.view.frame = CGRectMake(0.0,
-                                                    0.0,
-                                                    self.window.bounds.size.width,
-                                                    self.window.bounds.size.height);
-  
-  CGFloat mainAdjustment = [Utilities isIOS7] ? 0.0 : -20.0;
-  self.viewController.view.frame = self.viewController.view.frame;
-  self.viewController.view.frame = CGRectMake(0.0,
-                                              mainAdjustment,
-                                              self.masterRootController.view.frame.size.width,
-                                              self.masterRootController.view.frame.size.height - mainAdjustment);
   [self.masterRootController.view addSubview:self.viewController.view];
-
+  
   UINavigationController *unc = [[UINavigationController alloc] initWithRootViewController:self.masterRootController];
   unc.navigationBarHidden = YES;
   
@@ -91,10 +83,21 @@
   self.globalDrawer.view.alpha = 0.0;
   [self.masterRootController.view addSubview:self.globalDrawer.view];
   [self.masterRootController.view sendSubviewToBack:self.globalDrawer.view];
-  [self.masterRootController.view bringSubviewToFront:self.globalTitleBar.view];
   self.masterRootController.globalGradient = self.viewController.globalGradient;
   
   [self.window makeKeyAndVisible];
+  
+#if TARGET_IPHONE_SIMULATOR
+  [[DCIntrospect sharedIntrospector] start];
+#endif
+  
+  [[DesignManager shared] setPredictedWindowSize:self.window.frame.size];
+  
+  NSArray *vcTypical = [[DesignManager shared] typicalConstraints:self.viewController.view];
+  [self.masterRootController.view addConstraints:vcTypical];
+  
+  NSArray *typical = [[DesignManager shared] typicalConstraints:self.masterRootController.view];
+  [self.window addConstraints:typical];
   
   UILocalNotification *ln = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
   if ( ln ) {
@@ -113,9 +116,15 @@
   
   [self.viewController primeUI:ScreenContentTypeCompositePage newsPath:@""];
 
-  [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|
-   UIRemoteNotificationTypeBadge|
-   UIRemoteNotificationTypeSound];
+  NSLog(@" **** REQUESTING NOTIFICATION PERMISSIONS **** ");
+  if ( [[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)] ) {
+    NSLog(@" ************** iOS 8 : Using proper notification settings - Global **************");
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge
+                                                                                                          categories:nil]];
+  } else {
+    NSLog(@" ************** iOS 7 : Using legacy - Global **************");
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+  }
   
   return YES;
 }
@@ -183,6 +192,58 @@
   [self cloakUIWithMessage:message andUnfreezeString:@"network_ok"];
 }
 
+- (void)blackoutCloak:(VoidBlock)cloakAppeared {
+  if ( self.appCloaked ) {
+    return;
+  }
+  
+  self.cloak = [[SCPRCloakViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRCloakViewController"] bundle:nil];
+  self.cloak.view.frame = CGRectMake(0.0,0.0,self.window.frame.size.width,
+                                     self.window.frame.size.height);
+  self.cloak.view.backgroundColor = [UIColor blackColor];
+  self.cloak.view.alpha = 0.0;
+  
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+  
+  [self.cloak.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [spinner setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  [[DesignManager shared] snapView:self.cloak.view
+                       toContainer:self.masterRootController.view];
+  
+  NSLayoutConstraint *hC = [NSLayoutConstraint constraintWithItem:spinner
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.cloak.view
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.0
+                                                         constant:0.0];
+  
+  NSLayoutConstraint *vC = [NSLayoutConstraint constraintWithItem:spinner
+                                                        attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.cloak.view
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.0
+                                                         constant:0.0];
+  
+  [self.cloak.view addSubview:spinner];
+  [self.cloak.view addConstraints:@[ hC, vC ]];
+  [spinner startAnimating];
+  
+  [UIView animateWithDuration:0.25 animations:^{
+      self.cloak.view.alpha = 1.0;
+  } completion:^(BOOL finished) {
+    self.appCloaked = YES;
+    cloakAppeared();
+  }];
+  
+}
+
+- (void)uncloakBlackoutUI {
+  
+}
+
 - (void)cloakUIWithMessage:(NSString *)message andUnfreezeString:(NSString *)string {
   
   if ( self.appCloaked ) {
@@ -245,9 +306,6 @@
   self.cloak = [[SCPRCloakViewController alloc] initWithNibName:[[DesignManager shared]
                                                                  xibForPlatformWithName:@"SCPRCloakViewController"]
                                                          bundle:nil];
-  CGRect rf = CGRectMake(0.0,0.0,self.masterRootController.view.bounds.size.width,
-                                     self.masterRootController.view.bounds.size.height);
-  self.cloak.view.frame = rf;
   
   self.cloak.view.autoresizingMask = kGlobalResize;
   self.cloak.view.backgroundColor = [[DesignManager shared] obsidianColor:0.9];
@@ -257,13 +315,13 @@
   self.slideshowModal = [[SCPRScrollingAssetViewController alloc] initWithNibName:[[DesignManager shared]
                                                                                    xibForPlatformWithName:@"SCPRScrollingAssetViewController"]
                                                                            bundle:nil];
-  self.slideshowModal.view.center = CGPointMake(self.cloak.view.frame.size.width/2.0,
-                                                self.cloak.view.frame.size.height/2.0);
-  [self.cloak.view addSubview:self.slideshowModal.view];
-  self.cloak.cloakContent = self.slideshowModal;
-  [[ContentManager shared] pushToResizeVector:self.cloak];
+  [self.slideshowModal.view printDimensionsWithIdentifier:@"Slideshow Modal"];
   
-  [self.slideshowModal sourceWithArticle:article];
+
+  
+  self.cloak.cloakContent = self.slideshowModal;
+  
+  [[ContentManager shared] pushToResizeVector:self.cloak];
   
   self.slideshowModal.view.backgroundColor = [UIColor clearColor];
   self.slideshowModal.leftCurtain.alpha = 0.0;
@@ -275,12 +333,21 @@
   
   [self.cloak.view addGestureRecognizer:tap];
   
-  [self.masterRootController.view addSubview:self.cloak.view];
+  [[DesignManager shared] snapView:self.cloak.view
+                       toContainer:self.masterRootController.view];
+  [[DesignManager shared] snapView:self.slideshowModal.view
+                               toContainer:self.cloak.view];
   
-  [UIView beginAnimations:nil context:NULL];
-  [UIView setAnimationDuration:0.33];
-  self.cloak.view.alpha = 1.0;
-  [UIView commitAnimations];
+  //[self.slideshowModal sourceWithArticle:article];
+  self.slideshowModal.article = article;
+  self.slideshowModal.needsSetup = YES;
+  [self.slideshowModal.view setNeedsLayout];
+  
+  [UIView animateWithDuration:0.25 animations:^{
+      self.cloak.view.alpha = 1.0;
+  } completion:^(BOOL finished) {
+
+  }];
   
   self.appCloaked = YES;
 }
@@ -319,8 +386,12 @@
   ctrl.view.center = CGPointMake(self.cloak.view.frame.size.width/2.0,
                                  self.cloak.view.frame.size.height/2.0+push);
   ctrl.view.tag = 1501;
+  NSArray *layout = [[DesignManager shared] sizeContraintsForView:ctrl.view];
+  [ctrl.view addConstraints:layout];
   
-  [self.cloak.view addSubview:ctrl.view];
+  [[DesignManager shared] snapCenteredView:ctrl.view
+                               toContainer:self.cloak.view];
+  
   self.cloak.cloakContent = ctrl;
   [[ContentManager shared] pushToResizeVector:self.cloak];
   
@@ -333,7 +404,9 @@
     [self.cloak.view addGestureRecognizer:tap];
   }
   
-  [self.masterRootController.view addSubview:self.cloak.view];
+  //[self.masterRootController.view addSubview:self.cloak.view];
+  [[DesignManager shared] snapView:self.cloak.view
+                       toContainer:self.masterRootController.view];
   
   [UIView animateWithDuration:0.33 animations:^{
     self.cloak.view.alpha = 1.0;
@@ -347,6 +420,10 @@
 }
 
 - (void)uncloakUI {
+  [self uncloakUI:NO];
+}
+
+- (void)uncloakUI:(BOOL)blackout {
   
   if ( self.appIsShowingTour ) {
     return;
@@ -368,40 +445,38 @@
     self.unfreezeKey = nil;
   }
   
-  [UIView beginAnimations:nil context:NULL];
-  [UIView setAnimationDuration:0.33];
-  [UIView setAnimationDelegate:self];
-  [UIView setAnimationDidStopSelector:@selector(uncloaked)];
-  self.cloak.view.alpha = 0.0;
-  [UIView commitAnimations];
-}
+  [UIView animateWithDuration:0.25 animations:^{
+      self.cloak.view.alpha = 0.0;
+  } completion:^(BOOL finished) {
+    self.appCloaked = NO;
+    
+    [self.cloak.view removeFromSuperview];
+    self.cloak = nil;
+    
+    if ( !self.safeCloak ) {
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"wake_up_ui"
+                                                          object:nil];
+    } else {
+      self.safeCloak = NO;
+    }
+    
+    if ( self.customCloak ) {
+      [self.customCloak deactivate];
+      self.customCloak = nil;
+    }
+    if ( self.slideshowModal ) {
+      [self.slideshowModal deactivate];
+      self.slideshowModal = nil;
+    }
+    
+    if ( !blackout ) {
+      [[ContentManager shared] popFromResizeVector];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"app_uncloaked"
+                                                        object:nil];
+  }];
 
-- (void)uncloaked {
-  self.appCloaked = NO;
-  
-  [self.cloak.view removeFromSuperview];
-  self.cloak = nil;
-  
-  if ( !self.safeCloak ) {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"wake_up_ui"
-                                                      object:nil];
-  } else {
-    self.safeCloak = NO;
-  }
-  
-  if ( self.customCloak ) {
-    [self.customCloak deactivate];
-    self.customCloak = nil;
-  }
-  if ( self.slideshowModal ) {
-    [self.slideshowModal deactivate];
-    self.slideshowModal = nil;
-  }
-
-  [[ContentManager shared] popFromResizeVector];
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"app_uncloaked"
-                                                      object:nil];
 }
 
 - (SCPRPlayerWidgetViewController*)globalPlayer {
@@ -494,6 +569,11 @@
   }
 }
 
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+  NSLog(@"**** iOS 8 Notification Permissions received ****");
+  [application registerForRemoteNotifications];
+}
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   
 #ifdef USE_PARSE
@@ -525,7 +605,6 @@
   switch ([self operatingWithPushType]) {
     case PushTypeEvents:
     case PushTypeBreakingNews:
-
       break;
     case PushTypeUnknown:
       default:
@@ -671,6 +750,10 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
   }
   
+  if ( ![[DesignManager shared] inSingleArticle] ) {
+    [[FileManager shared] cleanupTemporaryFiles];
+  }
+  
   [[NetworkManager shared] fetchContentForScheduleThisWeek:[ScheduleManager shared]];}
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -680,6 +763,7 @@
     [[ContentManager shared] saveContextOnMainThread];
   }
   
+  [[FileManager shared] cleanupTemporaryFiles];
   [[AnalyticsManager shared] setSavedScreenContent:[[AnalyticsManager shared] screenContent]];
   [[AnalyticsManager shared] terminateTimedSessionForContentType:[[AnalyticsManager shared] screenContent]];
 }

@@ -27,6 +27,10 @@
 @property (nonatomic,strong) IBOutlet UIButton *drillDownButton;
 @property (nonatomic,strong) IBOutlet UIView *additionalSeat;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic,strong) IBOutlet UIView *shadowedSeatView;
+
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *headlineLabelAnchor;
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *pantsViewAnchor;
 
 @property (nonatomic,weak) id pushedContent;
 @property (nonatomic,weak) id parentMineral;
@@ -38,6 +42,7 @@
 
 - (void)setupWithEdition:(NSDictionary*)edition;
 - (void)prime;
+- (void)refresh;
 - (NSString*)buildList:(NSDictionary*)edition;
 
 - (void)shrink;

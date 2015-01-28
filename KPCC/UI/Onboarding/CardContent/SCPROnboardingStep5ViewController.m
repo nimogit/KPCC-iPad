@@ -77,12 +77,14 @@
                                                name:@"facebook_fail"
                                              object:nil];
   
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(fail)
+                                               name:@"twitter_fail"
+                                             object:nil];
+  
   ShareIntent type = (ShareIntent)[[self.metaData objectForKey:@"serviceType"] intValue];
   if ( type == ShareIntentTwitter ) {
     self.account = [self.metaData objectForKey:@"extraMeta"];
-    
-
-    
     [[SocialManager shared] loginWithTwitter:self.account];
   }
   if ( type == ShareIntentFacebook ) {
@@ -116,6 +118,11 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:@"facebook_fail"
                                                 object:nil];
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:@"twitter_fail"
+                                                object:nil];
+  
   
   [(SCPROnboardingFlowViewController *)self.master popCard];
   

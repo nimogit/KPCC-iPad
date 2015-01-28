@@ -287,6 +287,226 @@ static DesignManager *singleton = nil;
   }
 }
 
+- (NSArray*)typicalConstraints:(UIView *)view withTopOffset:(CGFloat)topOffset {
+  return [self typicalConstraints:view withTopOffset:topOffset fullscreen:NO];
+}
+
+- (NSArray*)typicalConstraints:(UIView *)view withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen {
+  
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"view" : view }];
+  
+  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-(%ld)-[view]-(0)-|",(long)topOffset]
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"view" : view }];
+  
+  
+  NSMutableArray *total = [NSMutableArray new];
+  
+  
+  [total addObjectsFromArray:hConstraints];
+  [total addObjectsFromArray:vConstraints];
+  
+  return [NSArray arrayWithArray:total];
+}
+
+- (NSArray*)sizeContraintsForView:(UIView *)view {
+  
+  NSLayoutConstraint *hConstraint = [NSLayoutConstraint constraintWithItem:view
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0
+                                                                  constant:view.frame.size.height];
+  
+  NSLayoutConstraint *wConstraint = [NSLayoutConstraint constraintWithItem:view
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0
+                                                                  constant:view.frame.size.width];
+  
+  return @[ hConstraint, wConstraint ];
+  
+}
+
+- (NSArray*)typicalConstraints:(UIView *)view {
+  return [self typicalConstraints:view
+                    withTopOffset:0.0];
+}
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset {
+  return [self snapView:view toContainer:container withTopOffset:topOffset fullscreen:NO];
+}
+
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen {
+  UIView *v2u = nil;
+  UIView *c2u = nil;
+  if ( [view isKindOfClass:[UIView class]] ) {
+    v2u = view;
+  }
+  if ( [view isKindOfClass:[UIViewController class]] ) {
+    v2u = [(UIViewController*)view view];
+  }
+  if ( [container isKindOfClass:[UIView class]] ) {
+    c2u = container;
+  }
+  if ( [container isKindOfClass:[UIViewController class]] ) {
+    c2u = [(UIViewController*)container view];
+  }
+  [c2u addSubview:v2u];
+  
+  CGFloat expectedWidth = c2u.frame.size.width;
+  CGFloat expectedHeight = c2u.frame.size.height;
+  NSLog(@"Expected width : %1.1f",expectedWidth);
+  NSLog(@"Expected height : %1.1f",expectedHeight);
+  
+  v2u.frame = CGRectMake(0.0, 0.0, expectedWidth,
+                         expectedHeight);
+  
+
+  [v2u setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  NSArray *anchors = [self typicalConstraints:v2u withTopOffset:topOffset fullscreen:fullscreen];
+  
+  [c2u setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [c2u addConstraints:anchors];
+  [c2u setNeedsUpdateConstraints];
+  [c2u setNeedsLayout];
+  [c2u layoutIfNeeded];
+  
+  /*if ( fullscreen ) {
+    for ( NSLayoutConstraint *anchor in [c2u constraints] ) {
+      if ( anchor.firstAttribute == NSLayoutAttributeBottom && anchor.secondAttribute == NSLayoutAttributeBottom ) {
+        anchor.constant = 0.0;
+      }
+    }
+  } else {
+    for ( NSLayoutConstraint *anchor in [c2u constraints] ) {
+      if ( anchor.firstAttribute == NSLayoutAttributeBottom && anchor.secondAttribute == NSLayoutAttributeBottom ) {
+        anchor.constant = 0.0;
+      }
+    }
+  }*/
+  for ( NSLayoutConstraint *anchor in anchors ) {
+    if ( anchor.firstAttribute == NSLayoutAttributeTop && anchor.secondAttribute == NSLayoutAttributeTop ) {
+      return anchor;
+    }
+  }
+
+  
+  return nil;
+  
+}
+
+- (void)touch:(NSArray *)views {
+  for ( UIView *v in views ) {
+    if ( [v respondsToSelector:@selector(updateConstraintsIfNeeded)] ) {
+      [v setNeedsUpdateConstraints];
+      [v setNeedsLayout];
+      [v setNeedsDisplay];
+      
+      [v updateConstraintsIfNeeded];
+      [v layoutIfNeeded];
+    }
+  }
+}
+
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container {
+  return [self snapView:view
+            toContainer:container
+          withTopOffset:0.0];
+}
+
+- (void)snapCenteredView:(id)view toContainer:(id)container {
+  UIView *v2u = nil;
+  UIView *c2u = nil;
+  if ( [view isKindOfClass:[UIView class]] ) {
+    v2u = view;
+  }
+  if ( [view isKindOfClass:[UIViewController class]] ) {
+    v2u = [(UIViewController*)view view];
+  }
+  if ( [container isKindOfClass:[UIView class]] ) {
+    c2u = container;
+  }
+  if ( [container isKindOfClass:[UIViewController class]] ) {
+    c2u = [(UIViewController*)container view];
+  }
+  
+
+  
+  [c2u addSubview:v2u];
+  [v2u setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+  
+  NSLayoutConstraint *hCenter = [NSLayoutConstraint constraintWithItem:v2u
+                                                             attribute:NSLayoutAttributeCenterX
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:c2u
+                                                             attribute:NSLayoutAttributeCenterX
+                                                            multiplier:1.0
+                                                              constant:0.0];
+  
+  NSLayoutConstraint *vCenter = [NSLayoutConstraint constraintWithItem:v2u
+                                                             attribute:NSLayoutAttributeCenterY
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:c2u
+                                                             attribute:NSLayoutAttributeCenterY
+                                                            multiplier:1.0
+                                                              constant:0.0];
+  
+  NSLayoutConstraint *aspectRatio = [NSLayoutConstraint constraintWithItem:v2u
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:v2u
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                multiplier:v2u.frame.size.height/v2u.frame.size.width
+                                                                  constant:0.0f];
+  
+
+  
+  long spacer = 20.0/*(long)(c2u.frame.size.width-v2u.frame.size.width)/2.0*/;
+  NSString *format = [NSString stringWithFormat:@"H:|-(%ld)-[view]-(%ld)-|",spacer,spacer];
+  NSArray *horizontal = [NSLayoutConstraint constraintsWithVisualFormat:format
+                                                                options:0
+                                                                metrics:nil
+                                                                  views:@{ @"view" : v2u }];
+
+  NSMutableArray *total = [horizontal mutableCopy];
+  [total addObject:hCenter];
+  [total addObject:vCenter];
+  
+  [c2u setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [v2u addConstraint:aspectRatio];
+  [c2u addConstraints:total];
+
+  [c2u setNeedsUpdateConstraints];
+  [v2u setNeedsUpdateConstraints];
+  [c2u updateConstraintsIfNeeded];
+  [v2u updateConstraintsIfNeeded];
+  
+  [v2u layoutIfNeeded];
+  [c2u layoutIfNeeded];
+  
+  v2u.clipsToBounds = YES;
+  
+  [c2u printDimensionsWithIdentifier:@"Cloak Container"];
+  [v2u printDimensionsWithIdentifier:@"Scrolling Assets"];
+  
+}
+
+- (void)unelasticizeView:(UIView *)view {
+  for ( UIView *sv in [view subviews] ) {
+    [sv setTranslatesAutoresizingMaskIntoConstraints:NO];
+  }
+}
+
 #pragma mark - Fonts
 - (UIFont*)bodyFontBold:(CGFloat)size {
   return [UIFont fontWithName:@"PTSerif-Bold"
@@ -526,7 +746,7 @@ static DesignManager *singleton = nil;
 - (NSString*)xibForPlatformWithName:(NSString *)root {
   NSString *orientation = @"";
   if ( [Utilities isLandscape] ) {
-    orientation = @"Landscape";
+      orientation = @"Landscape";
   }
   if ( [Utilities isIpad] ) {
     NSString *s = [NSString stringWithFormat:@"%@_iPad%@",root,orientation];
@@ -535,6 +755,7 @@ static DesignManager *singleton = nil;
       return s;
     } else {
       s = [NSString stringWithFormat:@"%@_iPad",root];
+
       return s;
     }
   }
@@ -1018,6 +1239,19 @@ static DesignManager *singleton = nil;
                          green:34.0/255.0
                           blue:32.0/255.0
                          alpha:1.0];
+}
+
+- (UIColor*)prettyRandomColor {
+  
+  CGFloat red = (arc4random() % 128 + ( arc4random() % 128 ))*1.0;
+  CGFloat green = (arc4random() % 128 + ( arc4random() % 128 ))*1.0;
+  CGFloat blue = (arc4random() % 128 + ( arc4random() % 128 ))*1.0;
+  
+  return [UIColor colorWithRed:red/255.0
+                         green:green/255.0
+                          blue:blue/255.0
+                         alpha:1.0];
+  
 }
 
 #pragma mark - Color functions

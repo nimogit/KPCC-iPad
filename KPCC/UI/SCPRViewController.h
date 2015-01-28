@@ -19,10 +19,6 @@
 #import "SCPRSmallCutViewController.h"
 #import "SCPRBreakingNewsViewController.h"
 
-
-
-
-
 typedef enum {
   NewsPageTemplateBigTopSplitBtm,
   NewsPageTemplateSplitTopSplitBtm,
@@ -35,9 +31,6 @@ typedef enum {
   SnapshotEditionAfternoon = 2,
   SnapshotEditionEvening = 3
 } SnapshotEdition;
-
-
-
 
 #pragma mark - Content protocols
 
@@ -60,11 +53,8 @@ typedef enum {
 
 
 
-#ifdef IPAD_VERSION
 @interface SCPRViewController : UIViewController<UIScrollViewDelegate,ContentProcessor,VersionCheckable,UIPopoverControllerDelegate> {
-#else
-@interface SCPRViewController : UIViewController<UIScrollViewDelegate,ContentProcessor,VersionCheckable> {
-#endif
+  
   SCPRPlayerWidgetViewController *_playerWidget;
   BOOL _playerDisplaying;
   
@@ -100,7 +90,7 @@ typedef enum {
   
 }
 
-@property (nonatomic,strong) SCPRPlayerWidgetViewController *playerWidget;
+@property (nonatomic,strong) IBOutlet SCPRPlayerWidgetViewController *playerWidget;
 @property (nonatomic,strong) IBOutlet UIButton *showOrHidePlayerButton;
 @property (nonatomic,strong) IBOutlet UIButton *playLocalButton;
 @property (nonatomic,strong) IBOutlet UIButton *addTakeTwoButton;
@@ -113,8 +103,11 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UIScrollView *mainPageScroller;
 @property (nonatomic,strong) NSMutableArray *contentVector;
 @property (nonatomic,strong) IBOutlet UIView *decorativeStripe;
-@property (nonatomic,strong) SCPRTitlebarViewController *titleBarController;
+@property (nonatomic,strong) IBOutlet SCPRTitlebarViewController *titleBarController;
 @property (nonatomic,strong) UISwipeGestureRecognizer *drawerSwiper;
+
+@property (nonatomic,strong) IBOutlet UIView *displayPortView;
+
 #ifdef IPHONE_VERSION
   @property (nonatomic,strong) UITapGestureRecognizer *shareDrawerTapDismiss;
 #endif
@@ -132,9 +125,13 @@ typedef enum {
 @property (nonatomic,strong) SCPRSmallCutViewController *smallCutter;
 @property (nonatomic,strong) IBOutlet UIImageView *globalGradient;
 
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *playerControlsBottomAnchor;
+
 #ifdef IPAD_VERSION
 @property (nonatomic,strong) UIPopoverController *sharePopover;
 #endif
+
+
 
 @property CGPoint capturedOffset;
 
@@ -153,7 +150,9 @@ typedef enum {
 @property BOOL silentlyFetchingNews;
 @property BOOL onboardingFirstTime;
 
+
 @property (nonatomic,strong) UIView *whiteSheet;
+@property (nonatomic,strong) NSDictionary *currentAnchors;
 
 @property (atomic) NSInteger backgroundProcessesToPend;
 
@@ -216,6 +215,11 @@ typedef enum {
 - (void)openShareDrawer:(id)targetContent;
 - (void)closeShareDrawer;
 - (void)toggleShareDrawer;
+
+
+- (void)snapToDisplayPortWithView:(id)view;
+- (void)snapToDisplayPortWithView:(id)view fullscreen:(BOOL)fullscreen;
+
 @property CGRect originalShareDrawerFrame;
 
 @end

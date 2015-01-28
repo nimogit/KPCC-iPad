@@ -85,6 +85,7 @@
 - (IBAction)buttonTapped:(id)sender {
   SCPROnboardingFlowViewController *flow = (SCPROnboardingFlowViewController*)self.master;
   if ( sender == self.nopeButton ) {
+    [[ContentManager shared].settings setMemberInformation:@""];
     [flow popCard];
   }
   if ( sender == self.memberButton ) {

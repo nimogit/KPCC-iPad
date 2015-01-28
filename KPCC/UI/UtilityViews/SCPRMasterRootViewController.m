@@ -14,6 +14,7 @@
 #import "SCPRViewController.h"
 #import "SCPRIntroductionViewController.h"
 #import "SCPRSingleArticleViewController.h"
+#import "SCPRViewController.h"
 
 @interface SCPRMasterRootViewController ()
 
@@ -179,12 +180,15 @@
                                          initWithNibName:[[DesignManager shared]
                                                           xibForPlatformWithName:@"SCPRIntroductionViewController"]
                                          bundle:nil];
-  ivc.view.frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width,
-                              self.view.bounds.size.height);
   
-  [ivc buildIntro];
-  [[Utilities del] cloakUIWithCustomView:ivc
-                             dismissible:NO];
+
+  
+  [ivc setNeedsSnap:YES];
+  [[DesignManager shared] snapView:ivc.view
+                       toContainer:self.view];
+  
+  ivc.view.alpha = 0.0;
+  self.introView = ivc;
   self.introDisplaying = YES;
   
   [[ContentManager shared] pushToResizeVector:ivc];
@@ -194,6 +198,10 @@
   } else {
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
   }
+  
+  [UIView animateWithDuration:0.33 animations:^{
+    ivc.view.alpha = 1.0;
+  }];
   
 }
 
@@ -212,6 +220,14 @@
   
   [[Utilities del] setAppIsShowingTour:NO];
   [[Utilities del] uncloakUI];
+  
+  SCPRIntroductionViewController *ivc = (SCPRIntroductionViewController*)self.introView;
+  [UIView animateWithDuration:0.33 animations:^{
+    ivc.view.alpha = 0.0;
+  } completion:^(BOOL finished) {
+    [ivc.view removeFromSuperview];
+    self.introView = nil;
+  }];
   
 }
 
@@ -315,6 +331,8 @@
 // This method is actually called when the user reaches the penultimate swipe ([[AnalyticsManager shared] numberOfSwipesPerAd]-1) so
 // it can prepare the ad offscreen in the direction the user appears to have been swiping.
 //
+
+
 - (void)deliverAd:(UISwipeGestureRecognizerDirection)direction intoView:(UIView *)scroller silence:(NSMutableArray *)silenceVector {
 #ifdef ENABLE_ADS
   
@@ -355,41 +373,46 @@
   // Non-native ghetto ads.
   self.adPresentationView = scroller;
   
-  #ifdef TRACK_SCROLLING_PROGRESS
+#ifdef TRACK_SCROLLING_PROGRESS
     [self.adPresentationView addObserver:self
                               forKeyPath:@"contentOffset"
                                  options:NSKeyValueObservingOptionNew
                                  context:nil];
-  #endif
+#endif
 
 
   self.dfpAdViewController = [[SCPRDFPViewController alloc]
                               initWithNibName:[[DesignManager shared]
                                                xibForPlatformWithName:@"SCPRDFPViewController"]
                               bundle:nil];
-  
+  self.dfpAdViewController.view.frame = self.dfpAdViewController.view.frame;
+  [self.adPresentationView addSubview:self.dfpAdViewController.view];
   NSLog(@"Ad presentation dimensions : W: %1.1f, H: %1.1f",self.adPresentationView.frame.size.width,self.adPresentationView.frame.size.height);
   
   CGFloat xDelta = direction == UISwipeGestureRecognizerDirectionLeft ? self.adPresentationView.frame.size.width : -1.0*self.adPresentationView.frame.size.width;
   CGPoint offset = [(UIScrollView*)self.adPresentationView contentOffset];
   xDelta = offset.x + xDelta;
   
-  CGFloat yOrigin = [Utilities isIOS7] ? 0.0 : 20.0;
+  NSString *alFormat = [NSString stringWithFormat:@"H:|-(%ld)-[ad(%1.1f)]",(long)xDelta,self.adPresentationView.frame.size.width];
+  NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:alFormat
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"ad" : self.dfpAdViewController.view }];
+  NSString *valFormat = [NSString stringWithFormat:@"V:|[ad(%1.1f)]|",self.adPresentationView.frame.size.height];
+  NSArray *vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:valFormat
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"ad" : self.dfpAdViewController.view }];
   
-  self.dfpAdViewController.view.frame = CGRectMake(xDelta,
-                                                   yOrigin,
-                                                   self.dfpAdViewController.view.frame.size.width,
-                                                   self.dfpAdViewController.view.frame.size.height+yOrigin);
-  [self.adPresentationView addSubview:self.dfpAdViewController.view];
+  [self.dfpAdViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.adPresentationView addConstraints:hConstraints];
+  [self.adPresentationView addConstraints:vConstraints];
 
   if ([Utilities isIOS7]) {
     [(UIScrollView*)self.adPresentationView setClipsToBounds:NO];
   } else {
     [(UIScrollView*)self.adPresentationView setClipsToBounds:NO];
-    self.dfpAdViewController.view.frame = CGRectMake(xDelta,
-                                                     yOrigin,
-                                                     self.dfpAdViewController.view.frame.size.width,
-                                                     self.dfpAdViewController.view.frame.size.height+yOrigin);
+
   }
   
   self.dfpAdViewController.view.alpha = 1.0;
@@ -449,9 +472,10 @@
 
 - (void)undeliverAd {
   
-  self.dfpAdViewController.view.alpha = 0.0;
+  /*self.dfpAdViewController.view.alpha = 0.0;
   
-  [self.dfpAdViewController.view removeFromSuperview];
+  [self.dfpAdViewController.view removeFromSuperview];*/
+  
   if ( [[ContentManager shared] adCount] > 0 ) {
     [[ContentManager shared] setAdCount:[[ContentManager shared] adCount]-1];
   }
@@ -464,10 +488,11 @@
     v.alpha = 1.0;
   }
   
+  [self.adSilenceVector removeAllObjects];
+  
   [[ContentManager shared] setAdIsDisplayingOnScreen:NO];
   [[ContentManager shared] setAdReadyOffscreen:NO];
   
-  [self disarmDismissal];
 }
 
 - (void)killAdOffscreen:(AdKilledCompletion)completion {
@@ -487,119 +512,16 @@
   } completion:^(BOOL finished) {
     [(UIScrollView*)self.adPresentationView setScrollEnabled:YES];
     [[ContentManager shared] setAdIsDisplayingOnScreen:NO];
-    [self disarmDismissal];
+ 
     if ( completion ) {
       dispatch_async(dispatch_get_main_queue(), completion);
     }
   }];
 }
 
-#pragma mark - Our DFP Delegate
-- (void)adDidFinishLoading {
-  [UIView animateWithDuration:.38 animations:^{
-    self.dfpAdViewController.view.alpha = 1.0;
-  } completion:^(BOOL finished) {
-    
-    
-    
-  }];
-}
 
-- (void)armDismissal {
-  self.dismissLeft = [[UISwipeGestureRecognizer alloc]
-                      initWithTarget:self
-                      action:@selector(dismissAdLeft)];
-  
-  self.dismissRight = [[UISwipeGestureRecognizer alloc]
-                       initWithTarget:self
-                       action:@selector(dismissAdRight)];
-  
-  self.dismissRight.direction = UISwipeGestureRecognizerDirectionRight;
-  self.dismissLeft.direction = UISwipeGestureRecognizerDirectionLeft;
-  
-  [self.view addGestureRecognizer:self.dismissLeft];
-  [self.view addGestureRecognizer:self.dismissRight];
-}
 
-- (void)disarmDismissal {
-  [self.view removeGestureRecognizer:self.dismissRight];
-  [self.view removeGestureRecognizer:self.dismissLeft];
-}
 
-- (void)dismissAdLeft {
-  [self adWillDismiss:DismissDirectionLeft];
-}
-
-- (void)dismissAdRight {
-  [self adWillDismiss:DismissDirectionRight];
-}
-
-- (void)adWillDismiss:(DismissDirection)direction {
-  
-  NSTimer *failureTimer = [[ContentManager shared] adFailureTimer];
-  if ( failureTimer ) {
-    if ( [failureTimer isValid] ) {
-      [failureTimer invalidate];
-    }
-  }
-  
-  [[ContentManager shared] setAdFailureTimer:nil];
-  [(UIScrollView*)self.adPresentationView setScrollEnabled:YES];
-  [(UIScrollView*)self.adPresentationView setClipsToBounds:YES];
-
-  
-  [self disarmDismissal];
-  
-  CGFloat xDelta = 0.0;
-  if ( direction == DismissDirectionRight ) {
-    xDelta = self.view.frame.size.width;
-  }
-  if ( direction == DismissDirectionLeft ) {
-    xDelta = self.view.frame.size.width*-1.0;
-  }
-  
-  CGPoint offset = [(UIScrollView*)self.adPresentationView contentOffset];
-  xDelta = xDelta + offset.x;
-  
-  [UIView animateWithDuration:.38 animations:^{
-    self.dfpAdViewController.view.frame = CGRectMake(xDelta, 0.0,self.dfpAdViewController.view.frame.size.width,
-                                                     self.dfpAdViewController.view.frame.size.height);
-
-    
-    for ( UIView *v in [self adSilenceVector] ) {
-      v.alpha = 1.0;
-    }
-    
-  } completion:^(BOOL finished) {
-    
-    self.adSilenceVector = nil;
-    [self.dfpAdViewController.view removeFromSuperview];
-    self.dfpAdViewController = nil;
-    [[ContentManager shared] setAdIsDisplayingOnScreen:NO];
-    
-  }];
-  
-}
-
-- (void)adDidFail {
-  [self armDismissal];
-}
-
-#pragma mark - Google DFP Delegate
-
-- (void)interstitialDidReceiveAd:(GADInterstitial *)ad {
-  self.modalPresentationStyle = UIModalPresentationPageSheet;
-  [ad presentFromRootViewController:self];
-}
-
-- (void)interstitialWillDismissScreen:(GADInterstitial *)ad {
-  [self uncloak];
-}
-
-- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error {
-  NSLog(@"DFP Error : %@",[error userInfo]);
-  [[ContentManager shared] setAdFailure:YES];
-}
 
 - (void)puntToSafariWithURL:(NSString *)url {
   NSURL *urlObj = [NSURL URLWithString:url];
@@ -648,9 +570,30 @@
                               bundle:nil];
   self.queueViewController.parentRoot = self;
   
-  [self presentViewController:self.queueViewController
-                     animated:YES
-                   completion:nil];
+  [self addChildViewController:self.queueViewController];
+  
+  self.queueViewController.view.frame = CGRectMake(0.0,self.view.frame.size.height,
+                                                   self.queueViewController.view.frame.size.width,
+                                                   self.queueViewController.view.frame.size.height);
+  [self.view addSubview:self.queueViewController.view];
+  [self.queueViewController primeQueueForState];
+  
+  [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    self.queueViewController.view.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width,
+                                                     self.view.frame.size.height);
+  } completion:^(BOOL finished) {
+    
+  }];
+}
+
+- (void)hideQueue {
+  [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    self.queueViewController.view.frame = CGRectMake(0.0, self.view.frame.size.height, self.view.frame.size.width,
+                                                     self.view.frame.size.height);
+  } completion:^(BOOL finished) {
+    [self.queueViewController.view removeFromSuperview];
+    self.queueViewController = nil;
+  }];
 }
 
 - (void)invalidateStatusBar {
@@ -683,7 +626,7 @@
 //
 //
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  NSLog(@"Going to rotate %d in rotation queue",[[ContentManager shared].resizeVector count]);
+  /*NSLog(@"Going to rotate %d in rotation queue",[[ContentManager shared].resizeVector count]);
   NSMutableArray *vector = [[ContentManager shared] resizeVector];
   
   if ( [[[Utilities del] viewController] shareDrawerOpen] ) {
@@ -701,12 +644,18 @@
       for ( id<Rotatable> r in vector ) {
         [r handleRotationPre];
       }
-    }];
-  }
+   // }];
+  }*/
 
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  
+  [[DesignManager shared] setPredictedWindowSize:size];
+  
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  
   SCPRPlayerWidgetViewController *player = [[Utilities del] globalPlayer];
   [player orient];
   [player.queueViewController prime];
@@ -716,52 +665,30 @@
                                          tb.view.bounds.size.height/2.0);
   
   
+  [self.view setNeedsUpdateConstraints];
+  [self.view updateConstraintsIfNeeded];
+  [self.view layoutIfNeeded];
+  
+  SCPRViewController *scprView = [[Utilities del] viewController];
+  [[scprView view] setNeedsUpdateConstraints];
+  [[scprView view] updateConstraintsIfNeeded];
+  [[scprView view] setNeedsLayout];
+  [[scprView view] layoutIfNeeded];
+
+  
   NSMutableArray *vector = [[ContentManager shared] resizeVector];
   for ( id<Rotatable> r in vector ) {
     [r handleRotationPost];
   }
   
-  [UIView animateWithDuration:0.12 animations:^{
-    self.cloakView.alpha = 0.0;
-    [self.spinner stopAnimating];
-    self.spinner.alpha = 0.0;
-  }];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+
 }
 
 - (void)viewWillLayoutSubviews {
-  
-  if ( self.frozenOrientation == 0 ) {
-    return;
-  }
-  
-  CGFloat yDelta = [Utilities isIOS7] ? 0.0 : 20.0;
-  
-  BOOL needsRefresh = NO;
-  if ( self.interfaceOrientation != self.frozenOrientation ) {
-    
-    if ( UIInterfaceOrientationIsLandscape(self.interfaceOrientation) ) {
-      if ( UIInterfaceOrientationIsLandscape(self.frozenOrientation) ) {
-        return;
-      }
-      
-      needsRefresh = YES;
-      self.view.frame = CGRectMake(0.0, yDelta, 1024.0, 768.0-yDelta);
-    } else {
-      if ( UIInterfaceOrientationIsPortrait(self.frozenOrientation)) {
-        return;
-      }
-      
-      needsRefresh = YES;
-      self.view.frame = CGRectMake(0.0, yDelta, 768.0, 1024.0-yDelta);
-    }
-  }
-  
-  if ( needsRefresh ) {
-    //[self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.25];
-    [self didRotateFromInterfaceOrientation:self.frozenOrientation];
-  }
-  
-  self.frozenOrientation = 0;
+
 }
 
 - (void)handleRotationPre {
@@ -772,27 +699,8 @@
   
 }
 
-- (BOOL)shouldAutomaticallyForwardRotationMethods {
-  return YES;
-}
 
-- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
-  return YES;
-}
 
-- (BOOL)shouldAutorotate {
-#ifdef SUPPORT_LANDSCAPE
-  if ([[DesignManager shared] hasBeenInFullscreen]) {
-    return NO;
-  }
-  if ( [[Utilities del] serverDown] ) {
-    return NO;
-  }
-  
-  return YES;
-#else
-  return NO;
-#endif
-}
+
 
 @end

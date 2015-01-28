@@ -16,6 +16,7 @@
 #import "SCPRQueueCellViewController.h"
 #import "SCPRMasterRootViewController.h"
 #import "SCPRDrawerViewController.h"
+#import "SCPRSingleArticleViewController.h"
 
 #define kImageFileLimit 180
 #define kImageMemoryFileLimit 20
@@ -38,6 +39,7 @@ static ContentManager *singleton = nil;
       singleton.resizeVector = [[NSMutableArray alloc] init];
       singleton.deactivationQueue = [[NSMutableDictionary alloc] init];
       singleton.globalCompositeNews = [[NSMutableDictionary alloc] init];
+      singleton.garbageCan = [NSMutableArray new];
       
       NSMutableDictionary *marshalledNews = singleton.globalCompositeNews;
       [marshalledNews setObject:[[NSMutableArray alloc] init]
@@ -104,6 +106,8 @@ static ContentManager *singleton = nil;
 - (NSString*)modelBase {
   return @"kpcc";
 }
+
+
 
 #pragma mark - Settings
 - (void)syncSettingsWithParse {
@@ -957,7 +961,6 @@ static ContentManager *singleton = nil;
 
 - (void)editPushForBreakingNews:(BOOL)on {
 #ifdef USE_PARSE
-  
   NSString *pushKey = kPushKeyBreakingNews;
 #ifdef SANDBOX_PUSHES
   pushKey = kPushKeySandbox;
@@ -965,10 +968,15 @@ static ContentManager *singleton = nil;
   if ( on ) {
       NSLog(@"Registering for push on %@",pushKey);
       
-      [[Utilities del] setOperatingWithPushType:PushTypeBreakingNews];
-      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|
-       UIRemoteNotificationTypeBadge|
-       UIRemoteNotificationTypeSound];
+    [[Utilities del] setOperatingWithPushType:PushTypeBreakingNews];
+    
+    if ( [[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)] ) {
+      NSLog(@" ************** iOS 8 : Using proper notification settings - Breaking News **************");
+      [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge
+                                                                                                            categories:nil]];
+    } else {
+      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    }
       
   } else {
     [self unregisterPushNotifications];
@@ -996,11 +1004,14 @@ static ContentManager *singleton = nil;
 #ifdef USE_PARSE
   if ( on ) {
     if ( [Utilities pureNil:[self.settings pushToken]] ) {
-      
       [[Utilities del] setOperatingWithPushType:PushTypeEvents];
-      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|
-       UIRemoteNotificationTypeBadge|
-       UIRemoteNotificationTypeSound];
+      if ( [[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)] ) {
+        NSLog(@" ************** iOS 8 : Using proper notification settings - Events **************");
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge
+                                                                                                              categories:nil]];
+      } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+      }
       
     } else {
       PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -1222,7 +1233,11 @@ static ContentManager *singleton = nil;
   if ( [self.resizeVector count] > 0 ) {
     id obj = [self.resizeVector lastObject];
     NSLog(@"**** POPPING %@ FROM RESIZE VECTOR",[[obj class] description]);
-    [self.resizeVector removeLastObject];
+    if ( [self.resizeVector count] == 1 ) {
+      [self.resizeVector removeAllObjects];
+    } else {
+      [self.resizeVector removeLastObject];
+    }
   }
   NSLog(@"Number of items in resize vector : %d",[self.resizeVector count]);
 }
@@ -1452,7 +1467,21 @@ static ContentManager *singleton = nil;
   return NO;
 }
 
-#pragma mark - Ad Counting
+#pragma mark - Google DFP Delegate
+- (void)interstitialDidReceiveAd:(GADInterstitial *)ad {
+  self.loadedAd = ad;
+  [self resetAdTracking];
+}
+
+- (void)interstitialWillDismissScreen:(GADInterstitial *)ad {
+  
+}
+
+- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error {
+  NSLog(@"DFP Error : %@",[error userInfo]);
+  [[ContentManager shared] setAdFailure:YES];
+}
+
 - (void)resetAdTracking {
   self.swipeCount = 0;
   self.adCount = 0;
@@ -1472,98 +1501,41 @@ static ContentManager *singleton = nil;
   
   self.swipeCount++;
   
-  SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
-  
   // If we haven't reached/exceeded our number of swipes between ads:
   // prepare one offscreen.
   if (self.swipeCount == [[AnalyticsManager shared].numberOfSwipesPerAd intValue] - 1) {
     if (self.adCount < [[AnalyticsManager shared].numberOfAdsPerSession intValue]) {
       
-      if (penultimate) {
-        self.swipeCount--;
-        return;
-      }
-      
-      
-      [self setObserveForSwipe:direction];
       [[ContentManager shared] setAdReadyOffscreen:YES];
-      [[[Utilities del] masterRootController] deliverAd:direction
-                                               intoView:hopefullyAScroller
-                                                silence:silenceVector];
+
     }
   }
-  
-  // If we've met our swipe count, display the prepared offscreen ad.
-  if (self.swipeCount >= [[AnalyticsManager shared].numberOfSwipesPerAd intValue]) {
-    if ([self adReadyOffscreen]) {
-      if (direction != [self observeForSwipe]) {
-        
-        self.observeForSwipe = direction;
-        [[[Utilities del] masterRootController] undeliverAd];
-        
-        [[AnalyticsManager shared] logEvent:@"ad_was_loaded_but_avoided"
-                             withParameters:@{}];
-     
-        [self setObserveForSwipe:direction];
-        [[ContentManager shared] setAdReadyOffscreen:YES];
-        
-        [[[Utilities del] masterRootController] deliverAd:direction
-                                                 intoView:hopefullyAScroller
-                                                  silence:silenceVector];
-      } else {
-        
-        self.adReadyOffscreen = NO;
-        self.swipeCount = 0;
-        self.adIsDisplayingOnScreen = YES;
-        
-        //[(UIScrollView*)hopefullyAScroller setScrollEnabled:NO];
-        [root.adPresentationView bringSubviewToFront:root.dfpAdViewController.view];
-        [root armDismissal];
-        
-        // A view may need to tell the ad to hide a few on-screen views when it displays
-        if (silenceVector) {
-          [UIView animateWithDuration:0.33 animations:^{
-            for ( UIView *v in silenceVector ) {
-              v.alpha = 0.0;
-            }
-          }];
-        }
-        
-        if (self.adFailure) {
-          [[AnalyticsManager shared] logEvent:@"ad_delivery_failed"
-                               withParameters:@{}];
-          
-          [[[Utilities del] masterRootController] adDidFail];
-          
-          if (self.adFailureTimer) {
-            if ([self.adFailureTimer isValid]) {
-              [self.adFailureTimer invalidate];
-            }
-          }
 
-          self.adFailureTimer = [NSTimer scheduledTimerWithTimeInterval:1.45
-                                                                 target:self
-                                                               selector:@selector(killAdOnscreen:)
-                                                               userInfo:nil
-                                                              repeats:NO];
-        } else {
+}
 
-          [[AnalyticsManager shared] logEvent:@"ad_delivery_succeeded"
-                               withParameters:@{}];
-          
-        }
-        
-        [self setAdCount:[self adCount]+1];
-        [self setAdFailure:NO];
-        
-      } // if (direction != [self observeForSwipe])
-    } // if ad ready offscreen
-  } // if reaching swipe count
+- (void)adDeliveredSuccessfully {
+  self.swipeCount = 0;
+  self.adCount++;
+  self.adReadyOffscreen = NO;
 }
 
 - (void)killAdOnscreen:(NSTimer*)timer {
   SCPRMasterRootViewController *root = [[Utilities del] masterRootController];
   [root killAdOnscreen:nil];
+}
+
+- (BOOL)adIsReady {
+  if ( ![[ContentManager shared] adReadyOffscreen] ) {
+    return NO;
+  }
+  if ( !self.loadedAd ) {
+    return NO;
+  }
+  if ( self.loadedAd.isReady ) {
+    return NO;
+  }
+  
+  return YES;
 }
 
 #pragma mark - Model operations
@@ -1606,6 +1578,52 @@ static ContentManager *singleton = nil;
   [self saveContext];
   
   return queue;
+}
+
+#pragma mark - Maintenance
+- (void)disposeOfObject:(id<Deactivatable>)object protect:(BOOL)protect {
+  if ( [self.garbageCan containsObject:object] ) return;
+  
+  @synchronized(self.garbageCan) {
+    [self.garbageCan addObject:object];
+    if ( !protect ) {
+      if ( [object respondsToSelector:@selector(deactivationMethod)] ) {
+        [object deactivationMethod];
+      }
+    }
+  }
+}
+
+- (void)emptyTrash {
+  
+  NSMutableArray *newCan = [NSMutableArray new];
+  for ( id<Deactivatable> thing in self.garbageCan ) {
+    if ( [thing respondsToSelector:@selector(okToDelete)] ) {
+      if ( [thing okToDelete] ) {
+        continue;
+      }
+    } else {
+      continue;
+    }
+    [newCan addObject:thing];
+    if ( [thing respondsToSelector:@selector(deactivationMethod)] ) {
+      if ( ![thing okToDelete] )
+        [thing deactivationMethod];
+    }
+  }
+  
+  @synchronized(self.garbageCan) {
+    self.garbageCan = newCan;
+  }
+  
+  NSLog(@"There are %ld items in the trash",(long)self.garbageCan.count);
+  
+}
+
+- (void)manuallyRemoveFromTrash:(id<Deactivatable>)object {
+  if ( [self.garbageCan containsObject:object] ) {
+    [self.garbageCan removeObject:object];
+  }
 }
 
 #pragma mark - Schedulers

@@ -7,6 +7,7 @@
 //
 
 #import "SCPRIntroCardViewController.h"
+#import "DesignManager.h"
 
 @interface SCPRIntroCardViewController ()
 
@@ -26,11 +27,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+  
+  [self.view removeConstraints:@[ self.cornerImageLeftAnchor, self.cornerImageTopAnchor, self.cornerImageTmpSizeX, self.cornerImageTmpSizeY ]];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)setupForCardType:(CardType)type {
   
+                               
+  self.cardTopAnchor.constant = [Utilities isLandscape] ? 60.0 : 135.0;
   NSArray *cards = [Utilities loadJson:@"intro_cards"];
   NSString *mainImage = [NSString stringWithFormat:@"onboarding-card-step%d",(int)type+1];
   self.cardType = type;
@@ -50,19 +55,7 @@
   
   [self placeOrnamentInCorner:position];
   
-  if ( [Utilities isLandscape] ) {
-    self.splashImage.center = CGPointMake(self.splashImage.center.x,
-                                          self.splashImage.center.y-80.0);
-    self.pager.frame = CGRectMake(self.splashImage.frame.origin.x+20.0,
-                                  self.splashImage.frame.origin.y+self.splashImage.frame.size.height-60.0,
-                                  self.pager.frame.size.width,
-                                  self.pager.frame.size.height);
-    
-    self.nextButton.frame = CGRectMake(self.splashImage.frame.origin.x+self.splashImage.frame.size.width-self.nextButton.frame.size.width-20.0,
-                                  self.splashImage.frame.origin.y+self.splashImage.frame.size.height-60.0,
-                                  self.nextButton.frame.size.width,
-                                  self.nextButton.frame.size.height);
-  }
+
   
   self.pager.currentPage = type;
   
@@ -71,14 +64,8 @@
             forControlEvents:UIControlEventTouchUpInside];
   
   if ( self.cardType == CardTypeWelcome ) {
-    if ( ![Utilities isLandscape] ) {
-      self.nextButton.center = CGPointMake(self.view.frame.size.width/2.0,
-                                         self.view.frame.size.height/2.0+140.0);
-    } else {
-      self.nextButton.center = self.splashImage.center;
-      self.nextButton.center = CGPointMake(self.nextButton.center.x,
-                                           self.nextButton.center.y+190.0);
-    }
+    self.buttonCenterXAnchor.constant = -416.0;
+    self.buttonCenterYAnchor.constant = -168.0;
   }
 }
 
@@ -96,6 +83,12 @@
 - (void)placeOrnamentInCorner:(CornerPosition)position {
   
   self.ornamentImage.alpha = 1.0;
+  
+  if ( self.cornerImageAnchors ) {
+    [self.view removeConstraints:self.cornerImageAnchors];
+  }
+  
+  /*
   switch (position) {
     case CornerPositionNorthwest:
       self.ornamentImage.frame = CGRectMake(0.0,-25.0,self.ornamentImage.frame.size.width,
@@ -119,7 +112,60 @@
       break;
     case CornerPositionNone:
       self.ornamentImage.alpha = 0.0;
+  }*/
+  
+  NSArray *hAnchors = nil;
+  NSArray *vAnchors = nil;
+  switch (position) {
+    case CornerPositionNorthwest:
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|[img(%1.1f)]",self.ornamentImage.frame.size.width]
+                                                         options:0
+                                                         metrics:nil
+                                                           views:@{ @"img" : self.ornamentImage }];
+      vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|[img(%1.1f)]",self.ornamentImage.frame.size.height]
+                                                         options:0
+                                                         metrics:nil
+                                                           views:@{ @"img" : self.ornamentImage }];
+      break;
+    case CornerPositionNortheast:
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:[img(%1.1f)]|",self.ornamentImage.frame.size.width]
+                                                         options:0
+                                                         metrics:nil
+                                                           views:@{ @"img" : self.ornamentImage }];
+      vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|[img(%1.1f)]",self.ornamentImage.frame.size.height]
+                                                         options:0
+                                                         metrics:nil
+                                                           views:@{ @"img" : self.ornamentImage }];
+      break;
+    case CornerPositionSoutheast:
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:[img(%1.1f)]|",self.ornamentImage.frame.size.width]
+                                                         options:0
+                                                         metrics:nil
+                                                           views:@{ @"img" : self.ornamentImage }];
+      vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:[img(%1.1f)]|",self.ornamentImage.frame.size.height]
+                                                         options:0
+                                                         metrics:nil
+                                                           views:@{ @"img" : self.ornamentImage }];
+      break;
+    case CornerPositionSouthwest:
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|[img(%1.1f)]",self.ornamentImage.frame.size.width]
+                                                         options:0
+                                                         metrics:nil
+                                                           views:@{ @"img" : self.ornamentImage }];
+      vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:[img(%1.1f)]|",self.ornamentImage.frame.size.height]
+                                                         options:0
+                                                         metrics:nil
+                                                           views:@{ @"img" : self.ornamentImage }];
+      break;
+    case CornerPositionNone:
+      self.ornamentImage.alpha = 0.0;
   }
+  
+  [self.ornamentImage setTranslatesAutoresizingMaskIntoConstraints:NO];
+  NSMutableArray *combined = [hAnchors mutableCopy];
+  [combined addObjectsFromArray:vAnchors];
+  self.cornerImageAnchors = [NSArray arrayWithArray:combined];
+  [self.view addConstraints:self.cornerImageAnchors];
   
 }
 

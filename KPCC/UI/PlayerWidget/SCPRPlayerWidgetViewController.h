@@ -101,6 +101,11 @@
 @property (nonatomic,strong) UISwipeGestureRecognizer *swipeToMaximize;
 @property (nonatomic,strong) IBOutlet SCPRQueueViewController *queueViewController;
 
+// Constraints
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *onairTopAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *playerDetailsTopAnchor;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *playerDetailsLeftAnchor;
+
 @property CGRect originalScrubberFrame;
 @property CGFloat savedVolume;
 

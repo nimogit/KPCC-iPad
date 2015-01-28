@@ -279,15 +279,15 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",prefix,sub]];
         [[UIApplication sharedApplication] openURL:url];
       }
+        
         break;
       case EmbedSupportInlineFullWebView:
         [self.delegate externalWebContentRequest:request];
         break;
+        
       default:
         break;
     }
-    
-    
     
     return NO;
     
@@ -304,6 +304,7 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
       NSLog(@"Bad Callout");
       return NO;
     }
+    
     NSString *message = [components objectAtIndex:1];
     NSString *player = [components objectAtIndex:2];
     NSLog(@"Message is %@ and player is %@",message,player);
@@ -321,8 +322,8 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
                           waitUntilDone:NO];
     }
     
-    
     return NO;
+    
   }
   
   if ( !self.initialLoadFinished ) {
@@ -391,16 +392,14 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
   
   if ( self.cleaningUp ) {
-#ifdef LOG_DEALLOCATIONS
-    NSLog(@"Finished cleanup for : %@",[self.referenceArticle objectForKey:@"title"]);
 
+    NSLog(@"Finished cleanup for : %@",[self.referenceArticle objectForKey:@"title"]);
     [[ContentManager shared] printCacheUsage];
-#endif
     self.cleaningUp = NO;
     if ( self.delegate ) {
       [self.delegate cleanup];
-      return;
     }
+    return;
   }
   
   BOOL firstTime = NO;
@@ -412,7 +411,6 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
     
   }
   
-  
   if ( firstTime ) {
     [self.delegate webContentLoaded:firstTime];
   }
@@ -421,7 +419,13 @@ static NSOperationQueue *singletonContentLoadingQueue = nil;
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
   NSLog(@"Error on web content load : %@",[error localizedDescription]);
-  [self.delegate webContentFailed];
+  if ( self.cleaningUp ) {
+    NSLog(@" **** // This happened while cleaning up \\ ****");
+    [self.webView loadHTMLString:@"" baseURL:nil];
+    [self.delegate cleanup];
+  } else {
+    [self.delegate webContentFailed];
+  }
 }
 
 #ifdef LOG_DEALLOCATIONS

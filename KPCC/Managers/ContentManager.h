@@ -13,6 +13,7 @@
 #import "SCPRAppDelegate.h"
 #import "NetworkManager.h"
 #import <Parse/Parse.h>
+#import <Google-Mobile-Ads-SDK/GADInterstitial.h>
 
 #define kPushKeyBreakingNews @"breakingNews"
 #define kPushKeyEvents @"events"
@@ -51,6 +52,11 @@ typedef enum {
   ModelTypeKeyword = 3
 } ModelType;
 
+@protocol Pageable <NSObject>
+
+- (NSInteger)index;
+
+@end
 
 @protocol VersionCheckable <NSObject>
 
@@ -64,11 +70,12 @@ typedef enum {
 
 @optional
 - (void)deactivationMethod;
+- (BOOL)okToDelete;
 
 @end
 
 
-@interface ContentManager : NSObject<ContentProcessor> {
+@interface ContentManager : NSObject<ContentProcessor,GADInterstitialDelegate> {
   NSManagedObjectModel *_managedObjectModel;
   NSPersistentStoreCoordinator *_persistentStoreCoordinator;
   NSManagedObjectContext *_managedObjectContext;
@@ -138,6 +145,7 @@ typedef enum {
 @property (atomic) BOOL parseReady;
 @property (atomic) BOOL userIsViewingExpandedDetails;
 @property BOOL passiveProgramCheck;
+@property BOOL adIsLoaded;
 @property (nonatomic,strong) NSOperationQueue *globalImageQueue;
 @property (nonatomic,strong) NSTimer *synthesisTimer;
 @property (nonatomic,strong) NSMutableArray *mutableTrendingStories;
@@ -154,6 +162,10 @@ typedef enum {
 @property (nonatomic,strong) NSMutableDictionary *deactivationQueue;
 @property (nonatomic,strong) NSMutableDictionary *pendingNotification;
 
+@property (nonatomic,strong) NSMutableArray *garbageCan;
+
+@property (nonatomic,strong) GADInterstitial *loadedAd;
+
 @property NSInteger swipeCount;
 @property NSInteger adCount;
 
@@ -167,18 +179,19 @@ typedef enum {
 // Ads
 @property BOOL adFailure;
 @property (nonatomic,strong) NSTimer *adFailureTimer;
+- (void)resetAdTracking;
+- (void)tickSwipe:(UISwipeGestureRecognizerDirection)direction
+           inView:(UIView*)hopefullyAScroller
+      penultimate:(BOOL)penultimate
+    silenceVector:(NSMutableArray*)silenceVector;
+- (void)adDeliveredSuccessfully;
 
 @property NSInteger currentNewsPage;
 
 - (void)pushToResizeVector:(id<Rotatable>)rotatable;
 - (void)popFromResizeVector;
 
-- (void)resetAdTracking;
 
-- (void)tickSwipe:(UISwipeGestureRecognizerDirection)direction
-           inView:(UIView*)hopefullyAScroller
-      penultimate:(BOOL)penultimate
-    silenceVector:(NSMutableArray*)silenceVector;
 
 - (void)resetNewsContent;
 
@@ -200,6 +213,8 @@ typedef enum {
 - (void)patch:(NSString*)version;
 - (void)writePatch:(NSString*)patch;
 - (BOOL)userIsMissingPatch:(NSString*)patch;
+
+- (BOOL)adIsReady;
 
 // Programs
 - (NSDictionary*)programCacheForProgram:(NSDictionary*)programObject;
@@ -235,6 +250,7 @@ typedef enum {
 - (void)threadedSettings;
 - (void)syncSettingsWithParse;
 - (void)forceSettingsWithParse;
+- (void)sweepUnsavedSettings;
 
 // Cache
 - (void)initDataStores;
@@ -270,5 +286,8 @@ typedef enum {
 - (BOOL)isKPCCArticle:(NSDictionary*)sourceArticle;
 - (BOOL)isKPCCURL:(NSString*)url;
 
+- (void)disposeOfObject:(id<Deactivatable>)object protect:(BOOL)protect;
+- (void)emptyTrash;
+- (void)manuallyRemoveFromTrash:(id<Deactivatable>)object;
 
 @end

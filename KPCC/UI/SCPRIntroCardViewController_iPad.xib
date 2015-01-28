@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPRIntroCardViewController">
             <connections>
+                <outlet property="buttonCenterXAnchor" destination="oyn-6V-HtG" id="86Y-jv-GfK"/>
+                <outlet property="buttonCenterYAnchor" destination="Phk-ur-nCf" id="xdM-kL-srG"/>
+                <outlet property="cardTopAnchor" destination="A60-YJ-rjk" id="BtJ-9V-Jhs"/>
+                <outlet property="cornerImageLeftAnchor" destination="yhV-ja-4AV" id="HIl-wE-IAn"/>
+                <outlet property="cornerImageTmpSizeX" destination="5oi-Py-wtY" id="oVA-Xm-GCG"/>
+                <outlet property="cornerImageTmpSizeY" destination="Sa2-IA-00P" id="YAe-vP-st8"/>
+                <outlet property="cornerImageTopAnchor" destination="oQo-2z-8J7" id="eOF-0l-fOB"/>
                 <outlet property="nextButton" destination="IoS-G7-W7H" id="hfI-yF-jkt"/>
                 <outlet property="ornamentImage" destination="bRf-je-8i7" id="s7f-ot-dg4"/>
                 <outlet property="pager" destination="fbv-XD-gF7" id="ozx-sT-R9S"/>
@@ -19,23 +26,35 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="RAH-6t-FG1">
-                    <rect key="frame" x="104" y="135" width="560" height="650"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RAH-6t-FG1">
+                    <rect key="frame" x="104" y="65" width="560" height="650"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="560" id="hO9-Kh-QRQ"/>
+                        <constraint firstAttribute="height" constant="650" id="x2e-Be-U2O"/>
+                    </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bRf-je-8i7">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bRf-je-8i7" userLabel="CornerImage">
                     <rect key="frame" x="0.0" y="0.0" width="130" height="135"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="130" id="5oi-Py-wtY"/>
+                        <constraint firstAttribute="height" constant="135" id="Sa2-IA-00P"/>
+                    </constraints>
                 </imageView>
-                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" id="fbv-XD-gF7">
-                    <rect key="frame" x="123" y="721" width="98" height="37"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" translatesAutoresizingMaskIntoConstraints="NO" id="fbv-XD-gF7">
+                    <rect key="frame" x="123" y="651" width="98" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="37" id="oOB-dU-7cT"/>
+                        <constraint firstAttribute="width" constant="98" id="xRO-4Y-fVo"/>
+                    </constraints>
                     <color key="pageIndicatorTintColor" red="0.85750679347826086" green="0.85750679347826086" blue="0.85750679347826086" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="currentPageIndicatorTintColor" red="0.51511548913043481" green="0.51511548913043481" blue="0.51511548913043481" alpha="1" colorSpace="calibratedRGB"/>
                 </pageControl>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IoS-G7-W7H">
-                    <rect key="frame" x="372" y="709" width="274" height="66"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoS-G7-W7H">
+                    <rect key="frame" x="386" y="638" width="274" height="66"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="274" id="Tb4-tR-bxX"/>
+                        <constraint firstAttribute="height" constant="66" id="yeb-hm-Fyt"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -43,8 +62,23 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="RAH-6t-FG1" firstAttribute="leading" secondItem="fbv-XD-gF7" secondAttribute="trailing" constant="-117" id="4Ut-Yi-dZt"/>
+                <constraint firstItem="RAH-6t-FG1" firstAttribute="top" secondItem="2" secondAttribute="top" constant="65" id="A60-YJ-rjk"/>
+                <constraint firstAttribute="centerX" secondItem="RAH-6t-FG1" secondAttribute="centerX" id="N1e-1A-cgZ"/>
+                <constraint firstItem="IoS-G7-W7H" firstAttribute="top" secondItem="RAH-6t-FG1" secondAttribute="bottom" constant="-77" id="Phk-ur-nCf"/>
+                <constraint firstItem="fbv-XD-gF7" firstAttribute="bottom" secondItem="RAH-6t-FG1" secondAttribute="bottom" constant="-27" id="SrG-EN-tus"/>
+                <constraint firstItem="bRf-je-8i7" firstAttribute="top" secondItem="2" secondAttribute="top" id="oQo-2z-8J7"/>
+                <constraint firstItem="RAH-6t-FG1" firstAttribute="leading" secondItem="IoS-G7-W7H" secondAttribute="trailing" constant="-556" id="oyn-6V-HtG"/>
+                <constraint firstItem="bRf-je-8i7" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="yhV-ja-4AV"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
 </document>

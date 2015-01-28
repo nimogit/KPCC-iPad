@@ -26,6 +26,7 @@
 @property BOOL fadeAudio;
 @property BOOL loadedOnce;
 @property BOOL deactivating;
+@property BOOL needsSnap;
 
 - (void)setupWithPVArticle:(NSDictionary*)pvArticle;
 - (void)setupWithEmbed:(NSDictionary*)metaData;

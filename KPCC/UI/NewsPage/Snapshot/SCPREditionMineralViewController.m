@@ -33,13 +33,63 @@
     [super viewDidLoad];
   
   self.currentIndex = 0;
+  self.editionsScroller.pagingEnabled = YES;
   
   [[[Utilities del] globalTitleBar] applyClearBackground];
   
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewDidLayoutSubviews {
+  if ( self.needsSnap ) {
+    self.needsSnap = NO;
+    [self snapContent];
+
+  }
+}
+
+- (void)snapContent {
+  
+  self.editionsScroller.contentSize = CGSizeMake([self.editions count]*self.editionsScroller.frame.size.width,
+                                                 self.editionsScroller.frame.size.height);
+  
+  if ( !self.setupCompleted ) {
+    [self setupWithEditions:self.editions];
+  }
+  
+  [self.editionsScroller printDimensionsWithIdentifier:@"*** EDITIONS SCROLLER ***"];
+
+  for ( NSDictionary *metrics in [self.metricChain allValues] ) {
+    NSLayoutConstraint *w = metrics[@"width"];
+    [w setConstant:self.editionsScroller.frame.size.width];
+    
+    NSLayoutConstraint *h = metrics[@"height"];
+    [h setConstant:self.editionsScroller.frame.size.height];
+  }
+  
+  for ( SCPREditionShortListViewController *slvc in self.contentVector ) {
+    
+    [slvc refresh];
+    [[DesignManager shared] touch:@[ slvc.view, slvc.shadowedSeatView, slvc.cruxView ]];
+    
+  }
+  
+
+  self.editionsScroller.contentOffset = CGPointMake(self.currentIndex*self.editionsScroller.frame.size.width,
+                                                    0.0);
+  
+  [self.editionsScroller setNeedsLayout];
+  [self.editionsScroller setNeedsUpdateConstraints];
+  [self.editionsScroller layoutIfNeeded];
+  [self.editionsScroller updateConstraintsIfNeeded];
+
+  
+  
+}
+
 - (void)setupWithEditions:(NSArray *)editions {
+
+  
   [[AnalyticsManager shared] tS];
   [self.view setNeedsLayout];
  
@@ -49,40 +99,27 @@
   
   CGFloat contentHeight = self.editionsScroller.frame.size.height;
   if ( [Utilities isIOS7] ) {
-    self.automaticallyAdjustsScrollViewInsets = NO;
+
   } else {
+    
   }
   
   BOOL needsRefresh = NO;
-  for ( SCPREditionCrystalViewController *snap in self.contentVector ) {
+  for ( SCPREditionShortListViewController *snap in self.contentVector ) {
     [snap.view removeFromSuperview];
     needsRefresh = YES;
   }
   
   [self.contentVector removeAllObjects];
-  
-  CGFloat widthToUse = self.editionsScroller.bounds.size.width;
-  CGFloat heightToUse = self.editionsScroller.bounds.size.height;
-  
-  if ( needsRefresh ) {
-    SCPREditionMineralViewController *emvD = [[SCPREditionMineralViewController alloc]
-                                              initWithNibName:[[DesignManager shared]
-                                                               xibForPlatformWithName:@"SCPREditionMineralViewController"]
-                                              bundle:nil];
-    emvD.view.frame = emvD.view.frame;
-    widthToUse = emvD.editionsScroller.frame.size.width;
-    heightToUse = emvD.editionsScroller.frame.size.height;
-    CGRect r = emvD.editionsScroller.frame;
-    self.editionsScroller.frame = r;
-  }
-  
 
-  self.contentVector = [[NSMutableArray alloc] init];
   
-  //NSInteger limit = kEditionsTotal;
-  //self.editions = [self.editions subarrayWithRange:NSMakeRange(0, limit)];
+  self.contentVector = [[NSMutableArray alloc] init];
+  [self.editionsScroller setTranslatesAutoresizingMaskIntoConstraints:NO];
   
   NSInteger processingIndex = -1;
+  SCPREditionShortListViewController *prev = nil;
+  self.metricChain = [NSMutableDictionary new];
+  
   for ( unsigned i = 0; i < [self.editions count]; i++ ) {
     
     NSMutableDictionary *edition = [self.editions objectAtIndex:i];
@@ -93,21 +130,87 @@
                                                          bundle:nil];
   
     snap.edition = edition;
-
+    snap.view.frame = snap.view.frame;
+    snap.view.frame = CGRectMake(0.0,0.0,self.editionsScroller.frame.size.width,
+                                 self.editionsScroller.frame.size.height);
     
-    CGFloat adjuster = [Utilities isIOS7] ? 0.0 : 0.0;
-    CGRect eFrame = CGRectMake(i*widthToUse,
-                               0.0,
-                               widthToUse,
-                               heightToUse-adjuster);
-    snap.view.frame = eFrame;
     snap.parentMineral = self;
     [snap setupWithEdition:snap.edition];
+    [snap.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [snap.view layoutIfNeeded];
     
     contentHeight = snap.view.frame.size.height;
     
     [self.editionsScroller addSubview:snap.view];
+    [self.editionsScroller sendSubviewToBack:snap.view];
     [self.contentVector addObject:snap];
+    
+    NSArray *hAnchors = nil;
+    NSArray *vAnchors = nil;
+    
+    if ( prev ) {
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[prev][me]"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"prev" : prev.view,
+                                                                             @"me" : snap.view }];
+      if ( i == [self.editions count]-1 ) {
+        hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[prev][me]|"
+                                                           options:0
+                                                           metrics:nil
+                                                             views:@{ @"prev" : prev.view,
+                                                                      @"me" : snap.view }];
+      }
+
+      vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[me]"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"me" : snap.view }];
+      
+      
+    } else {
+      
+      hAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[me]"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"me" : snap.view }];
+      vAnchors = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[me]"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:@{ @"me" : snap.view }];
+      
+    }
+    
+    prev = snap;
+    [self.editionsScroller addConstraints:hAnchors];
+    [self.editionsScroller addConstraints:vAnchors];
+    
+
+    NSLayoutConstraint *wC = [NSLayoutConstraint constraintWithItem:snap.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0
+                                                           constant:self.editionsScroller.frame.size.width];
+    
+    
+    NSLayoutConstraint *hC = [NSLayoutConstraint constraintWithItem:snap.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0
+                                                           constant:self.editionsScroller.frame.size.height];
+    
+    NSDictionary *metrics = @{ @"width" : wC,
+                               @"height" : hC };
+    
+    [self.metricChain setObject:metrics
+                         forKey:@(i)];
+    
+    [snap.view addConstraints:@[wC,hC]];
+
     
     if ( self.targetMolecule ) {
       if ( i == self.currentIndex ) {
@@ -144,13 +247,13 @@
     [self.view addSubview:self.pageControl];
   }
   
-  self.targetMolecule = nil;
-  self.editionsScroller.contentSize = CGSizeMake([self.editions count]*self.editionsScroller.frame.size.width,
-                                                 self.editionsScroller.frame.size.height);
+  [self.editionsScroller layoutIfNeeded];
   
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    //[[NetworkManager shared] fetchContentForEditionals:self];
-  });
+  self.targetMolecule = nil;
+
+  [self.editionsScroller printDimensionsWithIdentifier:@"Editions Scroller Dimensions"];
+  
+  self.setupCompleted = YES;
   
   [[AnalyticsManager shared] tF:@"Building edition mineral..."];
 }
@@ -171,6 +274,7 @@
   }
  */
 }
+
 - (void)viewDidAppear:(BOOL)animated {
  /*
   SCPRTitlebarViewController *tb = [[Utilities del] globalTitleBar];
@@ -190,6 +294,9 @@
                                                  self.editionsScroller.frame.size.height);
   
   */
+  SCPRTitlebarViewController *tb = [[Utilities del] globalTitleBar];
+  [tb applyKpccLogo];
+  
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -278,14 +385,7 @@
 }
 
 - (void)handleRotationPost {
-  
-  [self setupWithEditions:self.editions];
-  self.editionsScroller.contentOffset = CGPointMake(self.editionsScroller.frame.size.width*self.currentIndex,
-                                                    0.0);
-  
-  [UIView animateWithDuration:0.25 animations:^{
-    self.editionsScroller.alpha = 1.0;
-  }];
+  [self setNeedsSnap:YES];
 }
 
 - (BOOL)shouldAutorotate {

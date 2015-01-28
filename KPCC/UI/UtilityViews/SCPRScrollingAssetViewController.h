@@ -37,6 +37,7 @@
 
 @property NSInteger currentIndex;
 @property BOOL captionExpanded;
+@property BOOL needsSetup;
 
 - (void)expandCaption;
 - (void)contractCaption;

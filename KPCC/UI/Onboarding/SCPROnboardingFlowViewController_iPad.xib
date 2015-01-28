@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPROnboardingFlowViewController">
             <connections>
                 <outlet property="cardScroller" destination="2di-sD-G42" id="r3u-iD-KjN"/>
                 <outlet property="notRightNowButton" destination="ejE-s7-vcp" id="UY9-Jx-5GY"/>
+                <outlet property="topAnchor" destination="yt9-CH-VIY" id="JHX-aa-UTX"/>
                 <outlet property="versionLabel" destination="BCv-Xm-nsX" id="vxw-qg-nyp"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
@@ -18,20 +19,28 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="2di-sD-G42">
-                    <rect key="frame" x="0.0" y="69" width="768" height="649"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2di-sD-G42">
+                    <rect key="frame" x="0.0" y="48" width="768" height="620"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="620" id="aGR-zR-aSE"/>
+                    </constraints>
                 </scrollView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BCv-Xm-nsX">
-                    <rect key="frame" x="243" y="764" width="282" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCv-Xm-nsX">
+                    <rect key="frame" x="243" y="720" width="282" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Inu-Ou-GJz"/>
+                        <constraint firstAttribute="width" constant="282" id="YVE-t5-hld"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.82205332880434789" green="0.82205332880434789" blue="0.82205332880434789" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ejE-s7-vcp">
-                    <rect key="frame" x="252" y="726" width="265" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejE-s7-vcp">
+                    <rect key="frame" x="252" y="682" width="265" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Iwr-UC-IGC"/>
+                        <constraint firstAttribute="width" constant="265" id="zLa-Rb-xT6"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="Not right now, thanks.">
                         <color key="titleColor" red="0.63705842391304346" green="0.63705842391304346" blue="0.63705842391304346" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,8 +52,22 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="BCv-Xm-nsX" firstAttribute="top" secondItem="ejE-s7-vcp" secondAttribute="bottom" constant="8" id="0F0-eV-Qnt"/>
+                <constraint firstAttribute="centerX" secondItem="BCv-Xm-nsX" secondAttribute="centerX" id="AYJ-oT-FDr"/>
+                <constraint firstAttribute="trailing" secondItem="2di-sD-G42" secondAttribute="trailing" id="CKm-Sm-Y7T"/>
+                <constraint firstItem="ejE-s7-vcp" firstAttribute="top" secondItem="2di-sD-G42" secondAttribute="bottom" constant="14" id="F7K-tc-T5r"/>
+                <constraint firstAttribute="centerX" secondItem="ejE-s7-vcp" secondAttribute="centerX" constant="-0.5" id="nvr-88-JzI"/>
+                <constraint firstItem="2di-sD-G42" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="td0-D9-Jn7"/>
+                <constraint firstItem="2di-sD-G42" firstAttribute="top" secondItem="2" secondAttribute="top" constant="48" id="yt9-CH-VIY"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
 </document>

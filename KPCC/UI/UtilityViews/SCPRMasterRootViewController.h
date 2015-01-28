@@ -10,13 +10,13 @@
 #import "SCPRQueueViewController.h"
 #import "global.h"
 #import "SCPRDFPViewController.h"
-#import "GADInterstitial.h"
+#import <Google-Mobile-Ads-SDK/GADInterstitial.h>
 #import "SCPRBreakingNewsViewController.h"
 #import "SCPRDFPViewController.h"
 
 typedef void (^AdKilledCompletion)(void);
 
-@interface SCPRMasterRootViewController : UIViewController<Rotatable,GADInterstitialDelegate,ContentProcessor,UIAlertViewDelegate,SCPRDFPAdDelegate>
+@interface SCPRMasterRootViewController : UIViewController<Rotatable,ContentProcessor,UIAlertViewDelegate,SCPRDFPAdDelegate>
 
 @property NSInteger screenContentType;
 @property (nonatomic,strong) IBOutlet UIImageView *globalGradient;
@@ -27,6 +27,7 @@ typedef void (^AdKilledCompletion)(void);
 @property (nonatomic,strong) GADInterstitial *interstitial;
 @property (nonatomic,strong) IBOutlet SCPRBreakingNewsViewController *breakingNewsOverlay;
 @property (nonatomic,strong) id pushedContent;
+@property (nonatomic,strong) id introView;
 @property (nonatomic,strong) SCPRDFPViewController *dfpAdViewController;
 @property (nonatomic,weak) UIView *adPresentationView;
 
@@ -42,6 +43,7 @@ typedef void (^AdKilledCompletion)(void);
 @property UIInterfaceOrientation frozenOrientation;
 
 - (void)bringUpQueue;
+- (void)hideQueue;
 - (void)invalidateStatusBar;
 - (void)showIntro;
 - (void)hideIntro;
@@ -67,5 +69,6 @@ typedef void (^AdKilledCompletion)(void);
 - (void)hideBreakingNews;
 - (void)displayAtomicArticleWithURL:(NSString*)url;
 - (void)puntToSafariWithURL:(NSString*)url;
+
 
 @end

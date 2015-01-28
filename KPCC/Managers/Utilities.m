@@ -44,7 +44,8 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 }
 
 + (BOOL)isLandscape {
-  return UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+  return ([[DesignManager shared] predictedWindowSize].width > [[DesignManager shared] predictedWindowSize].height);
+  
   //return UIDeviceOrientationIsLandscape([[Utilities del] masterRootController].interfaceOrientation);
 }
 
@@ -702,12 +703,6 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
   return [NSDictionary dictionaryWithDictionary:reversed];
 }
 
-
-
-
-
-
-
 + (BOOL)validLink:(NSString *)link {
   NSString *urlRegEx =
   @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
@@ -718,8 +713,8 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 + (void)primeTitlebarWithText:(NSString *)text shareEnabled:(BOOL)shareEnabled container:(id<Backable>)container {
   [UIView animateWithDuration:0.33 animations:^{
     SCPRTitlebarViewController *titlebar = [[Utilities del] globalTitleBar];
-    [titlebar.kpccLogo removeFromSuperview];
-    [titlebar.editionsLogo removeFromSuperview];
+    titlebar.kpccLogo.alpha = 0.0;
+    titlebar.editionsLogo.alpha = 0.0;
     
     [titlebar.view addSubview:titlebar.pageTitleLabel];
     [titlebar.pageTitleLabel titleizeText:text bold:YES];

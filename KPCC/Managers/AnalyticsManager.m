@@ -7,7 +7,7 @@
 //
 
 #import "AnalyticsManager.h"
-#import "TestFlight.h"
+//#import "TestFlight.h"
 #import "Flurry.h"
 #import "global.h"
 #import "SBJson.h"
@@ -34,8 +34,8 @@ static AnalyticsManager *singleton = nil;
 }
 
 - (void)primeAnalytics {
-  NSString *tfKey = [Utilities isIpad] ? [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPadKey"] : [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPhoneKey"];
-  [TestFlight takeOff:tfKey];
+  //NSString *tfKey = [Utilities isIpad] ? [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPadKey"] : [[[[FileManager shared] globalConfig] objectForKey:@"TestFlight"] objectForKey:@"iPhoneKey"];
+  //[TestFlight takeOff:tfKey];
   
   [Flurry setCrashReportingEnabled:YES];
 #ifdef PRODUCTION
@@ -43,7 +43,7 @@ static AnalyticsManager *singleton = nil;
 #elif RELEASE
   [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"ProductionKey"] ];
 #else
-  [Flurry setDebugLogEnabled:YES];
+  //[Flurry setDebugLogEnabled:YES];
   [Flurry startSession: [[[[FileManager shared] globalConfig] objectForKey:@"Flurry"] objectForKey:@"DebugKey"] ];
 #endif
   [Flurry setBackgroundSessionEnabled:NO];
@@ -95,8 +95,13 @@ static AnalyticsManager *singleton = nil;
     NSLog(@"Using ad settings for %@ with ID : %@",[object objectForKey:@"buildType"],[object objectId]);
     
     if ( object ) {
+#ifdef DEBUG
+      [self setNumberOfAdsPerSession:@4];
+      [self setNumberOfSwipesPerAd:@4];
+#else
       [self setNumberOfAdsPerSession:[object objectForKey:@"numberOfAdsPerSession"]];
       [self setNumberOfSwipesPerAd:[object objectForKey:@"numberOfSwipesPerAd"]];
+#endif
       [self setAdVendorID:[object objectForKey:@"adVendorID"]];
       [self setAdUnitID:[object objectForKey:@"adUnitID"]];
       [self setUrlHint:[object objectForKey:@"urlHint"]];

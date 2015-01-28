@@ -15,6 +15,8 @@
 #define kFrameWidthMacro @"||_FRAMEWIDTH_||"
 #define kTopMarginMacro @"||_TOPMARGIN_||"
 #define kLeftPaddingMacro @"||_LEFTPADDING_||"
+#define kMaxContainerWidthMacro @"||_MAXCONTAINERWIDTH_||"
+#define kMaxBodyWidth @"||_MAXBODYWIDTH_||"
 #define kRightPaddingMacro @"||_RIGHTPADDING_||"
 #define kYouTubeYieldMacro @"||_YOUTUBE_YIELD_||"
 #define kYouTubeIDMacro @"||_YT_PLAYER_ID_||"

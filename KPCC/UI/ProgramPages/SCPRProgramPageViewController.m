@@ -36,6 +36,8 @@
 - (void)mergeWithShow {
   
   
+  if ( self.merged ) return;
+  self.merged = YES;
   
   [self.programTitleLabel titleizeText:[self.programObject objectForKey:@"title"]
                                   bold:NO
@@ -186,6 +188,7 @@
                                                         object:self.programObject];
     
     self.mainScroller.userInteractionEnabled = YES;
+    self.loaded = YES;
     
   }];
 }
@@ -261,6 +264,8 @@
 }
 
 - (void)fetchShowInformation {
+  
+  if ( self.loaded ) return;
   
   [self.nativeSpinner startAnimating];
   [UIView animateWithDuration:0.22 animations:^{
@@ -799,6 +804,8 @@
                                                       xibForPlatformWithName:@"SCPRProgramPageViewController"]
                                                owner:self
                                              options:nil];
+    self.merged = NO;
+    self.loaded = NO;
     [self mergeWithShow];
     [self fetchShowInformation];
     [UIView animateWithDuration:0.15 animations:^{

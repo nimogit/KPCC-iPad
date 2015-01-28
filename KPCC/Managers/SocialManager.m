@@ -950,7 +950,7 @@ static SocialManager *singleton = nil;
   NSString *username = [twitter username];
   SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter
                                           requestMethod:SLRequestMethodGET
-                                                    URL:[NSURL URLWithString:@"http://api.twitter.com/1.1/users/show.json"]
+                                                    URL:[NSURL URLWithString:@"https://api.twitter.com/1.1/users/show.json"]
                                              parameters:@{ @"screen_name" : username }];
   twitter.accountType = twitterType;
   [request setAccount:twitter];
@@ -959,7 +959,9 @@ static SocialManager *singleton = nil;
     
     if ( error ) {
       NSLog(@"Error while connecting with Twitter... : %@",[error localizedDescription]);
-      
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"twitter_fail"
+                                                          object:nil];
+      return;
     }
     
     NSString *s = [[NSString alloc] initWithData:responseData
@@ -976,6 +978,13 @@ static SocialManager *singleton = nil;
 - (void)storeTwitterInformation:(NSString *)twitterInfo {
 
   NSDictionary *twitterHash = (NSDictionary*)[twitterInfo JSONValue];
+  NSArray *errors = twitterHash[@"errors"];
+  if ( errors && [errors count] > 0 ) {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"twitter_fail"
+                                                        object:nil];
+    return;
+  }
+  
   [[ContentManager shared].settings setTwitterInformation:twitterInfo];
   
   NSString *normal = [twitterHash objectForKey:@"profile_image_url"];
@@ -1182,6 +1191,7 @@ static SocialManager *singleton = nil;
 - (void)logoutOfFacebook {
   [[ContentManager shared].settings setProfileImageURL:nil];
   [[ContentManager shared].settings setUserFacebookInformation:nil];
+  //[[ContentManager shared]]
   [[ContentManager shared] writeSettings];
   
   [[FBSession activeSession] closeAndClearTokenInformation];
@@ -1316,6 +1326,7 @@ static SocialManager *singleton = nil;
   container.text = [container.text capitalizedString];
   [[[ContentManager shared] settings] setUserFacebookInformation:[fbgo JSONRepresentation]];
   [[ContentManager shared] writeSettings];
+  
 }
 
 - (NSString*)facebookName {

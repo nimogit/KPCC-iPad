@@ -65,13 +65,18 @@ typedef enum {
 - (void)closeDrawer;
 - (void)toggleDrawer;
 - (void)rotateDrawerForInterfaceOrientation:(UIInterfaceOrientation)orientation;
+- (void)blackoutCloak:(VoidBlock)cloakAppeared;
 - (void)cloakUIWithMessage:(NSString*)message;
 - (void)cloakUIWithSlideshowFromArticle:(NSDictionary*)article;
 - (void)cloakUIWithCustomView:(id<Cloakable>)controller;
 - (void)cloakUIWithCustomView:(id<Cloakable>)controller dismissible:(BOOL)dismissible;
 - (void)cloakUIWithCustomView:(id<Cloakable>)controller dismissible:(BOOL)dismissible push:(CGFloat)push;
 - (void)cloakUIWithMessage:(NSString *)message andUnfreezeString:(NSString*)string;
+
 - (void)uncloakUI;
+- (void)uncloakUI:(BOOL)blackout;
+
+- (void)uncloakBlackoutUI;
 - (void)hideTitleBar;
 - (void)showTitleBar;
 - (void)dropOnWindow:(UIView*)view fromView:(UIView*)originalView animateToFrame:(CGRect)animateToFrame completion:(VoidBlock)completion;

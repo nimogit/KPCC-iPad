@@ -54,7 +54,8 @@
 }
 
 - (void)orient {
-  
+
+  /*
   self.bringUpQueueButton.frame = CGRectMake(self.view.frame.size.width-self.bringUpQueueButton.frame.size.width,
                                       self.bringUpQueueButton.frame.origin.y,
                                       self.bringUpQueueButton.frame.size.width,
@@ -81,7 +82,7 @@
   }
   
   [[DesignManager shared] alignVerticalCenterOf:self.timeElapsedLabel
-                                       withView:self.progressSlider];
+                                       withView:self.progressSlider];*/
   
 }
 
@@ -519,21 +520,11 @@
     self.skipLabel.alpha = 0.0;
     self.timeElapsedLabel.alpha = 0.0;
     
-    
-    [[DesignManager shared] alignVerticalCenterOf:self.queueViewController.currentPlayingDetails
-                                         withView:self.actionButton];
-    
-    UIView *v2u = [Utilities isIpad] ? self.onairSeat : self.actionButton;
-    CGFloat padding = [Utilities isIpad] ? 8.0 : -4.0;
-    [[DesignManager shared] avoidNeighbor:v2u
-                                 withView:self.queueViewController.currentPlayingDetails
-                                direction:NeighborDirectionToLeft
-                                  padding:padding];
-    
-    
-    [[DesignManager shared] alignVerticalCenterOf:v2u
-                                         withView:self.queueViewController.currentPlayingDetails];
-    
+    [self.onairTopAnchor setConstant:19.0];
+    [self.playerDetailsTopAnchor setConstant:17.0];
+    [self.playerDetailsLeftAnchor setConstant:58.0];
+    [self.bottomFrame layoutIfNeeded];
+
   }];
 
   
@@ -561,20 +552,12 @@
                                                             bold:NO
      respectHeight:YES];
     
-    UIView *v2u = [Utilities isIpad] ? self.leftDividerView : self.actionButton;
-    CGFloat padding = [Utilities isIpad] ? 10.0 : -10.0;
-    CGFloat vPad = [Utilities isIpad] ? -2.0 : 10.0;
+
+    [self.playerDetailsTopAnchor setConstant:9.0];
+    [self.playerDetailsLeftAnchor setConstant:9.0];
+    [self.bottomFrame layoutIfNeeded];
     
-    [[DesignManager shared] avoidNeighbor:self.progressSlider
-                                 withView:self.queueViewController.currentPlayingDetails
-                                direction:NeighborDirectionBelow
-                                  padding:vPad];
-    
-    [[DesignManager shared] avoidNeighbor:v2u
-                                 withView:self.queueViewController.currentPlayingDetails
-                                direction:NeighborDirectionToLeft
-                                  padding:padding];
-    
+    /*
     if ( ![Utilities isIpad] ) {
       self.queueViewController.currentPlayingDetails.frame = CGRectMake(self.queueViewController.currentPlayingDetails.frame.origin.x,
                                                                         8.0,
@@ -594,10 +577,8 @@
       
       [[DesignManager shared] alignHorizontalCenterOf:self.skipButton
                                              withView:self.timeElapsedLabel];
-      
-
-      
-    }
+     
+    }*/
     
   }];
   

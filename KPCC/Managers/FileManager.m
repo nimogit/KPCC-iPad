@@ -161,7 +161,7 @@ static FileManager *singleton = nil;
   
   NSString *leftPadding = [Utilities isLandscape] ? @"110px" : @"90px";
   NSString *rightPadding = [Utilities isLandscape] ? @"106px" : @"86px";
-  NSString *topPadding = @"46px";
+  NSString *topPadding = @"1px";
   
   if ( ![Utilities isIpad] ) {
     leftPadding = @"18px";
@@ -169,9 +169,16 @@ static FileManager *singleton = nil;
     topPadding = @"20px";
   }
   
+  CGFloat width = [[UIScreen mainScreen] bounds].size.width;
+  NSString *maxCWidth = [NSString stringWithFormat:@"%ldpx",(long)(width-([leftPadding floatValue]+[rightPadding floatValue]))];
+  NSString *maxBWidth = [NSString stringWithFormat:@"%ldpx",(long)width];
+  
   css = [css stringByReplacingOccurrencesOfString:kLeftPaddingMacro withString:leftPadding];
   css = [css stringByReplacingOccurrencesOfString:kRightPaddingMacro withString:rightPadding];
   css = [css stringByReplacingOccurrencesOfString:kTopMarginMacro withString:topPadding];
+  css = [css stringByReplacingOccurrencesOfString:kMaxContainerWidthMacro withString:maxCWidth];
+  css = [css stringByReplacingOccurrencesOfString:kMaxBodyWidth withString:maxBWidth];
+  
   NSString *base = [NSString stringWithFormat:@"<html><head>%@</head><body><div id=\"container\">%@</div></body></html>",css,body];
   return base;
 }
@@ -204,7 +211,7 @@ static FileManager *singleton = nil;
   
   NSString *lp = [Utilities isIpad] ? @"90px" : @"18px";
   NSString *rp = [Utilities isIpad] ? @"86px" : @"16px";
-  NSString *tp = [Utilities isIpad] ? @"46px" : @"20px";
+  NSString *tp = [Utilities isIpad] ? @"1px" : @"20px";
   
   css = [css stringByReplacingOccurrencesOfString:kLeftPaddingMacro withString:lp];
   css = [css stringByReplacingOccurrencesOfString:kRightPaddingMacro withString:rp];
@@ -297,7 +304,8 @@ static FileManager *singleton = nil;
     for ( NSString *filename in contents ) {
       
       
-      if ( [filename rangeOfString:@"article_base"].location == NSNotFound ) {
+      if ( [filename rangeOfString:@"article_base"].location == NSNotFound &&
+           [filename rangeOfString:@"blank-"].location == NSNotFound ) {
         continue;
       }
       
@@ -308,6 +316,7 @@ static FileManager *singleton = nil;
       if ( fileExists ) {
         [[NSFileManager defaultManager] removeItemAtPath:full
                                                    error:&error];
+        NSLog(@"Removed %@",[[full componentsSeparatedByString:@"/"] lastObject]);
       }
     }
     
@@ -607,8 +616,13 @@ static FileManager *singleton = nil;
   NSString *rightPadding = [Utilities isLandscape] ? @"100px" : @"86px";
   NSString *lp = [Utilities isIpad] ? leftPadding : @"18px";
   NSString *rp = [Utilities isIpad] ? rightPadding : @"16px";
-  NSString *tp = [Utilities isIpad] ? @"46px" : @"20px";
+  NSString *tp = [Utilities isIpad] ? @"4px" : @"20px";
+  CGFloat width = [[UIScreen mainScreen] bounds].size.width;
+  NSString *maxCWidth = [NSString stringWithFormat:@"%ldpx",(long)(width-([lp floatValue]+[rp floatValue]))];
+  NSString *maxBWidth = [NSString stringWithFormat:@"%ldpc",(long)width];
+
   
+
   NSArray *embeds = @[];
 
   
@@ -651,7 +665,8 @@ static FileManager *singleton = nil;
   content = [content stringByReplacingOccurrencesOfString:kLeftPaddingMacro withString:lp];
   content = [content stringByReplacingOccurrencesOfString:kRightPaddingMacro withString:rp];
   content = [content stringByReplacingOccurrencesOfString:kTopMarginMacro withString:tp];
-  
+  //content = [content stringByReplacingOccurrencesOfString:kMaxContainerWidthMacro withString:maxCWidth];
+  content = [content stringByReplacingOccurrencesOfString:kMaxBodyWidth withString:maxBWidth];
   /*if ( [embeds count] > 0 ) {
     content = [self modifyJavascriptInContainer:embeds
                                       container:content];

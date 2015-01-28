@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import "UIColor+Additions.h"
 
 #define kBaselinePadding 20.0
 
@@ -151,6 +152,7 @@ typedef enum {
 - (UIColor*)kingCrimsonColor;
 - (UIColor*)transparentWhiteColor;
 - (UIColor*)sectionsBlueColor;
+- (UIColor*)prettyRandomColor;
 
 // Queue colors
 - (UIColor*)doneGreenColor;
@@ -180,7 +182,24 @@ typedef enum {
 - (void)turn:(id<Turnable>)turnable withValues:(NSDictionary*)changes;
 - (void)nudge:(UIView*)view direction:(NeighborDirection)direction amount:(CGFloat)amount;
 
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container;
+
+- (void)snapCenteredView:(id)view toContainer:(id)container;
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset;
+- (NSLayoutConstraint*)snapView:(id)view toContainer:(id)container withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen;
+
+- (NSArray*)typicalConstraints:(UIView*)view withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen;
+- (NSArray*)typicalConstraints:(UIView*)view withTopOffset:(CGFloat)topOffset;
+- (NSArray*)typicalConstraints:(UIView*)view;
+
+- (NSArray*)sizeContraintsForView:(UIView*)view;
+- (void)unelasticizeView:(UIView*)view;
+- (void)touch:(NSArray*)views;
+
 @property BOOL inSingleArticle;
 @property BOOL hasBeenInFullscreen;
+@property BOOL reservedRotationFlag;
+
+@property CGSize predictedWindowSize;
 
 @end

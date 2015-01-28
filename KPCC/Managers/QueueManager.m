@@ -410,7 +410,6 @@ static QueueManager *singleton = nil;
     
     NSMutableArray *segments = [[NSMutableArray alloc] init];
     NSMutableDictionary *cloneHash = [[NSMutableDictionary alloc] init];
-    
     NSMutableArray *general = [self.stories objectForKey:@"general"];
 
     

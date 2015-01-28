@@ -44,31 +44,16 @@
   [super viewDidLoad];
   
   [[Utilities del] globalTitleBar].delegate = self;
-  
-  // Stretch bottom-most view for iOS7.
-  [self stretch];
-  
-  if ([Utilities isIOS7]) {
-    if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
-      self.photoVideoTable.frame = CGRectMake(self.photoVideoTable.frame.origin.x,
-                                              self.photoVideoTable.frame.origin.y,
-                                              self.photoVideoTable.frame.size.width,
-                                              self.photoVideoTable.frame.size.height - 20.0);
-    }
-  } else {
-    self.photoVideoTable.frame = CGRectMake(self.photoVideoTable.frame.origin.x,
-                                            self.photoVideoTable.frame.origin.y + 20.0,
-                                            self.photoVideoTable.frame.size.width,
-                                            self.photoVideoTable.frame.size.height - 36.0);
-  }
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(processEditions)
                                                name:@"update_news_feed_ui"
                                              object:nil];
 
+  
   // Config table background colors, scroll appearance, and bottom loading spinner.
   self.view.backgroundColor = [UIColor blackColor];
+  self.view.clipsToBounds = NO;
   self.photoVideoTable.showsVerticalScrollIndicator = NO;
   self.photoVideoTable.showsHorizontalScrollIndicator = NO;
   self.photoVideoTable.separatorColor = [UIColor clearColor];
@@ -781,6 +766,20 @@
     vpc.facade1.parentPVController = self;
     vpc.facade0.contentType = self.contentType;
     vpc.facade1.contentType = self.contentType;
+    
+    if ( [Utilities isLandscape] ) {
+      vpc.containerTopAnchor.constant = self.contentType == ScreenContentTypeVideoPhotoPage ? 0.0 : -23.0;
+    } else {
+      if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
+        vpc.containerTopAnchor.constant = 0.0;
+      } else {
+        if ( [self.cells count] == 0 ) {
+          vpc.containerTopAnchor.constant = -23.0;
+        } else {
+          vpc.containerTopAnchor.constant = 0.0;
+        }
+      }
+    }
     vpc.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.cells addObject:vpc];
   }
@@ -870,11 +869,12 @@
 
     [self.navigationController pushViewController:emvc
                                          animated:YES];
+    
   } else {
     if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage) {
-      SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc]
-                                                             initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
-                                                             bundle:nil];
+      SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                                                              navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                                                            options:@{ UIPageViewControllerOptionSpineLocationKey : @( UIPageViewControllerSpineLocationMin)}];
     
       NSArray *collectionType = nil;
       if ( self.contentType == ScreenContentTypeVideoPhotoPage ) {
@@ -981,12 +981,14 @@
         }
       }
       
-      SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc]
-                                                             initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleCollectionViewController"]
-                                                             bundle:nil];
+      SCPRSingleArticleCollectionViewController *collection = [[SCPRSingleArticleCollectionViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                                                                                   navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                                                                                 options:@{ UIPageViewControllerOptionSpineLocationKey : @( UIPageViewControllerSpineLocationMin)}];
     
       collection.category = ContentCategoryEvents;
-      collection.view.frame = collection.view.frame;
+      collection.view.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width,
+                                         self.view.frame.size.height);
+      
       NSMutableArray *arrayToUse = [NSMutableArray arrayWithArray:self.posts];
       self.pushedCollection = collection;
       
@@ -1000,6 +1002,12 @@
       
       [self.navigationController
        pushViewController:collection animated:YES];
+      
+
+      
+
+      
+      [collection.view printDimensionsWithIdentifier:@"Article collection"];
       
       [[[Utilities del] globalTitleBar] morph:BarTypeModal
                                   container:collection];
@@ -1074,11 +1082,14 @@
     editionPD = @"DUMMY";
   }
   NSDictionary *meta = [self.editionCellHash objectForKey:[Utilities sha1:editionPD]];
+  SCPRDeluxeEditionsCell *cell = nil;
   if ( meta ) {
-    return [meta objectForKey:@"editionCell"];
+    cell = [meta objectForKey:@"editionCell"];
+    [cell prime:self];
+    return cell;
   }
   
-  SCPRDeluxeEditionsCell *cell = nil;
+  
   NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared]
                                                           xibForPlatformWithName:@"SCPRDeluxeEditionsCell"]
                                                    owner:nil
@@ -1131,24 +1142,27 @@
   self.categoriesBlurView.alpha = 0.0;
   self.categoriesDarkView.alpha = 0.0;
   
-  [self.view addSubview:self.categoriesBlurView];
-  [self.view addSubview:self.categoriesDarkView];
-
+  //[self.view addSubview:self.categoriesBlurView];
+  //[self.view addSubview:self.categoriesDarkView];
+  [[DesignManager shared] snapView:self.categoriesBlurView
+                       toContainer:[[Utilities del].viewController displayPortView]];
+  [[DesignManager shared] snapView:self.categoriesDarkView
+                       toContainer:[[Utilities del].viewController displayPortView]];
+  
   self.categoriesTableViewController.view.layer.cornerRadius = 5;
   self.categoriesTableViewController.view.layer.masksToBounds = YES;
 
   self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(1.8, 1.8);
-  [self.view addSubview:self.categoriesTableViewController.view];
+  //[self.view addSubview:self.categoriesTableViewController.view];
+  
+  [[DesignManager shared] snapView:self.categoriesTableViewController.view
+                       toContainer:[[Utilities del].viewController displayPortView]];
 
   // Hide the player widget
   [[[Utilities del] viewController] hidePlayer];
   
   if ([Utilities isIOS7]) {
     [UIView animateWithDuration:0.45
-                          delay:0.0
-         usingSpringWithDamping:0.75
-          initialSpringVelocity:0.0
-                        options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                        self.categoriesTableViewController.view.transform = CGAffineTransformMakeScale(0.9, 0.9);
                        self.categoriesDarkView.alpha = 0.7;
@@ -1335,12 +1349,21 @@
       }
     }
     
-    self.photoVideoTable.alpha = 0.0;
+    //self.photoVideoTable.alpha = 0.0;
   }];
 }
 
 - (void)handleRotationPost {
-  if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeEventsPage) {
+  
+  [self.masterCellHash removeAllObjects];
+  [self.editionCellHash removeAllObjects];
+  
+  [self loadDummies];
+  [self buildCells];
+
+  [self.photoVideoTable reloadData];
+  
+  /*if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeEventsPage) {
     
     CGFloat width = [Utilities isLandscape] ? 1024.0 : 768.0;
     CGFloat height = [Utilities isLandscape] ? 673.0 : 926.0;
@@ -1397,6 +1420,7 @@
 
   [[[Utilities del] masterRootController] uncloak];
   self.reorienting = NO;
+   */
 }
 
 - (void)prepTableTransition {
@@ -1603,7 +1627,17 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.currentIndexPath = indexPath;
     cell.landscape = [Utilities isLandscape];
-
+    
+    if ( [Utilities isLandscape] ) {
+      cell.containerTopAnchor.constant = -23.0;
+    } else {
+      if ( indexPath.row == 0 ) {
+        cell.containerTopAnchor.constant = -20.0;
+      } else {
+        cell.containerTopAnchor.constant = 0.0;
+      }
+    }
+    
     return cell;
   }
   
@@ -1745,14 +1779,15 @@
       NSDictionary *meta = [map objectAtIndex:indexPath.row];
       NSString *type = [meta objectForKey:@"type"];
       NSMutableArray *posts = [meta objectForKey:@"posts"];
-      CGFloat squish = indexPath.row == 0 ? 23.0 : 0.0;
+      CGFloat squish = indexPath.row == 0 ? 0.0 : 0.0;
 
       if ([type isEqualToString:@"editions"]) {
-        return self.dummyEditions.frame.size.height;
+        CGFloat mod = [Utilities isLandscape] ? 100.0 : 0.0;
+        return self.dummyEditions.frame.size.height + mod;
       }
 
       if ([type isEqualToString:@"regular"]) {
-        return self.dummyDouble.frame.size.height-squish;
+        return self.dummyDouble.frame.size.height;
       }
 
       if ([type isEqualToString:@"embiggened"]) {
@@ -1771,7 +1806,8 @@
         }
       }
     } else {
-      return self.dummyEditions.frame.size.height;
+      CGFloat mod = [Utilities isLandscape] ? 120.0 : 0.0;
+      return self.dummyEditions.frame.size.height + mod;
     }
 
   } else if (self.contentType == ScreenContentTypeEventsPage) {
@@ -1784,10 +1820,10 @@
       }
       
       cell = [self.cells objectAtIndex:indexPath.row+1];
-      CGFloat squish = indexPath.row == 0 ? 23.0 : 0.0;
+      CGFloat squish = indexPath.row == 0 ? 0.0 : 0.0;
       return cell.frame.size.height-squish;
     } else {
-      CGFloat squish = indexPath.row == 0 ? 23.0 : 0.0;
+      CGFloat squish = indexPath.row == 0 ? 0.0 : 0.0;
       cell = [self.cells objectAtIndex:indexPath.row];
       return cell.frame.size.height-squish;
     }

@@ -38,6 +38,13 @@ static CGFloat expanseLimit = 100.0;
   self.headerCaption.alpha = 0.0;
   self.footerCaption.alpha = 0.0;
   
+#ifdef DEBUG
+  /*self.scroller.backgroundColor = [[DesignManager shared] prettyRandomColor];
+  self.mainCaptionLabel.backgroundColor = [[DesignManager shared] prettyRandomColor];
+  self.footerCaption.backgroundColor = [[DesignManager shared] prettyRandomColor];
+  self.titleCaptionLabel.backgroundColor = [[DesignManager shared] prettyRandomColor];*/
+#endif
+  
   if ( [Utilities isLandscape] ) {
     if ( ![Utilities isIOS7] ) {
       for ( UIView *v in [self.view subviews] ) {
@@ -57,12 +64,19 @@ static CGFloat expanseLimit = 100.0;
                               bold:NO
                      respectHeight:NO];
   
-  [self.headerCaption snapText:self.headerCaption.text bold:NO];
-  [self.footerCaption snapText:self.footerCaption.text bold:NO];
+  //[self.headerCaption snapText:self.headerCaption.text bold:NO];
+  //[self.footerCaption snapText:self.footerCaption.text bold:NO];
   
   self.scroller.delegate = self;
   
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewDidLayoutSubviews {
+  if ( self.needsSetup ) {
+    self.needsSetup = NO;
+    [self sourceWithArticle:self.article];
+  }
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,13 +100,18 @@ static CGFloat expanseLimit = 100.0;
   [self.spinner startAnimating];
   self.miniQueue = [[NSOperationQueue alloc] init];
   self.actualSizeLookupHash = [[NSMutableDictionary alloc] init];
+  [self.scroller setTranslatesAutoresizingMaskIntoConstraints:NO];
+  
+  for ( UIView *v in self.scroller.subviews ) {
+    [v removeFromSuperview];
+  }
   
   NSArray *assets = [article objectForKey:@"assets"];
-  self.scroller.contentSize = CGSizeMake([assets count]*self.scroller.frame.size.width,
-                                         self.scroller.frame.size.height);
   
   self.imageVector = [[NSMutableArray alloc] init];
   self.ownerVector = [[NSMutableArray alloc] init];
+  self.scroller.contentSize = CGSizeMake(self.scroller.frame.size.width*[assets count],
+                                         self.scroller.frame.size.height);
   
   for ( unsigned i = 0; i < [assets count]; i++ ) {
     UIView *seat = [[UIView alloc] initWithFrame:CGRectMake((i*self.scroller.frame.size.width),
@@ -100,11 +119,15 @@ static CGFloat expanseLimit = 100.0;
                                                             self.scroller.frame.size.width,
                                                             self.scroller.frame.size.height)];
     
+    
     seat.backgroundColor = [UIColor clearColor];
     
     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectZero];
-    iv.frame = CGRectMake(0.0,0.0,self.scroller.frame.size.width-(self.leftCurtain.frame.size.width/2.0)-(self.rightCurtain.frame.size.width/2.0),
+    iv.frame = CGRectMake(0.0,0.0,self.scroller.frame.size.width,
                           self.scroller.frame.size.height);
+    
+    [self.scroller printDimensionsWithIdentifier:@"Image Scroller"];
+    
     iv.center = CGPointMake(seat.frame.size.width/2.0,
                            seat.frame.size.height/2.0);
     [seat addSubview:iv];
@@ -166,15 +189,16 @@ static CGFloat expanseLimit = 100.0;
     }
     
     [self.imageVector addObject:iv];
-    
-
-
 
   }
   
   NSMutableDictionary *meta = [self.ownerVector objectAtIndex:0];
   [self applyMeta:meta withOffset:0];
   
+  [self.view layoutIfNeeded];
+  [self.scroller layoutIfNeeded];
+  [self.scroller setContentOffset:CGPointMake(self.currentIndex*self.scroller.frame.size.width,
+                                              0.0)];
 
 }
 
@@ -194,7 +218,8 @@ static CGFloat expanseLimit = 100.0;
   NSInteger offset = self.scroller.contentOffset.x / self.scroller.frame.size.width;
   NSDictionary *meta = [self.ownerVector objectAtIndex:offset];  
   [self applyMeta:meta withOffset:offset];
-
+  self.currentIndex = offset;
+  
 }
 
 - (void)applyMeta:(NSDictionary *)meta withOffset:(NSInteger)offset {
@@ -208,17 +233,14 @@ static CGFloat expanseLimit = 100.0;
     fadein = YES;
   }
   
-    self.titleCaptionLabel.frame = self.originalHeadlineHeight;
-    self.footerCaption.frame = self.originalBylineHeight;
-    self.mainCaptionLabel.frame = self.originalCaptionHeight;
     
-    [self.footerCaption titleizeText:[meta objectForKey:@"owner"]
+  [self.footerCaption titleizeText:[meta objectForKey:@"owner"]
                                 bold:NO
      respectHeight:YES];
-    [self.titleCaptionLabel titleizeText:[self.article objectForKey:@"title"]
+  [self.titleCaptionLabel titleizeText:[self.article objectForKey:@"title"]
                                     bold:NO
      respectHeight:YES];
-    [self.mainCaptionLabel titleizeText:[meta objectForKey:@"caption"]
+  [self.mainCaptionLabel titleizeText:[meta objectForKey:@"caption"]
                                    bold:NO
      respectHeight:YES];
   
@@ -226,96 +248,36 @@ static CGFloat expanseLimit = 100.0;
     //self.mainCaptionLabel.backgroundColor = [UIColor greenColor];
 #endif
   
-    NSString *progress = [NSString stringWithFormat:@"%d of %d",offset+1,[self.imageVector count]];
+  NSString *progress = [NSString stringWithFormat:@"%d of %d",offset+1,[self.imageVector count]];
     
 
-    self.progressLabel.text = progress;
-    
-    [[DesignManager shared] avoidNeighbor:self.scroller
-                                 withView:self.captionSeat
-                                direction:NeighborDirectionAbove
-                                  padding:3.0];
-    
-    if ( self.captionExpanded ) {
-      [self contractCaption];
-    }
-    
-    [self.captionExpansionButton removeFromSuperview];
-    self.captionExpansionButton = [[UIButton alloc] initWithFrame:self.mainCaptionLabel.frame];
-    self.captionExpansionButton.backgroundColor = [UIColor clearColor];
-    
+  self.progressLabel.text = progress;
 
-    [self.captionSeat addSubview:self.captionExpansionButton];
-    
-    self.captionExpanded = NO;
-    [self.captionExpansionButton addTarget:self
-                                    action:@selector(expandCaption)
-                          forControlEvents:UIControlEventTouchUpInside];
-    
-    if ( ![Utilities isIOS7] ) {
-      [[DesignManager shared] alignVerticalCenterOf:self.titleCaptionLabel
-                                           withView:self.progressLabel];
-      
-      [[DesignManager shared] avoidNeighbor:self.scroller
-                                   withView:self.footerCaption
-                                  direction:NeighborDirectionAbove
-                                    padding:3.0];
-      
-      
-    }
-    
-    NSValue *v = [self.actualSizeLookupHash objectForKey:key];
-    CGRect r = [v CGRectValue];
-    CGFloat topAlignment = r.origin.y;
-    if ( topAlignment > 0.0 ) {
-      self.titleCaptionLabel.frame = CGRectMake(self.titleCaptionLabel.frame.origin.x,
-                                                self.scroller.frame.origin.y+topAlignment-self.titleCaptionLabel.frame.size.height-3.0,
-                                                self.titleCaptionLabel.frame.size.width,
-                                                self.titleCaptionLabel.frame.size.height);
-      self.progressLabel.frame = CGRectMake(self.progressLabel.frame.origin.x,
-                                                self.scroller.frame.origin.y+topAlignment-self.progressLabel.frame.size.height-3.0,
-                                                self.progressLabel.frame.size.width,
-                                                self.progressLabel.frame.size.height);
-    } else {
-      [[DesignManager shared] avoidNeighbor:self.scroller
-                                   withView:self.titleCaptionLabel
-                                  direction:NeighborDirectionBelow
-                                    padding:3.0];
-      [[DesignManager shared] avoidNeighbor:self.scroller
-                                   withView:self.progressLabel
-                                  direction:NeighborDirectionBelow
-                                    padding:3.0];
-    }
-  
-  CGFloat bottomAlignment = self.scroller.frame.size.height-(r.origin.y+r.size.height);
-  if ( bottomAlignment > 0.0 ) {
-    self.footerCaption.frame = CGRectMake(self.footerCaption.frame.origin.x,
-                                              self.scroller.frame.origin.y+self.scroller.frame.size.height-bottomAlignment+5.0,
-                                              self.footerCaption.frame.size.width,
-                                              self.footerCaption.frame.size.height);
-    self.captionSeat.frame = CGRectMake(self.captionSeat.frame.origin.x,
-                                          self.scroller.frame.origin.y+self.scroller.frame.size.height-bottomAlignment+5.0,
-                                          self.captionSeat.frame.size.width,
-                                          self.captionSeat.frame.size.height);
-  } else {
-    [[DesignManager shared] avoidNeighbor:self.scroller
-                                 withView:self.captionSeat
-                                direction:NeighborDirectionAbove
-                                  padding:5.0];
-    [[DesignManager shared] avoidNeighbor:self.scroller
-                                 withView:self.footerCaption
-                                direction:NeighborDirectionAbove
-                                  padding:5.0];
+  if ( self.captionExpanded ) {
+    [self contractCaption];
   }
+    
+  /*[self.captionExpansionButton removeFromSuperview];
+  self.captionExpansionButton = [[UIButton alloc] initWithFrame:self.mainCaptionLabel.frame];*/
+  self.captionExpansionButton.backgroundColor = [UIColor clearColor];
   
-    if ( fadein ) {
-        [UIView animateWithDuration:0.22 animations:^{
-          self.titleCaptionLabel.alpha = 1.0;
-          self.footerCaption.alpha = 1.0;
-          self.mainCaptionLabel.alpha = 1.0;
-          self.progressLabel.alpha = 1.0;
-        }];
-    }
+
+  //[self.captionSeat addSubview:self.captionExpansionButton];
+  
+  self.captionExpanded = NO;
+  [self.captionExpansionButton addTarget:self
+                                  action:@selector(expandCaption)
+                        forControlEvents:UIControlEventTouchUpInside];
+
+
+  if ( fadein ) {
+      [UIView animateWithDuration:0.22 animations:^{
+        self.titleCaptionLabel.alpha = 1.0;
+        self.footerCaption.alpha = 1.0;
+        self.mainCaptionLabel.alpha = 1.0;
+        self.progressLabel.alpha = 1.0;
+      }];
+  }
   
 }
 
@@ -333,20 +295,12 @@ static CGFloat expanseLimit = 100.0;
     
     self.mainCaptionLabel.font = [[DesignManager shared]
                                   latoRegular:f.pointSize+4.0];
-    self.mainCaptionLabel.frame = CGRectMake(self.mainCaptionLabel.frame.origin.x,
-                                             self.mainCaptionLabel.frame.origin.y,
-                                             self.mainCaptionLabel.frame.size.width,
-                                             self.mainCaptionLabel.frame.size.height+expanseLimit);
+
     
     [self.mainCaptionLabel titleizeText:self.mainCaptionLabel.text
                                    bold:NO
                           respectHeight:YES];
     
-    
-    self.captionSeat.frame = CGRectMake(self.captionSeat.frame.origin.x,
-                                             self.captionSeat.frame.origin.y-expanseLimit,
-                                             self.captionSeat.frame.size.width,
-                                             self.mainCaptionLabel.frame.size.height+self.mainCaptionLabel.frame.origin.y);
     
     
   } completion:^(BOOL finished) {
@@ -357,7 +311,6 @@ static CGFloat expanseLimit = 100.0;
     [self.captionExpansionButton addTarget:self
                                     action:@selector(contractCaption)
                           forControlEvents:UIControlEventTouchUpInside];
-    self.captionExpansionButton.frame = self.mainCaptionLabel.frame;
   }];
   
 }
