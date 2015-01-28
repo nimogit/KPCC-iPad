@@ -616,11 +616,6 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   }
 
 
-
-  self.programPages.view.frame = CGRectMake(0.0,
-                                            0.0,
-                                            self.programPages.view.frame.size.width,
-                                            self.programPages.view.frame.size.height);
   [self snapToDisplayPortWithView:self.programPages.view];
   
   [[ContentManager shared] pushToResizeVector:self.programPages];
