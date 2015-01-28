@@ -961,7 +961,6 @@ static ContentManager *singleton = nil;
 
 - (void)editPushForBreakingNews:(BOOL)on {
 #ifdef USE_PARSE
-  
   NSString *pushKey = kPushKeyBreakingNews;
 #ifdef SANDBOX_PUSHES
   pushKey = kPushKeySandbox;
@@ -969,10 +968,15 @@ static ContentManager *singleton = nil;
   if ( on ) {
       NSLog(@"Registering for push on %@",pushKey);
       
-      [[Utilities del] setOperatingWithPushType:PushTypeBreakingNews];
-      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|
-       UIRemoteNotificationTypeBadge|
-       UIRemoteNotificationTypeSound];
+    [[Utilities del] setOperatingWithPushType:PushTypeBreakingNews];
+    
+    if ( [[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)] ) {
+      NSLog(@" ************** iOS 8 : Using proper notification settings - Breaking News **************");
+      [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge
+                                                                                                            categories:nil]];
+    } else {
+      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    }
       
   } else {
     [self unregisterPushNotifications];
@@ -1000,11 +1004,14 @@ static ContentManager *singleton = nil;
 #ifdef USE_PARSE
   if ( on ) {
     if ( [Utilities pureNil:[self.settings pushToken]] ) {
-      
       [[Utilities del] setOperatingWithPushType:PushTypeEvents];
-      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|
-       UIRemoteNotificationTypeBadge|
-       UIRemoteNotificationTypeSound];
+      if ( [[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)] ) {
+        NSLog(@" ************** iOS 8 : Using proper notification settings - Events **************");
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge
+                                                                                                              categories:nil]];
+      } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+      }
       
     } else {
       PFInstallation *currentInstallation = [PFInstallation currentInstallation];

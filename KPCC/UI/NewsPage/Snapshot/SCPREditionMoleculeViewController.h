@@ -39,6 +39,8 @@
 @property BOOL intermediaryAppearance;
 @property BOOL adIsHot;
 @property BOOL dismissalWentLeft;
+@property BOOL adIsDisplaying;
+
 @property DismissDirection dismissDirection;
 
 @property (nonatomic,strong) NSLayoutConstraint *leadingConstraint;
@@ -59,5 +61,6 @@
 - (void)snapContentSize:(BOOL)animated;
 - (void)insertAdAtIndex:(NSInteger)index;
 - (void)removeAdFromIndex:(NSInteger)index;
+- (void)removeAdFromIndex:(NSInteger)index adjustPager:(BOOL)adjustPager;
 
 @end

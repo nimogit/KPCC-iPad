@@ -129,7 +129,7 @@
   
   self.absoluteFinishTimer = nil;
   
-  if ( self.loadCount >= 3 ) {
+  //if ( self.loadCount >= 3 ) {
     
     [UIView animateWithDuration:0.15 animations:^{
       self.adView.alpha = 1.0;
@@ -143,17 +143,18 @@
       return;
     }];
     
-  } else {
+ // }
+/* else {
     if ( !self.failedOnce ) {
       self.loadCount = 0;
       self.failedOnce = YES;
       [self.adView loadRequest:self.adRequest];
       return;
     } else {
-      [self fail];
+      //[self fail];
       return;
     }
-  }
+  }*/
   
 }
 

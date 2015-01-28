@@ -29,6 +29,8 @@
                                bundle:nil];
   self.masterRootController.view.autoresizesSubviews = YES;
   
+  NSLog(@" ************* // APPLICATION DID FINISH LAUNCHING \\ ************** ");
+  
 #ifdef USE_PARSE
   [Parse setApplicationId:[[[[FileManager shared] globalConfig] objectForKey:@"Parse"] objectForKey:@"ApplicationId"]
                 clientKey:[[[[FileManager shared] globalConfig] objectForKey:@"Parse"] objectForKey:@"ClientKey"]];
@@ -114,9 +116,15 @@
   
   [self.viewController primeUI:ScreenContentTypeCompositePage newsPath:@""];
 
-  [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|
-   UIRemoteNotificationTypeBadge|
-   UIRemoteNotificationTypeSound];
+  NSLog(@" **** REQUESTING NOTIFICATION PERMISSIONS **** ");
+  if ( [[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)] ) {
+    NSLog(@" ************** iOS 8 : Using proper notification settings - Global **************");
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge
+                                                                                                          categories:nil]];
+  } else {
+    NSLog(@" ************** iOS 7 : Using legacy - Global **************");
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+  }
   
   return YES;
 }
@@ -561,6 +569,11 @@
   }
 }
 
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+  NSLog(@"**** iOS 8 Notification Permissions received ****");
+  [application registerForRemoteNotifications];
+}
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   
 #ifdef USE_PARSE
@@ -592,7 +605,6 @@
   switch ([self operatingWithPushType]) {
     case PushTypeEvents:
     case PushTypeBreakingNews:
-
       break;
     case PushTypeUnknown:
       default:

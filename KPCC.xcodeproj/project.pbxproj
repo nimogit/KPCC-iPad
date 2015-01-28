@@ -6850,8 +6850,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -6865,7 +6865,6 @@
 					SUPPORT_LANDSCAPE,
 					AGGRESSIVE_DEALLOCATION,
 					TURN_OFF_UNTESTED_FEATURES,
-					TURN_OFF_LOGGING,
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -6884,7 +6883,7 @@
 				);
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "92b9c3f6-4039-4005-93a0-90471d88e766";
+				PROVISIONING_PROFILE = "84cee567-7313-434c-8e1f-e3b9a1243ff0";
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = "build 3";
 				VALID_ARCHS = "armv7 armv7s arm64";

@@ -472,10 +472,10 @@
 
 - (void)undeliverAd {
   
+  /*self.dfpAdViewController.view.alpha = 0.0;
   
-  self.dfpAdViewController.view.alpha = 0.0;
+  [self.dfpAdViewController.view removeFromSuperview];*/
   
-  [self.dfpAdViewController.view removeFromSuperview];
   if ( [[ContentManager shared] adCount] > 0 ) {
     [[ContentManager shared] setAdCount:[[ContentManager shared] adCount]-1];
   }

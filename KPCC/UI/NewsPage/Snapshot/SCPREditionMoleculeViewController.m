@@ -468,26 +468,37 @@
 }
 
 - (void)removeAdFromIndex:(NSInteger)index {
+  [self removeAdFromIndex:index adjustPager:NO];
+}
+
+- (void)removeAdFromIndex:(NSInteger)index adjustPager:(BOOL)adjustPager {
   [UIView animateWithDuration:0.33 animations:^{
     [self.currentAdController.view setAlpha:0.0];
   } completion:^(BOOL finished) {
-    [self.currentAdController.view removeFromSuperview];
-    self.currentAdController = nil;
-    for ( NSLayoutConstraint *c in [self.pushedConstraints allValues] ) {
-      [self.scroller addConstraint:c];
-    }
-    [self.metricChain removeObjectForKey:@"ad"];
     
-    [UIView animateWithDuration:0.33 animations:^{
-      [self snapContentSize];
-      self.adConstraints = nil;
-      self.pushedConstraints = nil;
-      self.adIsHot = NO;
-      self.adIndex = -1;
-      SCPRTitlebarViewController *titleBar = [[Utilities del] globalTitleBar];
-      titleBar.pager.currentPage = index;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      self.adIsDisplaying = NO;
+      [self.currentAdController.view removeFromSuperview];
+      self.currentAdController = nil;
+      for ( NSLayoutConstraint *c in [self.pushedConstraints allValues] ) {
+        [self.scroller addConstraint:c];
+      }
+      [self.metricChain removeObjectForKey:@"ad"];
       
-    }];
+      [UIView animateWithDuration:0.33 animations:^{
+        
+        [self snapContentSize];
+        self.adConstraints = nil;
+        self.pushedConstraints = nil;
+        self.adIsHot = NO;
+        self.adIndex = -1;
+        SCPRTitlebarViewController *titleBar = [[Utilities del] globalTitleBar];
+        titleBar.pager.currentPage = adjustPager ? index - 1 : index;
+        
+      }];
+      
+    });
+
 
     
   }];
@@ -507,9 +518,6 @@
 }
 
 
-
-
-
 - (void)sendAnalysis {
   
   NSMutableDictionary *params = [[[AnalyticsManager shared] paramsForArticle:self.currentAtom.relatedArticle] mutableCopy];
@@ -523,7 +531,6 @@
   NSString *currIndexStr = [NSString stringWithFormat:@"%d",(int) self.currentAtom.index];
   [params setObject:currIndexStr
              forKey:@"stack_depth"];
-  
   
   [params setObject: ([[AudioManager shared] isPlayingAnyAudio]) ? @"YES" : @"NO" forKey:@"audio_on"];
   
@@ -637,8 +644,10 @@
         [[ContentManager shared] adDeliveredSuccessfully];
         self.adIsHot = NO;
         skipDot = YES;
+        self.adIsDisplaying = YES;
       } else {
         
+        self.adIsDisplaying = NO;
         if ( !self.adIsHot ) {
           NSInteger nextIndex = index > self.currentIndex ? index + 1 : index - 1;
           nextIndex = nextIndex < 0 ? 1 : nextIndex;
@@ -648,9 +657,11 @@
         }
         
       }
+      
     } else {
       [UIView animateWithDuration:0.25 animations:^{
         self.editionInfoLabel.alpha = 1.0;
+        self.adIsDisplaying = NO;
       }];
     }
     
@@ -689,13 +700,21 @@
 
 - (void)handleRotationPost {
   [[[Utilities del] globalTitleBar] restamp];
+  
+  if ( self.adIsDisplaying ) {
+    [self removeAdFromIndex:self.adIndex];
+  } else if ( [[ContentManager shared] adReadyOffscreen] ) {
+    [self removeAdFromIndex:self.adIndex adjustPager:YES];
+    [[[Utilities del] masterRootController] undeliverAd];
+  }
+  
   [self setNeedsContentSnap:YES];
   [self.view layoutSubviews];
 }
 
 #ifdef LOG_DEALLOCATIONS
 - (void)dealloc {
-  NSLog(@"DEALLOCATING EDITION MOLEUCLE...");
+  NSLog(@"DEALLOCATING EDITION MOLECULE...");
 }
 #endif
 
