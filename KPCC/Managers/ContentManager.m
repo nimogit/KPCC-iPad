@@ -326,8 +326,15 @@ static ContentManager *singleton = nil;
         self.skipParse = NO;
       }
     } else {
-
-      [self writeToParse];
+      /*if ( self.lastSynchWithParse ) {
+        if ( abs([[NSDate date] timeIntervalSince1970] - [self.lastSynchWithParse timeIntervalSince1970]) < 3 ) {
+          self.skipParse = NO;
+        } else {
+          [self writeToParse];
+        }
+      } else {*/
+        [self writeToParse];
+      //}
 
     }
   }
@@ -344,6 +351,9 @@ static ContentManager *singleton = nil;
 
 - (void)writeToParse {
 #ifdef USE_PARSE
+  
+  self.lastSynchWithParse = [NSDate date];
+  
   __block PFObject *parseBlock = nil;
   PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
   
