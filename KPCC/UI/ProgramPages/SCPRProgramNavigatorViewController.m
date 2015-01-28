@@ -47,7 +47,9 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-
+  self.needsSnap = YES;
+  [self.view setNeedsLayout];
+  [self.view layoutIfNeeded];
 }
 
 - (void)setupWithPrograms:(NSArray *)programs {
