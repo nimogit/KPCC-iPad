@@ -615,6 +615,46 @@ static NetworkManager *singleton = nil;
 
 }
 
+- (void)fetchContentForSingleArticle:(NSString *)articleURL completion:(CompletionBlockWithValue)completion {
+  if ( !articleURL ) {
+    return;
+  }
+  
+  NSString *urlString = [NSString stringWithFormat:@"%@/content/by_url?url=%@",kServerBase,articleURL];
+  NSURL *url = [NSURL URLWithString:urlString];
+  NSURLRequest *request = [NSURLRequest requestWithURL:url];
+  [NSURLConnection sendAsynchronousRequest:request
+                                     queue:[[NSOperationQueue alloc] init]
+                         completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
+                           
+                           if ( e ) {
+                             [[AnalyticsManager shared] failureFetchingContent:urlString];
+                             return;
+                           }
+                           
+                           NSString *dataString = [[NSString alloc] initWithData:d
+                                                                        encoding:NSUTF8StringEncoding];
+                           if ( dataString ) {
+                             NSDictionary *chunk = (NSDictionary*)[dataString JSONValue];
+                             if ( chunk ) {
+                               
+                               if ( [chunk objectForKey:@"error"] ) {
+                                 [[AnalyticsManager shared] failureFetchingContent:urlString];
+                                 return;
+                               }
+                               
+                               [self processContentDataSingle:chunk completion:completion];
+                               
+                             } else {
+                               [[AnalyticsManager shared] failureFetchingContent:urlString];
+                             }
+                           } else {
+                             [[AnalyticsManager shared] failureFetchingContent:urlString];
+                           }
+                           
+                         }];
+}
+
 - (void)fetchContentForTopic:(NSString *)topic display:(id<ContentProcessor>)display flags:(NSDictionary *)flags {
   
   NSInteger threshold = [[flags objectForKey:@"quantity"] intValue];
@@ -1191,6 +1231,16 @@ static NetworkManager *singleton = nil;
   NSDictionary *data = [content objectForKey:@"chunk"];
   id<ContentProcessor> display = [content objectForKey:@"port"];
   [display handleProcessedContent:@[data] flags:@{}];
+}
+
+- (void)processContentDataSingle:(NSDictionary *)content completion:(CompletionBlockWithValue)completion {
+  NSDictionary *data = content;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if ( completion ) {
+      completion(data);
+    }
+  });
+
 }
 
 @end

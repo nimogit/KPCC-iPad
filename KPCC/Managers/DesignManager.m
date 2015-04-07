@@ -1080,6 +1080,13 @@ static DesignManager *singleton = nil;
                          alpha:1.0];
 }
 
+- (UIColor*)seventiesJacketColor {
+  return [UIColor colorWithRed:248.0/255.0
+                         green:126.0/255.0
+                          blue:33.0/255.0
+                         alpha:1.0];
+}
+
 - (UIColor*)onyxColor {
   return [UIColor colorWithRed:36.0/255.0
                          green:41.0/255.0

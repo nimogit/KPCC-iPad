@@ -53,6 +53,7 @@
 + (NSString*)prettyStringFromSocialCount:(NSInteger)seconds;
 + (NSString*)formalStringFromSeconds:(NSInteger)seconds;
 + (NSString*)prettyStringFromRFCDateString:(NSString*)rawDate;
++ (NSString*)prettyLongStringFromRFCDateString:(NSString*)rawDate;
 + (NSString*)isoDateStringFromDate:(NSDate*)date;
 + (CGFloat)easeIn:(CGFloat)value;
 + (NSDictionary*)reverseHash:(NSDictionary*)hash;

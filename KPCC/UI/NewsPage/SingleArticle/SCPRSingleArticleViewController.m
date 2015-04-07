@@ -439,15 +439,15 @@
                                 pushAsset:self.pushAssetIntoBody
                                completion:^{
 
-
+                                 if ( !self.fromSnapshot ) {
+                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                     [[Utilities del] uncloakUI:YES];
+                                   });
+                                 }
                                  
                                }];
   
-  if ( self.fromSnapshot ) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [[Utilities del] uncloakUI:YES];
-    });
-  }
+
 }
 
 - (void)shortenForNoAudio {

@@ -23,6 +23,8 @@
 #define kEditionsTotal 12
 #define kFailoverThreshold 4
 
+typedef void (^CompletionBlock)(void);
+typedef void (^CompletionBlockWithValue)(id returnedObject);
 
 @protocol ContentProcessor <NSObject>
 @optional
@@ -87,6 +89,8 @@ typedef enum {
 - (void)fetchContentForSnapshotPage:(id<ContentProcessor>)display flags:(NSDictionary*)flags;
 - (void)fetchContentForEditionals:(id<ContentProcessor>)display;
 - (void)fetchContentForSingleArticle:(NSString*)articleURL display:(id<ContentProcessor>)display;
+- (void)fetchContentForSingleArticle:(NSString *)articleURL completion:(CompletionBlockWithValue)completion;
+
 - (void)fetchContentForTopic:(NSString*)topic display:(id<ContentProcessor>)display flags:(NSDictionary*)flags;
 - (void)fetchContentForUserProfile:(id<ContentProcessor>)display;
 - (void)fetchContentForProgramAZPage:(id<ContentProcessor>)display;
@@ -98,6 +102,8 @@ typedef enum {
 - (void)processCompositeData:(NSDictionary*)compositeContent;
 - (void)processVideoPhotoData:(NSDictionary*)videoPhotoContent;
 - (void)processEventsData:(NSDictionary*)content;
+- (void)processContentDataSingle:(NSDictionary*)content completion:(CompletionBlockWithValue)completion;
+
 - (void)requestFromKPCCWithEndpoint:(NSString*)endpoint andDisplay:(id<ContentProcessor>)display;
 - (void)requestFromKPCCWithEndpoint:(NSString *)endpoint andDisplay:(id<ContentProcessor>)display flags:(NSDictionary*)flags;
 - (void)fetchEditionsInBackground;
