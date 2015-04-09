@@ -21,6 +21,7 @@
 @property (nonatomic, strong) IBOutlet UIScrollView *contentScroller;
 @property (nonatomic, strong) IBOutlet UIView *scrollingContentView;
 @property (nonatomic, strong) IBOutlet UIView *curtainView;
+@property (nonatomic, strong) IBOutlet UITableViewCell *shortListHeaderCell;
 
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *headlineSeatConstraint;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *tableHeightConstraint;

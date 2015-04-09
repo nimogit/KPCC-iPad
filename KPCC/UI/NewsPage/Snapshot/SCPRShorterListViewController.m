@@ -41,10 +41,18 @@ static CGFloat kEstimatedRowHeight = 124.0f;
   self.splashImageView.contentMode = UIViewContentModeScaleAspectFill;
   self.splashImageView.clipsToBounds = YES;
   
+  
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  NSLog(@"View did appear");
+}
+
 - (void)viewDidLayoutSubviews {
+  
+  NSLog(@"View did layout subviews");
+  
   [self setupScrollingDimensionsWithStories:self.stories];
 }
 
@@ -62,19 +70,21 @@ static CGFloat kEstimatedRowHeight = 124.0f;
   
   NSDictionary *story = self.stories.firstObject;
   
-  [self.contentScroller addObserver:self
+  [self.contentsTable addObserver:self
                          forKeyPath:@"contentOffset"
                             options:NSKeyValueObservingOptionNew
                             context:nil];
   
-  self.contentsTable.scrollEnabled = NO;
   self.contentsTable.delegate = self;
   self.contentsTable.dataSource = self;
+  self.contentsTable.backgroundColor = [UIColor clearColor];
+  
   self.headlineSeatView.backgroundColor = [UIColor whiteColor];
   self.scrollingContentView.backgroundColor = [UIColor clearColor];
   self.contentsTable.separatorColor = [UIColor clearColor];
   self.contentsTable.translatesAutoresizingMaskIntoConstraints = NO;
   self.contentScroller.delegate = self;
+  
   
   [self.dateTimeLabel setText:[self formattedTimestampForEdition:edition]];
   
@@ -83,30 +93,28 @@ static CGFloat kEstimatedRowHeight = 124.0f;
                                              forceQuality:YES];
   [self.splashImageView loadImage:imageURL];
   
+  [self setupScrollingDimensionsWithStories:self.stories];
   
 }
 
 - (void)setupScrollingDimensionsWithStories:(NSMutableArray *)stories {
   
-  self.inlineContentPushConstraint.constant = self.splashImageView.frame.size.height + 40.0f;
+  [self.splashImageView printDimensionsWithIdentifier:@"Splash Image"];
   
-  CGFloat base = self.headlineSeatConstraint.constant;
-  CGFloat tableGuess = ( stories.count * kEstimatedRowHeight );
-  base += self.inlineContentPushConstraint.constant;
-  base += tableGuess;
+  self.contentsTable.contentInset = UIEdgeInsetsMake(self.splashImageView.frame.size.height,
+                                                     0.0f,
+                                                     0.0f,
+                                                     0.0f);
   
-  self.contentsTable.translatesAutoresizingMaskIntoConstraints = NO;
-  self.scrollingContentView.translatesAutoresizingMaskIntoConstraints = NO;
-
-  self.scrollingContentHeightConstraint.constant = base;
+  self.contentsTable.contentOffset = CGPointMake(0.0,-1.0*self.splashImageView.frame.size.height);
   
-  self.tableHeightConstraint.constant = tableGuess;
-  self.contentScroller.contentSize = CGSizeMake(self.contentScroller.frame.size.width,
-                                                base);
+  NSLog(@"Content Offset : %1.1f",self.contentsTable.contentOffset.y);
   
   [self.view layoutIfNeeded];
   [self.contentScroller layoutIfNeeded];
   [self.scrollingContentView updateConstraintsIfNeeded];
+  
+
   
   [self.contentScroller printDimensionsWithIdentifier:@"Short List Scroller"];
   [self.scrollingContentView printDimensionsWithIdentifier:@"Scrolling Content View"];
@@ -118,13 +126,15 @@ static CGFloat kEstimatedRowHeight = 124.0f;
   
   NSString *dateString = edition[@"published_at"];
   NSString *formatted = [Utilities prettyLongStringFromRFCDateString:dateString];
-  
   return [NSString stringWithFormat:@"Your morning digest for %@",formatted];
+  
 }
 
 - (void)pushToStoryAtIndex:(NSInteger)index {
   
   NSDictionary *story = self.stories[index];
+  [[ContentManager shared] setFocusedContentObject:story];
+  
   if ( ![[ContentManager shared] isKPCCArticle:story] ) {
     NSString *url = [story objectForKey:@"url"];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -206,12 +216,14 @@ static CGFloat kEstimatedRowHeight = 124.0f;
   [params setObject:@"Editions" forKey:@"accessed_from"];
   [params setObject: ([[AudioManager shared] isPlayingAnyAudio]) ? @"YES" : @"NO" forKey:@"audio_on"];
   [[AnalyticsManager shared] logEvent:@"story_read" withParameters:params];
+  
 }
 
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
   CGPoint offset = [change[@"new"] CGPointValue];
-  self.curtainView.alpha = offset.y / self.splashImageView.frame.size.height;
+  CGFloat ratio = fabs(offset.y) / self.splashImageView.frame.size.height;
+  self.curtainView.alpha = 1.0f - ratio;
 }
 
 #pragma mark - Rotatable
@@ -228,15 +240,23 @@ static CGFloat kEstimatedRowHeight = 124.0f;
 
 #pragma mark - UITableView
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
+  return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  
+  if ( section == 0 ) {
+    return 1;
+  }
+  
   return self.stories.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
+  if ( indexPath.section == 0 ) {
+    return self.shortListHeaderCell;
+  }
   
   SCPRStoryTableViewCell *cell = [self.contentsTable dequeueReusableCellWithIdentifier:@"story-cell"];
   if ( !cell ) {
@@ -261,14 +281,41 @@ static CGFloat kEstimatedRowHeight = 124.0f;
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
   
   return cell;
+  
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  if ( indexPath.section == 0 ) {
+    return self.shortListHeaderCell.frame.size.height;
+  }
+  
   return kEstimatedRowHeight;
 }
 
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+  if ( section == 1 ) {
+    return [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width,
+                                                    64.0f)];
+  }
+  
+  return nil;
+}
+            
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+  
+  if ( section == 1 ) {
+    return 64.0f;
+  }
+  
+  return 0.0f;
+  
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-  [[(SCPRStoryTableViewCell*)cell contentSeatView] layoutIfNeeded];
+  if ( indexPath.section > 0 ) {
+    [[(SCPRStoryTableViewCell*)cell contentSeatView] layoutIfNeeded];
+  }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -277,13 +324,11 @@ static CGFloat kEstimatedRowHeight = 124.0f;
 
 - (void)dealloc {
   @try {
-    [self.contentScroller removeObserver:self
+    [self.contentsTable removeObserver:self
                               forKeyPath:@"contentOffset"];
-  }
-  @catch (NSException *exception) {
+  } @catch (NSException *exception) {
     
-  }
-  @finally {
+  } @finally {
     
   }
 }

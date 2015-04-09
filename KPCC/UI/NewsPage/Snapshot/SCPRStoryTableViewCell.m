@@ -29,7 +29,7 @@
 
 - (void)setupWithStory:(NSDictionary *)story {
   self.grayLineView.vertical = YES;
-
+  
   [self.headlineCaptionLabel titleizeText:story[@"headline"]
                            bold:NO
                   respectHeight:YES
@@ -68,6 +68,10 @@
                       respectHeight:YES];
   
   
+}
+
+- (void)prepareForReuse {
+  [self.contentView layoutIfNeeded];
 }
 
 @end

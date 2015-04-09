@@ -1369,7 +1369,8 @@
 - (void)dealloc {
   
   NSLog(@"DEALLOCATING SINGLE ARTICLE VIEW CONTROLLER (%@ : %p)...",self.relatedArticle[@"short_title"],self);
-
+  [self.webContentLoader.webView stopLoading];
+  
 }
 
 
