@@ -1178,10 +1178,38 @@
 - (void)handleRotationPost {
   
   [[Utilities del] blackoutCloak:^{
-    SCPREditionAtomViewController *atom = self.parentEditionAtom;
+    /*SCPREditionAtomViewController *atom = self.parentEditionAtom;
     SCPREditionMoleculeViewController *molecule = [atom parentMolecule];
     [molecule setNeedsPush:YES];
-    [self backTapped];
+    [self backTapped];*/
+    
+    @try {
+      
+      [self.masterContentScroller removeObserver:self
+                                      forKeyPath:@"contentOffset"];
+      
+      [[NSBundle mainBundle] loadNibNamed:[[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleViewController"]
+                                    owner:self
+                                  options:nil];
+    }
+    @catch (NSException *exception) {
+      NSLog(@"Figured you couldn't do this, but here's why : %@",[exception description]);
+    }
+    @finally {
+      
+      
+      
+    }
+    
+    self.contentArranged = NO;
+    [self arrangeContent];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      
+      [[Utilities del] uncloakUI];
+      
+    });
+    
   }];
 
 }

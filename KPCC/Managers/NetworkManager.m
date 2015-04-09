@@ -1240,7 +1240,6 @@ static NetworkManager *singleton = nil;
       completion(data);
     }
   });
-
 }
 
 @end

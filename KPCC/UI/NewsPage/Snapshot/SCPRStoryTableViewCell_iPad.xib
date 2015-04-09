@@ -18,10 +18,9 @@
                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pp0-Tx-TE0" userLabel="contentSeatView">
                         <rect key="frame" x="21" y="1" width="726" height="117"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="It's never too early to start thinking about college" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPA-bL-OTn">
-                                <rect key="frame" x="15" y="33" width="232" height="77"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It's never too early to start thinking about college" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPA-bL-OTn">
+                                <rect key="frame" x="20" y="36" width="232" height="76"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="79" id="0yw-Gr-y6q"/>
                                     <constraint firstAttribute="width" constant="232" id="Zw2-go-FFV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
@@ -35,8 +34,8 @@
                                     <constraint firstAttribute="width" constant="14" id="jL9-yw-RoM"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2k-6c-iAP">
-                                <rect key="frame" x="291" y="31" width="334" height="60"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2k-6c-iAP">
+                                <rect key="frame" x="303" y="36" width="354" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="PXJ-qu-BJf"/>
                                 </constraints>
@@ -45,8 +44,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Read it on NPR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzP-Su-07l">
-                                <rect key="frame" x="303" y="94" width="86" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Read it on NPR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzP-Su-07l">
+                                <rect key="frame" x="303" y="99" width="86" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Io7-tN-Vzx"/>
                                 </constraints>
@@ -87,7 +86,7 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="link-arrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="keV-Nk-qLQ">
-                                <rect key="frame" x="387" y="94" width="20" height="20"/>
+                                <rect key="frame" x="387" y="100" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="Nqh-gv-D1F"/>
                                     <constraint firstAttribute="height" constant="20" id="aI1-QL-xA3"/>
@@ -96,9 +95,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="IPA-bL-OTn" firstAttribute="top" secondItem="lPt-Hu-4yn" secondAttribute="bottom" constant="12" id="1c3-jz-64Q"/>
-                            <constraint firstAttribute="bottom" secondItem="IPA-bL-OTn" secondAttribute="bottom" constant="8" id="3ZM-hH-GuS"/>
-                            <constraint firstItem="sLg-jb-jg1" firstAttribute="leading" secondItem="IPA-bL-OTn" secondAttribute="trailing" constant="25" id="9nd-Hq-vAK"/>
+                            <constraint firstItem="sLg-jb-jg1" firstAttribute="leading" secondItem="IPA-bL-OTn" secondAttribute="trailing" constant="20" id="9nd-Hq-vAK"/>
                             <constraint firstAttribute="trailing" secondItem="c2k-6c-iAP" secondAttribute="trailing" constant="69" id="Tbn-XX-qUQ"/>
                             <constraint firstItem="sLg-jb-jg1" firstAttribute="top" secondItem="Pp0-Tx-TE0" secondAttribute="top" id="bPM-eZ-MQ5"/>
                             <constraint firstItem="keV-Nk-qLQ" firstAttribute="leading" secondItem="wzP-Su-07l" secondAttribute="trailing" constant="-2" id="cRl-PV-HIb"/>
@@ -106,11 +103,12 @@
                             <constraint firstItem="sLg-jb-jg1" firstAttribute="leading" secondItem="Pp0-Tx-TE0" secondAttribute="centerX" multiplier="0.75" id="dEN-o1-eo2"/>
                             <constraint firstItem="wzP-Su-07l" firstAttribute="leading" secondItem="sLg-jb-jg1" secondAttribute="trailing" constant="17" id="dyj-vm-Jwa"/>
                             <constraint firstItem="keV-Nk-qLQ" firstAttribute="centerY" secondItem="wzP-Su-07l" secondAttribute="centerY" constant="0.5" id="fYv-Yc-Aec"/>
+                            <constraint firstItem="c2k-6c-iAP" firstAttribute="top" secondItem="IPA-bL-OTn" secondAttribute="top" id="iyP-Y3-pOD"/>
                             <constraint firstItem="sLg-jb-jg1" firstAttribute="leading" secondItem="lPt-Hu-4yn" secondAttribute="trailing" constant="-7" id="kxC-eS-Lqc"/>
                             <constraint firstItem="c2k-6c-iAP" firstAttribute="leading" secondItem="sLg-jb-jg1" secondAttribute="trailing" constant="17" id="qHR-fQ-J83"/>
                             <constraint firstItem="wzP-Su-07l" firstAttribute="top" secondItem="c2k-6c-iAP" secondAttribute="bottom" constant="3" id="u00-R4-6RP"/>
                             <constraint firstAttribute="bottom" secondItem="sLg-jb-jg1" secondAttribute="bottom" constant="-1" id="utb-1V-e8D"/>
-                            <constraint firstItem="c2k-6c-iAP" firstAttribute="top" secondItem="Pp0-Tx-TE0" secondAttribute="top" constant="30" id="yoC-qg-XZR"/>
+                            <constraint firstItem="c2k-6c-iAP" firstAttribute="top" secondItem="Pp0-Tx-TE0" secondAttribute="top" constant="36" id="yoC-qg-XZR"/>
                         </constraints>
                     </view>
                 </subviews>

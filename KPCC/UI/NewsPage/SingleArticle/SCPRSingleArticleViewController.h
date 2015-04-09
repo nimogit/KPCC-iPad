@@ -20,6 +20,12 @@
 @class SCPRHBTView;
 @class SCPRNewsPageViewController;
 
+@protocol Redrawable <NSObject>
+
+@property BOOL needsPush;
+
+@end
+
 @interface SCPRSingleArticleViewController : UIViewController<ContentProcessor,UIWebViewDelegate,UIAlertViewDelegate,Backable,WebContentContainer,Deactivatable,Rotatable,Pageable>
 
 

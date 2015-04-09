@@ -878,9 +878,13 @@
                                            bundle:nil];
     
     slvc.view.frame = slvc.view.frame;
-    [slvc setupWithEdition:dict];
+    
     [self.navigationController pushViewController:slvc
                                             animated:YES];
+    
+    [slvc setupWithEdition:dict];
+    
+    [[ContentManager shared] pushToResizeVector:slvc];
     
   } else {
     if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage) {
