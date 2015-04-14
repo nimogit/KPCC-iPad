@@ -439,15 +439,15 @@
                                 pushAsset:self.pushAssetIntoBody
                                completion:^{
 
-
+                                 if ( !self.fromSnapshot ) {
+                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                     [[Utilities del] uncloakUI:YES];
+                                   });
+                                 }
                                  
                                }];
   
-  if ( self.fromSnapshot ) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [[Utilities del] uncloakUI:YES];
-    });
-  }
+
 }
 
 - (void)shortenForNoAudio {
@@ -1178,10 +1178,46 @@
 - (void)handleRotationPost {
   
   [[Utilities del] blackoutCloak:^{
-    SCPREditionAtomViewController *atom = self.parentEditionAtom;
+    /*SCPREditionAtomViewController *atom = self.parentEditionAtom;
     SCPREditionMoleculeViewController *molecule = [atom parentMolecule];
     [molecule setNeedsPush:YES];
-    [self backTapped];
+    [self backTapped];*/
+    
+
+    
+    @try {
+      
+      
+      [self.masterContentScroller removeObserver:self
+                                      forKeyPath:@"contentOffset"];
+      
+
+      
+    }
+    @catch (NSException *exception) {
+      NSLog(@"Figured you couldn't do this, but here's why : %@",[exception description]);
+    }
+    @finally {
+      
+      NSString *nibName = [[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleViewController"];
+      NSLog(@"NIB Name : %@",nibName);
+      
+      [[NSBundle mainBundle] loadNibNamed:nibName
+                                    owner:self
+                                  options:nil];
+      
+    }
+ 
+    
+    self.contentArranged = NO;
+    [self arrangeContent];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      
+      [[Utilities del] uncloakUI:YES];
+      
+    });
+    
   }];
 
 }
@@ -1341,7 +1377,8 @@
 - (void)dealloc {
   
   NSLog(@"DEALLOCATING SINGLE ARTICLE VIEW CONTROLLER (%@ : %p)...",self.relatedArticle[@"short_title"],self);
-
+  [self.webContentLoader.webView stopLoading];
+  
 }
 
 

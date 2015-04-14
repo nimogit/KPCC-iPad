@@ -20,6 +20,7 @@
 #import "SCPRControllerOverlayAnimator.h"
 #import <AFNetworking/AFNetworking.h>
 #import "MBProgressHud.h"
+#import "SCPRShorterListViewController.h"
 
 #define kPreemptivePrimeThreshold 25
 
@@ -818,11 +819,12 @@
 
 - (void)handleDrillDown:(NSDictionary *)story {
 
+  NSDictionary *dict = nil;
   if ( [story objectForKey:@"summary"] ) {
     
     NSArray *abstracts = nil;
     NSInteger index = 0;
-    NSDictionary *dict = nil;
+    
     for ( NSString *key in self.editionCellHash ) {
       NSDictionary *d = [self.editionCellHash objectForKey:key];
       abstracts = [d objectForKey:@"abstracts"];
@@ -832,7 +834,6 @@
         if ( absCandidate == story ) {
           index = i;
           found = YES;
-          
           SCPRDeluxeEditionsCell *cell = [d objectForKey:@"editionCell"];
           dict = cell.mainEdition;
           
@@ -845,6 +846,7 @@
     }
     
     // This is an edition
+    /*
     SCPREditionMoleculeViewController *emvc = [[SCPREditionMoleculeViewController alloc]
                                                initWithNibName:[[DesignManager shared]
                                                                 xibForPlatformWithName:@"SCPREditionMoleculeViewController"]
@@ -869,6 +871,20 @@
 
     [self.navigationController pushViewController:emvc
                                          animated:YES];
+     */
+    
+    SCPRShorterListViewController *slvc = [[SCPRShorterListViewController alloc]
+                                           initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRShorterListViewController"]
+                                           bundle:nil];
+    
+    slvc.view.frame = slvc.view.frame;
+    
+    [self.navigationController pushViewController:slvc
+                                            animated:YES];
+    
+    [slvc setupWithEdition:dict];
+    
+    [[ContentManager shared] pushToResizeVector:slvc];
     
   } else {
     if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage) {

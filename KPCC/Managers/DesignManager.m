@@ -293,6 +293,8 @@ static DesignManager *singleton = nil;
 
 - (NSArray*)typicalConstraints:(UIView *)view withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen {
   
+  if ( !view.superview ) return @[];
+  
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
                                                                   options:0
@@ -1077,6 +1079,13 @@ static DesignManager *singleton = nil;
   return [UIColor colorWithRed:240.0/255.0
                          green:101.0/255.0
                           blue:0.0/255.0
+                         alpha:1.0];
+}
+
+- (UIColor*)seventiesJacketColor {
+  return [UIColor colorWithRed:248.0/255.0
+                         green:126.0/255.0
+                          blue:33.0/255.0
                          alpha:1.0];
 }
 

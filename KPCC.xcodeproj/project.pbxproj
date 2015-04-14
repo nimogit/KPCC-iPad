@@ -1538,6 +1538,12 @@
 		25FA3DF4175FD42100D25D50 /* circle_with_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FA3DF2175FD42100D25D50 /* circle_with_line@2x.png */; };
 		25FA3DF6175FDCF700D25D50 /* email_payload.html in Resources */ = {isa = PBXBuildFile; fileRef = 25FA3DF5175FDCF700D25D50 /* email_payload.html */; };
 		25FA3DF7175FDCF700D25D50 /* email_payload.html in Resources */ = {isa = PBXBuildFile; fileRef = 25FA3DF5175FDCF700D25D50 /* email_payload.html */; };
+		25FC709A1AD4600F00D703CF /* SCPRStoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC70981AD4600F00D703CF /* SCPRStoryTableViewCell.m */; };
+		25FC709B1AD4600F00D703CF /* SCPRStoryTableViewCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FC70991AD4600F00D703CF /* SCPRStoryTableViewCell_iPad.xib */; };
+		25FC709C1AD4601500D703CF /* SCPRShorterListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC70931AD458AF00D703CF /* SCPRShorterListViewController.m */; };
+		25FC709D1AD4601900D703CF /* SCPRShorterListViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FC70941AD458AF00D703CF /* SCPRShorterListViewController_iPad.xib */; };
+		25FC70A01AD48CE100D703CF /* link-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FC709E1AD48CE100D703CF /* link-arrow.png */; };
+		25FC70A11AD48CE100D703CF /* link-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FC709F1AD48CE100D703CF /* link-arrow@2x.png */; };
 		28036A7E1718A344007DBDE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 28683CC6170B9BBD00346B6E /* main.m */; };
 		28036A7F1718A344007DBDE2 /* SCPRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 28683CCA170B9BBD00346B6E /* SCPRAppDelegate.m */; };
 		28036A801718A344007DBDE2 /* SCPRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C9E756170CF4B300ED18FB /* SCPRViewController.m */; };
@@ -2651,6 +2657,14 @@
 		25FA3DEF175FD24F00D25D50 /* supported_sharetypes_nomail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = supported_sharetypes_nomail.json; path = Assets/flatResources/supported_sharetypes_nomail.json; sourceTree = "<group>"; };
 		25FA3DF2175FD42100D25D50 /* circle_with_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_with_line@2x.png"; sourceTree = "<group>"; };
 		25FA3DF5175FDCF700D25D50 /* email_payload.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = email_payload.html; path = Assets/flatResources/email_payload.html; sourceTree = "<group>"; };
+		25FC70921AD458AF00D703CF /* SCPRShorterListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRShorterListViewController.h; path = UI/NewsPage/Snapshot/SCPRShorterListViewController.h; sourceTree = "<group>"; };
+		25FC70931AD458AF00D703CF /* SCPRShorterListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRShorterListViewController.m; path = UI/NewsPage/Snapshot/SCPRShorterListViewController.m; sourceTree = "<group>"; };
+		25FC70941AD458AF00D703CF /* SCPRShorterListViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRShorterListViewController_iPad.xib; path = UI/NewsPage/Snapshot/SCPRShorterListViewController_iPad.xib; sourceTree = "<group>"; };
+		25FC70971AD4600F00D703CF /* SCPRStoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRStoryTableViewCell.h; path = UI/NewsPage/Snapshot/SCPRStoryTableViewCell.h; sourceTree = "<group>"; };
+		25FC70981AD4600F00D703CF /* SCPRStoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRStoryTableViewCell.m; path = UI/NewsPage/Snapshot/SCPRStoryTableViewCell.m; sourceTree = "<group>"; };
+		25FC70991AD4600F00D703CF /* SCPRStoryTableViewCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SCPRStoryTableViewCell_iPad.xib; path = UI/NewsPage/Snapshot/SCPRStoryTableViewCell_iPad.xib; sourceTree = "<group>"; };
+		25FC709E1AD48CE100D703CF /* link-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "link-arrow.png"; sourceTree = "<group>"; };
+		25FC709F1AD48CE100D703CF /* link-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "link-arrow@2x.png"; sourceTree = "<group>"; };
 		28036AC91718A344007DBDE2 /* KPCC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPCC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28036ACC1718BDF9007DBDE2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "KPCC/Icon-72.png"; sourceTree = SOURCE_ROOT; };
 		28036ACD1718BDF9007DBDE2 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "KPCC/Icon-72@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -3384,6 +3398,12 @@
 				257001D0182196B1008B43F6 /* SCPREditionShortListViewController.m */,
 				259AF5AC183409B4008AFB2A /* SCPREditionShortListViewController.xib */,
 				257001D1182196B1008B43F6 /* SCPREditionShortListViewController_iPad.xib */,
+				25FC70921AD458AF00D703CF /* SCPRShorterListViewController.h */,
+				25FC70931AD458AF00D703CF /* SCPRShorterListViewController.m */,
+				25FC70941AD458AF00D703CF /* SCPRShorterListViewController_iPad.xib */,
+				25FC70971AD4600F00D703CF /* SCPRStoryTableViewCell.h */,
+				25FC70981AD4600F00D703CF /* SCPRStoryTableViewCell.m */,
+				25FC70991AD4600F00D703CF /* SCPRStoryTableViewCell_iPad.xib */,
 			);
 			name = Editions;
 			sourceTree = "<group>";
@@ -4053,6 +4073,8 @@
 		28036A7A171898AE007DBDE2 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				25FC709E1AD48CE100D703CF /* link-arrow.png */,
+				25FC709F1AD48CE100D703CF /* link-arrow@2x.png */,
 				257001D618219B56008B43F6 /* Titlebar */,
 				25D113C11811E9C30001C434 /* Player */,
 				25D113C01811E9B30001C434 /* Global */,
@@ -4879,6 +4901,7 @@
 				255FD5E617D0043600F03A0B /* SCPRDeluxeNewsCellSingle34_iPad.xib in Resources */,
 				25A70BDF17E13C220024E654 /* avatar-member@2x.png in Resources */,
 				25A6779E1828785600565925 /* onboarding-card-step5@2x.jpg in Resources */,
+				25FC709D1AD4601900D703CF /* SCPRShorterListViewController_iPad.xib in Resources */,
 				256421DD1810750E002F1C6A /* SCPRDeluxeNewsCellSingle23_iPadLandscape.xib in Resources */,
 				25A70BD717E13C220024E654 /* avatar-default@2x.png in Resources */,
 				25A70C1517E144130024E654 /* button-signin-member.png in Resources */,
@@ -4982,6 +5005,7 @@
 				2549BDA1177A520300EE57D0 /* airtalk.json in Resources */,
 				2549BDA4177A5C1600EE57D0 /* black_gradient_fade@2x.png in Resources */,
 				257AB7D9177B6C3100D2F4EA /* SCPRProgramNavigatorViewController_iPad.xib in Resources */,
+				25FC70A11AD48CE100D703CF /* link-arrow@2x.png in Resources */,
 				25A70C1117E142160024E654 /* SCPROnboardingStep1ViewController_iPad.xib in Resources */,
 				25A70BCD17E13C220024E654 /* arrow-back-dkgray.png in Resources */,
 				763B61FC1909A2660021C530 /* sections_icon.png in Resources */,
@@ -5038,6 +5062,7 @@
 				25C9A4B817F4CBF400B6BBB6 /* icon-share-twitter.png in Resources */,
 				2559458A1781F6A50014B0B5 /* shareIcon.png in Resources */,
 				256421D718107391002F1C6A /* SCPRDeluxeNewsCellSingle32_iPadLandscape.xib in Resources */,
+				25FC709B1AD4600F00D703CF /* SCPRStoryTableViewCell_iPad.xib in Resources */,
 				2559458C1781F6A50014B0B5 /* stripes.png in Resources */,
 				2559458E1781F6A50014B0B5 /* thumb_handle.png in Resources */,
 				256421CC18106196002F1C6A /* blue_fave_heart@2x.png in Resources */,
@@ -5267,6 +5292,7 @@
 				25E0B23817C2F0E7009C3C72 /* latinousa_splash@2x.jpg in Resources */,
 				25E0B23A17C2F0E7009C3C72 /* marketplace_splash.jpg in Resources */,
 				25E0B23C17C2F0E7009C3C72 /* marketplace_splash@2x.jpg in Resources */,
+				25FC70A01AD48CE100D703CF /* link-arrow.png in Resources */,
 				25E0B23E17C2F0E7009C3C72 /* marketplacemorningreport_splash.jpg in Resources */,
 				25E0B24017C2F0E7009C3C72 /* marketplacemorningreport_splash@2x.jpg in Resources */,
 				25E0B24217C2F0E7009C3C72 /* morningedition_splash.jpg in Resources */,
@@ -6295,6 +6321,7 @@
 				28036A9A1718A344007DBDE2 /* AnalyticsManager.m in Sources */,
 				28036A9B1718A344007DBDE2 /* Collection.m in Sources */,
 				76A3089118BD5ABA0065D4B1 /* AlarmManager.m in Sources */,
+				25FC709C1AD4601500D703CF /* SCPRShorterListViewController.m in Sources */,
 				25A70C5117E3E87C0024E654 /* SCPROnboardingStep6ViewController.m in Sources */,
 				28036A9C1718A344007DBDE2 /* Keyword.m in Sources */,
 				25A6774E18285EF600565925 /* SCPRIntroductionViewController.m in Sources */,
@@ -6381,6 +6408,7 @@
 				255B583617B1A2F9004E9712 /* SCPRCompositeNewsViewController.m in Sources */,
 				25C55F3B1A66EEDE000A755B /* UIColor+Additions.m in Sources */,
 				255B583C17B1A400004E9712 /* SCPRCompSingleCell.m in Sources */,
+				25FC709A1AD4600F00D703CF /* SCPRStoryTableViewCell.m in Sources */,
 				255B584017B1A419004E9712 /* SCPRCompDoubleCell.m in Sources */,
 				25A70BB017E135800024E654 /* SCPROnboardingFlowViewController.m in Sources */,
 				257001D3182196B1008B43F6 /* SCPREditionShortListViewController.m in Sources */,
@@ -6626,7 +6654,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -6664,9 +6692,9 @@
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "4679b9f3-4400-477b-8855-bfd40a790066";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = 1;
+				UNIQUE_BUNDLE_VERSION = 4;
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.0.7;
+				VERSION = 1.1.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Production;
@@ -6788,7 +6816,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = "NFR build 2";
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.0.7;
+				VERSION = 1.1.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = NFR;
@@ -6834,11 +6862,11 @@
 				);
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "d6545178-9d31-44a5-bdf1-e8b2ca01aaf3";
+				PROVISIONING_PROFILE = "280c6594-716e-442e-8644-3e9f8280f6be";
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = SANDBOX;
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.0.7;
+				VERSION = 1.1.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -6885,9 +6913,9 @@
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "84cee567-7313-434c-8e1f-e3b9a1243ff0";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = "RC 1";
+				UNIQUE_BUNDLE_VERSION = "GM Seed";
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.0.7;
+				VERSION = 1.1.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

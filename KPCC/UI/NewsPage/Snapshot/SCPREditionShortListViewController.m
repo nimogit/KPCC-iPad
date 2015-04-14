@@ -11,6 +11,7 @@
 #import "SCPREditionMoleculeViewController.h"
 #import "SCPRTitlebarViewController.h"
 #import "SCPREditionMineralViewController.h"
+#import "SCPRShorterListViewController.h"
 
 @interface SCPREditionShortListViewController ()
 
@@ -101,7 +102,7 @@
                                                quality:AssetQualityFull
                                           forceQuality:YES];
   [self.leadAssetImage loadImage:asset];
-  [self.numberOfStoriesLabel titleizeText:[NSString stringWithFormat:@"%d STORIES",[abstracts count]]
+  [self.numberOfStoriesLabel titleizeText:[NSString stringWithFormat:@"%ld STORIES",(long)[abstracts count]]
                                      bold:YES];
   [self.leadStoryHeadlineLabel sansifyTitleText:[lead objectForKey:@"headline"]
                                            bold:YES
@@ -207,6 +208,7 @@
 }
 
 - (void)pushToMolecule:(NSInteger)atomIndex {
+  /*
   SCPREditionMoleculeViewController *emvc = [[SCPREditionMoleculeViewController alloc]
                                              initWithNibName:[[DesignManager shared]
                                                               xibForPlatformWithName:@"SCPREditionMoleculeViewController"]
@@ -231,7 +233,19 @@
   [mineral.navigationController pushViewController:emvc
                                           animated:YES];
   
-  [[ContentManager shared] pushToResizeVector:emvc];
+  [[ContentManager shared] pushToResizeVector:emvc];*/
+  
+  SCPRShorterListViewController *slvc = [[SCPRShorterListViewController alloc]
+                                         initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRShorterListViewController"]
+                                         bundle:nil];
+  
+  slvc.view.frame = slvc.view.frame;
+  [slvc setupWithEdition:self.edition];
+  UIViewController *mineral = (UIViewController*)self.parentMineral;
+  [mineral.navigationController pushViewController:slvc
+                                          animated:YES];
+  
+  
 }
 
 - (NSString*)buildList:(NSDictionary *)edition {

@@ -544,6 +544,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)displaySnapshot:(NSMutableArray *)contentObjects edition:(SnapshotEdition)edition {
+  /*
   SCPREditionMineralViewController *mineral = [[SCPREditionMineralViewController alloc]
                                                initWithNibName:[[DesignManager shared]
                                                                 xibForPlatformWithName:@"SCPREditionMineralViewController"]
@@ -562,7 +563,8 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
   mineral.editions = contentObjects;
   [mineral setNeedsSnap:YES];
   
-  [mineral setupWithEditions:[NSArray arrayWithArray:contentObjects]];
+  [mineral setupWithEditions:[NSArray arrayWithArray:contentObjects]];*/
+  
 }
 
 - (void)displayProgramAZPage:(NSMutableArray *)contentObjects {

@@ -384,6 +384,12 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
                      withFormat:@"EEEE MMM d, YYYY"];
 }
 
++ (NSString*)prettyLongStringFromRFCDateString:(NSString *)rawDate {
+  NSDate *date = [self dateFromRFCString:rawDate];
+  return [NSDate stringFromDate:date
+                     withFormat:@"EEEE, MMMM d, YYYY"];
+}
+
 + (NSString*)isoDateStringFromDate:(NSDate *)date {
   return [NSDate stringFromDate:date
                      withFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
