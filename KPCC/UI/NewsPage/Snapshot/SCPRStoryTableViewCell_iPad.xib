@@ -103,7 +103,7 @@
                             <constraint firstItem="lPt-Hu-4yn" firstAttribute="top" secondItem="Pp0-Tx-TE0" secondAttribute="top" id="d0h-CL-LDs"/>
                             <constraint firstItem="sLg-jb-jg1" firstAttribute="leading" secondItem="Pp0-Tx-TE0" secondAttribute="centerX" multiplier="0.75" id="dEN-o1-eo2"/>
                             <constraint firstItem="wzP-Su-07l" firstAttribute="leading" secondItem="sLg-jb-jg1" secondAttribute="trailing" constant="17" id="dyj-vm-Jwa"/>
-                            <constraint firstItem="keV-Nk-qLQ" firstAttribute="centerY" secondItem="wzP-Su-07l" secondAttribute="centerY" constant="0.5" id="fYv-Yc-Aec"/>
+                            <constraint firstItem="keV-Nk-qLQ" firstAttribute="centerY" secondItem="wzP-Su-07l" secondAttribute="centerY" id="fYv-Yc-Aec"/>
                             <constraint firstItem="c2k-6c-iAP" firstAttribute="top" secondItem="IPA-bL-OTn" secondAttribute="top" id="iyP-Y3-pOD"/>
                             <constraint firstItem="sLg-jb-jg1" firstAttribute="leading" secondItem="lPt-Hu-4yn" secondAttribute="trailing" constant="-7" id="kxC-eS-Lqc"/>
                             <constraint firstItem="c2k-6c-iAP" firstAttribute="leading" secondItem="sLg-jb-jg1" secondAttribute="trailing" constant="17" id="qHR-fQ-J83"/>
@@ -125,6 +125,7 @@
                 <outlet property="contentSeatView" destination="Pp0-Tx-TE0" id="foa-hd-7Lx"/>
                 <outlet property="grayLineView" destination="sLg-jb-jg1" id="jFX-zI-SOk"/>
                 <outlet property="headlineCaptionLabel" destination="IPA-bL-OTn" id="1u0-SF-RSK"/>
+                <outlet property="linkArrowImage" destination="keV-Nk-qLQ" id="Oqs-Dx-aN0"/>
                 <outlet property="quantityLabel" destination="mUA-cd-C8v" id="1iu-43-oSO"/>
                 <outlet property="quantityView" destination="lPt-Hu-4yn" id="uDX-BJ-xrE"/>
                 <outlet property="readMoreLabel" destination="wzP-Su-07l" id="ZCs-0T-iH7"/>

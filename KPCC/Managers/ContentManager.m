@@ -1527,6 +1527,10 @@ static ContentManager *singleton = nil;
   self.swipeCount = 0;
   self.adCount++;
   self.adReadyOffscreen = NO;
+  
+  [[AnalyticsManager shared] logEvent:@"ad_delivery_succeeded"
+                       withParameters:@{}];
+  
 }
 
 - (void)killAdOnscreen:(NSTimer*)timer {

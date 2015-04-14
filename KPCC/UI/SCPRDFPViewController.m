@@ -116,45 +116,32 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
 #ifndef USE_LOCAL_ADS
   self.loadCount++;
-  [self forceFinish];
+  if ( self.loadCount >= 4 ) {
+    [self forceFinish];
+  }
 #else
   self.loadCount = 4;
   [self forceFinish];
 #endif
-  
-  
 }
 
 - (void)forceFinish {
   
   self.absoluteFinishTimer = nil;
   
-  //if ( self.loadCount >= 3 ) {
+  [UIView animateWithDuration:0.15 animations:^{
+    self.adView.alpha = 1.0;
+    self.spinner.alpha = 0.0;
+    self.adLoadingLabel.alpha = 0.0;
+  } completion:^(BOOL finished) {
     
-    [UIView animateWithDuration:0.15 animations:^{
-      self.adView.alpha = 1.0;
-      self.spinner.alpha = 0.0;
-      self.adLoadingLabel.alpha = 0.0;
-    } completion:^(BOOL finished) {
-      
-      [self.spinner stopAnimating];
-      [self.delegate adDidFinishLoading];
-      
-      return;
-    }];
+    [self.spinner stopAnimating];
+    [self.delegate adDidFinishLoading];
+    return;
     
- // }
-/* else {
-    if ( !self.failedOnce ) {
-      self.loadCount = 0;
-      self.failedOnce = YES;
-      [self.adView loadRequest:self.adRequest];
-      return;
-    } else {
-      //[self fail];
-      return;
-    }
-  }*/
+  }];
+    
+
   
 }
 
@@ -167,6 +154,9 @@
   self.spinner.alpha = 0.0;
   
   [[ContentManager shared] setAdFailure:YES];
+  
+  [[AnalyticsManager shared] logEvent:@"ad_delivery_failed"
+                       withParameters:@{}];
   
 }
 

@@ -21,6 +21,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *blurbLabel;
 @property (nonatomic, strong) IBOutlet UILabel *readMoreLabel;
 @property (nonatomic, strong) IBOutlet UIButton *readMoreButton;
+@property (nonatomic, strong) IBOutlet UIImageView *linkArrowImage;
 
 - (void)setupWithStory:(NSDictionary*)story;
 - (void)applyQuantity:(NSInteger)quantity;

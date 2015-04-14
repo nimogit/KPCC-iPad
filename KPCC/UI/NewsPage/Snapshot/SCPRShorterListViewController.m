@@ -258,15 +258,15 @@ static CGFloat kEstimatedRowHeight = 124.0f;
     return self.shortListHeaderCell;
   }
   
-  SCPRStoryTableViewCell *cell = [self.contentsTable dequeueReusableCellWithIdentifier:@"story-cell"];
-  if ( !cell ) {
+  SCPRStoryTableViewCell *cell = nil/*[self.contentsTable dequeueReusableCellWithIdentifier:@"story-cell"]*/;
+  //if ( !cell ) {
     NSArray *objects = [[NSBundle mainBundle]
                         loadNibNamed:[[DesignManager shared]
                                       xibForPlatformWithName:@"SCPRStoryTableViewCell"]
                         owner:nil
                         options:nil];
     cell = (SCPRStoryTableViewCell*)objects[0];
-  }
+  //}
   
   NSDictionary *story = self.stories[indexPath.row];
   [cell setupWithStory:story];

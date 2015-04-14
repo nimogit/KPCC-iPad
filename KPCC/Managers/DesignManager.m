@@ -293,6 +293,8 @@ static DesignManager *singleton = nil;
 
 - (NSArray*)typicalConstraints:(UIView *)view withTopOffset:(CGFloat)topOffset fullscreen:(BOOL)fullscreen {
   
+  if ( !view.superview ) return @[];
+  
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSArray *hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
                                                                   options:0
