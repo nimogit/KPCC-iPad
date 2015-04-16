@@ -111,4 +111,7 @@ typedef enum {
 @property (nonatomic, strong) UIImageView *bigShadow;
 @property (nonatomic, strong) SCPRSpinnerViewController *globalSpinner;
 
+@property (nonatomic, strong) NSArray *windowConstraints;
+
+
 @end

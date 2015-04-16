@@ -23,11 +23,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
   self.masterRootController = [[SCPRMasterRootViewController alloc]
                                initWithNibName:[[DesignManager shared]
                                                 xibForPlatformWithName:@"SCPRMasterRootViewController"]
                                bundle:nil];
   self.masterRootController.view.autoresizesSubviews = YES;
+
   
   NSLog(@" ************* // APPLICATION DID FINISH LAUNCHING \\ ************** ");
   
@@ -62,7 +64,7 @@
   self.globalSpinner = [[SCPRSpinnerViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRAltSpinnerViewController"] bundle:nil];
   self.viewController = [[SCPRViewController alloc] initWithNibName:[[DesignManager shared] xibForPlatformWithName:@"SCPRViewController"] bundle:nil];
 
-  [self.masterRootController.view addSubview:self.viewController.view];
+
   
   UINavigationController *unc = [[UINavigationController alloc] initWithRootViewController:self.masterRootController];
   unc.navigationBarHidden = YES;
@@ -76,7 +78,7 @@
                                             self.globalDrawer.view.frame.size.width,
                                             self.masterRootController.view.frame.size.height+adjustment);
   
-  self.window.autoresizesSubviews = NO;
+  self.window.autoresizesSubviews = [Utilities isIOS7] ? YES : NO;
   self.window.backgroundColor = [UIColor blackColor];
   self.window.rootViewController = self.masterRootController;
 
@@ -87,15 +89,31 @@
   
   [self.window makeKeyAndVisible];
   
+  if ( [Utilities isIOS7] ) {
+    [[DesignManager shared] snapView:self.viewController.view
+                         toContainer:self.masterRootController.view];
+  } else {
+    [self.masterRootController.view addSubview:self.viewController.view];
+  }
+  
+  if ( [Utilities isIOS7] ) {
+    //self.window.translatesAutoresizingMaskIntoConstraints = NO;
+    NSArray *sc = [[DesignManager shared] sizeContraintsForView:self.window];
+    //[self.window addConstraints:sc];
+    self.windowConstraints = sc;
+  }
+  
 #if TARGET_IPHONE_SIMULATOR
   [[DCIntrospect sharedIntrospector] start];
 #endif
   
   [[DesignManager shared] setPredictedWindowSize:self.window.frame.size];
   
-  NSArray *vcTypical = [[DesignManager shared] typicalConstraints:self.viewController.view];
-  [self.masterRootController.view addConstraints:vcTypical];
-  
+  if ( ![Utilities isIOS7] ) {
+    NSArray *vcTypical = [[DesignManager shared] typicalConstraints:self.viewController.view];
+    [self.masterRootController.view addConstraints:vcTypical];
+  }
+
   NSArray *typical = [[DesignManager shared] typicalConstraints:self.masterRootController.view];
   [self.window addConstraints:typical];
   
@@ -496,11 +514,9 @@
 
 #pragma mark - Main drawer and Share drawer
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-#ifdef SUPPORT_LANDSCAPE
-  return UIInterfaceOrientationMaskAll;
-#else
+
   return UIInterfaceOrientationMaskAllButUpsideDown;
-#endif
+
 }
 
 - (void)toggleDrawer {

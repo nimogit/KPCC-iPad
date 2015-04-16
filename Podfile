@@ -6,10 +6,10 @@ target "KPCC iPhone" do
 end
 
 target "KPCC iPad" do
-pod 'AFNetworking', '~> 2.0'
-pod 'MBProgressHUD', '~> 0.8'
+pod 'AFNetworking'
+pod 'MBProgressHUD'
 pod 'Parse'
-pod 'Facebook-iOS-SDK'
+pod 'Facebook-iOS-SDK', '~> 3.20'
 pod 'DCIntrospect-ARC'
 pod 'FXBlurView'
 pod 'Google-Mobile-Ads-SDK'

@@ -142,7 +142,7 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (void)viewDidLayoutSubviews {
-
+  [self.view printDimensionsWithIdentifier:@"SCPRViewController"];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -327,11 +327,11 @@ static NSString *kOndemandURL = @"http://media.scpr.org/audio/upload/2013/04/04/
 }
 
 - (BOOL)shouldAutomaticallyForwardAppearanceMethods {
-  return YES;
+  return NO;
 }
 
 - (BOOL)shouldAutomaticallyForwardRotationMethods {
-  return YES;
+  return NO;
 }
 
 #pragma mark - Content layouts

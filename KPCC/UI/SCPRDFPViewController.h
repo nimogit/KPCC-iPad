@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GADInterstitial.h"
+#import <GoogleMobileAds/GADInterstitial.h>
 #import "ContentManager.h"
 
 typedef enum {

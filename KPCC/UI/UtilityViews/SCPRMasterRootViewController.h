@@ -10,7 +10,7 @@
 #import "SCPRQueueViewController.h"
 #import "global.h"
 #import "SCPRDFPViewController.h"
-#import <Google-Mobile-Ads-SDK/GADInterstitial.h>
+#import <GoogleMobileAds/GADInterstitial.h>
 #import "SCPRBreakingNewsViewController.h"
 #import "SCPRDFPViewController.h"
 
@@ -37,6 +37,7 @@ typedef void (^AdKilledCompletion)(void);
 @property BOOL queueUp;
 @property BOOL breakingNewsShowing;
 @property BOOL introDisplaying;
+@property BOOL needsAnchoring;
 
 @property CGFloat savedYOffset;
 
