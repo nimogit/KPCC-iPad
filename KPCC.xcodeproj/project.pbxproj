@@ -3822,7 +3822,7 @@
 				ORGANIZATIONNAME = scpr;
 				TargetAttributes = {
 					28036A7C1718A344007DBDE2 = {
-						DevelopmentTeam = 6N8RT3FVF6;
+						DevelopmentTeam = SXALEDSVFU;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -4784,7 +4784,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				FACEBOOK_IDENTIFIER = 129848480405753;
@@ -4806,7 +4806,7 @@
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/KPCC/KPCC-Info.plist";
+				INFOPLIST_FILE = "./KPCC/KPCC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4918,7 +4918,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Reed DeLapp (2L3CQSAF79)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reed DeLapp (2L3CQSAF79)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				FACEBOOK_IDENTIFIER = 129848480405753;
@@ -4970,7 +4970,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				FACEBOOK_IDENTIFIER = 129848480405753;
