@@ -53,6 +53,13 @@
   self.socialSheetView.alpha = 0.0;
   self.categorySeat.backgroundColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
   
+
+  
+  UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                           action:@selector(proveInteraction)];
+  [self.masterContentScroller addGestureRecognizer:tapper];
+  
+  
   if (!self.relatedArticle) {
     [[NetworkManager shared] fetchContentForSingleArticle:self.relatedURL display:self];
   }
@@ -60,12 +67,24 @@
   self.shareDrawer = [[Utilities del] viewController].globalShareDrawer;
   
 
+  [self setAutomaticallyAdjustsScrollViewInsets:NO];
+  
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(adjustUIForQueue:)
                                                name:@"notify_listeners_of_queue_change"
                                              object:nil];
 }
 
+#pragma mark - Proofs
+- (void)proveInteraction {
+  NSLog(@"Scroller touched");
+}
+
+- (void)provePanningInteraction {
+  NSLog(@"Panning should be happening");
+}
+
+#pragma mark - view methods
 - (void)viewDidAppear:(BOOL)animated {
   [[[Utilities del] globalTitleBar] applyKpccLogo];
   if ( self.needsShareOpen ) {
@@ -281,10 +300,7 @@
     if (![Utilities isLandscape]) { // Configure shortPage in Portrait
       [self.basicTemplate.image1 removeFromSuperview];
       self.basicTemplate.matteView.alpha = 0.0;
-      
       self.articleDetailsAnchor.constant = 40.0;
-      
-      
     } else {
       
       [self.landscapeImageSheetView removeFromSuperview];
@@ -300,8 +316,6 @@
                                                               multiplier:1.0
                                                                 constant:0.0];
       [self.masterContentScroller addConstraint:self.articleDetailsAnchor];
-      
-
       
     }
 
@@ -319,7 +333,6 @@
                                              bold:YES
                                     respectHeight:YES];
   }
-
 
   // Set article Byline
   NSString *bylineStr = [[self.relatedArticle objectForKey:@"byline"] uppercaseString];
@@ -416,8 +429,8 @@
       [self.view sendSubviewToBack:self.basicTemplate.image1];
       self.masterContentScroller.backgroundColor = [UIColor clearColor];
     }
-    [[DesignManager shared] alignHorizontalCenterOf:self.basicTemplate.image1
-                                           withView:self.masterContentScroller];
+    /*[[DesignManager shared] alignHorizontalCenterOf:self.basicTemplate.image1
+                                           withView:self.masterContentScroller];*/
   }
   
 
@@ -452,6 +465,12 @@
 
 - (void)shortenForNoAudio {
   
+  if ( [Utilities isIOS7] ) {
+    self.audioSeatView.alpha = 0.0f;
+    self.grayLineBottomAnchor.constant = 23.0f;
+    return;
+  }
+  
   [self.textSheetView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.audioSeatView removeFromSuperview];
   
@@ -474,6 +493,7 @@
                                                             constant:28.0];
   
   [self.textSheetView addConstraint:self.grayLineBottomAnchor];
+  
   
 }
 
@@ -778,6 +798,9 @@
   if (![Utilities isIOS7]) {
     totalHeight += 60.0;
     webHeight += 60.0;
+  } else {
+    totalHeight += 120.0f;
+    webHeight += 120.0f;
   }
   if (self.fromSnapshot) {
     totalHeight += 60.0;
@@ -785,8 +808,7 @@
   }
   
   self.webContentHeightAnchor.constant = webHeight;
-  
-  
+
   if (self.hasSocialData) {
     // Place the social sheetview below the article's contents and embeds
     CGFloat socialSheetVertAdjust = 30.0;
@@ -810,6 +832,11 @@
                        } completion:nil];
     }
   }
+  
+  
+  [self.masterContentScroller printDimensionsWithIdentifier:@"Master Scroller Physical Dimensions"];
+  NSLog(@"Scroller Content Height : %1.1fw x %1.1fh",self.masterContentScroller.contentSize.width,
+        self.masterContentScroller.contentSize.height);
   
 }
 
@@ -929,6 +956,7 @@
 
 - (void)socialDataLoaded {
   
+  
   _hasSocialData = YES;
   
   [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.socialShareButton.titleLabel.font.pointSize]
@@ -940,6 +968,8 @@
 
   if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
     [self.masterContentScroller addSubview:self.socialSheetView];
+    
+    
     NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[social]|"
                                                                    options:0
                                                                    metrics:nil
@@ -977,12 +1007,14 @@
                                                                       multiplier:1.0
                                                                         constant:0.0];
     
+ 
     [self.socialSheetView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.webContentLoader.webView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
 
+    if ( ![Utilities isIOS7] ) {
+      [self.masterContentScroller removeConstraint:self.webViewBottomAnchor];
+    }
     
-    [self.masterContentScroller removeConstraint:self.webViewBottomAnchor];
     [self.socialSheetView addConstraint:heightConstraint];
     [self.socialSheetView addConstraint:widthConstraint];
     [self.masterContentScroller addConstraints:constraints];
@@ -1090,12 +1122,19 @@
     [self snapToContentHeight];
     
     [UIView animateWithDuration:0.22 animations:^{
-      
       self.webContentLoader.webView.alpha = 1.0;
     } completion:^(BOOL finished) {
 
       self.masterContentScroller.scrollEnabled = YES;
-
+      
+      if ( [Utilities isIOS7] ) {
+        
+        self.webContentLoader.webView.scrollView.scrollEnabled = NO;
+        self.webContentLoader.webView.userInteractionEnabled = NO;
+        [self.masterContentScroller sendSubviewToBack:self.webContentLoader.webView];
+        
+      }
+      
     }];
     
   } else {
@@ -1106,6 +1145,9 @@
   self.activity.alpha = 0.0;
   
   self.socialSheetView.alpha = 1.0;
+  
+  [self.textSheetView printDimensionsWithIdentifier:@"TEXT SHEET VIEW"];
+  
 }
 
 - (void)webContentFailed {
@@ -1178,26 +1220,13 @@
 - (void)handleRotationPost {
   
   [[Utilities del] blackoutCloak:^{
-    /*SCPREditionAtomViewController *atom = self.parentEditionAtom;
-    SCPREditionMoleculeViewController *molecule = [atom parentMolecule];
-    [molecule setNeedsPush:YES];
-    [self backTapped];*/
-    
 
-    
     @try {
-      
-      
       [self.masterContentScroller removeObserver:self
                                       forKeyPath:@"contentOffset"];
-      
-
-      
-    }
-    @catch (NSException *exception) {
+    } @catch (NSException *exception) {
       NSLog(@"Figured you couldn't do this, but here's why : %@",[exception description]);
-    }
-    @finally {
+    } @finally {
       
       NSString *nibName = [[DesignManager shared] xibForPlatformWithName:@"SCPRSingleArticleViewController"];
       NSLog(@"NIB Name : %@",nibName);
@@ -1208,7 +1237,6 @@
       
     }
  
-    
     self.contentArranged = NO;
     [self arrangeContent];
     

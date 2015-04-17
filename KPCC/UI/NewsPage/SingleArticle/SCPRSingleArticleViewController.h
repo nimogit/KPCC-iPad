@@ -26,7 +26,7 @@
 
 @end
 
-@interface SCPRSingleArticleViewController : UIViewController<ContentProcessor,UIWebViewDelegate,UIAlertViewDelegate,Backable,WebContentContainer,Deactivatable,Rotatable,Pageable>
+@interface SCPRSingleArticleViewController : UIViewController<ContentProcessor,UIWebViewDelegate,UIAlertViewDelegate,Backable,WebContentContainer,Deactivatable,Rotatable,Pageable,UIGestureRecognizerDelegate>
 
 
 @property (nonatomic,strong) NSDictionary *relatedArticle;
@@ -144,7 +144,6 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *playerControlsByLineAnchor;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *webViewBottomAnchor;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *webViewTopAnchor;
-
 
 - (IBAction)buttonTapped:(id)sender;
 - (void)arrangeContent;

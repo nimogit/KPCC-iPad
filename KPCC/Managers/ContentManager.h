@@ -13,7 +13,7 @@
 #import "SCPRAppDelegate.h"
 #import "NetworkManager.h"
 #import <Parse/Parse.h>
-#import <Google-Mobile-Ads-SDK/GADInterstitial.h>
+#import <GoogleMobileAds/GADInterstitial.h>
 
 #define kPushKeyBreakingNews @"breakingNews"
 #define kPushKeyEvents @"events"

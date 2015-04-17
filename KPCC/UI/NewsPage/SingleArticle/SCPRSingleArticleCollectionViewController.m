@@ -34,9 +34,7 @@ static NSInteger kCacheLockDistance = 3;
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  if ( [Utilities isIOS7] ) {
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
-  }
+  [self setAutomaticallyAdjustsScrollViewInsets:NO];
   
   self.view.backgroundColor = [UIColor whiteColor];
   self.contentLock = NO;
@@ -49,7 +47,10 @@ static NSInteger kCacheLockDistance = 3;
   self.articlePageViewController = self;
   self.articlePageViewController.delegate = self;
   self.articlePageViewController.dataSource = self;
+  
+  
   [self.articlePageViewController.view printDimensionsWithIdentifier:@"Article Page Container"];
+  
   self.untouchables = [[NSMutableArray alloc] init];
   
   [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];

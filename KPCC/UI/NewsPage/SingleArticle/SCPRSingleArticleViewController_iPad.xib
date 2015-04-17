@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7531" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SCPRSingleArticleViewController">
@@ -29,7 +29,7 @@
                 <outlet property="extraAssetsSeat" destination="lKx-9o-Z4h" id="Lqc-F1-A80"/>
                 <outlet property="facebookCountLabel" destination="GBl-sH-aI5" id="HKl-G4-zIr"/>
                 <outlet property="facebookLogoImage" destination="r5p-WL-gK0" id="zpD-xe-eXE"/>
-                <outlet property="grayLineBottomAnchor" destination="XmK-sR-1Bf" id="H1d-V4-Int"/>
+                <outlet property="grayLineBottomAnchor" destination="zmK-hE-w66" id="usr-Ao-mih"/>
                 <outlet property="locationCaptionLabel" destination="NSY-hs-Vvf" id="C8V-9Q-ijJ"/>
                 <outlet property="locationContentLabel" destination="Tzv-m8-6xq" id="WMj-MT-6oZ"/>
                 <outlet property="masterContentScroller" destination="53" id="54"/>
@@ -65,7 +65,7 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="G1Y-uD-mhG">
-                    <rect key="frame" x="374" y="782" width="20" height="20"/>
+                    <rect key="frame" x="374" y="842" width="20" height="20"/>
                 </activityIndicatorView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="53">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
@@ -337,7 +337,6 @@
                                 <constraint firstItem="39" firstAttribute="leading" secondItem="48" secondAttribute="leading" constant="97" id="Rtw-nr-Uh3"/>
                                 <constraint firstItem="kvl-NV-kgn" firstAttribute="leading" secondItem="48" secondAttribute="leading" constant="97" id="TAH-Fv-6WS"/>
                                 <constraint firstItem="DvO-YX-9SP" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="23" id="XUF-PX-sc6"/>
-                                <constraint firstItem="kvl-NV-kgn" firstAttribute="top" secondItem="DvO-YX-9SP" secondAttribute="bottom" constant="23" id="XmK-sR-1Bf"/>
                                 <constraint firstAttribute="trailing" secondItem="DvO-YX-9SP" secondAttribute="trailing" id="bAQ-jC-Ich"/>
                                 <constraint firstAttribute="bottom" secondItem="kvl-NV-kgn" secondAttribute="bottom" id="bUV-f6-2Xz"/>
                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="362" id="hpg-9B-Pg0"/>
@@ -346,6 +345,7 @@
                                 <constraint firstAttribute="trailing" secondItem="kvl-NV-kgn" secondAttribute="trailing" constant="91" id="pg4-N2-Tzy"/>
                                 <constraint firstItem="dtj-em-cg0" firstAttribute="top" secondItem="48" secondAttribute="top" constant="18" id="v6A-a3-Rnk"/>
                                 <constraint firstAttribute="trailing" secondItem="39" secondAttribute="trailing" constant="91" id="zc3-Fr-myv"/>
+                                <constraint firstItem="kvl-NV-kgn" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="116" id="zmK-hE-w66"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -367,7 +367,7 @@
             <constraints>
                 <constraint firstItem="4de-gO-SFp" firstAttribute="top" secondItem="2" secondAttribute="top" id="2va-8c-kjM"/>
                 <constraint firstAttribute="centerX" secondItem="G1Y-uD-mhG" secondAttribute="centerX" id="4ct-4V-OEQ"/>
-                <constraint firstAttribute="centerY" secondItem="G1Y-uD-mhG" secondAttribute="centerY" constant="-280" id="AkZ-Am-eMh"/>
+                <constraint firstAttribute="centerY" secondItem="G1Y-uD-mhG" secondAttribute="centerY" constant="-340" id="AkZ-Am-eMh"/>
                 <constraint firstAttribute="bottom" secondItem="4de-gO-SFp" secondAttribute="bottom" id="BOC-Ja-yJe"/>
                 <constraint firstAttribute="trailing" secondItem="4de-gO-SFp" secondAttribute="trailing" id="HaO-Jj-rie"/>
                 <constraint firstItem="4de-gO-SFp" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="O1s-lg-ob9"/>
@@ -384,6 +384,7 @@
                 <outlet property="image1" destination="16" id="41"/>
                 <outlet property="matteView" destination="44" id="45"/>
             </connections>
+            <point key="canvasLocation" x="766" y="-814"/>
         </view>
         <view contentMode="scaleToFill" id="4hW-ge-twn">
             <rect key="frame" x="0.0" y="0.0" width="768" height="129"/>

@@ -47,6 +47,7 @@
   self.cloakView.alpha = 0.0;
   if ( [Utilities isIOS7] ) {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    self.needsAnchoring = YES;
   }
   
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -63,10 +64,19 @@
   // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+
+}
+
 - (void)viewDidAppear:(BOOL)animated {
 
 
   
+
+}
+
+- (void)viewDidLayoutSubviews {
+
 }
 
 #pragma mark - KVO
@@ -174,34 +184,40 @@
 #pragma mark - GLobal display
 - (void)showIntro {
   
-  [[Utilities del] setAppIsShowingTour:YES];
-  
-  SCPRIntroductionViewController *ivc = [[SCPRIntroductionViewController alloc]
-                                         initWithNibName:[[DesignManager shared]
-                                                          xibForPlatformWithName:@"SCPRIntroductionViewController"]
-                                         bundle:nil];
-  
+  if ( ![Utilities isIOS7] ) {
+    [[Utilities del] setAppIsShowingTour:YES];
+    
+    SCPRIntroductionViewController *ivc = [[SCPRIntroductionViewController alloc]
+                                           initWithNibName:[[DesignManager shared]
+                                                            xibForPlatformWithName:@"SCPRIntroductionViewController"]
+                                           bundle:nil];
+    
 
-  
-  [ivc setNeedsSnap:YES];
-  [[DesignManager shared] snapView:ivc.view
-                       toContainer:self.view];
-  
-  ivc.view.alpha = 0.0;
-  self.introView = ivc;
-  self.introDisplaying = YES;
-  
-  [[ContentManager shared] pushToResizeVector:ivc];
-  
-  if ( [Utilities isIOS7] ) {
-    [self setNeedsStatusBarAppearanceUpdate];
+    
+    [ivc setNeedsSnap:YES];
+    [[DesignManager shared] snapView:ivc.view
+                         toContainer:self.view];
+    
+    ivc.view.alpha = 0.0;
+    self.introView = ivc;
+    self.introDisplaying = YES;
+    
+    [[ContentManager shared] pushToResizeVector:ivc];
+    
+    if ( [Utilities isIOS7] ) {
+      //[self setNeedsStatusBarAppearanceUpdate];
+    } else {
+      [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    }
+    
+    [UIView animateWithDuration:0.33 animations:^{
+      ivc.view.alpha = 1.0;
+    }];
   } else {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [[ContentManager shared].settings setOnboardingShown:YES];
+    [[ContentManager shared] setSkipParse:YES];
+    [[ContentManager shared] writeSettings];
   }
-  
-  [UIView animateWithDuration:0.33 animations:^{
-    ivc.view.alpha = 1.0;
-  }];
   
 }
 
@@ -210,7 +226,7 @@
   self.introDisplaying = NO;
   
   if ( [Utilities isIOS7] ) {
-    [self setNeedsStatusBarAppearanceUpdate];
+    //[self setNeedsStatusBarAppearanceUpdate];
   } else {
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
   }
@@ -313,11 +329,7 @@
 
 - (NSUInteger)supportedInterfaceOrientations {
   
-#ifdef SUPPORT_LANDSCAPE
-  return UIInterfaceOrientationMaskAll;
-#endif
-  
-  return UIInterfaceOrientationMaskPortrait;
+  return UIInterfaceOrientationMaskAllButUpsideDown;
   
 }
 
@@ -612,11 +624,7 @@
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-  if ( ![Utilities isIOS7] ) {
-    return YES;
-  }
-  
-  return NO;
+  return YES;
 }
 
 /*******************************************************************/
@@ -629,9 +637,7 @@
   /*NSLog(@"Going to rotate %d in rotation queue",[[ContentManager shared].resizeVector count]);
   NSMutableArray *vector = [[ContentManager shared] resizeVector];
   
-  if ( [[[Utilities del] viewController] shareDrawerOpen] ) {
-    [[[Utilities del] viewController] closeShareDrawer];
-  }
+
   
   [self.view bringSubviewToFront:self.cloakView];
   
@@ -646,6 +652,65 @@
       }
    // }];
   }*/
+  
+  if ( ![Utilities isIOS7] ) return;
+  
+  if ( [[[Utilities del] viewController] shareDrawerOpen] ) {
+    [[[Utilities del] viewController] closeShareDrawer];
+  }
+  
+  UIWindow *window = [[Utilities del] window];
+  [window setNeedsLayout];
+  
+  CGSize newSize = CGSizeZero;
+  if ( toInterfaceOrientation == UIInterfaceOrientationPortrait ||
+      toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ) {
+    newSize = CGSizeMake(768.0f, 1024.0f);
+  } else {
+    newSize = CGSizeMake(1024.0f, 768.0f);
+  }
+  
+
+  
+  [[DesignManager shared] setPredictedWindowSize:newSize];
+  
+  NSArray *wc = [[Utilities del] windowConstraints];
+  for ( NSLayoutConstraint *c in wc ) {
+    if ( [c firstAttribute] == NSLayoutAttributeWidth ) {
+      [c setConstant:[[DesignManager shared] predictedWindowSize].width];
+    } else {
+      [c setConstant:[[DesignManager shared] predictedWindowSize].height];
+    }
+  }
+  
+  
+  [self.view layoutIfNeeded];
+  
+  SCPRPlayerWidgetViewController *player = [[Utilities del] globalPlayer];
+  [player orient];
+  [player.queueViewController prime];
+  
+  //if ( ![Utilities isIOS7] ) {
+    SCPRTitlebarViewController *tb = [[Utilities del] globalTitleBar];
+    tb.pageTitleLabel.center = CGPointMake(tb.view.bounds.size.width/2.0,
+                                         tb.view.bounds.size.height/2.0);
+  
+    [self.view setNeedsUpdateConstraints];
+    [self.view updateConstraintsIfNeeded];
+    [self.view layoutIfNeeded];
+  
+  
+    SCPRViewController *scprView = [[Utilities del] viewController];
+    [[scprView view] setNeedsUpdateConstraints];
+    [[scprView view] updateConstraintsIfNeeded];
+    [[scprView view] setNeedsLayout];
+    [[scprView view] layoutIfNeeded];
+  //}
+  
+  NSMutableArray *vector = [[ContentManager shared] resizeVector];
+  for ( id<Rotatable> r in vector ) {
+    [r handleRotationPost];
+  }
 
 }
 
@@ -685,6 +750,20 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 
+  if ( [Utilities isIOS7] ) {
+    
+    [[[Utilities del] window] layoutIfNeeded];
+    [self.view layoutIfNeeded];
+    SCPRViewController *scprView = [[Utilities del] viewController];
+    [[scprView view] setNeedsUpdateConstraints];
+    [[scprView view] updateConstraintsIfNeeded];
+    [[scprView view] setNeedsLayout];
+    [[scprView view] layoutIfNeeded];
+    
+    CGRect r = [[[Utilities del] window] frame];
+    NSLog(@"Main Window after rotation : %1.1fw x %1.1fh",r.size.width,r.size.height);
+    [self.view printDimensionsWithIdentifier:@"MASTER ROOT CONTROLLER"];
+  }
 }
 
 - (void)viewWillLayoutSubviews {

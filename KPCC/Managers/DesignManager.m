@@ -380,7 +380,10 @@ static DesignManager *singleton = nil;
   [c2u addConstraints:anchors];
   [c2u setNeedsUpdateConstraints];
   [c2u setNeedsLayout];
-  [c2u layoutIfNeeded];
+  
+  if ( ![Utilities isIOS7] ) {
+    [c2u layoutIfNeeded];
+  }
   
   /*if ( fullscreen ) {
     for ( NSLayoutConstraint *anchor in [c2u constraints] ) {

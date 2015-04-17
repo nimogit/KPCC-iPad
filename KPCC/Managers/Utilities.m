@@ -32,11 +32,11 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 }
 
 + (BOOL)isIOS7 {
-  if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-    return NO;
+  if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
+    return YES;
   }
   
-  return YES;
+  return NO;
 }
 
 + (BOOL)isRetina {
@@ -44,9 +44,14 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 }
 
 + (BOOL)isLandscape {
+  
+  /*if ( [Utilities isIOS7] ) {
+      return [[Utilities del] masterRootController].interfaceOrientation != UIInterfaceOrientationPortrait;
+  }*/
+  
   return ([[DesignManager shared] predictedWindowSize].width > [[DesignManager shared] predictedWindowSize].height);
   
-  //return UIDeviceOrientationIsLandscape([[Utilities del] masterRootController].interfaceOrientation);
+  //
 }
 
 
