@@ -8,8 +8,8 @@ end
 target "KPCC iPad" do
 pod 'AFNetworking'
 pod 'MBProgressHUD'
-pod 'Parse'
-pod 'Facebook-iOS-SDK', '~> 3.20'
+pod 'Parse', '1.5'
+pod 'Facebook-iOS-SDK', '3.20'
 pod 'DCIntrospect-ARC'
 pod 'FXBlurView'
 pod 'Google-Mobile-Ads-SDK'

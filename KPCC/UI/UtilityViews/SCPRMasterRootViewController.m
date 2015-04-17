@@ -690,7 +690,7 @@
   [player orient];
   [player.queueViewController prime];
   
-  if ( ![Utilities isIOS7] ) {
+  //if ( ![Utilities isIOS7] ) {
     SCPRTitlebarViewController *tb = [[Utilities del] globalTitleBar];
     tb.pageTitleLabel.center = CGPointMake(tb.view.bounds.size.width/2.0,
                                          tb.view.bounds.size.height/2.0);
@@ -705,7 +705,7 @@
     [[scprView view] updateConstraintsIfNeeded];
     [[scprView view] setNeedsLayout];
     [[scprView view] layoutIfNeeded];
-  }
+  //}
   
   NSMutableArray *vector = [[ContentManager shared] resizeVector];
   for ( id<Rotatable> r in vector ) {

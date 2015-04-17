@@ -28,7 +28,7 @@
                 <outlet property="extraAssetsSeat" destination="lKx-9o-Z4h" id="Lqc-F1-A80"/>
                 <outlet property="facebookCountLabel" destination="fd7-uw-HJs" id="CD2-xo-C2z"/>
                 <outlet property="facebookLogoImage" destination="wlX-c2-ekX" id="aVf-VT-6XS"/>
-                <outlet property="grayLineBottomAnchor" destination="cZQ-Sb-1qw" id="igi-de-8c6"/>
+                <outlet property="grayLineBottomAnchor" destination="lL8-dH-lGf" id="7TP-0X-UhF"/>
                 <outlet property="landscapeImageSheetView" destination="a8K-L0-fcI" id="eca-op-DqO"/>
                 <outlet property="locationCaptionLabel" destination="gKt-Kq-2YE" id="VR9-M9-wNK"/>
                 <outlet property="locationContentLabel" destination="XBq-K8-hCT" id="Gkm-ja-Vyj"/>
@@ -216,9 +216,9 @@
                                 <constraint firstAttribute="trailing" secondItem="DvO-YX-9SP" secondAttribute="trailing" id="QSW-p7-fHo"/>
                                 <constraint firstItem="kvl-NV-kgn" firstAttribute="leading" secondItem="48" secondAttribute="leading" constant="110" id="Zku-SK-j3s"/>
                                 <constraint firstItem="dtj-em-cg0" firstAttribute="leading" secondItem="48" secondAttribute="leading" constant="107" id="bWi-bm-L45"/>
-                                <constraint firstItem="kvl-NV-kgn" firstAttribute="top" secondItem="DvO-YX-9SP" secondAttribute="bottom" constant="22" id="cZQ-Sb-1qw"/>
                                 <constraint firstItem="DvO-YX-9SP" firstAttribute="leading" secondItem="48" secondAttribute="leading" id="dmG-wi-hiB"/>
                                 <constraint firstItem="39" firstAttribute="leading" secondItem="dtj-em-cg0" secondAttribute="leading" id="iwr-7y-r0j"/>
+                                <constraint firstItem="kvl-NV-kgn" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="103" id="lL8-dH-lGf"/>
                                 <constraint firstAttribute="trailing" secondItem="18" secondAttribute="trailing" constant="109" id="mLC-ff-MFo"/>
                                 <constraint firstAttribute="bottom" secondItem="kvl-NV-kgn" secondAttribute="bottom" id="nGc-Tb-afu"/>
                                 <constraint firstItem="39" firstAttribute="top" secondItem="dtj-em-cg0" secondAttribute="bottom" constant="11" id="t2C-Ie-Cda"/>

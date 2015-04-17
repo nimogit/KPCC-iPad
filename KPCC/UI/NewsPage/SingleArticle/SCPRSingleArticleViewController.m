@@ -75,10 +75,16 @@
                                              object:nil];
 }
 
+#pragma mark - Proofs
 - (void)proveInteraction {
   NSLog(@"Scroller touched");
 }
 
+- (void)provePanningInteraction {
+  NSLog(@"Panning should be happening");
+}
+
+#pragma mark - view methods
 - (void)viewDidAppear:(BOOL)animated {
   [[[Utilities del] globalTitleBar] applyKpccLogo];
   if ( self.needsShareOpen ) {
@@ -459,7 +465,11 @@
 
 - (void)shortenForNoAudio {
   
-  if ( [Utilities isIOS7] ) return;
+  if ( [Utilities isIOS7] ) {
+    self.audioSeatView.alpha = 0.0f;
+    self.grayLineBottomAnchor.constant = 23.0f;
+    return;
+  }
   
   [self.textSheetView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.audioSeatView removeFromSuperview];
@@ -484,9 +494,6 @@
   
   [self.textSheetView addConstraint:self.grayLineBottomAnchor];
   
-  if ( [Utilities isIOS7] ) {
-    [self.masterContentScroller layoutIfNeeded];
-  }
   
 }
 
@@ -791,6 +798,9 @@
   if (![Utilities isIOS7]) {
     totalHeight += 60.0;
     webHeight += 60.0;
+  } else {
+    totalHeight += 120.0f;
+    webHeight += 120.0f;
   }
   if (self.fromSnapshot) {
     totalHeight += 60.0;
@@ -823,18 +833,6 @@
     }
   }
   
-  if ( [Utilities isIOS7] ) {
-    /*self.masterContentScroller.contentSize = CGSizeMake(self.masterContentScroller.frame.size.width,
-                                                        totalHeight+self.socialSheetView.frame.size.height);
-    
-    
-    
-    
-    [self.masterContentScroller layoutIfNeeded];
-    [self.masterContentScroller updateConstraintsIfNeeded];
-    
-    [self.view printDimensionsWithIdentifier:@"SINGLE ARTICLE CONTAINER"];*/
-  }
   
   [self.masterContentScroller printDimensionsWithIdentifier:@"Master Scroller Physical Dimensions"];
   NSLog(@"Scroller Content Height : %1.1fw x %1.1fh",self.masterContentScroller.contentSize.width,
@@ -958,6 +956,7 @@
 
 - (void)socialDataLoaded {
   
+  
   _hasSocialData = YES;
   
   [[DesignManager shared] globalSetFontTo:[[DesignManager shared] latoRegular:self.socialShareButton.titleLabel.font.pointSize]
@@ -969,6 +968,8 @@
 
   if (![self.masterContentScroller.subviews containsObject:self.socialSheetView]) {
     [self.masterContentScroller addSubview:self.socialSheetView];
+    
+    
     NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[social]|"
                                                                    options:0
                                                                    metrics:nil
@@ -1006,11 +1007,14 @@
                                                                       multiplier:1.0
                                                                         constant:0.0];
     
+ 
     [self.socialSheetView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
 
+    if ( ![Utilities isIOS7] ) {
+      [self.masterContentScroller removeConstraint:self.webViewBottomAnchor];
+    }
     
-    [self.masterContentScroller removeConstraint:self.webViewBottomAnchor];
     [self.socialSheetView addConstraint:heightConstraint];
     [self.socialSheetView addConstraint:widthConstraint];
     [self.masterContentScroller addConstraints:constraints];
@@ -1122,16 +1126,13 @@
     } completion:^(BOOL finished) {
 
       self.masterContentScroller.scrollEnabled = YES;
-      //self.webContentLoader.webView.alpha = 0.0;
-      //self.masterContentScroller.backgroundColor = [UIColor purpleColor];
-      self.masterContentScroller.contentOffset = CGPointMake(0.0f,1488.0f);
+      
       if ( [Utilities isIOS7] ) {
         
         self.webContentLoader.webView.scrollView.scrollEnabled = NO;
         self.webContentLoader.webView.userInteractionEnabled = NO;
         [self.masterContentScroller sendSubviewToBack:self.webContentLoader.webView];
         
-
       }
       
     }];
