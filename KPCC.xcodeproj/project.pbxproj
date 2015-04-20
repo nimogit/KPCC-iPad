@@ -840,9 +840,6 @@
 		763B61FF1909A26E0021C530 /* sections_close_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E697FE1909A05800D373BF /* sections_close_icon@2x.png */; };
 		763B620B190EDC370021C530 /* SCPRNewsSectionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B6208190EDC370021C530 /* SCPRNewsSectionTableViewController.m */; };
 		76658B5818E1F43800026176 /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5418E1F43800026176 /* libFlurry_4.3.2.a */; };
-		76658B6118E2141C00026176 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76658B5A18E2141C00026176 /* libTestFlight.a */; };
-		76658B6318E2141C00026176 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5B18E2141C00026176 /* README.md */; };
-		76658B6518E2141C00026176 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 76658B5C18E2141C00026176 /* release_notes.md */; };
 		76709F4019106DD200E0574C /* SCPRControllerOverlayAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */; };
 		76709F4719131A6600E0574C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76709F4619131A6600E0574C /* Accelerate.framework */; };
 		76709F4A191934C700E0574C /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 76709F48191934C700E0574C /* categories.json */; };
@@ -1902,12 +1899,6 @@
 		763B6208190EDC370021C530 /* SCPRNewsSectionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRNewsSectionTableViewController.m; path = UI/VideoPhoto/SCPRNewsSectionTableViewController.m; sourceTree = "<group>"; };
 		76658B5318E1F43800026176 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		76658B5418E1F43800026176 /* libFlurry_4.3.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.2.a; sourceTree = "<group>"; };
-		76658B5A18E2141C00026176 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		76658B5B18E2141C00026176 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		76658B5C18E2141C00026176 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		76658B5D18E2141C00026176 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		76658B5E18E2141C00026176 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
-		76658B5F18E2141C00026176 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		76709F3D19106DD200E0574C /* SCPRControllerOverlayAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRControllerOverlayAnimator.h; path = Helpers/SCPRControllerOverlayAnimator.h; sourceTree = "<group>"; };
 		76709F3E19106DD200E0574C /* SCPRControllerOverlayAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRControllerOverlayAnimator.m; path = Helpers/SCPRControllerOverlayAnimator.m; sourceTree = "<group>"; };
 		76709F4619131A6600E0574C /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -1954,7 +1945,6 @@
 				76709F4719131A6600E0574C /* Accelerate.framework in Frameworks */,
 				28036AA81718A344007DBDE2 /* libz.dylib in Frameworks */,
 				2594146317E7DD52006DC6A6 /* StoreKit.framework in Frameworks */,
-				76658B6118E2141C00026176 /* libTestFlight.a in Frameworks */,
 				25332B901760FF8400ADAB3B /* CoreLocation.framework in Frameworks */,
 				25A824A41757CFEB0061C889 /* Social.framework in Frameworks */,
 				25AEFA7A17558636003CD916 /* MessageUI.framework in Frameworks */,
@@ -3663,7 +3653,6 @@
 		28C9E776170D064200ED18FB /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				76658B5918E2141C00026176 /* TestFlight */,
 				76658AC618E1F43700026176 /* Flurry */,
 				76A3086F18B696630065D4B1 /* iRate */,
 				25AC7D2917BB00B8008B1599 /* XMLD */,
@@ -3752,20 +3741,6 @@
 			);
 			name = Flurry;
 			path = ThirdParty/Flurry;
-			sourceTree = "<group>";
-		};
-		76658B5918E2141C00026176 /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				76658B5A18E2141C00026176 /* libTestFlight.a */,
-				76658B5B18E2141C00026176 /* README.md */,
-				76658B5C18E2141C00026176 /* release_notes.md */,
-				76658B5D18E2141C00026176 /* TestFlight+AsyncLogging.h */,
-				76658B5E18E2141C00026176 /* TestFlight+ManualSessions.h */,
-				76658B5F18E2141C00026176 /* TestFlight.h */,
-			);
-			name = TestFlight;
-			path = ThirdParty/TestFlight;
 			sourceTree = "<group>";
 		};
 		76A3086F18B696630065D4B1 /* iRate */ = {
@@ -4163,7 +4138,6 @@
 				255EE4A917970395004D1D5E /* add_to_favorites_plus.png in Resources */,
 				25C9A4B017F4CBF400B6BBB6 /* icon-share-facebook.png in Resources */,
 				25D1C61F18088225001FD92C /* icon-save-queue@2x.png in Resources */,
-				76658B6518E2141C00026176 /* release_notes.md in Resources */,
 				255EE4AB17970395004D1D5E /* add_to_favorites_plus@2x.png in Resources */,
 				255EE4AD17970395004D1D5E /* section_0_header_icon.png in Resources */,
 				255EE4AF17970395004D1D5E /* section_0_header_icon@2x.png in Resources */,
@@ -4217,7 +4191,6 @@
 				2577165317A19FE6003BDC2F /* byline_containers.json in Resources */,
 				2577165617A1B4FC003BDC2F /* top_gradient@2x.png in Resources */,
 				25A70C4817E378F90024E654 /* SCPROnboardingStep5ViewController_iPad.xib in Resources */,
-				76658B6318E2141C00026176 /* README.md in Resources */,
 				2577165917A1B533003BDC2F /* top_gradient.png in Resources */,
 				25C9A44217F358F100B6BBB6 /* top_gradient_7.png in Resources */,
 				251EF54C17A2E035002893AF /* programCellGradient.png in Resources */,
@@ -4809,7 +4782,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/KPCC/ThirdParty/TestFlight",
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
@@ -4890,7 +4862,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/KPCC/ThirdParty/TestFlight",
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
@@ -4940,7 +4911,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/KPCC/ThirdParty/TestFlight",
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
@@ -4989,7 +4959,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/KPCC/ThirdParty/TestFlight",
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
