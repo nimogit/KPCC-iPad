@@ -4839,7 +4839,7 @@
 			baseConfigurationReference = 54CC025BAFF069D5DA0C1463 /* Pods-KPCC iPad.nfr.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				BUNDLE_ID = org.scpr.ipad.kpcc;
+				BUNDLE_ID = org.scpr.ipad.kpccmobile;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
