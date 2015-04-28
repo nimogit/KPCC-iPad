@@ -4860,7 +4860,7 @@
 				);
 				GCC_WARN_UNUSED_VALUE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/KPCC/KPCC-Info.plist";
+				INFOPLIST_FILE = "./KPCC/KPCC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
