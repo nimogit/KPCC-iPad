@@ -13,5 +13,6 @@
 - (CGSize)sizeOfStringWithFont:(UIFont*)font;
 - (CGSize)sizeOfStringWithFont:(UIFont*)font constrainedToSize:(CGSize)size;
 - (CGSize)sizeOfStringWithFont:(UIFont *)font constrainedToSize:(CGSize)size lineBreakMode:(NSLineBreakMode)lineBreakMode;
+- (NSString*)trimLeadingWhitespace;
 
 @end

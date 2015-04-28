@@ -519,7 +519,7 @@ static DesignManager *singleton = nil;
 }
 
 - (UIFont*)bodyFontRegular:(CGFloat)size {
-  return [UIFont fontWithName:@"PTSerif-Normal"
+  return [UIFont fontWithName:@"PTSerif-Regular"
                          size:size];
 }
 

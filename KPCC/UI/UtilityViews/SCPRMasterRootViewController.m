@@ -184,7 +184,7 @@
 #pragma mark - GLobal display
 - (void)showIntro {
   
-  if ( ![Utilities isIOS7] ) {
+  //if ( ![Utilities isIOS7] ) {
     [[Utilities del] setAppIsShowingTour:YES];
     
     SCPRIntroductionViewController *ivc = [[SCPRIntroductionViewController alloc]
@@ -213,11 +213,11 @@
     [UIView animateWithDuration:0.33 animations:^{
       ivc.view.alpha = 1.0;
     }];
-  } else {
+  /*} else {
     [[ContentManager shared].settings setOnboardingShown:YES];
     [[ContentManager shared] setSkipParse:YES];
     [[ContentManager shared] writeSettings];
-  }
+  }*/
   
 }
 
@@ -659,8 +659,7 @@
     [[[Utilities del] viewController] closeShareDrawer];
   }
   
-  UIWindow *window = [[Utilities del] window];
-  [window setNeedsLayout];
+
   
   CGSize newSize = CGSizeZero;
   if ( toInterfaceOrientation == UIInterfaceOrientationPortrait ||
@@ -683,6 +682,8 @@
     }
   }
   
+  UIWindow *window = [[Utilities del] window];
+  [window layoutIfNeeded];
   
   [self.view layoutIfNeeded];
   
@@ -699,17 +700,25 @@
     [self.view updateConstraintsIfNeeded];
     [self.view layoutIfNeeded];
   
+  if ( ![Utilities isIOS7] ) {
   
     SCPRViewController *scprView = [[Utilities del] viewController];
     [[scprView view] setNeedsUpdateConstraints];
     [[scprView view] updateConstraintsIfNeeded];
     [[scprView view] setNeedsLayout];
     [[scprView view] layoutIfNeeded];
-  //}
   
-  NSMutableArray *vector = [[ContentManager shared] resizeVector];
-  for ( id<Rotatable> r in vector ) {
-    [r handleRotationPost];
+  
+    NSMutableArray *vector = [[ContentManager shared] resizeVector];
+    for ( id<Rotatable> r in vector ) {
+      [r handleRotationPost];
+    }
+    
+  } else {
+    NSMutableArray *vector = [[ContentManager shared] resizeVector];
+    for ( id<Rotatable> r in vector ) {
+      [r handleRotationPre];
+    }
   }
 
 }
@@ -734,16 +743,18 @@
   [self.view updateConstraintsIfNeeded];
   [self.view layoutIfNeeded];
   
-  SCPRViewController *scprView = [[Utilities del] viewController];
-  [[scprView view] setNeedsUpdateConstraints];
-  [[scprView view] updateConstraintsIfNeeded];
-  [[scprView view] setNeedsLayout];
-  [[scprView view] layoutIfNeeded];
+  if ( ![Utilities isIOS7] ) {
+    SCPRViewController *scprView = [[Utilities del] viewController];
+    [[scprView view] setNeedsUpdateConstraints];
+    [[scprView view] updateConstraintsIfNeeded];
+    [[scprView view] setNeedsLayout];
+    [[scprView view] layoutIfNeeded];
 
-  
-  NSMutableArray *vector = [[ContentManager shared] resizeVector];
-  for ( id<Rotatable> r in vector ) {
-    [r handleRotationPost];
+    
+    NSMutableArray *vector = [[ContentManager shared] resizeVector];
+    for ( id<Rotatable> r in vector ) {
+      [r handleRotationPost];
+    }
   }
   
 }
@@ -763,6 +774,12 @@
     CGRect r = [[[Utilities del] window] frame];
     NSLog(@"Main Window after rotation : %1.1fw x %1.1fh",r.size.width,r.size.height);
     [self.view printDimensionsWithIdentifier:@"MASTER ROOT CONTROLLER"];
+    
+    NSMutableArray *vector = [[ContentManager shared] resizeVector];
+    for ( id<Rotatable> r in vector ) {
+      [r handleRotationPost];
+    }
+    
   }
 }
 

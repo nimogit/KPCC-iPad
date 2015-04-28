@@ -884,7 +884,11 @@
     
     [slvc setupWithEdition:dict];
     
+    [[[Utilities del] globalTitleBar] morph:BarTypeEditions container:slvc];
+    
     [[ContentManager shared] pushToResizeVector:slvc];
+    
+    
     
   } else {
     if (self.contentType == ScreenContentTypeCompositePage || self.contentType == ScreenContentTypeVideoPhotoPage) {

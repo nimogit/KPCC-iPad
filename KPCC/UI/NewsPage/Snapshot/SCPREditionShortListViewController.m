@@ -193,6 +193,7 @@
                                             selector:@selector(hideSpinner)
                                                 name:@"editions_finished_building"
                                               object:nil];
+    
     [self pushToMolecule:0];
   }];
 }

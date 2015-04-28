@@ -26,7 +26,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>${VERSION}</string>
+	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>KPCC</string>
 	<key>CFBundleURLTypes</key>
@@ -41,7 +41,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>${UNIQUE_BUNDLE_VERSION}</string>
+	<string>62</string>
 	<key>FacebookAppID</key>
 	<string>${FACEBOOK_IDENTIFIER}</string>
 	<key>LSRequiresIPhoneOS</key>

@@ -37,6 +37,15 @@
 
 - (void)viewDidLayoutSubviews {
   if ( self.needsSnap ) {
+    if ( ![Utilities isIOS7] ) {
+      self.needsSnap = NO;
+      [self buildIntro];
+    }
+  }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  if ( self.needsSnap ) {
     self.needsSnap = NO;
     [self buildIntro];
   }
@@ -161,11 +170,11 @@
 }
 
 - (void)handleRotationPost {
-  [self setNeedsSnap:YES];
   [UIView animateWithDuration:0.25 animations:^{
     self.cardScroller.alpha = 0.0;
   } completion:^(BOOL finished) {
-    [self.view setNeedsLayout];
+    [self.view printDimensionsWithIdentifier:@"INTRO MAIN FRAME"];
+    [self buildIntro];
     [self.view layoutIfNeeded];
   }];
 }

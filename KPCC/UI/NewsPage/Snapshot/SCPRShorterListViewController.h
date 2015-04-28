@@ -10,7 +10,7 @@
 #import "SCPRGrayLineView.h"
 #import "SCPRAppDelegate.h"
 
-@interface SCPRShorterListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,Rotatable>
+@interface SCPRShorterListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,Rotatable,Backable>
 
 @property (nonatomic, strong) IBOutlet UIImageView *splashImageView;
 @property (nonatomic, strong) IBOutlet SCPRGrayLineView *dividerLineView;
@@ -27,14 +27,19 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *tableHeightConstraint;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *inlineContentPushConstraint;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *scrollingContentHeightConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *rightFloatConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *leftFloatConstraint;
 
 @property (nonatomic, strong) NSMutableArray *stories;
 @property (nonatomic, weak) id parentMolecule;
 @property BOOL fromNews;
+@property (nonatomic, strong) NSMutableArray *cellCache;
 
 - (void)setupWithEdition:(NSDictionary*)edition;
 - (void)pushToStoryAtIndex:(NSInteger)index;
 - (void)setupScrollingDimensionsWithStories:(NSMutableArray*)stories;
 - (NSString*)formattedTimestampForEdition:(NSDictionary*)edition;
+- (void)properSpacingForHeadline;
+- (void)buildCells;
 
 @end

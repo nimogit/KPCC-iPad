@@ -68,6 +68,8 @@
       [savc setNeedsSetup:YES];
     }
   }
+  
+  [self.view printDimensionsWithIdentifier:@"CLOAK DIMENSIONS"];
 }
 
 - (void)didReceiveMemoryWarning

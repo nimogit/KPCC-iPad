@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -14,6 +14,8 @@
                 <outlet property="dividerLineView" destination="fqB-gc-7MD" id="rOI-fp-x3R"/>
                 <outlet property="headlineSeatView" destination="WsT-Xl-rzS" id="MIP-4y-gJB"/>
                 <outlet property="inlineContentPushConstraint" destination="zwO-4B-aUT" id="5rt-aG-dy6"/>
+                <outlet property="leftFloatConstraint" destination="eDF-kY-r7b" id="wMk-rf-k8f"/>
+                <outlet property="rightFloatConstraint" destination="AAH-h5-T3U" id="KpH-Fl-tGj"/>
                 <outlet property="scrollingContentView" destination="4B0-5n-453" id="yDn-Oc-hZm"/>
                 <outlet property="shortListHeaderCell" destination="ddO-rX-eCI" id="umA-ye-AJb"/>
                 <outlet property="shortListLabel" destination="tyw-jv-rBl" id="ybu-tg-dVm"/>
@@ -88,8 +90,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your morning digest for Friday, December 25, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONe-bl-c50">
-                                <rect key="frame" x="324" y="38" width="257" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Your morning digest for Friday, December 25, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONe-bl-c50">
+                                <rect key="frame" x="324" y="38" width="226" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="rx6-Kc-xJT"/>
                                 </constraints>
@@ -108,12 +110,13 @@
                         <color key="backgroundColor" red="0.91840277777777779" green="0.91840277777777779" blue="0.91840277777777779" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="fqB-gc-7MD" secondAttribute="trailing" id="9Mi-vN-dGf"/>
+                            <constraint firstItem="ONe-bl-c50" firstAttribute="leading" secondItem="tyw-jv-rBl" secondAttribute="trailing" constant="31" id="AAH-h5-T3U"/>
                             <constraint firstItem="ONe-bl-c50" firstAttribute="bottom" secondItem="tyw-jv-rBl" secondAttribute="bottom" constant="-18" id="DSf-CE-tJL"/>
-                            <constraint firstAttribute="trailing" secondItem="ONe-bl-c50" secondAttribute="trailing" constant="19" id="cea-72-wVt"/>
+                            <constraint firstAttribute="bottom" secondItem="ONe-bl-c50" secondAttribute="bottom" constant="36" id="Kzm-W5-1jv"/>
                             <constraint firstItem="tyw-jv-rBl" firstAttribute="leading" secondItem="WsT-Xl-rzS" secondAttribute="leading" constant="30" id="eDF-kY-r7b"/>
                             <constraint firstAttribute="bottom" secondItem="fqB-gc-7MD" secondAttribute="bottom" constant="-2" id="h3G-HD-0Xb"/>
                             <constraint firstItem="fqB-gc-7MD" firstAttribute="leading" secondItem="WsT-Xl-rzS" secondAttribute="leading" id="hd8-Zg-8xb"/>
-                            <constraint firstItem="ONe-bl-c50" firstAttribute="leading" secondItem="tyw-jv-rBl" secondAttribute="trailing" constant="31" id="qEF-Uz-w3X"/>
+                            <constraint firstAttribute="bottom" secondItem="tyw-jv-rBl" secondAttribute="bottom" constant="18" id="pvZ-aX-8ox"/>
                             <constraint firstItem="tyw-jv-rBl" firstAttribute="top" secondItem="WsT-Xl-rzS" secondAttribute="top" constant="18" id="ru5-e6-2Vp"/>
                         </constraints>
                     </view>

@@ -41,6 +41,8 @@
   self.view.backgroundColor = [UIColor whiteColor];
   self.masterContentScroller.backgroundColor = [UIColor whiteColor];
   self.webContentLoader.webView.alpha = 0.0;
+  self.webContentLoader.view.backgroundColor = [UIColor whiteColor];
+  
   self.textSheetView.alpha = 0.0;
   self.cloakView.alpha = 1.0;
   self.queueButton.alpha = 0.0;

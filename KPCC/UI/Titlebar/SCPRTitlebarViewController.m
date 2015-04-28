@@ -155,13 +155,12 @@
       break;
     case BarTypeEditions:
     {
-      [self applyClearBackground];
     
       self.drawerButton.alpha = 0.0;
       self.backButtonSeat.alpha = 1.0;
       
       self.container = container;
-      [self applyBackButtonText:@"Short List"];
+      [self applyBackButtonText:@"News"];
       
       [self applyKpccLogo];
       

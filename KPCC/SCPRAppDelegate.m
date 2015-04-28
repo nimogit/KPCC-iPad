@@ -92,16 +92,17 @@
   if ( [Utilities isIOS7] ) {
     [[DesignManager shared] snapView:self.viewController.view
                          toContainer:self.masterRootController.view];
+    
+    NSArray *sc = [[DesignManager shared] sizeContraintsForView:self.window];
+    //self.window.translatesAutoresizingMaskIntoConstraints = NO;
+    //[self.window addConstraints:sc];
+    //self.windowConstraints = sc;
+    
   } else {
     [self.masterRootController.view addSubview:self.viewController.view];
   }
   
-  if ( [Utilities isIOS7] ) {
-    //self.window.translatesAutoresizingMaskIntoConstraints = NO;
-    NSArray *sc = [[DesignManager shared] sizeContraintsForView:self.window];
-    //[self.window addConstraints:sc];
-    self.windowConstraints = sc;
-  }
+
   
 #if TARGET_IPHONE_SIMULATOR
   [[DCIntrospect sharedIntrospector] start];

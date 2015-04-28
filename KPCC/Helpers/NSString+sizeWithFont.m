@@ -42,4 +42,14 @@
               lineBreakMode:lineBreakMode];
 }
 
+-(NSString*)trimLeadingWhitespace {
+  NSInteger i = 0;
+  
+  while ((i < [self length])
+         && [[NSCharacterSet whitespaceCharacterSet] characterIsMember:[self characterAtIndex:i]]) {
+    i++;
+  }
+  return [self substringFromIndex:i];
+}
+
 @end

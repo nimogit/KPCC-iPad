@@ -37,8 +37,19 @@
                   respectHeight:YES
                         lighten:YES];
   
-  [self.blurbLabel snapText:[Utilities unwebbifyString:story[@"summary"]]
+  NSString *summary = story[@"summary"];
+  summary = [Utilities unwebbifyString:summary];
+  summary = [summary trimLeadingWhitespace];
+  
+  NSLog(@"Blurb Height before text : %1.1f",self.blurbLabel.frame.size.height);
+  if ( ![Utilities isIOS7] ) {
+    [self.blurbLabel snapText:summary
                        bold:NO];
+  } else {
+    self.blurbLabel.font = [[DesignManager shared] bodyFontRegular:16.0f];
+    self.blurbLabel.text = summary;
+  }
+
   
   self.readMoreLabel.textColor = [[DesignManager shared] turquoiseCrystalColor:1.0];
   NSString *moreLabelString = @"";
@@ -55,11 +66,15 @@
                               bold:NO
                      respectHeight:YES
                            lighten:NO];
+
   
   [self.headlineCaptionLabel layoutIfNeeded];
-  [self.contentView layoutIfNeeded];
+  [self.blurbLabel layoutIfNeeded];
+  [self.contentView layoutSubviews];
+
+  NSLog(@"Blurb Height after text : %1.1f",self.blurbLabel.frame.size.height);
   
-  
+  self.topAlignmentAnchor.constant = 4.0f;
 }
 
 - (void)applyQuantity:(NSInteger)quantity {
@@ -70,6 +85,18 @@
                       respectHeight:YES];
   
   
+}
+
+- (CGFloat)heightGuess {
+  [self.contentView layoutSubviews];
+  NSString *text = self.blurbLabel.text;
+  CGSize s = [text sizeOfStringWithFont:self.blurbLabel.font
+                      constrainedToSize:CGSizeMake(self.blurbLabel.frame.size.width,
+                                                   MAXFLOAT)];
+  
+  CGFloat guess = self.blurbLabel.frame.origin.y + s.height + 10.0f + self.readMoreLabel.frame.size.height;
+  NSLog(@"Height Guess : %1.1f",guess);
+  return guess;
 }
 
 - (void)prepareForReuse {

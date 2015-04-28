@@ -50,11 +50,14 @@
 + (NSDictionary*)collectTappableLinks:(NSString*)body;
 + (void)animStart:(id)del sel:(SEL)sel;
 + (void)animEnd;
+
 + (NSString*)prettyStringFromSeconds:(NSInteger)seconds;
 + (NSString*)prettyStringFromSocialCount:(NSInteger)seconds;
 + (NSString*)formalStringFromSeconds:(NSInteger)seconds;
 + (NSString*)prettyStringFromRFCDateString:(NSString*)rawDate;
 + (NSString*)prettyLongStringFromRFCDateString:(NSString*)rawDate;
++ (NSString*)prettyLongStringFromRFCDateString:(NSString*)rawDate weekend:(BOOL)weekend;
+
 + (NSString*)isoDateStringFromDate:(NSDate*)date;
 + (CGFloat)easeIn:(CGFloat)value;
 + (NSDictionary*)reverseHash:(NSDictionary*)hash;

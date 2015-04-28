@@ -16,7 +16,7 @@
 #import "Utilities.h"
 #import "SCPRSingleArticleViewController.h"
 
-static CGFloat kEstimatedRowHeight = 124.0f;
+static CGFloat kEstimatedRowHeight = 152.0f;
 
 @interface SCPRShorterListViewController ()
 
@@ -37,16 +37,17 @@ static CGFloat kEstimatedRowHeight = 124.0f;
                       respectHeight:YES];
   
   self.dateTimeLabel.textColor = [[DesignManager shared] seventiesJacketColor];
-  
   self.splashImageView.contentMode = UIViewContentModeScaleAspectFill;
   self.splashImageView.clipsToBounds = YES;
-  
+  self.cellCache = [NSMutableArray new];
   
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   NSLog(@"View did appear");
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"editions_finished_building"
+                                                      object:nil];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -67,6 +68,7 @@ static CGFloat kEstimatedRowHeight = 124.0f;
   
   NSArray *abstracts = [edition objectForKey:@"abstracts"];
   self.stories = [abstracts mutableCopy];
+  [self buildCells];
   
   NSDictionary *story = self.stories.firstObject;
   
@@ -78,6 +80,10 @@ static CGFloat kEstimatedRowHeight = 124.0f;
   self.contentsTable.delegate = self;
   self.contentsTable.dataSource = self;
   self.contentsTable.backgroundColor = [UIColor clearColor];
+  
+  if ( ![Utilities isIOS7] ) {
+    self.contentsTable.rowHeight = UITableViewAutomaticDimension;
+  }
   
   self.headlineSeatView.backgroundColor = [UIColor whiteColor];
   self.scrollingContentView.backgroundColor = [UIColor clearColor];
@@ -95,6 +101,34 @@ static CGFloat kEstimatedRowHeight = 124.0f;
   
   [self setupScrollingDimensionsWithStories:self.stories];
   
+}
+
+- (void)buildCells {
+  for ( unsigned i = 0; i < self.stories.count; i++ ) {
+    SCPRStoryTableViewCell *cell = nil;
+    NSArray *objects = [[NSBundle mainBundle]
+                        loadNibNamed:[[DesignManager shared]
+                                      xibForPlatformWithName:@"SCPRStoryTableViewCell"]
+                        owner:nil
+                        options:nil];
+    cell = (SCPRStoryTableViewCell*)objects[0];
+
+    
+    NSDictionary *story = self.stories[i];
+    [cell setupWithStory:story];
+    [cell.contentView layoutIfNeeded];
+    [cell layoutIfNeeded];
+    
+    if ( i == 0 ) {
+      [cell applyQuantity:self.stories.count];
+      cell.quantityView.alpha = 1.0f;
+    } else {
+      cell.quantityView.alpha = 0.0f;
+    }
+    
+    self.cellCache[i] = cell;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  }
 }
 
 - (void)setupScrollingDimensionsWithStories:(NSMutableArray *)stories {
@@ -125,9 +159,27 @@ static CGFloat kEstimatedRowHeight = 124.0f;
 - (NSString*)formattedTimestampForEdition:(NSDictionary *)edition {
   
   NSString *dateString = edition[@"published_at"];
-  NSString *formatted = [Utilities prettyLongStringFromRFCDateString:dateString];
-  return [NSString stringWithFormat:@"Your morning digest for %@",formatted];
+  NSString *type = edition[@"edition_type"];
+#ifdef DEBUG
+  type = @"Weekend Reads";
+#endif
+  if ( SEQ(type,@"AM edition") ) {
+    NSString *formatted = [Utilities prettyLongStringFromRFCDateString:dateString];
+    return [NSString stringWithFormat:@"Your morning digest for %@",formatted];
+  } else {
+    NSString *formatted = [Utilities prettyLongStringFromRFCDateString:dateString
+                                                               weekend:YES];
+    return [NSString stringWithFormat:@"Your weekend reads for %@",formatted];
+  }
   
+  return @"";
+
+}
+
+#pragma mark - Backable
+- (void)backTapped {
+  [[[Utilities del] globalTitleBar] pop];
+  [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)pushToStoryAtIndex:(NSInteger)index {
@@ -159,16 +211,7 @@ static CGFloat kEstimatedRowHeight = 124.0f;
     [[[Utilities del] globalTitleBar] morph:BarTypeExternalWeb container:external];
     [self.navigationController pushViewController:external animated:YES];
     [external prime:request];
-    
-    /*if (self.externalContent) {
-      SCPRExternalWebContentViewController *prev = (SCPRExternalWebContentViewController*)self.externalContent;
-      [prev.bensOffbrandButton removeTarget:prev
-                                     action:@selector(buttonTapped:)
-                           forControlEvents:UIControlEventTouchUpInside];
-      self.externalContent = nil;
-    }
-    
-    self.externalContent = external;*/
+
     
     external.bensOffbrandButton = [[[Utilities del] globalTitleBar] parserOrFullButton];
     [external.bensOffbrandButton addTarget:external
@@ -227,8 +270,32 @@ static CGFloat kEstimatedRowHeight = 124.0f;
 }
 
 #pragma mark - Rotatable
+- (void)handleRotationPre {
+  [self properSpacingForHeadline];
+
+}
+
 - (void)handleRotationPost {
+  if ( ![Utilities isIOS7] ) {
+    [self properSpacingForHeadline];
+  }
   [self setupScrollingDimensionsWithStories:self.stories];
+}
+
+- (void)properSpacingForHeadline {
+  CGSize s = [[DesignManager shared] predictedWindowSize];
+  [UIView animateWithDuration:0.25 animations:^{
+    if ( s.width > s.height ) {
+      // Landscape
+      self.rightFloatConstraint.constant = 40.0f;
+      self.leftFloatConstraint.constant = 120.0f;
+    } else {
+      // Portrait
+      self.rightFloatConstraint.constant = 30.0f;
+      self.leftFloatConstraint.constant = 30.0f;
+    }
+    [self.headlineSeatView layoutIfNeeded];
+  }];
 }
 
 #pragma mark - UIScrollView
@@ -258,31 +325,10 @@ static CGFloat kEstimatedRowHeight = 124.0f;
     return self.shortListHeaderCell;
   }
   
-  SCPRStoryTableViewCell *cell = nil/*[self.contentsTable dequeueReusableCellWithIdentifier:@"story-cell"]*/;
-  //if ( !cell ) {
-    NSArray *objects = [[NSBundle mainBundle]
-                        loadNibNamed:[[DesignManager shared]
-                                      xibForPlatformWithName:@"SCPRStoryTableViewCell"]
-                        owner:nil
-                        options:nil];
-    cell = (SCPRStoryTableViewCell*)objects[0];
-  //}
-  
-  NSDictionary *story = self.stories[indexPath.row];
-  [cell setupWithStory:story];
-  
-  if ( indexPath.row == 0 ) {
-    [cell applyQuantity:self.stories.count];
-    cell.quantityView.alpha = 1.0f;
-  } else {
-    cell.quantityView.alpha = 0.0f;
-  }
-  
-  cell.selectionStyle = UITableViewCellSelectionStyleNone;
-  
-  return cell;
+  return self.cellCache[indexPath.row];
   
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
@@ -290,7 +336,38 @@ static CGFloat kEstimatedRowHeight = 124.0f;
     return self.shortListHeaderCell.frame.size.height;
   }
   
+  if ( ![Utilities isIOS7] ) {
+    return UITableViewAutomaticDimension;
+  }
+  
+  if ( self.cellCache.count > 0 ) {
+    SCPRStoryTableViewCell *storyCell = self.cellCache[indexPath.row];
+    return [storyCell heightGuess];
+    
+  }
+  
   return kEstimatedRowHeight;
+  
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  if ( indexPath.section == 0 ) {
+    return self.shortListHeaderCell.frame.size.height;
+  }
+  
+  if ( ![Utilities isIOS7] ) {
+    return kEstimatedRowHeight;
+  }
+  
+  if ( self.cellCache.count > 0 ) {
+    SCPRStoryTableViewCell *storyCell = self.cellCache[indexPath.row];
+    [storyCell.contentView layoutSubviews];
+    return [storyCell heightGuess];
+  }
+  
+  return kEstimatedRowHeight;
+  
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {

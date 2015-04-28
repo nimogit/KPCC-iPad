@@ -390,7 +390,17 @@ static char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 }
 
 + (NSString*)prettyLongStringFromRFCDateString:(NSString *)rawDate {
+  return [Utilities prettyLongStringFromRFCDateString:rawDate
+                                              weekend:NO];
+}
+
++ (NSString*)prettyLongStringFromRFCDateString:(NSString *)rawDate weekend:(BOOL)weekend {
   NSDate *date = [self dateFromRFCString:rawDate];
+  if ( weekend ) {
+    return [NSDate stringFromDate:date
+                       withFormat:@"MMMM d, YYYY"];
+  }
+  
   return [NSDate stringFromDate:date
                      withFormat:@"EEEE, MMMM d, YYYY"];
 }
