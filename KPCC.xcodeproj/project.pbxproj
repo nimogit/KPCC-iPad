@@ -865,7 +865,6 @@
 		76D71F2418ABF3D500487864 /* icon-share-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D71F2118ABF3D500487864 /* icon-share-blue.png */; };
 		76D71F2618ABF3D500487864 /* icon-share-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D71F2218ABF3D500487864 /* icon-share-blue@2x.png */; };
 		76D71F2B18B555EC00487864 /* desk_customer_template.json in Resources */ = {isa = PBXBuildFile; fileRef = 76D71F2918B555EC00487864 /* desk_customer_template.json */; };
-		A4E561D4B96F480DA13CFFC0 /* libPods-KPCC iPad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E26265E2D24A4BB971374B /* libPods-KPCC iPad.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1933,6 +1932,10 @@
 		76E698011909A05800D373BF /* sections_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sections_icon@2x.png"; sourceTree = "<group>"; };
 		B29FC713FB1A0828222E837C /* libPods-KPCC-iPad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPCC-iPad.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1E26265E2D24A4BB971374B /* libPods-KPCC iPad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPCC iPad.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D43AE0316969D61A6A4C841D /* Pods-KPCC-iPad.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPCC-iPad.production.xcconfig"; path = "Pods/Target Support Files/Pods-KPCC-iPad/Pods-KPCC-iPad.production.xcconfig"; sourceTree = "<group>"; };
+		E2A641539854D142F391C1B0 /* Pods-KPCC-iPad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPCC-iPad.release.xcconfig"; path = "Pods/Target Support Files/Pods-KPCC-iPad/Pods-KPCC-iPad.release.xcconfig"; sourceTree = "<group>"; };
+		F214FD29EF9DF16C852509F2 /* Pods-KPCC-iPad.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPCC-iPad.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KPCC-iPad/Pods-KPCC-iPad.debug.xcconfig"; sourceTree = "<group>"; };
+		F4F28DEFE8F6EDD3E492AA6A /* Pods-KPCC-iPad.nfr.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPCC-iPad.nfr.xcconfig"; path = "Pods/Target Support Files/Pods-KPCC-iPad/Pods-KPCC-iPad.nfr.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1967,7 +1970,6 @@
 				28036AAC1718A344007DBDE2 /* UIKit.framework in Frameworks */,
 				28036AAD1718A344007DBDE2 /* Foundation.framework in Frameworks */,
 				28036AAE1718A344007DBDE2 /* CoreGraphics.framework in Frameworks */,
-				A4E561D4B96F480DA13CFFC0 /* libPods-KPCC iPad.a in Frameworks */,
 				015CDAF1E1BFB8C2B6C5CB6E /* libPods-KPCC-iPad.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3725,6 +3727,10 @@
 		2B52A61A3769598759EEC2A8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				F214FD29EF9DF16C852509F2 /* Pods-KPCC-iPad.debug.xcconfig */,
+				E2A641539854D142F391C1B0 /* Pods-KPCC-iPad.release.xcconfig */,
+				F4F28DEFE8F6EDD3E492AA6A /* Pods-KPCC-iPad.nfr.xcconfig */,
+				D43AE0316969D61A6A4C841D /* Pods-KPCC-iPad.production.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -4748,6 +4754,7 @@
 		};
 		259210EF18315B0A001EDFB2 /* Production */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D43AE0316969D61A6A4C841D /* Pods-KPCC-iPad.production.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
@@ -4832,6 +4839,7 @@
 		};
 		25E21ACF183ADA660057E91D /* NFR */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4F28DEFE8F6EDD3E492AA6A /* Pods-KPCC-iPad.nfr.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.ipad.kpccmobile;
@@ -4881,6 +4889,7 @@
 		};
 		28036AC71718A344007DBDE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F214FD29EF9DF16C852509F2 /* Pods-KPCC-iPad.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
@@ -4931,6 +4940,7 @@
 		};
 		28036AC81718A344007DBDE2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2A641539854D142F391C1B0 /* Pods-KPCC-iPad.release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
