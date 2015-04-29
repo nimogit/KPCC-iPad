@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		015CDAF1E1BFB8C2B6C5CB6E /* libPods-KPCC-iPad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B29FC713FB1A0828222E837C /* libPods-KPCC-iPad.a */; };
 		25061AD017456A2400F96852 /* youtube_snippet.html in Resources */ = {isa = PBXBuildFile; fileRef = 25061ACE17456A2400F96852 /* youtube_snippet.html */; };
 		25061AD817459F7000F96852 /* SCPRExternalWebContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25061AD517459F6F00F96852 /* SCPRExternalWebContentViewController.m */; };
 		25061ADA17459F7000F96852 /* SCPRExternalWebContentViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25061AD617459F6F00F96852 /* SCPRExternalWebContentViewController_iPad.xib */; };
@@ -1932,6 +1933,7 @@
 		76E697FF1909A05800D373BF /* sections_close_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sections_close_icon.png; sourceTree = "<group>"; };
 		76E698001909A05800D373BF /* sections_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sections_icon.png; sourceTree = "<group>"; };
 		76E698011909A05800D373BF /* sections_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sections_icon@2x.png"; sourceTree = "<group>"; };
+		B29FC713FB1A0828222E837C /* libPods-KPCC-iPad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPCC-iPad.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1E26265E2D24A4BB971374B /* libPods-KPCC iPad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPCC iPad.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC1503E2B44539E2874B8FE4 /* Pods-KPCC iPad.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPCC iPad.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KPCC iPad/Pods-KPCC iPad.debug.xcconfig"; sourceTree = "<group>"; };
 		D80CCF045DFA0743EA24D186 /* Pods-KPCC iPad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPCC iPad.release.xcconfig"; path = "Pods/Target Support Files/Pods-KPCC iPad/Pods-KPCC iPad.release.xcconfig"; sourceTree = "<group>"; };
@@ -1970,6 +1972,7 @@
 				28036AAD1718A344007DBDE2 /* Foundation.framework in Frameworks */,
 				28036AAE1718A344007DBDE2 /* CoreGraphics.framework in Frameworks */,
 				A4E561D4B96F480DA13CFFC0 /* libPods-KPCC iPad.a in Frameworks */,
+				015CDAF1E1BFB8C2B6C5CB6E /* libPods-KPCC-iPad.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3319,6 +3322,7 @@
 				28C9E7B8170DFB2F00ED18FB /* libz.dylib */,
 				28C9E7B6170DFB2500ED18FB /* libxml2.dylib */,
 				C1E26265E2D24A4BB971374B /* libPods-KPCC iPad.a */,
+				B29FC713FB1A0828222E837C /* libPods-KPCC-iPad.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3767,9 +3771,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		28036A7C1718A344007DBDE2 /* KPCC iPad */ = {
+		28036A7C1718A344007DBDE2 /* KPCC-iPad */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 28036AC61718A344007DBDE2 /* Build configuration list for PBXNativeTarget "KPCC iPad" */;
+			buildConfigurationList = 28036AC61718A344007DBDE2 /* Build configuration list for PBXNativeTarget "KPCC-iPad" */;
 			buildPhases = (
 				33F2928416DD4127868A42A8 /* Check Pods Manifest.lock */,
 				28036A7D1718A344007DBDE2 /* Sources */,
@@ -3781,7 +3785,7 @@
 			);
 			dependencies = (
 			);
-			name = "KPCC iPad";
+			name = "KPCC-iPad";
 			productName = KPCC;
 			productReference = 28036AC91718A344007DBDE2 /* KPCC.app */;
 			productType = "com.apple.product-type.application";
@@ -3818,7 +3822,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				28036A7C1718A344007DBDE2 /* KPCC iPad */,
+				28036A7C1718A344007DBDE2 /* KPCC-iPad */,
 			);
 		};
 /* End PBXProject section */
@@ -4551,7 +4555,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KPCC iPad/Pods-KPCC iPad-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KPCC-iPad/Pods-KPCC-iPad-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -5056,7 +5060,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		28036AC61718A344007DBDE2 /* Build configuration list for PBXNativeTarget "KPCC iPad" */ = {
+		28036AC61718A344007DBDE2 /* Build configuration list for PBXNativeTarget "KPCC-iPad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28036AC71718A344007DBDE2 /* Debug */,

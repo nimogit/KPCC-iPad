@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "28036A7C1718A344007DBDE2"
                BuildableName = "KPCC.app"
-               BlueprintName = "KPCC iPad"
+               BlueprintName = "KPCC-iPad"
                ReferencedContainer = "container:KPCC.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28036A7C1718A344007DBDE2"
             BuildableName = "KPCC.app"
-            BlueprintName = "KPCC iPad"
+            BlueprintName = "KPCC-iPad"
             ReferencedContainer = "container:KPCC.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -54,7 +54,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28036A7C1718A344007DBDE2"
             BuildableName = "KPCC.app"
-            BlueprintName = "KPCC iPad"
+            BlueprintName = "KPCC-iPad"
             ReferencedContainer = "container:KPCC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -73,7 +73,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "28036A7C1718A344007DBDE2"
             BuildableName = "KPCC.app"
-            BlueprintName = "KPCC iPad"
+            BlueprintName = "KPCC-iPad"
             ReferencedContainer = "container:KPCC.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

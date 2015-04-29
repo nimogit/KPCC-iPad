@@ -1,7 +1,7 @@
 # Uncomment this line to define a global platform for your project
 platform :ios, "7.0"
 
-target "KPCC iPad" do
+target "KPCC-iPad" do
 pod 'AFNetworking'
 pod 'MBProgressHUD'
 pod 'Parse', '1.5'
