@@ -4786,6 +4786,7 @@
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
+				OTHER_CODE_SIGN_FLAGS = "no-strict";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -4867,6 +4868,7 @@
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
+				OTHER_CODE_SIGN_FLAGS = "no-strict";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -4917,6 +4919,7 @@
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
+				OTHER_CODE_SIGN_FLAGS = "no-strict";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -4966,6 +4969,7 @@
 					"$(SRCROOT)/KPCC/ThirdParty/Flurry",
 					"$(SRCROOT)/KPCC/ThirdParty/DFP",
 				);
+				OTHER_CODE_SIGN_FLAGS = "no-strict";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
