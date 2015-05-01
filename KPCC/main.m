@@ -12,8 +12,8 @@
 
 int main(int argc, char *argv[])
 {
-  
-      //_CFEnableZombies();
+  // SCPR iPad NFR
+  //_CFEnableZombies();
   srandom(time(NULL));
   return UIApplicationMain(argc, argv, nil, NSStringFromClass([SCPRAppDelegate class]));
   
