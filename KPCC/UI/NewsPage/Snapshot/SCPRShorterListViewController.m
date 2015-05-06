@@ -163,7 +163,7 @@ static CGFloat kEstimatedRowHeight = 152.0f;
 #ifdef DEBUG
   type = @"Weekend Reads";
 #endif
-  if ( SEQ(type,@"AM edition") ) {
+  if ( SEQ([type lowercaseString],@"a.m. edition") ) {
     NSString *formatted = [Utilities prettyLongStringFromRFCDateString:dateString];
     return [NSString stringWithFormat:@"Your morning digest for %@",formatted];
   } else {

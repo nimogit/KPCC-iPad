@@ -4795,9 +4795,9 @@
 				PRODUCT_NAME = KPCC;
 				PROVISIONING_PROFILE = "4679b9f3-4400-477b-8855-bfd40a790066";
 				TARGETED_DEVICE_FAMILY = 2;
-				UNIQUE_BUNDLE_VERSION = 5;
+				UNIQUE_BUNDLE_VERSION = 6;
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.1.0;
+				VERSION = 1.1.1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Production;
@@ -4878,7 +4878,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = 1.1.0;
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.1.0;
+				VERSION = 1.1.1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = NFR;
@@ -4889,7 +4889,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_ID = org.scpr.mobile.ipad;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Reed DeLapp (2L3CQSAF79)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reed DeLapp (2L3CQSAF79)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				FACEBOOK_IDENTIFIER = 129848480405753;
@@ -4924,11 +4924,11 @@
 				);
 				PLATFORM_STRING = ipad;
 				PRODUCT_NAME = KPCC;
-				PROVISIONING_PROFILE = "280c6594-716e-442e-8644-3e9f8280f6be";
+				PROVISIONING_PROFILE = "b328a2ff-6d3c-4aef-9c24-47d0cdcafc00";
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = SANDBOX;
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.1.0;
+				VERSION = 1.1.1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -4977,7 +4977,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				UNIQUE_BUNDLE_VERSION = "GM Seed";
 				VALID_ARCHS = "armv7 armv7s arm64";
-				VERSION = 1.1.0;
+				VERSION = 1.1.1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
