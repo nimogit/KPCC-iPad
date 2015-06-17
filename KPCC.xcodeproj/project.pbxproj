@@ -4762,6 +4762,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
+				CURRENT_PROJECT_VERSION = 25;
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4847,6 +4848,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
+				CURRENT_PROJECT_VERSION = 25;
 				FACEBOOK_IDENTIFIER = 580965191936158;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4896,6 +4898,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Reed DeLapp (2L3CQSAF79)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
+				CURRENT_PROJECT_VERSION = 25;
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4948,6 +4951,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Southern California Public Radio (SXALEDSVFU)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
+				CURRENT_PROJECT_VERSION = 25;
 				FACEBOOK_IDENTIFIER = 129848480405753;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

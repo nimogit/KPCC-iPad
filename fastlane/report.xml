@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="fastlane">
+  <testsuite name="deploy">
+    <testcase name="0: fastlane_version" time="9.4e-05"/>
+    <testcase name="1: default_platform" time="1.1e-05"/>
+    <testcase name="2: cocoapods" time="24.55315"/>
+    <testcase name="3: increment_build_number" time="0.869574"/>
+    <testcase name="4: ipa" time="231.366527"/>
+    <testcase name="5: sigh" time="3.730359"/>
+    <testcase name="6: deliver" time="116.826153"/>
+  </testsuite>
+</testsuites>
