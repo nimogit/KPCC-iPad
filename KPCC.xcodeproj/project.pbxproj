@@ -472,7 +472,6 @@
 		25BA551517AB0DBD00328233 /* twitter-icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25BA54D917AB0DBD00328233 /* twitter-icon-small@2x.png */; };
 		25C55F3B1A66EEDE000A755B /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C55F391A66EDB7000A755B /* UIColor+Additions.m */; };
 		25C6A946174AB72B008331FF /* SCPRQueueCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C6A944174AB72B008331FF /* SCPRQueueCellView.m */; };
-		25C799891B33705400DDD3EC /* KPCC_iPad_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C799881B33705400DDD3EC /* KPCC_iPad_Tests.m */; };
 		25C8F15F173190C100229891 /* vimeo_container.html in Resources */ = {isa = PBXBuildFile; fileRef = 25C8F15C173190C100229891 /* vimeo_container.html */; };
 		25C8F20E1732FCD500229891 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C8F20D1732FCD400229891 /* CoreMedia.framework */; };
 		25C9A44217F358F100B6BBB6 /* top_gradient_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9A43F17F358F100B6BBB6 /* top_gradient_7.png */; };
@@ -867,16 +866,6 @@
 		76D71F2618ABF3D500487864 /* icon-share-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D71F2218ABF3D500487864 /* icon-share-blue@2x.png */; };
 		76D71F2B18B555EC00487864 /* desk_customer_template.json in Resources */ = {isa = PBXBuildFile; fileRef = 76D71F2918B555EC00487864 /* desk_customer_template.json */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		25C7998A1B33705400DDD3EC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 28683CAF170B9BBD00346B6E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 28036A7C1718A344007DBDE2;
-			remoteInfo = "KPCC-iPad";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		25061ACE17456A2400F96852 /* youtube_snippet.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = youtube_snippet.html; path = Assets/html/youtube_snippet.html; sourceTree = "<group>"; };
@@ -1467,9 +1456,6 @@
 		25C55F391A66EDB7000A755B /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Additions.m"; path = "Helpers/UIColor+Additions.m"; sourceTree = "<group>"; };
 		25C6A943174AB72B008331FF /* SCPRQueueCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCPRQueueCellView.h; path = UI/PlayerWidget/QueueWidget/SCPRQueueCellView.h; sourceTree = "<group>"; };
 		25C6A944174AB72B008331FF /* SCPRQueueCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCPRQueueCellView.m; path = UI/PlayerWidget/QueueWidget/SCPRQueueCellView.m; sourceTree = "<group>"; };
-		25C799841B33705400DDD3EC /* KPCC-iPad-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KPCC-iPad-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		25C799871B33705400DDD3EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		25C799881B33705400DDD3EC /* KPCC_iPad_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KPCC_iPad_Tests.m; sourceTree = "<group>"; };
 		25C8F15C173190C100229891 /* vimeo_container.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = vimeo_container.html; path = Assets/html/vimeo_container.html; sourceTree = "<group>"; };
 		25C8F20D1732FCD400229891 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		25C9A43F17F358F100B6BBB6 /* top_gradient_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top_gradient_7.png; sourceTree = "<group>"; };
@@ -1953,13 +1939,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		25C799811B33705400DDD3EC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		28036AA11718A344007DBDE2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2809,23 +2788,6 @@
 			name = "User profile";
 			sourceTree = "<group>";
 		};
-		25C799851B33705400DDD3EC /* KPCC-iPad-Tests */ = {
-			isa = PBXGroup;
-			children = (
-				25C799881B33705400DDD3EC /* KPCC_iPad_Tests.m */,
-				25C799861B33705400DDD3EC /* Supporting Files */,
-			);
-			path = "KPCC-iPad-Tests";
-			sourceTree = "<group>";
-		};
-		25C799861B33705400DDD3EC /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				25C799871B33705400DDD3EC /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		25D113BD1811E9730001C434 /* Program AZ */ = {
 			isa = PBXGroup;
 			children = (
@@ -3306,7 +3268,6 @@
 			isa = PBXGroup;
 			children = (
 				28683CC0170B9BBD00346B6E /* KPCC */,
-				25C799851B33705400DDD3EC /* KPCC-iPad-Tests */,
 				28683CB9170B9BBD00346B6E /* Frameworks */,
 				28683CB8170B9BBD00346B6E /* Products */,
 				2B52A61A3769598759EEC2A8 /* Pods */,
@@ -3319,7 +3280,6 @@
 			isa = PBXGroup;
 			children = (
 				28036AC91718A344007DBDE2 /* KPCC.app */,
-				25C799841B33705400DDD3EC /* KPCC-iPad-Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3809,24 +3769,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		25C799831B33705400DDD3EC /* KPCC-iPad-Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 25C799901B33705400DDD3EC /* Build configuration list for PBXNativeTarget "KPCC-iPad-Tests" */;
-			buildPhases = (
-				25C799801B33705400DDD3EC /* Sources */,
-				25C799811B33705400DDD3EC /* Frameworks */,
-				25C799821B33705400DDD3EC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				25C7998B1B33705400DDD3EC /* PBXTargetDependency */,
-			);
-			name = "KPCC-iPad-Tests";
-			productName = "KPCC-iPad-Tests";
-			productReference = 25C799841B33705400DDD3EC /* KPCC-iPad-Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		28036A7C1718A344007DBDE2 /* KPCC-iPad */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28036AC61718A344007DBDE2 /* Build configuration list for PBXNativeTarget "KPCC-iPad" */;
@@ -3856,10 +3798,6 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = scpr;
 				TargetAttributes = {
-					25C799831B33705400DDD3EC = {
-						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = 28036A7C1718A344007DBDE2;
-					};
 					28036A7C1718A344007DBDE2 = {
 						DevelopmentTeam = SXALEDSVFU;
 						SystemCapabilities = {
@@ -3883,19 +3821,11 @@
 			projectRoot = "";
 			targets = (
 				28036A7C1718A344007DBDE2 /* KPCC-iPad */,
-				25C799831B33705400DDD3EC /* KPCC-iPad-Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		25C799821B33705400DDD3EC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		28036AB21718A344007DBDE2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4629,14 +4559,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		25C799801B33705400DDD3EC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				25C799891B33705400DDD3EC /* KPCC_iPad_Tests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		28036A7D1718A344007DBDE2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4786,14 +4708,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		25C7998B1B33705400DDD3EC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 28036A7C1718A344007DBDE2 /* KPCC-iPad */;
-			targetProxy = 25C7998A1B33705400DDD3EC /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		28683CC3170B9BBD00346B6E /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -4889,136 +4803,6 @@
 				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSION = 1.1.0;
 				WRAPPER_EXTENSION = app;
-			};
-			name = Production;
-		};
-		25C7998C1B33705400DDD3EC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "KPCC-iPad-Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KPCC.app/KPCC";
-			};
-			name = Debug;
-		};
-		25C7998D1B33705400DDD3EC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "KPCC-iPad-Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KPCC.app/KPCC";
-			};
-			name = Release;
-		};
-		25C7998E1B33705400DDD3EC /* NFR */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "KPCC-iPad-Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KPCC.app/KPCC";
-			};
-			name = NFR;
-		};
-		25C7998F1B33705400DDD3EC /* Production */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "KPCC-iPad-Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KPCC.app/KPCC";
 			};
 			name = Production;
 		};
@@ -5278,16 +5062,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		25C799901B33705400DDD3EC /* Build configuration list for PBXNativeTarget "KPCC-iPad-Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				25C7998C1B33705400DDD3EC /* Debug */,
-				25C7998D1B33705400DDD3EC /* Release */,
-				25C7998E1B33705400DDD3EC /* NFR */,
-				25C7998F1B33705400DDD3EC /* Production */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		28036AC61718A344007DBDE2 /* Build configuration list for PBXNativeTarget "KPCC-iPad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
