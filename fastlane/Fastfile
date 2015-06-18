@@ -57,28 +57,29 @@ platform :ios do
 
 	lane :nfr do
 		cocoapods
+		xctool
 	    ipa(scheme: "KPCC-iPad", configuration: "NFR") # Build your app - more options available
 	    sigh
 	    deliver(skip_deploy: true, force: true)
 	end
 
-  # You can define as many lanes as you want
+  	# You can define as many lanes as you want
 
-  after_all do |lane|
-    # This block is called, only if the executed lane was successful
+	  after_all do |lane|
+	    # This block is called, only if the executed lane was successful
     
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
-  end
+	    # slack(
+	    #   message: "Successfully deployed new App Update."
+	    # )
+	  end
 
 
-  error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
-  end
+	  error do |lane, exception|
+	    # slack(
+	    #   message: exception.message,
+	    #   success: false
+	    # )
+	  end
 
 end
 
