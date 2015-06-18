@@ -63,6 +63,13 @@ platform :ios do
     # frameit
   end
 
+	lane :nfr do
+		cocoapods
+	    ipa(scheme: "KPCC-iPad", configuration: "NFR") # Build your app - more options available
+	    sigh
+	    deliver(skip_deploy: true, force: true)
+	end
+
   # You can define as many lanes as you want
 
   after_all do |lane|
