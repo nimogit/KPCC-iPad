@@ -20,6 +20,20 @@
                ReferencedContainer = "container:KPCC.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "25C799831B33705400DDD3EC"
+               BuildableName = "KPCC-iPad-Tests.xctest"
+               BlueprintName = "KPCC-iPad-Tests"
+               ReferencedContainer = "container:KPCC.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -28,6 +42,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "25C799831B33705400DDD3EC"
+               BuildableName = "KPCC-iPad-Tests.xctest"
+               BlueprintName = "KPCC-iPad-Tests"
+               ReferencedContainer = "container:KPCC.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

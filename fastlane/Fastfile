@@ -24,7 +24,7 @@ default_platform :ios
 platform :ios do
 
   before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+    ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
 
  
 
@@ -53,15 +53,7 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   desc "** Full Markdown** Support: `code`"
-  lane :deploy do
-    # snapshot
-    cocoapods
-    increment_build_number
-    ipa(scheme: "KPCC-iPad", configuration: "NFR") # Build your app - more options available
-    sigh
-    deliver(skip_deploy: true, force: true)
-    # frameit
-  end
+
 
 	lane :nfr do
 		cocoapods
