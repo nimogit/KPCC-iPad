@@ -58,8 +58,9 @@ platform :ios do
 	lane :nfr do
 		cocoapods
 		#xctest
+		sigh
 	    ipa(scheme: "KPCC-iPad", configuration: "NFR") # Build your app - more options available
-	    sigh
+	    
 	    deliver(skip_deploy: true, force: true)
 	end
 
